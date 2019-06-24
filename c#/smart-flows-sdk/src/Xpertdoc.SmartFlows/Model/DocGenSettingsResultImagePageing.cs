@@ -40,14 +40,12 @@ namespace Xpertdoc.SmartFlows.Model
         /// <value>The index of the first page to render (zero-based index)</value>
         [DataMember(Name = "firstPageIndex", EmitDefaultValue = false)]
         public int? FirstPageIndex { get; set; }
-
         /// <summary>
         /// The number of pages to render
         /// </summary>
         /// <value>The number of pages to render</value>
         [DataMember(Name = "pageCount", EmitDefaultValue = false)]
         public int? PageCount { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -74,33 +72,35 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DocGenSettingsResultImagePageing);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DocGenSettingsResultImagePageing);
         }
 
         /// <summary>
         /// Returns true if DocGenSettingsResultImagePageing instances are equal
         /// </summary>
-        /// <param name="input">Instance of DocGenSettingsResultImagePageing to be compared</param>
+        /// <param name="other">Instance of DocGenSettingsResultImagePageing to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DocGenSettingsResultImagePageing input)
+        public bool Equals(DocGenSettingsResultImagePageing other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.FirstPageIndex == input.FirstPageIndex ||
-                    (this.FirstPageIndex != null &&
-                    this.FirstPageIndex.Equals(input.FirstPageIndex))
+                    this.FirstPageIndex == other.FirstPageIndex ||
+                    this.FirstPageIndex != null &&
+                    this.FirstPageIndex.Equals(other.FirstPageIndex)
                 ) &&
                 (
-                    this.PageCount == input.PageCount ||
-                    (this.PageCount != null &&
-                    this.PageCount.Equals(input.PageCount))
+                    this.PageCount == other.PageCount ||
+                    this.PageCount != null &&
+                    this.PageCount.Equals(other.PageCount)
                 );
         }
 
@@ -110,34 +110,31 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.FirstPageIndex != null)
-                    hashCode = hashCode * 59 + this.FirstPageIndex.GetHashCode();
+                    hash = hash * 59 + this.FirstPageIndex.GetHashCode();
                 if (this.PageCount != null)
-                    hashCode = hashCode * 59 + this.PageCount.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.PageCount.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // FirstPageIndex (int?) minimum
             if (this.FirstPageIndex < (int?)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for FirstPageIndex, must be a value greater than or equal to 0.", new[] { "FirstPageIndex" });
+                yield return new ValidationResult("Invalid value for FirstPageIndex, must be a value greater than or equal to 0.", new[] { "FirstPageIndex" });
             }
 
             // PageCount (int?) minimum
             if (this.PageCount < (int?)1)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for PageCount, must be a value greater than or equal to 1.", new[] { "PageCount" });
+                yield return new ValidationResult("Invalid value for PageCount, must be a value greater than or equal to 1.", new[] { "PageCount" });
             }
 
             yield break;

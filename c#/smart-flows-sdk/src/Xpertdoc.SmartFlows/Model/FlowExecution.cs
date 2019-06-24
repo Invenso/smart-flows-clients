@@ -9,9 +9,11 @@
  */
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 
@@ -24,26 +26,59 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class FlowExecution : IEquatable<FlowExecution>, IValidatableObject
     {
         /// <summary>
+        /// Gets or Sets Mode
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum ModeEnum
+        {
+
+            /// <summary>
+            /// Enum Interactive for "interactive"
+            /// </summary>
+            [EnumMember(Value = "interactive")]
+            Interactive,
+
+            /// <summary>
+            /// Enum Batch for "batch"
+            /// </summary>
+            [EnumMember(Value = "batch")]
+            Batch
+        }
+
+        /// <summary>
+        /// Gets or Sets Mode
+        /// </summary>
+        [DataMember(Name = "mode", EmitDefaultValue = false)]
+        public ModeEnum? Mode { get; set; }
+        /// <summary>
         /// Initializes a new instance of the <see cref="FlowExecution" /> class.
         /// </summary>
         /// <param name="Id">Id.</param>
         /// <param name="CreatedAt">CreatedAt.</param>
         /// <param name="CreatedBy">CreatedBy.</param>
+        /// <param name="CreatedFor">CreatedFor.</param>
         /// <param name="ModifiedAt">ModifiedAt.</param>
         /// <param name="ModifiedBy">ModifiedBy.</param>
+        /// <param name="Priority">Priority.</param>
         /// <param name="Status">Status.</param>
         /// <param name="Flow">Flow.</param>
         /// <param name="State">State.</param>
-        public FlowExecution(string Id = default(string), string CreatedAt = default(string), IdWithName CreatedBy = default(IdWithName), string ModifiedAt = default(string), IdWithName ModifiedBy = default(IdWithName), FlowExecutionStatus Status = default(FlowExecutionStatus), IdWithName Flow = default(IdWithName), FlowExecutionState State = default(FlowExecutionState))
+        /// <param name="Mode">Mode.</param>
+        /// <param name="Outputs">Outputs.</param>
+        public FlowExecution(string Id = default(string), string CreatedAt = default(string), IdWithName CreatedBy = default(IdWithName), IdWithName CreatedFor = default(IdWithName), string ModifiedAt = default(string), IdWithName ModifiedBy = default(IdWithName), int? Priority = default(int?), FlowExecutionStatus Status = default(FlowExecutionStatus), IdWithName Flow = default(IdWithName), FlowExecutionState State = default(FlowExecutionState), ModeEnum? Mode = default(ModeEnum?), List<FlowExecutionOutput> Outputs = default(List<FlowExecutionOutput>))
         {
             this.Id = Id;
             this.CreatedAt = CreatedAt;
             this.CreatedBy = CreatedBy;
+            this.CreatedFor = CreatedFor;
             this.ModifiedAt = ModifiedAt;
             this.ModifiedBy = ModifiedBy;
+            this.Priority = Priority;
             this.Status = Status;
             this.Flow = Flow;
             this.State = State;
+            this.Mode = Mode;
+            this.Outputs = Outputs;
         }
 
         /// <summary>
@@ -51,49 +86,56 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedAt
         /// </summary>
         [DataMember(Name = "createdAt", EmitDefaultValue = false)]
         public string CreatedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedBy
         /// </summary>
         [DataMember(Name = "createdBy", EmitDefaultValue = false)]
         public IdWithName CreatedBy { get; set; }
-
+        /// <summary>
+        /// Gets or Sets CreatedFor
+        /// </summary>
+        [DataMember(Name = "createdFor", EmitDefaultValue = false)]
+        public IdWithName CreatedFor { get; set; }
         /// <summary>
         /// Gets or Sets ModifiedAt
         /// </summary>
         [DataMember(Name = "modifiedAt", EmitDefaultValue = false)]
         public string ModifiedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedBy
         /// </summary>
         [DataMember(Name = "modifiedBy", EmitDefaultValue = false)]
         public IdWithName ModifiedBy { get; set; }
-
+        /// <summary>
+        /// Gets or Sets Priority
+        /// </summary>
+        [DataMember(Name = "priority", EmitDefaultValue = false)]
+        public int? Priority { get; set; }
         /// <summary>
         /// Gets or Sets Status
         /// </summary>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public FlowExecutionStatus Status { get; set; }
-
         /// <summary>
         /// Gets or Sets Flow
         /// </summary>
         [DataMember(Name = "flow", EmitDefaultValue = false)]
         public IdWithName Flow { get; set; }
-
         /// <summary>
         /// Gets or Sets State
         /// </summary>
         [DataMember(Name = "state", EmitDefaultValue = false)]
         public FlowExecutionState State { get; set; }
-
+        /// <summary>
+        /// Gets or Sets Outputs
+        /// </summary>
+        [DataMember(Name = "outputs", EmitDefaultValue = false)]
+        public List<FlowExecutionOutput> Outputs { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -105,11 +147,15 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
             sb.Append("  CreatedBy: ").Append(CreatedBy).Append("\n");
+            sb.Append("  CreatedFor: ").Append(CreatedFor).Append("\n");
             sb.Append("  ModifiedAt: ").Append(ModifiedAt).Append("\n");
             sb.Append("  ModifiedBy: ").Append(ModifiedBy).Append("\n");
+            sb.Append("  Priority: ").Append(Priority).Append("\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  Flow: ").Append(Flow).Append("\n");
             sb.Append("  State: ").Append(State).Append("\n");
+            sb.Append("  Mode: ").Append(Mode).Append("\n");
+            sb.Append("  Outputs: ").Append(Outputs).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -126,63 +172,85 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as FlowExecution);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as FlowExecution);
         }
 
         /// <summary>
         /// Returns true if FlowExecution instances are equal
         /// </summary>
-        /// <param name="input">Instance of FlowExecution to be compared</param>
+        /// <param name="other">Instance of FlowExecution to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FlowExecution input)
+        public bool Equals(FlowExecution other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.CreatedAt == input.CreatedAt ||
-                    (this.CreatedAt != null &&
-                    this.CreatedAt.Equals(input.CreatedAt))
+                    this.CreatedAt == other.CreatedAt ||
+                    this.CreatedAt != null &&
+                    this.CreatedAt.Equals(other.CreatedAt)
                 ) &&
                 (
-                    this.CreatedBy == input.CreatedBy ||
-                    (this.CreatedBy != null &&
-                    this.CreatedBy.Equals(input.CreatedBy))
+                    this.CreatedBy == other.CreatedBy ||
+                    this.CreatedBy != null &&
+                    this.CreatedBy.Equals(other.CreatedBy)
                 ) &&
                 (
-                    this.ModifiedAt == input.ModifiedAt ||
-                    (this.ModifiedAt != null &&
-                    this.ModifiedAt.Equals(input.ModifiedAt))
+                    this.CreatedFor == other.CreatedFor ||
+                    this.CreatedFor != null &&
+                    this.CreatedFor.Equals(other.CreatedFor)
                 ) &&
                 (
-                    this.ModifiedBy == input.ModifiedBy ||
-                    (this.ModifiedBy != null &&
-                    this.ModifiedBy.Equals(input.ModifiedBy))
+                    this.ModifiedAt == other.ModifiedAt ||
+                    this.ModifiedAt != null &&
+                    this.ModifiedAt.Equals(other.ModifiedAt)
                 ) &&
                 (
-                    this.Status == input.Status ||
-                    (this.Status != null &&
-                    this.Status.Equals(input.Status))
+                    this.ModifiedBy == other.ModifiedBy ||
+                    this.ModifiedBy != null &&
+                    this.ModifiedBy.Equals(other.ModifiedBy)
                 ) &&
                 (
-                    this.Flow == input.Flow ||
-                    (this.Flow != null &&
-                    this.Flow.Equals(input.Flow))
+                    this.Priority == other.Priority ||
+                    this.Priority != null &&
+                    this.Priority.Equals(other.Priority)
                 ) &&
                 (
-                    this.State == input.State ||
-                    (this.State != null &&
-                    this.State.Equals(input.State))
+                    this.Status == other.Status ||
+                    this.Status != null &&
+                    this.Status.Equals(other.Status)
+                ) &&
+                (
+                    this.Flow == other.Flow ||
+                    this.Flow != null &&
+                    this.Flow.Equals(other.Flow)
+                ) &&
+                (
+                    this.State == other.State ||
+                    this.State != null &&
+                    this.State.Equals(other.State)
+                ) &&
+                (
+                    this.Mode == other.Mode ||
+                    this.Mode != null &&
+                    this.Mode.Equals(other.Mode)
+                ) &&
+                (
+                    this.Outputs == other.Outputs ||
+                    this.Outputs != null &&
+                    this.Outputs.SequenceEqual(other.Outputs)
                 );
         }
 
@@ -192,36 +260,53 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.CreatedAt != null)
-                    hashCode = hashCode * 59 + this.CreatedAt.GetHashCode();
+                    hash = hash * 59 + this.CreatedAt.GetHashCode();
                 if (this.CreatedBy != null)
-                    hashCode = hashCode * 59 + this.CreatedBy.GetHashCode();
+                    hash = hash * 59 + this.CreatedBy.GetHashCode();
+                if (this.CreatedFor != null)
+                    hash = hash * 59 + this.CreatedFor.GetHashCode();
                 if (this.ModifiedAt != null)
-                    hashCode = hashCode * 59 + this.ModifiedAt.GetHashCode();
+                    hash = hash * 59 + this.ModifiedAt.GetHashCode();
                 if (this.ModifiedBy != null)
-                    hashCode = hashCode * 59 + this.ModifiedBy.GetHashCode();
+                    hash = hash * 59 + this.ModifiedBy.GetHashCode();
+                if (this.Priority != null)
+                    hash = hash * 59 + this.Priority.GetHashCode();
                 if (this.Status != null)
-                    hashCode = hashCode * 59 + this.Status.GetHashCode();
+                    hash = hash * 59 + this.Status.GetHashCode();
                 if (this.Flow != null)
-                    hashCode = hashCode * 59 + this.Flow.GetHashCode();
+                    hash = hash * 59 + this.Flow.GetHashCode();
                 if (this.State != null)
-                    hashCode = hashCode * 59 + this.State.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.State.GetHashCode();
+                if (this.Mode != null)
+                    hash = hash * 59 + this.Mode.GetHashCode();
+                if (this.Outputs != null)
+                    hash = hash * 59 + this.Outputs.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            // Priority (int?) maximum
+            if (this.Priority > (int?)9)
+            {
+                yield return new ValidationResult("Invalid value for Priority, must be a value less than or equal to 9.", new[] { "Priority" });
+            }
+
+            // Priority (int?) minimum
+            if (this.Priority < (int?)0)
+            {
+                yield return new ValidationResult("Invalid value for Priority, must be a value greater than or equal to 0.", new[] { "Priority" });
+            }
+
             yield break;
         }
     }

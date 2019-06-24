@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DocGenSettingsTemplateComposed> (instance, "variable 'instance' is a DocGenSettingsTemplateComposed");
         }
 
-
         /// <summary>
         /// Test the property 'Content'
         /// </summary>

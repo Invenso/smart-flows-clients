@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<CleanupActionSettings> (instance, "variable 'instance' is a CleanupActionSettings");
         }
 
-
         /// <summary>
         /// Test the property 'Schedule'
         /// </summary>

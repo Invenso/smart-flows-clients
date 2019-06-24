@@ -47,13 +47,11 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "include", EmitDefaultValue = false)]
         public bool? Include { get; set; }
-
         /// <summary>
         /// Gets or Sets InstructionId
         /// </summary>
         [DataMember(Name = "instructionId", EmitDefaultValue = false)]
         public string InstructionId { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -80,33 +78,35 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DocGenSettingsResultChartData);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DocGenSettingsResultChartData);
         }
 
         /// <summary>
         /// Returns true if DocGenSettingsResultChartData instances are equal
         /// </summary>
-        /// <param name="input">Instance of DocGenSettingsResultChartData to be compared</param>
+        /// <param name="other">Instance of DocGenSettingsResultChartData to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DocGenSettingsResultChartData input)
+        public bool Equals(DocGenSettingsResultChartData other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Include == input.Include ||
-                    (this.Include != null &&
-                    this.Include.Equals(input.Include))
+                    this.Include == other.Include ||
+                    this.Include != null &&
+                    this.Include.Equals(other.Include)
                 ) &&
                 (
-                    this.InstructionId == input.InstructionId ||
-                    (this.InstructionId != null &&
-                    this.InstructionId.Equals(input.InstructionId))
+                    this.InstructionId == other.InstructionId ||
+                    this.InstructionId != null &&
+                    this.InstructionId.Equals(other.InstructionId)
                 );
         }
 
@@ -116,23 +116,20 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Include != null)
-                    hashCode = hashCode * 59 + this.Include.GetHashCode();
+                    hash = hash * 59 + this.Include.GetHashCode();
                 if (this.InstructionId != null)
-                    hashCode = hashCode * 59 + this.InstructionId.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.InstructionId.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

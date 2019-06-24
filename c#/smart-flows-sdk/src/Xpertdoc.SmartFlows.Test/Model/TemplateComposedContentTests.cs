@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<TemplateComposedContent> (instance, "variable 'instance' is a TemplateComposedContent");
         }
 
-
         /// <summary>
         /// Test the property 'Bodies'
         /// </summary>

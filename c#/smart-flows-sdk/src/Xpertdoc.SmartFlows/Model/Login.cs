@@ -35,7 +35,8 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="Username">Username (required).</param>
         /// <param name="Password">Password (required).</param>
         /// <param name="Scope">Scope.</param>
-        public Login(string Username = default(string), string Password = default(string), string Scope = default(string))
+        /// <param name="LoginContext">LoginContext.</param>
+        public Login(string Username = default(string), string Password = default(string), string Scope = default(string), string LoginContext = default(string))
         {
             // to ensure "Username" is required (not null)
             if (Username == null)
@@ -56,6 +57,7 @@ namespace Xpertdoc.SmartFlows.Model
                 this.Password = Password;
             }
             this.Scope = Scope;
+            this.LoginContext = LoginContext;
         }
 
         /// <summary>
@@ -63,19 +65,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "username", EmitDefaultValue = false)]
         public string Username { get; set; }
-
         /// <summary>
         /// Gets or Sets Password
         /// </summary>
         [DataMember(Name = "password", EmitDefaultValue = false)]
         public string Password { get; set; }
-
         /// <summary>
         /// Gets or Sets Scope
         /// </summary>
         [DataMember(Name = "scope", EmitDefaultValue = false)]
         public string Scope { get; set; }
-
+        /// <summary>
+        /// Gets or Sets LoginContext
+        /// </summary>
+        [DataMember(Name = "loginContext", EmitDefaultValue = false)]
+        public string LoginContext { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -87,6 +91,7 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("  Username: ").Append(Username).Append("\n");
             sb.Append("  Password: ").Append(Password).Append("\n");
             sb.Append("  Scope: ").Append(Scope).Append("\n");
+            sb.Append("  LoginContext: ").Append(LoginContext).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -103,38 +108,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Login);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Login);
         }
 
         /// <summary>
         /// Returns true if Login instances are equal
         /// </summary>
-        /// <param name="input">Instance of Login to be compared</param>
+        /// <param name="other">Instance of Login to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Login input)
+        public bool Equals(Login other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Username == input.Username ||
-                    (this.Username != null &&
-                    this.Username.Equals(input.Username))
+                    this.Username == other.Username ||
+                    this.Username != null &&
+                    this.Username.Equals(other.Username)
                 ) &&
                 (
-                    this.Password == input.Password ||
-                    (this.Password != null &&
-                    this.Password.Equals(input.Password))
+                    this.Password == other.Password ||
+                    this.Password != null &&
+                    this.Password.Equals(other.Password)
                 ) &&
                 (
-                    this.Scope == input.Scope ||
-                    (this.Scope != null &&
-                    this.Scope.Equals(input.Scope))
+                    this.Scope == other.Scope ||
+                    this.Scope != null &&
+                    this.Scope.Equals(other.Scope)
+                ) &&
+                (
+                    this.LoginContext == other.LoginContext ||
+                    this.LoginContext != null &&
+                    this.LoginContext.Equals(other.LoginContext)
                 );
         }
 
@@ -144,25 +156,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Username != null)
-                    hashCode = hashCode * 59 + this.Username.GetHashCode();
+                    hash = hash * 59 + this.Username.GetHashCode();
                 if (this.Password != null)
-                    hashCode = hashCode * 59 + this.Password.GetHashCode();
+                    hash = hash * 59 + this.Password.GetHashCode();
                 if (this.Scope != null)
-                    hashCode = hashCode * 59 + this.Scope.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Scope.GetHashCode();
+                if (this.LoginContext != null)
+                    hash = hash * 59 + this.LoginContext.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

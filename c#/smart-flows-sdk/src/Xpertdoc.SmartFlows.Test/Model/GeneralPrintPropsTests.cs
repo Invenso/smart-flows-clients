@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<GeneralPrintProps> (instance, "variable 'instance' is a GeneralPrintProps");
         }
 
-
         /// <summary>
         /// Test the property 'Copies'
         /// </summary>

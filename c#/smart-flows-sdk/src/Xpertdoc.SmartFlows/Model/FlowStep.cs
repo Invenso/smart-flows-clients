@@ -27,35 +27,41 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class FlowStep : IEquatable<FlowStep>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum Data for value: data
+            /// Enum Data for "data"
             /// </summary>
             [EnumMember(Value = "data")]
-            Data = 1,
+            Data,
 
             /// <summary>
-            /// Enum Gendoc for value: gendoc
+            /// Enum Gendoc for "gendoc"
             /// </summary>
             [EnumMember(Value = "gendoc")]
-            Gendoc = 2,
+            Gendoc,
 
             /// <summary>
-            /// Enum Convert for value: convert
+            /// Enum Convert for "convert"
             /// </summary>
             [EnumMember(Value = "convert")]
-            Convert = 3,
+            Convert,
 
             /// <summary>
-            /// Enum Postprocess for value: postprocess
+            /// Enum Postprocess for "postprocess"
             /// </summary>
             [EnumMember(Value = "postprocess")]
-            Postprocess = 4
+            Postprocess,
+
+            /// <summary>
+            /// Enum Other for "other"
+            /// </summary>
+            [EnumMember(Value = "other")]
+            Other
         }
 
         /// <summary>
@@ -120,68 +126,56 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
         /// <summary>
         /// Gets or Sets IconClass
         /// </summary>
         [DataMember(Name = "iconClass", EmitDefaultValue = false)]
         public string IconClass { get; set; }
-
         /// <summary>
         /// Gets or Sets Group
         /// </summary>
         [DataMember(Name = "group", EmitDefaultValue = false)]
         public string Group { get; set; }
-
-
         /// <summary>
         /// Gets or Sets PrimaryParameters
         /// </summary>
         [DataMember(Name = "primaryParameters", EmitDefaultValue = false)]
         public List<string> PrimaryParameters { get; set; }
-
         /// <summary>
         /// Gets or Sets InputSchema
         /// </summary>
         [DataMember(Name = "inputSchema", EmitDefaultValue = false)]
         public Object InputSchema { get; set; }
-
         /// <summary>
         /// Gets or Sets InputForm
         /// </summary>
         [DataMember(Name = "inputForm", EmitDefaultValue = false)]
         public List<Object> InputForm { get; set; }
-
         /// <summary>
         /// Gets or Sets OutputId
         /// </summary>
         [DataMember(Name = "outputId", EmitDefaultValue = false)]
         public string OutputId { get; set; }
-
         /// <summary>
         /// Gets or Sets ExternalOutputParameters
         /// </summary>
         [DataMember(Name = "externalOutputParameters", EmitDefaultValue = false)]
         public List<string> ExternalOutputParameters { get; set; }
-
         /// <summary>
         /// Gets or Sets OutputSchema
         /// </summary>
         [DataMember(Name = "outputSchema", EmitDefaultValue = false)]
         public Object OutputSchema { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -218,83 +212,85 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as FlowStep);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as FlowStep);
         }
 
         /// <summary>
         /// Returns true if FlowStep instances are equal
         /// </summary>
-        /// <param name="input">Instance of FlowStep to be compared</param>
+        /// <param name="other">Instance of FlowStep to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FlowStep input)
+        public bool Equals(FlowStep other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.IconClass == input.IconClass ||
-                    (this.IconClass != null &&
-                    this.IconClass.Equals(input.IconClass))
+                    this.IconClass == other.IconClass ||
+                    this.IconClass != null &&
+                    this.IconClass.Equals(other.IconClass)
                 ) &&
                 (
-                    this.Group == input.Group ||
-                    (this.Group != null &&
-                    this.Group.Equals(input.Group))
+                    this.Group == other.Group ||
+                    this.Group != null &&
+                    this.Group.Equals(other.Group)
                 ) &&
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.PrimaryParameters == input.PrimaryParameters ||
+                    this.PrimaryParameters == other.PrimaryParameters ||
                     this.PrimaryParameters != null &&
-                    this.PrimaryParameters.SequenceEqual(input.PrimaryParameters)
+                    this.PrimaryParameters.SequenceEqual(other.PrimaryParameters)
                 ) &&
                 (
-                    this.InputSchema == input.InputSchema ||
-                    (this.InputSchema != null &&
-                    this.InputSchema.Equals(input.InputSchema))
+                    this.InputSchema == other.InputSchema ||
+                    this.InputSchema != null &&
+                    this.InputSchema.Equals(other.InputSchema)
                 ) &&
                 (
-                    this.InputForm == input.InputForm ||
+                    this.InputForm == other.InputForm ||
                     this.InputForm != null &&
-                    this.InputForm.SequenceEqual(input.InputForm)
+                    this.InputForm.SequenceEqual(other.InputForm)
                 ) &&
                 (
-                    this.OutputId == input.OutputId ||
-                    (this.OutputId != null &&
-                    this.OutputId.Equals(input.OutputId))
+                    this.OutputId == other.OutputId ||
+                    this.OutputId != null &&
+                    this.OutputId.Equals(other.OutputId)
                 ) &&
                 (
-                    this.ExternalOutputParameters == input.ExternalOutputParameters ||
+                    this.ExternalOutputParameters == other.ExternalOutputParameters ||
                     this.ExternalOutputParameters != null &&
-                    this.ExternalOutputParameters.SequenceEqual(input.ExternalOutputParameters)
+                    this.ExternalOutputParameters.SequenceEqual(other.ExternalOutputParameters)
                 ) &&
                 (
-                    this.OutputSchema == input.OutputSchema ||
-                    (this.OutputSchema != null &&
-                    this.OutputSchema.Equals(input.OutputSchema))
+                    this.OutputSchema == other.OutputSchema ||
+                    this.OutputSchema != null &&
+                    this.OutputSchema.Equals(other.OutputSchema)
                 );
         }
 
@@ -304,43 +300,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.IconClass != null)
-                    hashCode = hashCode * 59 + this.IconClass.GetHashCode();
+                    hash = hash * 59 + this.IconClass.GetHashCode();
                 if (this.Group != null)
-                    hashCode = hashCode * 59 + this.Group.GetHashCode();
+                    hash = hash * 59 + this.Group.GetHashCode();
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.PrimaryParameters != null)
-                    hashCode = hashCode * 59 + this.PrimaryParameters.GetHashCode();
+                    hash = hash * 59 + this.PrimaryParameters.GetHashCode();
                 if (this.InputSchema != null)
-                    hashCode = hashCode * 59 + this.InputSchema.GetHashCode();
+                    hash = hash * 59 + this.InputSchema.GetHashCode();
                 if (this.InputForm != null)
-                    hashCode = hashCode * 59 + this.InputForm.GetHashCode();
+                    hash = hash * 59 + this.InputForm.GetHashCode();
                 if (this.OutputId != null)
-                    hashCode = hashCode * 59 + this.OutputId.GetHashCode();
+                    hash = hash * 59 + this.OutputId.GetHashCode();
                 if (this.ExternalOutputParameters != null)
-                    hashCode = hashCode * 59 + this.ExternalOutputParameters.GetHashCode();
+                    hash = hash * 59 + this.ExternalOutputParameters.GetHashCode();
                 if (this.OutputSchema != null)
-                    hashCode = hashCode * 59 + this.OutputSchema.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.OutputSchema.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

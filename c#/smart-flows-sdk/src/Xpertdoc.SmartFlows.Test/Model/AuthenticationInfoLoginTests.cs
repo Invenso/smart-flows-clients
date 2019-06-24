@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<AuthenticationInfoLogin> (instance, "variable 'instance' is a AuthenticationInfoLogin");
         }
 
-
         /// <summary>
         /// Test the property 'Enabled'
         /// </summary>

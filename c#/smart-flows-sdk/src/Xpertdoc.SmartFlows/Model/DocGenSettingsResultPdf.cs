@@ -33,30 +33,24 @@ namespace Xpertdoc.SmartFlows.Model
         {
 
             /// <summary>
-            /// Enum Pdf15 for value: pdf15
+            /// Enum Pdf15 for "pdf15"
             /// </summary>
             [EnumMember(Value = "pdf15")]
-            Pdf15 = 1,
+            Pdf15,
 
             /// <summary>
-            /// Enum PdfA1b for value: pdfA1b
+            /// Enum PdfA1b for "pdfA1b"
             /// </summary>
             [EnumMember(Value = "pdfA1b")]
-            PdfA1b = 2,
+            PdfA1b,
 
             /// <summary>
-            /// Enum PdfA1a for value: pdfA1a
+            /// Enum PdfA1a for "pdfA1a"
             /// </summary>
             [EnumMember(Value = "pdfA1a")]
-            PdfA1a = 3
+            PdfA1a
         }
 
-        /// <summary>
-        /// Specifies the PDF standards compliance level. Pdf15: The output file will comply with the PDF 1.5 standard. PdfA1a: The output file will comply with the PDF/A-1a standard. This level includes all the requirements of PDF/A-1b and additionally requires that document structure be included (also known as being tagged), with the objective of ensuring that document content can be searched and repurposed. PdfA1b: The output file will comply with the PDF/A-1b standard. PDF/A-1b has the objective of ensuring reliable reproduction of the visual appearance of the document
-        /// </summary>
-        /// <value>Specifies the PDF standards compliance level. Pdf15: The output file will comply with the PDF 1.5 standard. PdfA1a: The output file will comply with the PDF/A-1a standard. This level includes all the requirements of PDF/A-1b and additionally requires that document structure be included (also known as being tagged), with the objective of ensuring that document content can be searched and repurposed. PdfA1b: The output file will comply with the PDF/A-1b standard. PDF/A-1b has the objective of ensuring reliable reproduction of the visual appearance of the document</value>
-        [DataMember(Name = "compliance", EmitDefaultValue = false)]
-        public ComplianceEnum? Compliance { get; set; }
         /// <summary>
         /// Controls how fonts are embedded into the resulting PDF documents. All: Embed all fonts. Non Standard: embed all fonts except standard Windows fonts Arial and Times New Roman. None: no fonts are embedded
         /// </summary>
@@ -66,24 +60,30 @@ namespace Xpertdoc.SmartFlows.Model
         {
 
             /// <summary>
-            /// Enum All for value: all
+            /// Enum All for "all"
             /// </summary>
             [EnumMember(Value = "all")]
-            All = 1,
+            All,
 
             /// <summary>
-            /// Enum NonStandard for value: nonStandard
+            /// Enum NonStandard for "nonStandard"
             /// </summary>
             [EnumMember(Value = "nonStandard")]
-            NonStandard = 2,
+            NonStandard,
 
             /// <summary>
-            /// Enum None for value: none
+            /// Enum None for "none"
             /// </summary>
             [EnumMember(Value = "none")]
-            None = 3
+            None
         }
 
+        /// <summary>
+        /// Specifies the PDF standards compliance level. Pdf15: The output file will comply with the PDF 1.5 standard. PdfA1a: The output file will comply with the PDF/A-1a standard. This level includes all the requirements of PDF/A-1b and additionally requires that document structure be included (also known as being tagged), with the objective of ensuring that document content can be searched and repurposed. PdfA1b: The output file will comply with the PDF/A-1b standard. PDF/A-1b has the objective of ensuring reliable reproduction of the visual appearance of the document
+        /// </summary>
+        /// <value>Specifies the PDF standards compliance level. Pdf15: The output file will comply with the PDF 1.5 standard. PdfA1a: The output file will comply with the PDF/A-1a standard. This level includes all the requirements of PDF/A-1b and additionally requires that document structure be included (also known as being tagged), with the objective of ensuring that document content can be searched and repurposed. PdfA1b: The output file will comply with the PDF/A-1b standard. PDF/A-1b has the objective of ensuring reliable reproduction of the visual appearance of the document</value>
+        [DataMember(Name = "compliance", EmitDefaultValue = false)]
+        public ComplianceEnum? Compliance { get; set; }
         /// <summary>
         /// Controls how fonts are embedded into the resulting PDF documents. All: Embed all fonts. Non Standard: embed all fonts except standard Windows fonts Arial and Times New Roman. None: no fonts are embedded
         /// </summary>
@@ -129,21 +129,17 @@ namespace Xpertdoc.SmartFlows.Model
             this.Encryption = Encryption;
         }
 
-
         /// <summary>
         /// Specifies whether to preserve form fields in PDF or convert them to text. Microsoft Word form fields include text input, drop down and check box controls. When set to false, these fields will be exported as text. When set to true, these fields will be exported as PDF form fields. When exporting form fields to PDF as form fields, some formatting loss might occur because PDF form fields do not support all features of Microsoft Word form fields
         /// </summary>
         /// <value>Specifies whether to preserve form fields in PDF or convert them to text. Microsoft Word form fields include text input, drop down and check box controls. When set to false, these fields will be exported as text. When set to true, these fields will be exported as PDF form fields. When exporting form fields to PDF as form fields, some formatting loss might occur because PDF form fields do not support all features of Microsoft Word form fields</value>
         [DataMember(Name = "preserveFormFields", EmitDefaultValue = false)]
         public bool? PreserveFormFields { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Encryption
         /// </summary>
         [DataMember(Name = "encryption", EmitDefaultValue = false)]
         public DocGenSettingsResultPdfEncryption Encryption { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -172,43 +168,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DocGenSettingsResultPdf);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DocGenSettingsResultPdf);
         }
 
         /// <summary>
         /// Returns true if DocGenSettingsResultPdf instances are equal
         /// </summary>
-        /// <param name="input">Instance of DocGenSettingsResultPdf to be compared</param>
+        /// <param name="other">Instance of DocGenSettingsResultPdf to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DocGenSettingsResultPdf input)
+        public bool Equals(DocGenSettingsResultPdf other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Compliance == input.Compliance ||
-                    (this.Compliance != null &&
-                    this.Compliance.Equals(input.Compliance))
+                    this.Compliance == other.Compliance ||
+                    this.Compliance != null &&
+                    this.Compliance.Equals(other.Compliance)
                 ) &&
                 (
-                    this.PreserveFormFields == input.PreserveFormFields ||
-                    (this.PreserveFormFields != null &&
-                    this.PreserveFormFields.Equals(input.PreserveFormFields))
+                    this.PreserveFormFields == other.PreserveFormFields ||
+                    this.PreserveFormFields != null &&
+                    this.PreserveFormFields.Equals(other.PreserveFormFields)
                 ) &&
                 (
-                    this.FontEmbeddingMode == input.FontEmbeddingMode ||
-                    (this.FontEmbeddingMode != null &&
-                    this.FontEmbeddingMode.Equals(input.FontEmbeddingMode))
+                    this.FontEmbeddingMode == other.FontEmbeddingMode ||
+                    this.FontEmbeddingMode != null &&
+                    this.FontEmbeddingMode.Equals(other.FontEmbeddingMode)
                 ) &&
                 (
-                    this.Encryption == input.Encryption ||
-                    (this.Encryption != null &&
-                    this.Encryption.Equals(input.Encryption))
+                    this.Encryption == other.Encryption ||
+                    this.Encryption != null &&
+                    this.Encryption.Equals(other.Encryption)
                 );
         }
 
@@ -218,27 +216,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Compliance != null)
-                    hashCode = hashCode * 59 + this.Compliance.GetHashCode();
+                    hash = hash * 59 + this.Compliance.GetHashCode();
                 if (this.PreserveFormFields != null)
-                    hashCode = hashCode * 59 + this.PreserveFormFields.GetHashCode();
+                    hash = hash * 59 + this.PreserveFormFields.GetHashCode();
                 if (this.FontEmbeddingMode != null)
-                    hashCode = hashCode * 59 + this.FontEmbeddingMode.GetHashCode();
+                    hash = hash * 59 + this.FontEmbeddingMode.GetHashCode();
                 if (this.Encryption != null)
-                    hashCode = hashCode * 59 + this.Encryption.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Encryption.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

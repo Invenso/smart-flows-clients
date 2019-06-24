@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<LanguageDefinitionDateTimeFormats> (instance, "variable 'instance' is a LanguageDefinitionDateTimeFormats");
         }
 
-
         /// <summary>
         /// Test the property 'Date'
         /// </summary>

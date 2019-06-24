@@ -43,25 +43,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "message", EmitDefaultValue = false)]
         public string Message { get; set; }
-
         /// <summary>
         /// Gets or Sets Line
         /// </summary>
         [DataMember(Name = "line", EmitDefaultValue = false)]
         public int? Line { get; set; }
-
         /// <summary>
         /// Gets or Sets PosInLine
         /// </summary>
         [DataMember(Name = "posInLine", EmitDefaultValue = false)]
         public int? PosInLine { get; set; }
-
         /// <summary>
         /// Gets or Sets Offset
         /// </summary>
         [DataMember(Name = "offset", EmitDefaultValue = false)]
         public int? Offset { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -90,43 +86,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as ParseExpressionResponseErrors);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ParseExpressionResponseErrors);
         }
 
         /// <summary>
         /// Returns true if ParseExpressionResponseErrors instances are equal
         /// </summary>
-        /// <param name="input">Instance of ParseExpressionResponseErrors to be compared</param>
+        /// <param name="other">Instance of ParseExpressionResponseErrors to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ParseExpressionResponseErrors input)
+        public bool Equals(ParseExpressionResponseErrors other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Message == input.Message ||
-                    (this.Message != null &&
-                    this.Message.Equals(input.Message))
+                    this.Message == other.Message ||
+                    this.Message != null &&
+                    this.Message.Equals(other.Message)
                 ) &&
                 (
-                    this.Line == input.Line ||
-                    (this.Line != null &&
-                    this.Line.Equals(input.Line))
+                    this.Line == other.Line ||
+                    this.Line != null &&
+                    this.Line.Equals(other.Line)
                 ) &&
                 (
-                    this.PosInLine == input.PosInLine ||
-                    (this.PosInLine != null &&
-                    this.PosInLine.Equals(input.PosInLine))
+                    this.PosInLine == other.PosInLine ||
+                    this.PosInLine != null &&
+                    this.PosInLine.Equals(other.PosInLine)
                 ) &&
                 (
-                    this.Offset == input.Offset ||
-                    (this.Offset != null &&
-                    this.Offset.Equals(input.Offset))
+                    this.Offset == other.Offset ||
+                    this.Offset != null &&
+                    this.Offset.Equals(other.Offset)
                 );
         }
 
@@ -136,27 +134,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Message != null)
-                    hashCode = hashCode * 59 + this.Message.GetHashCode();
+                    hash = hash * 59 + this.Message.GetHashCode();
                 if (this.Line != null)
-                    hashCode = hashCode * 59 + this.Line.GetHashCode();
+                    hash = hash * 59 + this.Line.GetHashCode();
                 if (this.PosInLine != null)
-                    hashCode = hashCode * 59 + this.PosInLine.GetHashCode();
+                    hash = hash * 59 + this.PosInLine.GetHashCode();
                 if (this.Offset != null)
-                    hashCode = hashCode * 59 + this.Offset.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Offset.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

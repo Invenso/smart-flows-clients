@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<FlowSettings> (instance, "variable 'instance' is a FlowSettings");
         }
 
-
         /// <summary>
         /// Test the property 'GroupToSingleDocument'
         /// </summary>

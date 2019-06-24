@@ -17,65 +17,69 @@ namespace Xpertdoc.SmartFlows.Model
     /// <summary>
     /// Defines flowExecutionStatus
     /// </summary>
-
     [JsonConverter(typeof(StringEnumConverter))]
-
     public enum FlowExecutionStatus
     {
 
         /// <summary>
-        /// Enum Queued for value: Queued
+        /// Enum Queued for "Queued"
         /// </summary>
         [EnumMember(Value = "Queued")]
-        Queued = 1,
+        Queued,
 
         /// <summary>
-        /// Enum Running for value: Running
+        /// Enum Running for "Running"
         /// </summary>
         [EnumMember(Value = "Running")]
-        Running = 2,
+        Running,
 
         /// <summary>
-        /// Enum Waiting for value: Waiting
+        /// Enum Waiting for "Waiting"
         /// </summary>
         [EnumMember(Value = "Waiting")]
-        Waiting = 3,
+        Waiting,
 
         /// <summary>
-        /// Enum UserInput for value: UserInput
+        /// Enum UserInput for "UserInput"
         /// </summary>
         [EnumMember(Value = "UserInput")]
-        UserInput = 4,
+        UserInput,
 
         /// <summary>
-        /// Enum Success for value: Success
+        /// Enum Success for "Success"
         /// </summary>
         [EnumMember(Value = "Success")]
-        Success = 5,
+        Success,
 
         /// <summary>
-        /// Enum Error for value: Error
+        /// Enum Warning for "Warning"
+        /// </summary>
+        [EnumMember(Value = "Warning")]
+        Warning,
+
+        /// <summary>
+        /// Enum Error for "Error"
         /// </summary>
         [EnumMember(Value = "Error")]
-        Error = 6,
+        Error,
 
         /// <summary>
-        /// Enum Canceled for value: Canceled
+        /// Enum Canceled for "Canceled"
         /// </summary>
         [EnumMember(Value = "Canceled")]
-        Canceled = 7,
+        Canceled,
 
         /// <summary>
-        /// Enum SelectFlow for value: SelectFlow
+        /// Enum SelectFlow for "SelectFlow"
         /// </summary>
         [EnumMember(Value = "SelectFlow")]
-        SelectFlow = 8,
+        SelectFlow,
 
         /// <summary>
-        /// Enum Interrupted for value: Interrupted
+        /// Enum Interrupted for "Interrupted"
         /// </summary>
         [EnumMember(Value = "Interrupted")]
-        Interrupted = 9
+        Interrupted
     }
 
 }

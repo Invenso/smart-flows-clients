@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<ConditionGroupNode> (instance, "variable 'instance' is a ConditionGroupNode");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

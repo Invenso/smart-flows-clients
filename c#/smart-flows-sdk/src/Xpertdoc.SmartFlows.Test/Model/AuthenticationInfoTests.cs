@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<AuthenticationInfo> (instance, "variable 'instance' is a AuthenticationInfo");
         }
 
-
         /// <summary>
         /// Test the property 'Login'
         /// </summary>
@@ -65,12 +64,28 @@ namespace Xpertdoc.SmartFlows.Test
             // TODO unit test for the property 'Login'
         }
         /// <summary>
+        /// Test the property 'ResetPasswordSupported'
+        /// </summary>
+        [Test]
+        public void ResetPasswordSupportedTest()
+        {
+            // TODO unit test for the property 'ResetPasswordSupported'
+        }
+        /// <summary>
         /// Test the property 'Oauth2'
         /// </summary>
         [Test]
         public void Oauth2Test()
         {
             // TODO unit test for the property 'Oauth2'
+        }
+        /// <summary>
+        /// Test the property 'Methods'
+        /// </summary>
+        [Test]
+        public void MethodsTest()
+        {
+            // TODO unit test for the property 'Methods'
         }
 
     }

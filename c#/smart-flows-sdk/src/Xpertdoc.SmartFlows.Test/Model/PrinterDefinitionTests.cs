@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<PrinterDefinition> (instance, "variable 'instance' is a PrinterDefinition");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

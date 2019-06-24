@@ -26,23 +26,23 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class DependencyTreeNode : IEquatable<DependencyTreeNode>, IValidatableObject
     {
         /// <summary>
-        /// Defines Loaded
+        /// Gets or Sets Loaded
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum LoadedEnum
         {
 
             /// <summary>
-            /// Enum Eager for value: eager
+            /// Enum Eager for "eager"
             /// </summary>
             [EnumMember(Value = "eager")]
-            Eager = 1,
+            Eager,
 
             /// <summary>
-            /// Enum Lazy for value: lazy
+            /// Enum Lazy for "lazy"
             /// </summary>
             [EnumMember(Value = "lazy")]
-            Lazy = 2
+            Lazy
         }
 
         /// <summary>
@@ -76,14 +76,11 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "target", EmitDefaultValue = false)]
         public IdWithName Target { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Children
         /// </summary>
         [DataMember(Name = "children", EmitDefaultValue = false)]
         public List<DependencyTreeNode> Children { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -111,38 +108,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DependencyTreeNode);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DependencyTreeNode);
         }
 
         /// <summary>
         /// Returns true if DependencyTreeNode instances are equal
         /// </summary>
-        /// <param name="input">Instance of DependencyTreeNode to be compared</param>
+        /// <param name="other">Instance of DependencyTreeNode to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DependencyTreeNode input)
+        public bool Equals(DependencyTreeNode other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Target == input.Target ||
-                    (this.Target != null &&
-                    this.Target.Equals(input.Target))
+                    this.Target == other.Target ||
+                    this.Target != null &&
+                    this.Target.Equals(other.Target)
                 ) &&
                 (
-                    this.Loaded == input.Loaded ||
-                    (this.Loaded != null &&
-                    this.Loaded.Equals(input.Loaded))
+                    this.Loaded == other.Loaded ||
+                    this.Loaded != null &&
+                    this.Loaded.Equals(other.Loaded)
                 ) &&
                 (
-                    this.Children == input.Children ||
+                    this.Children == other.Children ||
                     this.Children != null &&
-                    this.Children.SequenceEqual(input.Children)
+                    this.Children.SequenceEqual(other.Children)
                 );
         }
 
@@ -152,25 +151,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Target != null)
-                    hashCode = hashCode * 59 + this.Target.GetHashCode();
+                    hash = hash * 59 + this.Target.GetHashCode();
                 if (this.Loaded != null)
-                    hashCode = hashCode * 59 + this.Loaded.GetHashCode();
+                    hash = hash * 59 + this.Loaded.GetHashCode();
                 if (this.Children != null)
-                    hashCode = hashCode * 59 + this.Children.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Children.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

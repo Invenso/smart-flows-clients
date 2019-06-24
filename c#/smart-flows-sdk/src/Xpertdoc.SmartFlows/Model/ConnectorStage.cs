@@ -56,61 +56,51 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets Title
         /// </summary>
         [DataMember(Name = "title", EmitDefaultValue = false)]
         public string Title { get; set; }
-
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
         /// <summary>
         /// Gets or Sets Schema
         /// </summary>
         [DataMember(Name = "schema", EmitDefaultValue = false)]
         public Object Schema { get; set; }
-
         /// <summary>
         /// Gets or Sets Model
         /// </summary>
         [DataMember(Name = "model", EmitDefaultValue = false)]
         public Object Model { get; set; }
-
         /// <summary>
         /// Gets or Sets Form
         /// </summary>
         [DataMember(Name = "form", EmitDefaultValue = false)]
         public List<Object> Form { get; set; }
-
         /// <summary>
         /// Gets or Sets HasNext
         /// </summary>
         [DataMember(Name = "hasNext", EmitDefaultValue = false)]
         public bool? HasNext { get; set; }
-
         /// <summary>
         /// Gets or Sets NextDisabled
         /// </summary>
         [DataMember(Name = "nextDisabled", EmitDefaultValue = false)]
         public string NextDisabled { get; set; }
-
         /// <summary>
         /// Gets or Sets HasPrevious
         /// </summary>
         [DataMember(Name = "hasPrevious", EmitDefaultValue = false)]
         public bool? HasPrevious { get; set; }
-
         /// <summary>
         /// Gets or Sets CanFinish
         /// </summary>
         [DataMember(Name = "canFinish", EmitDefaultValue = false)]
         public bool? CanFinish { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -145,73 +135,75 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as ConnectorStage);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ConnectorStage);
         }
 
         /// <summary>
         /// Returns true if ConnectorStage instances are equal
         /// </summary>
-        /// <param name="input">Instance of ConnectorStage to be compared</param>
+        /// <param name="other">Instance of ConnectorStage to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ConnectorStage input)
+        public bool Equals(ConnectorStage other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.Title == input.Title ||
-                    (this.Title != null &&
-                    this.Title.Equals(input.Title))
+                    this.Title == other.Title ||
+                    this.Title != null &&
+                    this.Title.Equals(other.Title)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.Schema == input.Schema ||
-                    (this.Schema != null &&
-                    this.Schema.Equals(input.Schema))
+                    this.Schema == other.Schema ||
+                    this.Schema != null &&
+                    this.Schema.Equals(other.Schema)
                 ) &&
                 (
-                    this.Model == input.Model ||
-                    (this.Model != null &&
-                    this.Model.Equals(input.Model))
+                    this.Model == other.Model ||
+                    this.Model != null &&
+                    this.Model.Equals(other.Model)
                 ) &&
                 (
-                    this.Form == input.Form ||
+                    this.Form == other.Form ||
                     this.Form != null &&
-                    this.Form.SequenceEqual(input.Form)
+                    this.Form.SequenceEqual(other.Form)
                 ) &&
                 (
-                    this.HasNext == input.HasNext ||
-                    (this.HasNext != null &&
-                    this.HasNext.Equals(input.HasNext))
+                    this.HasNext == other.HasNext ||
+                    this.HasNext != null &&
+                    this.HasNext.Equals(other.HasNext)
                 ) &&
                 (
-                    this.NextDisabled == input.NextDisabled ||
-                    (this.NextDisabled != null &&
-                    this.NextDisabled.Equals(input.NextDisabled))
+                    this.NextDisabled == other.NextDisabled ||
+                    this.NextDisabled != null &&
+                    this.NextDisabled.Equals(other.NextDisabled)
                 ) &&
                 (
-                    this.HasPrevious == input.HasPrevious ||
-                    (this.HasPrevious != null &&
-                    this.HasPrevious.Equals(input.HasPrevious))
+                    this.HasPrevious == other.HasPrevious ||
+                    this.HasPrevious != null &&
+                    this.HasPrevious.Equals(other.HasPrevious)
                 ) &&
                 (
-                    this.CanFinish == input.CanFinish ||
-                    (this.CanFinish != null &&
-                    this.CanFinish.Equals(input.CanFinish))
+                    this.CanFinish == other.CanFinish ||
+                    this.CanFinish != null &&
+                    this.CanFinish.Equals(other.CanFinish)
                 );
         }
 
@@ -221,39 +213,36 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.Title != null)
-                    hashCode = hashCode * 59 + this.Title.GetHashCode();
+                    hash = hash * 59 + this.Title.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.Schema != null)
-                    hashCode = hashCode * 59 + this.Schema.GetHashCode();
+                    hash = hash * 59 + this.Schema.GetHashCode();
                 if (this.Model != null)
-                    hashCode = hashCode * 59 + this.Model.GetHashCode();
+                    hash = hash * 59 + this.Model.GetHashCode();
                 if (this.Form != null)
-                    hashCode = hashCode * 59 + this.Form.GetHashCode();
+                    hash = hash * 59 + this.Form.GetHashCode();
                 if (this.HasNext != null)
-                    hashCode = hashCode * 59 + this.HasNext.GetHashCode();
+                    hash = hash * 59 + this.HasNext.GetHashCode();
                 if (this.NextDisabled != null)
-                    hashCode = hashCode * 59 + this.NextDisabled.GetHashCode();
+                    hash = hash * 59 + this.NextDisabled.GetHashCode();
                 if (this.HasPrevious != null)
-                    hashCode = hashCode * 59 + this.HasPrevious.GetHashCode();
+                    hash = hash * 59 + this.HasPrevious.GetHashCode();
                 if (this.CanFinish != null)
-                    hashCode = hashCode * 59 + this.CanFinish.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.CanFinish.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

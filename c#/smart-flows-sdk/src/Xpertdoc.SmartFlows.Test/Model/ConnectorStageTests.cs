@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<ConnectorStage> (instance, "variable 'instance' is a ConnectorStage");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<SystemInfoDefaults> (instance, "variable 'instance' is a SystemInfoDefaults");
         }
 
-
         /// <summary>
         /// Test the property 'EsignProvider'
         /// </summary>

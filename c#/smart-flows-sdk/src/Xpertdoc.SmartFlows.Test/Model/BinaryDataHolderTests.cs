@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<BinaryDataHolder> (instance, "variable 'instance' is a BinaryDataHolder");
         }
 
-
         /// <summary>
         /// Test the property 'DisplayName'
         /// </summary>

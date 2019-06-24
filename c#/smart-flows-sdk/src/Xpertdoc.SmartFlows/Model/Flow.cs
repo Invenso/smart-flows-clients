@@ -26,23 +26,23 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class Flow : IEquatable<Flow>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum Simple for value: simple
+            /// Enum Simple for "simple"
             /// </summary>
             [EnumMember(Value = "simple")]
-            Simple = 1,
+            Simple,
 
             /// <summary>
-            /// Enum Advanced for value: advanced
+            /// Enum Advanced for "advanced"
             /// </summary>
             [EnumMember(Value = "advanced")]
-            Advanced = 2
+            Advanced
         }
 
         /// <summary>
@@ -66,8 +66,9 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="Input">Input.</param>
         /// <param name="PrimaryEntity">PrimaryEntity.</param>
         /// <param name="PrimaryTemplate">PrimaryTemplate.</param>
+        /// <param name="Outputs">Outputs.</param>
         /// <param name="Settings">Settings.</param>
-        public Flow(string Id = default(string), string DisplayName = default(string), string Description = default(string), string CreatedAt = default(string), IdWithName CreatedBy = default(IdWithName), string ModifiedAt = default(string), IdWithName ModifiedBy = default(IdWithName), List<TagGroupRef> TagGroups = default(List<TagGroupRef>), TypeEnum? Type = TypeEnum.Advanced, FlowBody Body = default(FlowBody), FlowInput Input = default(FlowInput), string PrimaryEntity = default(string), IdWithName PrimaryTemplate = default(IdWithName), FlowSettings Settings = default(FlowSettings))
+        public Flow(string Id = default(string), string DisplayName = default(string), string Description = default(string), string CreatedAt = default(string), IdWithName CreatedBy = default(IdWithName), string ModifiedAt = default(string), IdWithName ModifiedBy = default(IdWithName), List<TagGroupRef> TagGroups = default(List<TagGroupRef>), TypeEnum? Type = TypeEnum.Advanced, FlowBody Body = default(FlowBody), FlowInput Input = default(FlowInput), string PrimaryEntity = default(string), IdWithName PrimaryTemplate = default(IdWithName), List<FlowOutput> Outputs = default(List<FlowOutput>), FlowSettings Settings = default(FlowSettings))
         {
             this.Id = Id;
             this.DisplayName = DisplayName;
@@ -90,6 +91,7 @@ namespace Xpertdoc.SmartFlows.Model
             this.Input = Input;
             this.PrimaryEntity = PrimaryEntity;
             this.PrimaryTemplate = PrimaryTemplate;
+            this.Outputs = Outputs;
             this.Settings = Settings;
         }
 
@@ -98,80 +100,71 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedAt
         /// </summary>
         [DataMember(Name = "createdAt", EmitDefaultValue = false)]
         public string CreatedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedBy
         /// </summary>
         [DataMember(Name = "createdBy", EmitDefaultValue = false)]
         public IdWithName CreatedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedAt
         /// </summary>
         [DataMember(Name = "modifiedAt", EmitDefaultValue = false)]
         public string ModifiedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedBy
         /// </summary>
         [DataMember(Name = "modifiedBy", EmitDefaultValue = false)]
         public IdWithName ModifiedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets TagGroups
         /// </summary>
         [DataMember(Name = "tagGroups", EmitDefaultValue = false)]
         public List<TagGroupRef> TagGroups { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Body
         /// </summary>
         [DataMember(Name = "body", EmitDefaultValue = false)]
         public FlowBody Body { get; set; }
-
         /// <summary>
         /// Gets or Sets Input
         /// </summary>
         [DataMember(Name = "input", EmitDefaultValue = false)]
         public FlowInput Input { get; set; }
-
         /// <summary>
         /// Gets or Sets PrimaryEntity
         /// </summary>
         [DataMember(Name = "primaryEntity", EmitDefaultValue = false)]
         public string PrimaryEntity { get; set; }
-
         /// <summary>
         /// Gets or Sets PrimaryTemplate
         /// </summary>
         [DataMember(Name = "primaryTemplate", EmitDefaultValue = false)]
         public IdWithName PrimaryTemplate { get; set; }
-
+        /// <summary>
+        /// Gets or Sets Outputs
+        /// </summary>
+        [DataMember(Name = "outputs", EmitDefaultValue = false)]
+        public List<FlowOutput> Outputs { get; set; }
         /// <summary>
         /// Gets or Sets Settings
         /// </summary>
         [DataMember(Name = "settings", EmitDefaultValue = false)]
         public FlowSettings Settings { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -193,6 +186,7 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("  Input: ").Append(Input).Append("\n");
             sb.Append("  PrimaryEntity: ").Append(PrimaryEntity).Append("\n");
             sb.Append("  PrimaryTemplate: ").Append(PrimaryTemplate).Append("\n");
+            sb.Append("  Outputs: ").Append(Outputs).Append("\n");
             sb.Append("  Settings: ").Append(Settings).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -210,93 +204,100 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Flow);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Flow);
         }
 
         /// <summary>
         /// Returns true if Flow instances are equal
         /// </summary>
-        /// <param name="input">Instance of Flow to be compared</param>
+        /// <param name="other">Instance of Flow to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Flow input)
+        public bool Equals(Flow other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.CreatedAt == input.CreatedAt ||
-                    (this.CreatedAt != null &&
-                    this.CreatedAt.Equals(input.CreatedAt))
+                    this.CreatedAt == other.CreatedAt ||
+                    this.CreatedAt != null &&
+                    this.CreatedAt.Equals(other.CreatedAt)
                 ) &&
                 (
-                    this.CreatedBy == input.CreatedBy ||
-                    (this.CreatedBy != null &&
-                    this.CreatedBy.Equals(input.CreatedBy))
+                    this.CreatedBy == other.CreatedBy ||
+                    this.CreatedBy != null &&
+                    this.CreatedBy.Equals(other.CreatedBy)
                 ) &&
                 (
-                    this.ModifiedAt == input.ModifiedAt ||
-                    (this.ModifiedAt != null &&
-                    this.ModifiedAt.Equals(input.ModifiedAt))
+                    this.ModifiedAt == other.ModifiedAt ||
+                    this.ModifiedAt != null &&
+                    this.ModifiedAt.Equals(other.ModifiedAt)
                 ) &&
                 (
-                    this.ModifiedBy == input.ModifiedBy ||
-                    (this.ModifiedBy != null &&
-                    this.ModifiedBy.Equals(input.ModifiedBy))
+                    this.ModifiedBy == other.ModifiedBy ||
+                    this.ModifiedBy != null &&
+                    this.ModifiedBy.Equals(other.ModifiedBy)
                 ) &&
                 (
-                    this.TagGroups == input.TagGroups ||
+                    this.TagGroups == other.TagGroups ||
                     this.TagGroups != null &&
-                    this.TagGroups.SequenceEqual(input.TagGroups)
+                    this.TagGroups.SequenceEqual(other.TagGroups)
                 ) &&
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.Body == input.Body ||
-                    (this.Body != null &&
-                    this.Body.Equals(input.Body))
+                    this.Body == other.Body ||
+                    this.Body != null &&
+                    this.Body.Equals(other.Body)
                 ) &&
                 (
-                    this.Input == input.Input ||
-                    (this.Input != null &&
-                    this.Input.Equals(input.Input))
+                    this.Input == other.Input ||
+                    this.Input != null &&
+                    this.Input.Equals(other.Input)
                 ) &&
                 (
-                    this.PrimaryEntity == input.PrimaryEntity ||
-                    (this.PrimaryEntity != null &&
-                    this.PrimaryEntity.Equals(input.PrimaryEntity))
+                    this.PrimaryEntity == other.PrimaryEntity ||
+                    this.PrimaryEntity != null &&
+                    this.PrimaryEntity.Equals(other.PrimaryEntity)
                 ) &&
                 (
-                    this.PrimaryTemplate == input.PrimaryTemplate ||
-                    (this.PrimaryTemplate != null &&
-                    this.PrimaryTemplate.Equals(input.PrimaryTemplate))
+                    this.PrimaryTemplate == other.PrimaryTemplate ||
+                    this.PrimaryTemplate != null &&
+                    this.PrimaryTemplate.Equals(other.PrimaryTemplate)
                 ) &&
                 (
-                    this.Settings == input.Settings ||
-                    (this.Settings != null &&
-                    this.Settings.Equals(input.Settings))
+                    this.Outputs == other.Outputs ||
+                    this.Outputs != null &&
+                    this.Outputs.SequenceEqual(other.Outputs)
+                ) &&
+                (
+                    this.Settings == other.Settings ||
+                    this.Settings != null &&
+                    this.Settings.Equals(other.Settings)
                 );
         }
 
@@ -306,47 +307,46 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.CreatedAt != null)
-                    hashCode = hashCode * 59 + this.CreatedAt.GetHashCode();
+                    hash = hash * 59 + this.CreatedAt.GetHashCode();
                 if (this.CreatedBy != null)
-                    hashCode = hashCode * 59 + this.CreatedBy.GetHashCode();
+                    hash = hash * 59 + this.CreatedBy.GetHashCode();
                 if (this.ModifiedAt != null)
-                    hashCode = hashCode * 59 + this.ModifiedAt.GetHashCode();
+                    hash = hash * 59 + this.ModifiedAt.GetHashCode();
                 if (this.ModifiedBy != null)
-                    hashCode = hashCode * 59 + this.ModifiedBy.GetHashCode();
+                    hash = hash * 59 + this.ModifiedBy.GetHashCode();
                 if (this.TagGroups != null)
-                    hashCode = hashCode * 59 + this.TagGroups.GetHashCode();
+                    hash = hash * 59 + this.TagGroups.GetHashCode();
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.Body != null)
-                    hashCode = hashCode * 59 + this.Body.GetHashCode();
+                    hash = hash * 59 + this.Body.GetHashCode();
                 if (this.Input != null)
-                    hashCode = hashCode * 59 + this.Input.GetHashCode();
+                    hash = hash * 59 + this.Input.GetHashCode();
                 if (this.PrimaryEntity != null)
-                    hashCode = hashCode * 59 + this.PrimaryEntity.GetHashCode();
+                    hash = hash * 59 + this.PrimaryEntity.GetHashCode();
                 if (this.PrimaryTemplate != null)
-                    hashCode = hashCode * 59 + this.PrimaryTemplate.GetHashCode();
+                    hash = hash * 59 + this.PrimaryTemplate.GetHashCode();
+                if (this.Outputs != null)
+                    hash = hash * 59 + this.Outputs.GetHashCode();
                 if (this.Settings != null)
-                    hashCode = hashCode * 59 + this.Settings.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Settings.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

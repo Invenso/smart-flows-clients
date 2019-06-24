@@ -41,19 +41,16 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "groupingSeparator", EmitDefaultValue = false)]
         public string GroupingSeparator { get; set; }
-
         /// <summary>
         /// Gets or Sets DecimalSeparator
         /// </summary>
         [DataMember(Name = "decimalSeparator", EmitDefaultValue = false)]
         public string DecimalSeparator { get; set; }
-
         /// <summary>
         /// Gets or Sets Sample
         /// </summary>
         [DataMember(Name = "sample", EmitDefaultValue = false)]
         public string Sample { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -81,38 +78,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as LanguageDefinitionNumberFormat);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as LanguageDefinitionNumberFormat);
         }
 
         /// <summary>
         /// Returns true if LanguageDefinitionNumberFormat instances are equal
         /// </summary>
-        /// <param name="input">Instance of LanguageDefinitionNumberFormat to be compared</param>
+        /// <param name="other">Instance of LanguageDefinitionNumberFormat to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(LanguageDefinitionNumberFormat input)
+        public bool Equals(LanguageDefinitionNumberFormat other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.GroupingSeparator == input.GroupingSeparator ||
-                    (this.GroupingSeparator != null &&
-                    this.GroupingSeparator.Equals(input.GroupingSeparator))
+                    this.GroupingSeparator == other.GroupingSeparator ||
+                    this.GroupingSeparator != null &&
+                    this.GroupingSeparator.Equals(other.GroupingSeparator)
                 ) &&
                 (
-                    this.DecimalSeparator == input.DecimalSeparator ||
-                    (this.DecimalSeparator != null &&
-                    this.DecimalSeparator.Equals(input.DecimalSeparator))
+                    this.DecimalSeparator == other.DecimalSeparator ||
+                    this.DecimalSeparator != null &&
+                    this.DecimalSeparator.Equals(other.DecimalSeparator)
                 ) &&
                 (
-                    this.Sample == input.Sample ||
-                    (this.Sample != null &&
-                    this.Sample.Equals(input.Sample))
+                    this.Sample == other.Sample ||
+                    this.Sample != null &&
+                    this.Sample.Equals(other.Sample)
                 );
         }
 
@@ -122,25 +121,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.GroupingSeparator != null)
-                    hashCode = hashCode * 59 + this.GroupingSeparator.GetHashCode();
+                    hash = hash * 59 + this.GroupingSeparator.GetHashCode();
                 if (this.DecimalSeparator != null)
-                    hashCode = hashCode * 59 + this.DecimalSeparator.GetHashCode();
+                    hash = hash * 59 + this.DecimalSeparator.GetHashCode();
                 if (this.Sample != null)
-                    hashCode = hashCode * 59 + this.Sample.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Sample.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

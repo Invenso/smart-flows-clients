@@ -18,26 +18,25 @@ using System.Text;
 namespace Xpertdoc.SmartFlows.Model
 {
     /// <summary>
-    /// CustomContentFieldTime
+    /// LicenseInformationPlugins
     /// </summary>
     [DataContract]
-    public partial class CustomContentFieldTime : IEquatable<CustomContentFieldTime>, IValidatableObject
+    public partial class LicenseInformationPlugins : IEquatable<LicenseInformationPlugins>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CustomContentFieldTime" /> class.
+        /// Initializes a new instance of the <see cref="LicenseInformationPlugins" /> class.
         /// </summary>
-        /// <param name="_Default">_Default.</param>
-        public CustomContentFieldTime(string _Default = default(string))
+        /// <param name="DisplayName">DisplayName.</param>
+        public LicenseInformationPlugins(string DisplayName = default(string))
         {
-            this._Default = _Default;
+            this.DisplayName = DisplayName;
         }
 
         /// <summary>
-        /// Gets or Sets _Default
+        /// Gets or Sets DisplayName
         /// </summary>
-        [DataMember(Name = "default", EmitDefaultValue = false)]
-        public string _Default { get; set; }
-
+        [DataMember(Name = "displayName", EmitDefaultValue = false)]
+        public string DisplayName { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -45,8 +44,8 @@ namespace Xpertdoc.SmartFlows.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class CustomContentFieldTime {\n");
-            sb.Append("  _Default: ").Append(_Default).Append("\n");
+            sb.Append("class LicenseInformationPlugins {\n");
+            sb.Append("  DisplayName: ").Append(DisplayName).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -63,28 +62,30 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as CustomContentFieldTime);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as LicenseInformationPlugins);
         }
 
         /// <summary>
-        /// Returns true if CustomContentFieldTime instances are equal
+        /// Returns true if LicenseInformationPlugins instances are equal
         /// </summary>
-        /// <param name="input">Instance of CustomContentFieldTime to be compared</param>
+        /// <param name="other">Instance of LicenseInformationPlugins to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CustomContentFieldTime input)
+        public bool Equals(LicenseInformationPlugins other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this._Default == input._Default ||
-                    (this._Default != null &&
-                    this._Default.Equals(input._Default))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 );
         }
 
@@ -94,21 +95,18 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
-                if (this._Default != null)
-                    hashCode = hashCode * 59 + this._Default.GetHashCode();
-                return hashCode;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
+                if (this.DisplayName != null)
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

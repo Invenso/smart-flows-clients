@@ -17,23 +17,21 @@ namespace Xpertdoc.SmartFlows.Model
     /// <summary>
     /// Defines dependencyDepth
     /// </summary>
-
     [JsonConverter(typeof(StringEnumConverter))]
-
     public enum DependencyDepth
     {
 
         /// <summary>
-        /// Enum Direct for value: direct
+        /// Enum Direct for "direct"
         /// </summary>
         [EnumMember(Value = "direct")]
-        Direct = 1,
+        Direct,
 
         /// <summary>
-        /// Enum Full for value: full
+        /// Enum Full for "full"
         /// </summary>
         [EnumMember(Value = "full")]
-        Full = 2
+        Full
     }
 
 }

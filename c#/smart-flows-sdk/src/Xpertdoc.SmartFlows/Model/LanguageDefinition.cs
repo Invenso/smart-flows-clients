@@ -83,49 +83,41 @@ namespace Xpertdoc.SmartFlows.Model
         /// <value>The language code</value>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayCountry
         /// </summary>
         [DataMember(Name = "displayCountry", EmitDefaultValue = false)]
         public string DisplayCountry { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayLanguage
         /// </summary>
         [DataMember(Name = "displayLanguage", EmitDefaultValue = false)]
         public string DisplayLanguage { get; set; }
-
         /// <summary>
         /// Gets or Sets IsSystem
         /// </summary>
         [DataMember(Name = "isSystem", EmitDefaultValue = false)]
         public bool? IsSystem { get; set; }
-
         /// <summary>
         /// Gets or Sets DateTimeFormats
         /// </summary>
         [DataMember(Name = "dateTimeFormats", EmitDefaultValue = false)]
         public LanguageDefinitionDateTimeFormats DateTimeFormats { get; set; }
-
         /// <summary>
         /// Gets or Sets PeriodFormats
         /// </summary>
         [DataMember(Name = "periodFormats", EmitDefaultValue = false)]
         public List<FormatDefinition> PeriodFormats { get; set; }
-
         /// <summary>
         /// Gets or Sets NumberFormat
         /// </summary>
         [DataMember(Name = "numberFormat", EmitDefaultValue = false)]
         public LanguageDefinitionNumberFormat NumberFormat { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -158,63 +150,65 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as LanguageDefinition);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as LanguageDefinition);
         }
 
         /// <summary>
         /// Returns true if LanguageDefinition instances are equal
         /// </summary>
-        /// <param name="input">Instance of LanguageDefinition to be compared</param>
+        /// <param name="other">Instance of LanguageDefinition to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(LanguageDefinition input)
+        public bool Equals(LanguageDefinition other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.DisplayCountry == input.DisplayCountry ||
-                    (this.DisplayCountry != null &&
-                    this.DisplayCountry.Equals(input.DisplayCountry))
+                    this.DisplayCountry == other.DisplayCountry ||
+                    this.DisplayCountry != null &&
+                    this.DisplayCountry.Equals(other.DisplayCountry)
                 ) &&
                 (
-                    this.DisplayLanguage == input.DisplayLanguage ||
-                    (this.DisplayLanguage != null &&
-                    this.DisplayLanguage.Equals(input.DisplayLanguage))
+                    this.DisplayLanguage == other.DisplayLanguage ||
+                    this.DisplayLanguage != null &&
+                    this.DisplayLanguage.Equals(other.DisplayLanguage)
                 ) &&
                 (
-                    this.IsSystem == input.IsSystem ||
-                    (this.IsSystem != null &&
-                    this.IsSystem.Equals(input.IsSystem))
+                    this.IsSystem == other.IsSystem ||
+                    this.IsSystem != null &&
+                    this.IsSystem.Equals(other.IsSystem)
                 ) &&
                 (
-                    this.DateTimeFormats == input.DateTimeFormats ||
-                    (this.DateTimeFormats != null &&
-                    this.DateTimeFormats.Equals(input.DateTimeFormats))
+                    this.DateTimeFormats == other.DateTimeFormats ||
+                    this.DateTimeFormats != null &&
+                    this.DateTimeFormats.Equals(other.DateTimeFormats)
                 ) &&
                 (
-                    this.PeriodFormats == input.PeriodFormats ||
+                    this.PeriodFormats == other.PeriodFormats ||
                     this.PeriodFormats != null &&
-                    this.PeriodFormats.SequenceEqual(input.PeriodFormats)
+                    this.PeriodFormats.SequenceEqual(other.PeriodFormats)
                 ) &&
                 (
-                    this.NumberFormat == input.NumberFormat ||
-                    (this.NumberFormat != null &&
-                    this.NumberFormat.Equals(input.NumberFormat))
+                    this.NumberFormat == other.NumberFormat ||
+                    this.NumberFormat != null &&
+                    this.NumberFormat.Equals(other.NumberFormat)
                 );
         }
 
@@ -224,35 +218,32 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.DisplayCountry != null)
-                    hashCode = hashCode * 59 + this.DisplayCountry.GetHashCode();
+                    hash = hash * 59 + this.DisplayCountry.GetHashCode();
                 if (this.DisplayLanguage != null)
-                    hashCode = hashCode * 59 + this.DisplayLanguage.GetHashCode();
+                    hash = hash * 59 + this.DisplayLanguage.GetHashCode();
                 if (this.IsSystem != null)
-                    hashCode = hashCode * 59 + this.IsSystem.GetHashCode();
+                    hash = hash * 59 + this.IsSystem.GetHashCode();
                 if (this.DateTimeFormats != null)
-                    hashCode = hashCode * 59 + this.DateTimeFormats.GetHashCode();
+                    hash = hash * 59 + this.DateTimeFormats.GetHashCode();
                 if (this.PeriodFormats != null)
-                    hashCode = hashCode * 59 + this.PeriodFormats.GetHashCode();
+                    hash = hash * 59 + this.PeriodFormats.GetHashCode();
                 if (this.NumberFormat != null)
-                    hashCode = hashCode * 59 + this.NumberFormat.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.NumberFormat.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

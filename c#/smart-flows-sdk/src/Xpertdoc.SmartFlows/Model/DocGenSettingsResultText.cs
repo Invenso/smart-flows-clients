@@ -28,10 +28,10 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         /// <param name="Encoding">Specifies the encoding to use (default to &quot;UTF-8&quot;).</param>
         /// <param name="ExportHeadersFooters">Whether to output headers and footers (default to true).</param>
-        /// <param name="ParagraphBreak">The string to use as a paragraph break (default to &quot;&quot;).</param>
+        /// <param name="ParagraphBreak">The string to use as a paragraph break (default to &quot;\r\n&quot;).</param>
         /// <param name="PreserveTableLayout">Attempt to preserve layout of tables (default to false).</param>
         /// <param name="SimplifyListLabels">Simplify list labels in case of complex label formatting not being adequately represented by plain text. If set to true, numbered list labels are written in simple numeric format and itemized list labels as simple ASCII characters (default to false).</param>
-        public DocGenSettingsResultText(string Encoding = "UTF-8", bool? ExportHeadersFooters = true, string ParagraphBreak = "", bool? PreserveTableLayout = false, bool? SimplifyListLabels = false)
+        public DocGenSettingsResultText(string Encoding = "UTF-8", bool? ExportHeadersFooters = true, string ParagraphBreak = "\r\n", bool? PreserveTableLayout = false, bool? SimplifyListLabels = false)
         {
             // use default value if no "Encoding" provided
             if (Encoding == null)
@@ -54,7 +54,7 @@ namespace Xpertdoc.SmartFlows.Model
             // use default value if no "ParagraphBreak" provided
             if (ParagraphBreak == null)
             {
-                this.ParagraphBreak = "";
+                this.ParagraphBreak = "\r\n";
             }
             else
             {
@@ -86,35 +86,30 @@ namespace Xpertdoc.SmartFlows.Model
         /// <value>Specifies the encoding to use</value>
         [DataMember(Name = "encoding", EmitDefaultValue = false)]
         public string Encoding { get; set; }
-
         /// <summary>
         /// Whether to output headers and footers
         /// </summary>
         /// <value>Whether to output headers and footers</value>
         [DataMember(Name = "exportHeadersFooters", EmitDefaultValue = false)]
         public bool? ExportHeadersFooters { get; set; }
-
         /// <summary>
         /// The string to use as a paragraph break
         /// </summary>
         /// <value>The string to use as a paragraph break</value>
         [DataMember(Name = "paragraphBreak", EmitDefaultValue = false)]
         public string ParagraphBreak { get; set; }
-
         /// <summary>
         /// Attempt to preserve layout of tables
         /// </summary>
         /// <value>Attempt to preserve layout of tables</value>
         [DataMember(Name = "preserveTableLayout", EmitDefaultValue = false)]
         public bool? PreserveTableLayout { get; set; }
-
         /// <summary>
         /// Simplify list labels in case of complex label formatting not being adequately represented by plain text. If set to true, numbered list labels are written in simple numeric format and itemized list labels as simple ASCII characters
         /// </summary>
         /// <value>Simplify list labels in case of complex label formatting not being adequately represented by plain text. If set to true, numbered list labels are written in simple numeric format and itemized list labels as simple ASCII characters</value>
         [DataMember(Name = "simplifyListLabels", EmitDefaultValue = false)]
         public bool? SimplifyListLabels { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -144,48 +139,50 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DocGenSettingsResultText);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DocGenSettingsResultText);
         }
 
         /// <summary>
         /// Returns true if DocGenSettingsResultText instances are equal
         /// </summary>
-        /// <param name="input">Instance of DocGenSettingsResultText to be compared</param>
+        /// <param name="other">Instance of DocGenSettingsResultText to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DocGenSettingsResultText input)
+        public bool Equals(DocGenSettingsResultText other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Encoding == input.Encoding ||
-                    (this.Encoding != null &&
-                    this.Encoding.Equals(input.Encoding))
+                    this.Encoding == other.Encoding ||
+                    this.Encoding != null &&
+                    this.Encoding.Equals(other.Encoding)
                 ) &&
                 (
-                    this.ExportHeadersFooters == input.ExportHeadersFooters ||
-                    (this.ExportHeadersFooters != null &&
-                    this.ExportHeadersFooters.Equals(input.ExportHeadersFooters))
+                    this.ExportHeadersFooters == other.ExportHeadersFooters ||
+                    this.ExportHeadersFooters != null &&
+                    this.ExportHeadersFooters.Equals(other.ExportHeadersFooters)
                 ) &&
                 (
-                    this.ParagraphBreak == input.ParagraphBreak ||
-                    (this.ParagraphBreak != null &&
-                    this.ParagraphBreak.Equals(input.ParagraphBreak))
+                    this.ParagraphBreak == other.ParagraphBreak ||
+                    this.ParagraphBreak != null &&
+                    this.ParagraphBreak.Equals(other.ParagraphBreak)
                 ) &&
                 (
-                    this.PreserveTableLayout == input.PreserveTableLayout ||
-                    (this.PreserveTableLayout != null &&
-                    this.PreserveTableLayout.Equals(input.PreserveTableLayout))
+                    this.PreserveTableLayout == other.PreserveTableLayout ||
+                    this.PreserveTableLayout != null &&
+                    this.PreserveTableLayout.Equals(other.PreserveTableLayout)
                 ) &&
                 (
-                    this.SimplifyListLabels == input.SimplifyListLabels ||
-                    (this.SimplifyListLabels != null &&
-                    this.SimplifyListLabels.Equals(input.SimplifyListLabels))
+                    this.SimplifyListLabels == other.SimplifyListLabels ||
+                    this.SimplifyListLabels != null &&
+                    this.SimplifyListLabels.Equals(other.SimplifyListLabels)
                 );
         }
 
@@ -195,29 +192,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Encoding != null)
-                    hashCode = hashCode * 59 + this.Encoding.GetHashCode();
+                    hash = hash * 59 + this.Encoding.GetHashCode();
                 if (this.ExportHeadersFooters != null)
-                    hashCode = hashCode * 59 + this.ExportHeadersFooters.GetHashCode();
+                    hash = hash * 59 + this.ExportHeadersFooters.GetHashCode();
                 if (this.ParagraphBreak != null)
-                    hashCode = hashCode * 59 + this.ParagraphBreak.GetHashCode();
+                    hash = hash * 59 + this.ParagraphBreak.GetHashCode();
                 if (this.PreserveTableLayout != null)
-                    hashCode = hashCode * 59 + this.PreserveTableLayout.GetHashCode();
+                    hash = hash * 59 + this.PreserveTableLayout.GetHashCode();
                 if (this.SimplifyListLabels != null)
-                    hashCode = hashCode * 59 + this.SimplifyListLabels.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.SimplifyListLabels.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

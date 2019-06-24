@@ -12,9 +12,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
-using SwaggerDateConverter = Xpertdoc.SmartFlows.Client.SwaggerDateConverter;
 
 namespace Xpertdoc.SmartFlows.Model
 {
@@ -29,13 +29,19 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         /// <param name="Id">Id.</param>
         /// <param name="DisplayName">DisplayName.</param>
+        /// <param name="Edition">Edition.</param>
+        /// <param name="Flavour">Flavour.</param>
         /// <param name="Expiry">Expiry.</param>
         /// <param name="Valid">Valid (default to false).</param>
         /// <param name="Expired">Expired (default to true).</param>
-        public LicenseInformation(string Id = default(string), string DisplayName = default(string), DateTime? Expiry = default(DateTime?), bool? Valid = false, bool? Expired = true)
+        /// <param name="Limits">Limits.</param>
+        /// <param name="Plugins">Plugins.</param>
+        public LicenseInformation(string Id = default(string), string DisplayName = default(string), string Edition = default(string), string Flavour = default(string), DateTime? Expiry = default(DateTime?), bool? Valid = false, bool? Expired = true, LicenseInformationLimits Limits = default(LicenseInformationLimits), List<LicenseInformationPlugins> Plugins = default(List<LicenseInformationPlugins>))
         {
             this.Id = Id;
             this.DisplayName = DisplayName;
+            this.Edition = Edition;
+            this.Flavour = Flavour;
             this.Expiry = Expiry;
             // use default value if no "Valid" provided
             if (Valid == null)
@@ -55,6 +61,8 @@ namespace Xpertdoc.SmartFlows.Model
             {
                 this.Expired = Expired;
             }
+            this.Limits = Limits;
+            this.Plugins = Plugins;
         }
 
         /// <summary>
@@ -62,32 +70,46 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
+        /// <summary>
+        /// Gets or Sets Edition
+        /// </summary>
+        [DataMember(Name = "edition", EmitDefaultValue = false)]
+        public string Edition { get; set; }
+        /// <summary>
+        /// Gets or Sets Flavour
+        /// </summary>
+        [DataMember(Name = "flavour", EmitDefaultValue = false)]
+        public string Flavour { get; set; }
         /// <summary>
         /// Gets or Sets Expiry
         /// </summary>
         [DataMember(Name = "expiry", EmitDefaultValue = false)]
-        [JsonConverter(typeof(SwaggerDateConverter))]
         public DateTime? Expiry { get; set; }
-
         /// <summary>
         /// Gets or Sets Valid
         /// </summary>
         [DataMember(Name = "valid", EmitDefaultValue = false)]
         public bool? Valid { get; set; }
-
         /// <summary>
         /// Gets or Sets Expired
         /// </summary>
         [DataMember(Name = "expired", EmitDefaultValue = false)]
         public bool? Expired { get; set; }
-
+        /// <summary>
+        /// Gets or Sets Limits
+        /// </summary>
+        [DataMember(Name = "limits", EmitDefaultValue = false)]
+        public LicenseInformationLimits Limits { get; set; }
+        /// <summary>
+        /// Gets or Sets Plugins
+        /// </summary>
+        [DataMember(Name = "plugins", EmitDefaultValue = false)]
+        public List<LicenseInformationPlugins> Plugins { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -98,9 +120,13 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("class LicenseInformation {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  DisplayName: ").Append(DisplayName).Append("\n");
+            sb.Append("  Edition: ").Append(Edition).Append("\n");
+            sb.Append("  Flavour: ").Append(Flavour).Append("\n");
             sb.Append("  Expiry: ").Append(Expiry).Append("\n");
             sb.Append("  Valid: ").Append(Valid).Append("\n");
             sb.Append("  Expired: ").Append(Expired).Append("\n");
+            sb.Append("  Limits: ").Append(Limits).Append("\n");
+            sb.Append("  Plugins: ").Append(Plugins).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -117,48 +143,70 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as LicenseInformation);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as LicenseInformation);
         }
 
         /// <summary>
         /// Returns true if LicenseInformation instances are equal
         /// </summary>
-        /// <param name="input">Instance of LicenseInformation to be compared</param>
+        /// <param name="other">Instance of LicenseInformation to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(LicenseInformation input)
+        public bool Equals(LicenseInformation other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.Expiry == input.Expiry ||
-                    (this.Expiry != null &&
-                    this.Expiry.Equals(input.Expiry))
+                    this.Edition == other.Edition ||
+                    this.Edition != null &&
+                    this.Edition.Equals(other.Edition)
                 ) &&
                 (
-                    this.Valid == input.Valid ||
-                    (this.Valid != null &&
-                    this.Valid.Equals(input.Valid))
+                    this.Flavour == other.Flavour ||
+                    this.Flavour != null &&
+                    this.Flavour.Equals(other.Flavour)
                 ) &&
                 (
-                    this.Expired == input.Expired ||
-                    (this.Expired != null &&
-                    this.Expired.Equals(input.Expired))
+                    this.Expiry == other.Expiry ||
+                    this.Expiry != null &&
+                    this.Expiry.Equals(other.Expiry)
+                ) &&
+                (
+                    this.Valid == other.Valid ||
+                    this.Valid != null &&
+                    this.Valid.Equals(other.Valid)
+                ) &&
+                (
+                    this.Expired == other.Expired ||
+                    this.Expired != null &&
+                    this.Expired.Equals(other.Expired)
+                ) &&
+                (
+                    this.Limits == other.Limits ||
+                    this.Limits != null &&
+                    this.Limits.Equals(other.Limits)
+                ) &&
+                (
+                    this.Plugins == other.Plugins ||
+                    this.Plugins != null &&
+                    this.Plugins.SequenceEqual(other.Plugins)
                 );
         }
 
@@ -168,29 +216,34 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
+                if (this.Edition != null)
+                    hash = hash * 59 + this.Edition.GetHashCode();
+                if (this.Flavour != null)
+                    hash = hash * 59 + this.Flavour.GetHashCode();
                 if (this.Expiry != null)
-                    hashCode = hashCode * 59 + this.Expiry.GetHashCode();
+                    hash = hash * 59 + this.Expiry.GetHashCode();
                 if (this.Valid != null)
-                    hashCode = hashCode * 59 + this.Valid.GetHashCode();
+                    hash = hash * 59 + this.Valid.GetHashCode();
                 if (this.Expired != null)
-                    hashCode = hashCode * 59 + this.Expired.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Expired.GetHashCode();
+                if (this.Limits != null)
+                    hash = hash * 59 + this.Limits.GetHashCode();
+                if (this.Plugins != null)
+                    hash = hash * 59 + this.Plugins.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

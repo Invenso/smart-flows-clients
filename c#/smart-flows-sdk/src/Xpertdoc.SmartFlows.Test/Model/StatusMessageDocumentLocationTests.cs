@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<StatusMessageDocumentLocation> (instance, "variable 'instance' is a StatusMessageDocumentLocation");
         }
 
-
         /// <summary>
         /// Test the property 'Template'
         /// </summary>

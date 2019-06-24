@@ -45,31 +45,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "template", EmitDefaultValue = false)]
         public string Template { get; set; }
-
         /// <summary>
         /// Gets or Sets Language
         /// </summary>
         [DataMember(Name = "language", EmitDefaultValue = false)]
         public string Language { get; set; }
-
         /// <summary>
         /// Gets or Sets IsDefault
         /// </summary>
         [DataMember(Name = "isDefault", EmitDefaultValue = false)]
         public bool? IsDefault { get; set; }
-
         /// <summary>
         /// Gets or Sets HasContent
         /// </summary>
         [DataMember(Name = "hasContent", EmitDefaultValue = false)]
         public bool? HasContent { get; set; }
-
         /// <summary>
         /// Gets or Sets ContentLink
         /// </summary>
         [DataMember(Name = "contentLink", EmitDefaultValue = false)]
         public string ContentLink { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -99,48 +94,50 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as TemplateLanguage);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as TemplateLanguage);
         }
 
         /// <summary>
         /// Returns true if TemplateLanguage instances are equal
         /// </summary>
-        /// <param name="input">Instance of TemplateLanguage to be compared</param>
+        /// <param name="other">Instance of TemplateLanguage to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(TemplateLanguage input)
+        public bool Equals(TemplateLanguage other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Template == input.Template ||
-                    (this.Template != null &&
-                    this.Template.Equals(input.Template))
+                    this.Template == other.Template ||
+                    this.Template != null &&
+                    this.Template.Equals(other.Template)
                 ) &&
                 (
-                    this.Language == input.Language ||
-                    (this.Language != null &&
-                    this.Language.Equals(input.Language))
+                    this.Language == other.Language ||
+                    this.Language != null &&
+                    this.Language.Equals(other.Language)
                 ) &&
                 (
-                    this.IsDefault == input.IsDefault ||
-                    (this.IsDefault != null &&
-                    this.IsDefault.Equals(input.IsDefault))
+                    this.IsDefault == other.IsDefault ||
+                    this.IsDefault != null &&
+                    this.IsDefault.Equals(other.IsDefault)
                 ) &&
                 (
-                    this.HasContent == input.HasContent ||
-                    (this.HasContent != null &&
-                    this.HasContent.Equals(input.HasContent))
+                    this.HasContent == other.HasContent ||
+                    this.HasContent != null &&
+                    this.HasContent.Equals(other.HasContent)
                 ) &&
                 (
-                    this.ContentLink == input.ContentLink ||
-                    (this.ContentLink != null &&
-                    this.ContentLink.Equals(input.ContentLink))
+                    this.ContentLink == other.ContentLink ||
+                    this.ContentLink != null &&
+                    this.ContentLink.Equals(other.ContentLink)
                 );
         }
 
@@ -150,29 +147,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Template != null)
-                    hashCode = hashCode * 59 + this.Template.GetHashCode();
+                    hash = hash * 59 + this.Template.GetHashCode();
                 if (this.Language != null)
-                    hashCode = hashCode * 59 + this.Language.GetHashCode();
+                    hash = hash * 59 + this.Language.GetHashCode();
                 if (this.IsDefault != null)
-                    hashCode = hashCode * 59 + this.IsDefault.GetHashCode();
+                    hash = hash * 59 + this.IsDefault.GetHashCode();
                 if (this.HasContent != null)
-                    hashCode = hashCode * 59 + this.HasContent.GetHashCode();
+                    hash = hash * 59 + this.HasContent.GetHashCode();
                 if (this.ContentLink != null)
-                    hashCode = hashCode * 59 + this.ContentLink.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.ContentLink.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

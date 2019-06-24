@@ -25,41 +25,67 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class DocGenSettingsResultOoxml : IEquatable<DocGenSettingsResultOoxml>, IValidatableObject
     {
         /// <summary>
-        /// Defines Format
+        /// Gets or Sets Format
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum FormatEnum
         {
 
             /// <summary>
-            /// Enum Docx for value: docx
+            /// Enum Docx for "docx"
             /// </summary>
             [EnumMember(Value = "docx")]
-            Docx = 1,
+            Docx,
 
             /// <summary>
-            /// Enum Dotx for value: dotx
+            /// Enum Dotx for "dotx"
             /// </summary>
             [EnumMember(Value = "dotx")]
-            Dotx = 2,
+            Dotx,
 
             /// <summary>
-            /// Enum Docm for value: docm
+            /// Enum Docm for "docm"
             /// </summary>
             [EnumMember(Value = "docm")]
-            Docm = 3,
+            Docm,
 
             /// <summary>
-            /// Enum Dotm for value: dotm
+            /// Enum Dotm for "dotm"
             /// </summary>
             [EnumMember(Value = "dotm")]
-            Dotm = 4,
+            Dotm,
 
             /// <summary>
-            /// Enum Flatopc for value: flatopc
+            /// Enum Flatopc for "flatopc"
             /// </summary>
             [EnumMember(Value = "flatopc")]
-            Flatopc = 5
+            Flatopc
+        }
+
+        /// <summary>
+        /// Gets or Sets Compliance
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum ComplianceEnum
+        {
+
+            /// <summary>
+            /// Enum Iso295002008strict for "iso_29500_2008_strict"
+            /// </summary>
+            [EnumMember(Value = "iso_29500_2008_strict")]
+            Iso295002008strict,
+
+            /// <summary>
+            /// Enum Ecma3762006 for "ecma_376_2006"
+            /// </summary>
+            [EnumMember(Value = "ecma_376_2006")]
+            Ecma3762006,
+
+            /// <summary>
+            /// Enum Iso295002008transitional for "iso_29500_2008_transitional"
+            /// </summary>
+            [EnumMember(Value = "iso_29500_2008_transitional")]
+            Iso295002008transitional
         }
 
         /// <summary>
@@ -67,32 +93,6 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "format", EmitDefaultValue = false)]
         public FormatEnum? Format { get; set; }
-        /// <summary>
-        /// Defines Compliance
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum ComplianceEnum
-        {
-
-            /// <summary>
-            /// Enum Iso295002008strict for value: iso_29500_2008_strict
-            /// </summary>
-            [EnumMember(Value = "iso_29500_2008_strict")]
-            Iso295002008strict = 1,
-
-            /// <summary>
-            /// Enum Ecma3762006 for value: ecma_376_2006
-            /// </summary>
-            [EnumMember(Value = "ecma_376_2006")]
-            Ecma3762006 = 2,
-
-            /// <summary>
-            /// Enum Iso295002008transitional for value: iso_29500_2008_transitional
-            /// </summary>
-            [EnumMember(Value = "iso_29500_2008_transitional")]
-            Iso295002008transitional = 3
-        }
-
         /// <summary>
         /// Gets or Sets Compliance
         /// </summary>
@@ -119,14 +119,11 @@ namespace Xpertdoc.SmartFlows.Model
             }
         }
 
-
         /// <summary>
         /// Gets or Sets Password
         /// </summary>
         [DataMember(Name = "password", EmitDefaultValue = false)]
         public string Password { get; set; }
-
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -154,38 +151,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DocGenSettingsResultOoxml);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DocGenSettingsResultOoxml);
         }
 
         /// <summary>
         /// Returns true if DocGenSettingsResultOoxml instances are equal
         /// </summary>
-        /// <param name="input">Instance of DocGenSettingsResultOoxml to be compared</param>
+        /// <param name="other">Instance of DocGenSettingsResultOoxml to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DocGenSettingsResultOoxml input)
+        public bool Equals(DocGenSettingsResultOoxml other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Format == input.Format ||
-                    (this.Format != null &&
-                    this.Format.Equals(input.Format))
+                    this.Format == other.Format ||
+                    this.Format != null &&
+                    this.Format.Equals(other.Format)
                 ) &&
                 (
-                    this.Password == input.Password ||
-                    (this.Password != null &&
-                    this.Password.Equals(input.Password))
+                    this.Password == other.Password ||
+                    this.Password != null &&
+                    this.Password.Equals(other.Password)
                 ) &&
                 (
-                    this.Compliance == input.Compliance ||
-                    (this.Compliance != null &&
-                    this.Compliance.Equals(input.Compliance))
+                    this.Compliance == other.Compliance ||
+                    this.Compliance != null &&
+                    this.Compliance.Equals(other.Compliance)
                 );
         }
 
@@ -195,25 +194,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Format != null)
-                    hashCode = hashCode * 59 + this.Format.GetHashCode();
+                    hash = hash * 59 + this.Format.GetHashCode();
                 if (this.Password != null)
-                    hashCode = hashCode * 59 + this.Password.GetHashCode();
+                    hash = hash * 59 + this.Password.GetHashCode();
                 if (this.Compliance != null)
-                    hashCode = hashCode * 59 + this.Compliance.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Compliance.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

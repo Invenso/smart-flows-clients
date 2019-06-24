@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<ConditionOccurrence> (instance, "variable 'instance' is a ConditionOccurrence");
         }
 
-
         /// <summary>
         /// Test the property 'EmptyElementsAreNoneExistant'
         /// </summary>

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<FlowSwitchState> (instance, "variable 'instance' is a FlowSwitchState");
         }
 
-
         /// <summary>
         /// Test the property 'CaseValue'
         /// </summary>

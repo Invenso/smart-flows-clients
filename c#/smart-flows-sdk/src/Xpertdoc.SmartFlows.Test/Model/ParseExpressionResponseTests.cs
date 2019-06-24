@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<ParseExpressionResponse> (instance, "variable 'instance' is a ParseExpressionResponse");
         }
 
-
         /// <summary>
         /// Test the property 'Value'
         /// </summary>

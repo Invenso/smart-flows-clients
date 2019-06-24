@@ -25,23 +25,29 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class UserIdentity : IEquatable<UserIdentity>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum Native for value: native
+            /// Enum Native for "native"
             /// </summary>
             [EnumMember(Value = "native")]
-            Native = 1,
+            Native,
 
             /// <summary>
-            /// Enum External for value: external
+            /// Enum External for "external"
             /// </summary>
             [EnumMember(Value = "external")]
-            External = 2
+            External,
+
+            /// <summary>
+            /// Enum None for "none"
+            /// </summary>
+            [EnumMember(Value = "none")]
+            None
         }
 
         /// <summary>
@@ -62,19 +68,16 @@ namespace Xpertdoc.SmartFlows.Model
             this.External = External;
         }
 
-
         /// <summary>
         /// Gets or Sets Native
         /// </summary>
         [DataMember(Name = "native", EmitDefaultValue = false)]
         public UserIdentityNative Native { get; set; }
-
         /// <summary>
         /// Gets or Sets External
         /// </summary>
         [DataMember(Name = "external", EmitDefaultValue = false)]
         public UserIdentityExternal External { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -102,38 +105,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as UserIdentity);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as UserIdentity);
         }
 
         /// <summary>
         /// Returns true if UserIdentity instances are equal
         /// </summary>
-        /// <param name="input">Instance of UserIdentity to be compared</param>
+        /// <param name="other">Instance of UserIdentity to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(UserIdentity input)
+        public bool Equals(UserIdentity other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.Native == input.Native ||
-                    (this.Native != null &&
-                    this.Native.Equals(input.Native))
+                    this.Native == other.Native ||
+                    this.Native != null &&
+                    this.Native.Equals(other.Native)
                 ) &&
                 (
-                    this.External == input.External ||
-                    (this.External != null &&
-                    this.External.Equals(input.External))
+                    this.External == other.External ||
+                    this.External != null &&
+                    this.External.Equals(other.External)
                 );
         }
 
@@ -143,25 +148,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.Native != null)
-                    hashCode = hashCode * 59 + this.Native.GetHashCode();
+                    hash = hash * 59 + this.Native.GetHashCode();
                 if (this.External != null)
-                    hashCode = hashCode * 59 + this.External.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.External.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

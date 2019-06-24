@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DateCondition> (instance, "variable 'instance' is a DateCondition");
         }
 
-
         /// <summary>
         /// Test the property '_Operator'
         /// </summary>

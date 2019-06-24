@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DocGenSettingsResultPdf> (instance, "variable 'instance' is a DocGenSettingsResultPdf");
         }
 
-
         /// <summary>
         /// Test the property 'Compliance'
         /// </summary>

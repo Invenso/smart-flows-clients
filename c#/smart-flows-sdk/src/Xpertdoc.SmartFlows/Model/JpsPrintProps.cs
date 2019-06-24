@@ -25,35 +25,113 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class JpsPrintProps : IEquatable<JpsPrintProps>, IValidatableObject
     {
         /// <summary>
-        /// Defines Duplexing
+        /// Gets or Sets Duplexing
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum DuplexingEnum
         {
 
             /// <summary>
-            /// Enum Default for value: default
+            /// Enum Default for "default"
             /// </summary>
             [EnumMember(Value = "default")]
-            Default = 1,
+            Default,
 
             /// <summary>
-            /// Enum OneSided for value: oneSided
+            /// Enum OneSided for "oneSided"
             /// </summary>
             [EnumMember(Value = "oneSided")]
-            OneSided = 2,
+            OneSided,
 
             /// <summary>
-            /// Enum TwoSidedLongEdge for value: twoSidedLongEdge
+            /// Enum TwoSidedLongEdge for "twoSidedLongEdge"
             /// </summary>
             [EnumMember(Value = "twoSidedLongEdge")]
-            TwoSidedLongEdge = 3,
+            TwoSidedLongEdge,
 
             /// <summary>
-            /// Enum TwoSidedShortEdge for value: twoSidedShortEdge
+            /// Enum TwoSidedShortEdge for "twoSidedShortEdge"
             /// </summary>
             [EnumMember(Value = "twoSidedShortEdge")]
-            TwoSidedShortEdge = 4
+            TwoSidedShortEdge
+        }
+
+        /// <summary>
+        /// Gets or Sets Collate
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum CollateEnum
+        {
+
+            /// <summary>
+            /// Enum Default for "default"
+            /// </summary>
+            [EnumMember(Value = "default")]
+            Default,
+
+            /// <summary>
+            /// Enum True for "true"
+            /// </summary>
+            [EnumMember(Value = "true")]
+            True,
+
+            /// <summary>
+            /// Enum False for "false"
+            /// </summary>
+            [EnumMember(Value = "false")]
+            False
+        }
+
+        /// <summary>
+        /// Gets or Sets Chromaticity
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum ChromaticityEnum
+        {
+
+            /// <summary>
+            /// Enum Default for "default"
+            /// </summary>
+            [EnumMember(Value = "default")]
+            Default,
+
+            /// <summary>
+            /// Enum Monochrome for "monochrome"
+            /// </summary>
+            [EnumMember(Value = "monochrome")]
+            Monochrome,
+
+            /// <summary>
+            /// Enum Color for "color"
+            /// </summary>
+            [EnumMember(Value = "color")]
+            Color
+        }
+
+        /// <summary>
+        /// Gets or Sets Orientation
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum OrientationEnum
+        {
+
+            /// <summary>
+            /// Enum Default for "default"
+            /// </summary>
+            [EnumMember(Value = "default")]
+            Default,
+
+            /// <summary>
+            /// Enum Portrait for "portrait"
+            /// </summary>
+            [EnumMember(Value = "portrait")]
+            Portrait,
+
+            /// <summary>
+            /// Enum Landscape for "landscape"
+            /// </summary>
+            [EnumMember(Value = "landscape")]
+            Landscape
         }
 
         /// <summary>
@@ -62,93 +140,15 @@ namespace Xpertdoc.SmartFlows.Model
         [DataMember(Name = "duplexing", EmitDefaultValue = false)]
         public DuplexingEnum? Duplexing { get; set; }
         /// <summary>
-        /// Defines Collate
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum CollateEnum
-        {
-
-            /// <summary>
-            /// Enum Default for value: default
-            /// </summary>
-            [EnumMember(Value = "default")]
-            Default = 1,
-
-            /// <summary>
-            /// Enum True for value: true
-            /// </summary>
-            [EnumMember(Value = "true")]
-            True = 2,
-
-            /// <summary>
-            /// Enum False for value: false
-            /// </summary>
-            [EnumMember(Value = "false")]
-            False = 3
-        }
-
-        /// <summary>
         /// Gets or Sets Collate
         /// </summary>
         [DataMember(Name = "collate", EmitDefaultValue = false)]
         public CollateEnum? Collate { get; set; }
         /// <summary>
-        /// Defines Chromaticity
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum ChromaticityEnum
-        {
-
-            /// <summary>
-            /// Enum Default for value: default
-            /// </summary>
-            [EnumMember(Value = "default")]
-            Default = 1,
-
-            /// <summary>
-            /// Enum Monochrome for value: monochrome
-            /// </summary>
-            [EnumMember(Value = "monochrome")]
-            Monochrome = 2,
-
-            /// <summary>
-            /// Enum Color for value: color
-            /// </summary>
-            [EnumMember(Value = "color")]
-            Color = 3
-        }
-
-        /// <summary>
         /// Gets or Sets Chromaticity
         /// </summary>
         [DataMember(Name = "chromaticity", EmitDefaultValue = false)]
         public ChromaticityEnum? Chromaticity { get; set; }
-        /// <summary>
-        /// Defines Orientation
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum OrientationEnum
-        {
-
-            /// <summary>
-            /// Enum Default for value: default
-            /// </summary>
-            [EnumMember(Value = "default")]
-            Default = 1,
-
-            /// <summary>
-            /// Enum Portrait for value: portrait
-            /// </summary>
-            [EnumMember(Value = "portrait")]
-            Portrait = 2,
-
-            /// <summary>
-            /// Enum Landscape for value: landscape
-            /// </summary>
-            [EnumMember(Value = "landscape")]
-            Landscape = 3
-        }
-
         /// <summary>
         /// Gets or Sets Orientation
         /// </summary>
@@ -175,28 +175,21 @@ namespace Xpertdoc.SmartFlows.Model
             this.PaperSize = PaperSize;
         }
 
-
-
-
-
         /// <summary>
         /// Gets or Sets PaperSource
         /// </summary>
         [DataMember(Name = "paperSource", EmitDefaultValue = false)]
         public string PaperSource { get; set; }
-
         /// <summary>
         /// Gets or Sets FirstPagePaperSource
         /// </summary>
         [DataMember(Name = "firstPagePaperSource", EmitDefaultValue = false)]
         public string FirstPagePaperSource { get; set; }
-
         /// <summary>
         /// Gets or Sets PaperSize
         /// </summary>
         [DataMember(Name = "paperSize", EmitDefaultValue = false)]
         public string PaperSize { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -228,58 +221,60 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as JpsPrintProps);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as JpsPrintProps);
         }
 
         /// <summary>
         /// Returns true if JpsPrintProps instances are equal
         /// </summary>
-        /// <param name="input">Instance of JpsPrintProps to be compared</param>
+        /// <param name="other">Instance of JpsPrintProps to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(JpsPrintProps input)
+        public bool Equals(JpsPrintProps other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Duplexing == input.Duplexing ||
-                    (this.Duplexing != null &&
-                    this.Duplexing.Equals(input.Duplexing))
+                    this.Duplexing == other.Duplexing ||
+                    this.Duplexing != null &&
+                    this.Duplexing.Equals(other.Duplexing)
                 ) &&
                 (
-                    this.Collate == input.Collate ||
-                    (this.Collate != null &&
-                    this.Collate.Equals(input.Collate))
+                    this.Collate == other.Collate ||
+                    this.Collate != null &&
+                    this.Collate.Equals(other.Collate)
                 ) &&
                 (
-                    this.Chromaticity == input.Chromaticity ||
-                    (this.Chromaticity != null &&
-                    this.Chromaticity.Equals(input.Chromaticity))
+                    this.Chromaticity == other.Chromaticity ||
+                    this.Chromaticity != null &&
+                    this.Chromaticity.Equals(other.Chromaticity)
                 ) &&
                 (
-                    this.Orientation == input.Orientation ||
-                    (this.Orientation != null &&
-                    this.Orientation.Equals(input.Orientation))
+                    this.Orientation == other.Orientation ||
+                    this.Orientation != null &&
+                    this.Orientation.Equals(other.Orientation)
                 ) &&
                 (
-                    this.PaperSource == input.PaperSource ||
-                    (this.PaperSource != null &&
-                    this.PaperSource.Equals(input.PaperSource))
+                    this.PaperSource == other.PaperSource ||
+                    this.PaperSource != null &&
+                    this.PaperSource.Equals(other.PaperSource)
                 ) &&
                 (
-                    this.FirstPagePaperSource == input.FirstPagePaperSource ||
-                    (this.FirstPagePaperSource != null &&
-                    this.FirstPagePaperSource.Equals(input.FirstPagePaperSource))
+                    this.FirstPagePaperSource == other.FirstPagePaperSource ||
+                    this.FirstPagePaperSource != null &&
+                    this.FirstPagePaperSource.Equals(other.FirstPagePaperSource)
                 ) &&
                 (
-                    this.PaperSize == input.PaperSize ||
-                    (this.PaperSize != null &&
-                    this.PaperSize.Equals(input.PaperSize))
+                    this.PaperSize == other.PaperSize ||
+                    this.PaperSize != null &&
+                    this.PaperSize.Equals(other.PaperSize)
                 );
         }
 
@@ -289,33 +284,30 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Duplexing != null)
-                    hashCode = hashCode * 59 + this.Duplexing.GetHashCode();
+                    hash = hash * 59 + this.Duplexing.GetHashCode();
                 if (this.Collate != null)
-                    hashCode = hashCode * 59 + this.Collate.GetHashCode();
+                    hash = hash * 59 + this.Collate.GetHashCode();
                 if (this.Chromaticity != null)
-                    hashCode = hashCode * 59 + this.Chromaticity.GetHashCode();
+                    hash = hash * 59 + this.Chromaticity.GetHashCode();
                 if (this.Orientation != null)
-                    hashCode = hashCode * 59 + this.Orientation.GetHashCode();
+                    hash = hash * 59 + this.Orientation.GetHashCode();
                 if (this.PaperSource != null)
-                    hashCode = hashCode * 59 + this.PaperSource.GetHashCode();
+                    hash = hash * 59 + this.PaperSource.GetHashCode();
                 if (this.FirstPagePaperSource != null)
-                    hashCode = hashCode * 59 + this.FirstPagePaperSource.GetHashCode();
+                    hash = hash * 59 + this.FirstPagePaperSource.GetHashCode();
                 if (this.PaperSize != null)
-                    hashCode = hashCode * 59 + this.PaperSize.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.PaperSize.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

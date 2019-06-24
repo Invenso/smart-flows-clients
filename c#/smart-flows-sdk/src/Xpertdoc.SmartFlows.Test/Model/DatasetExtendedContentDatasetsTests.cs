@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DatasetExtendedContentDatasets> (instance, "variable 'instance' is a DatasetExtendedContentDatasets");
         }
 
-
         /// <summary>
         /// Test the property 'Name'
         /// </summary>

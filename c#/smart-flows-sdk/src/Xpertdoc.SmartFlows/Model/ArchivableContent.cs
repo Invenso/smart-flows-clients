@@ -49,43 +49,36 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
         /// <summary>
         /// Gets or Sets Parent
         /// </summary>
         [DataMember(Name = "parent", EmitDefaultValue = false)]
         public string Parent { get; set; }
-
         /// <summary>
         /// Gets or Sets Revision
         /// </summary>
         [DataMember(Name = "revision", EmitDefaultValue = false)]
         public int? Revision { get; set; }
-
         /// <summary>
         /// Gets or Sets Checksum
         /// </summary>
         [DataMember(Name = "checksum", EmitDefaultValue = false)]
         public string Checksum { get; set; }
-
         /// <summary>
         /// Gets or Sets Language
         /// </summary>
         [DataMember(Name = "language", EmitDefaultValue = false)]
         public string Language { get; set; }
-
         /// <summary>
         /// Gets or Sets Definition
         /// </summary>
         [DataMember(Name = "definition", EmitDefaultValue = false)]
         public string Definition { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -117,58 +110,60 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as ArchivableContent);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ArchivableContent);
         }
 
         /// <summary>
         /// Returns true if ArchivableContent instances are equal
         /// </summary>
-        /// <param name="input">Instance of ArchivableContent to be compared</param>
+        /// <param name="other">Instance of ArchivableContent to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ArchivableContent input)
+        public bool Equals(ArchivableContent other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.Parent == input.Parent ||
-                    (this.Parent != null &&
-                    this.Parent.Equals(input.Parent))
+                    this.Parent == other.Parent ||
+                    this.Parent != null &&
+                    this.Parent.Equals(other.Parent)
                 ) &&
                 (
-                    this.Revision == input.Revision ||
-                    (this.Revision != null &&
-                    this.Revision.Equals(input.Revision))
+                    this.Revision == other.Revision ||
+                    this.Revision != null &&
+                    this.Revision.Equals(other.Revision)
                 ) &&
                 (
-                    this.Checksum == input.Checksum ||
-                    (this.Checksum != null &&
-                    this.Checksum.Equals(input.Checksum))
+                    this.Checksum == other.Checksum ||
+                    this.Checksum != null &&
+                    this.Checksum.Equals(other.Checksum)
                 ) &&
                 (
-                    this.Language == input.Language ||
-                    (this.Language != null &&
-                    this.Language.Equals(input.Language))
+                    this.Language == other.Language ||
+                    this.Language != null &&
+                    this.Language.Equals(other.Language)
                 ) &&
                 (
-                    this.Definition == input.Definition ||
-                    (this.Definition != null &&
-                    this.Definition.Equals(input.Definition))
+                    this.Definition == other.Definition ||
+                    this.Definition != null &&
+                    this.Definition.Equals(other.Definition)
                 );
         }
 
@@ -178,33 +173,30 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.Parent != null)
-                    hashCode = hashCode * 59 + this.Parent.GetHashCode();
+                    hash = hash * 59 + this.Parent.GetHashCode();
                 if (this.Revision != null)
-                    hashCode = hashCode * 59 + this.Revision.GetHashCode();
+                    hash = hash * 59 + this.Revision.GetHashCode();
                 if (this.Checksum != null)
-                    hashCode = hashCode * 59 + this.Checksum.GetHashCode();
+                    hash = hash * 59 + this.Checksum.GetHashCode();
                 if (this.Language != null)
-                    hashCode = hashCode * 59 + this.Language.GetHashCode();
+                    hash = hash * 59 + this.Language.GetHashCode();
                 if (this.Definition != null)
-                    hashCode = hashCode * 59 + this.Definition.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Definition.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

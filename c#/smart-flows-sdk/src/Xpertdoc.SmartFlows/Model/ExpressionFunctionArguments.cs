@@ -25,119 +25,119 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class ExpressionFunctionArguments : IEquatable<ExpressionFunctionArguments>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum NotSpecified for value: notSpecified
+            /// Enum NotSpecified for "notSpecified"
             /// </summary>
             [EnumMember(Value = "notSpecified")]
-            NotSpecified = 1,
+            NotSpecified,
 
             /// <summary>
-            /// Enum Period for value: period
+            /// Enum Period for "period"
             /// </summary>
             [EnumMember(Value = "period")]
-            Period = 2,
+            Period,
 
             /// <summary>
-            /// Enum Date for value: date
+            /// Enum Date for "date"
             /// </summary>
             [EnumMember(Value = "date")]
-            Date = 3,
+            Date,
 
             /// <summary>
-            /// Enum Time for value: time
+            /// Enum Time for "time"
             /// </summary>
             [EnumMember(Value = "time")]
-            Time = 4,
+            Time,
 
             /// <summary>
-            /// Enum DateTime for value: dateTime
+            /// Enum DateTime for "dateTime"
             /// </summary>
             [EnumMember(Value = "dateTime")]
-            DateTime = 5,
+            DateTime,
 
             /// <summary>
-            /// Enum Number for value: number
+            /// Enum Number for "number"
             /// </summary>
             [EnumMember(Value = "number")]
-            Number = 6,
+            Number,
 
             /// <summary>
-            /// Enum Text for value: text
+            /// Enum Text for "text"
             /// </summary>
             [EnumMember(Value = "text")]
-            Text = 7,
+            Text,
 
             /// <summary>
-            /// Enum Boolean for value: boolean
+            /// Enum Boolean for "boolean"
             /// </summary>
             [EnumMember(Value = "boolean")]
-            Boolean = 8,
+            Boolean,
 
             /// <summary>
-            /// Enum Pattern for value: pattern
+            /// Enum Pattern for "pattern"
             /// </summary>
             [EnumMember(Value = "pattern")]
-            Pattern = 9,
+            Pattern,
 
             /// <summary>
-            /// Enum DatePattern for value: datePattern
+            /// Enum DatePattern for "datePattern"
             /// </summary>
             [EnumMember(Value = "datePattern")]
-            DatePattern = 10,
+            DatePattern,
 
             /// <summary>
-            /// Enum TimePattern for value: timePattern
+            /// Enum TimePattern for "timePattern"
             /// </summary>
             [EnumMember(Value = "timePattern")]
-            TimePattern = 11,
+            TimePattern,
 
             /// <summary>
-            /// Enum DateTimePattern for value: dateTimePattern
+            /// Enum DateTimePattern for "dateTimePattern"
             /// </summary>
             [EnumMember(Value = "dateTimePattern")]
-            DateTimePattern = 12,
+            DateTimePattern,
 
             /// <summary>
-            /// Enum TextWithExtendedCharacters for value: textWithExtendedCharacters
+            /// Enum TextWithExtendedCharacters for "textWithExtendedCharacters"
             /// </summary>
             [EnumMember(Value = "textWithExtendedCharacters")]
-            TextWithExtendedCharacters = 13,
+            TextWithExtendedCharacters,
 
             /// <summary>
-            /// Enum RegEx for value: regEx
+            /// Enum RegEx for "regEx"
             /// </summary>
             [EnumMember(Value = "regEx")]
-            RegEx = 14,
+            RegEx,
 
             /// <summary>
-            /// Enum RegExSubstitution for value: regExSubstitution
+            /// Enum RegExSubstitution for "regExSubstitution"
             /// </summary>
             [EnumMember(Value = "regExSubstitution")]
-            RegExSubstitution = 15,
+            RegExSubstitution,
 
             /// <summary>
-            /// Enum Locale for value: locale
+            /// Enum Locale for "locale"
             /// </summary>
             [EnumMember(Value = "locale")]
-            Locale = 16,
+            Locale,
 
             /// <summary>
-            /// Enum DurationPattern for value: durationPattern
+            /// Enum DurationPattern for "durationPattern"
             /// </summary>
             [EnumMember(Value = "durationPattern")]
-            DurationPattern = 17,
+            DurationPattern,
 
             /// <summary>
-            /// Enum DecimalPattern for value: decimalPattern
+            /// Enum DecimalPattern for "decimalPattern"
             /// </summary>
             [EnumMember(Value = "decimalPattern")]
-            DecimalPattern = 18
+            DecimalPattern
         }
 
         /// <summary>
@@ -175,26 +175,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Optional
         /// </summary>
         [DataMember(Name = "optional", EmitDefaultValue = false)]
         public bool? Optional { get; set; }
-
         /// <summary>
         /// Gets or Sets HelpLink
         /// </summary>
         [DataMember(Name = "helpLink", EmitDefaultValue = false)]
         public string HelpLink { get; set; }
-
         /// <summary>
         /// Gets or Sets DefaultValue
         /// </summary>
         [DataMember(Name = "defaultValue", EmitDefaultValue = false)]
         public string DefaultValue { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -224,48 +219,50 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as ExpressionFunctionArguments);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ExpressionFunctionArguments);
         }
 
         /// <summary>
         /// Returns true if ExpressionFunctionArguments instances are equal
         /// </summary>
-        /// <param name="input">Instance of ExpressionFunctionArguments to be compared</param>
+        /// <param name="other">Instance of ExpressionFunctionArguments to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ExpressionFunctionArguments input)
+        public bool Equals(ExpressionFunctionArguments other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
+                    this.Name == other.Name ||
+                    this.Name != null &&
+                    this.Name.Equals(other.Name)
                 ) &&
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.Optional == input.Optional ||
-                    (this.Optional != null &&
-                    this.Optional.Equals(input.Optional))
+                    this.Optional == other.Optional ||
+                    this.Optional != null &&
+                    this.Optional.Equals(other.Optional)
                 ) &&
                 (
-                    this.HelpLink == input.HelpLink ||
-                    (this.HelpLink != null &&
-                    this.HelpLink.Equals(input.HelpLink))
+                    this.HelpLink == other.HelpLink ||
+                    this.HelpLink != null &&
+                    this.HelpLink.Equals(other.HelpLink)
                 ) &&
                 (
-                    this.DefaultValue == input.DefaultValue ||
-                    (this.DefaultValue != null &&
-                    this.DefaultValue.Equals(input.DefaultValue))
+                    this.DefaultValue == other.DefaultValue ||
+                    this.DefaultValue != null &&
+                    this.DefaultValue.Equals(other.DefaultValue)
                 );
         }
 
@@ -275,29 +272,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Name != null)
-                    hashCode = hashCode * 59 + this.Name.GetHashCode();
+                    hash = hash * 59 + this.Name.GetHashCode();
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.Optional != null)
-                    hashCode = hashCode * 59 + this.Optional.GetHashCode();
+                    hash = hash * 59 + this.Optional.GetHashCode();
                 if (this.HelpLink != null)
-                    hashCode = hashCode * 59 + this.HelpLink.GetHashCode();
+                    hash = hash * 59 + this.HelpLink.GetHashCode();
                 if (this.DefaultValue != null)
-                    hashCode = hashCode * 59 + this.DefaultValue.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.DefaultValue.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

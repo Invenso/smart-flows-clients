@@ -40,13 +40,11 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "source", EmitDefaultValue = false)]
         public IdWithName Source { get; set; }
-
         /// <summary>
         /// Gets or Sets Targets
         /// </summary>
         [DataMember(Name = "targets", EmitDefaultValue = false)]
         public List<IdWithName> Targets { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -73,33 +71,35 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as MultiDependencyMapping);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as MultiDependencyMapping);
         }
 
         /// <summary>
         /// Returns true if MultiDependencyMapping instances are equal
         /// </summary>
-        /// <param name="input">Instance of MultiDependencyMapping to be compared</param>
+        /// <param name="other">Instance of MultiDependencyMapping to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(MultiDependencyMapping input)
+        public bool Equals(MultiDependencyMapping other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Source == input.Source ||
-                    (this.Source != null &&
-                    this.Source.Equals(input.Source))
+                    this.Source == other.Source ||
+                    this.Source != null &&
+                    this.Source.Equals(other.Source)
                 ) &&
                 (
-                    this.Targets == input.Targets ||
+                    this.Targets == other.Targets ||
                     this.Targets != null &&
-                    this.Targets.SequenceEqual(input.Targets)
+                    this.Targets.SequenceEqual(other.Targets)
                 );
         }
 
@@ -109,23 +109,20 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Source != null)
-                    hashCode = hashCode * 59 + this.Source.GetHashCode();
+                    hash = hash * 59 + this.Source.GetHashCode();
                 if (this.Targets != null)
-                    hashCode = hashCode * 59 + this.Targets.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Targets.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

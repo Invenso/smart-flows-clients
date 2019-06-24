@@ -25,35 +25,41 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class DatasetContent : IEquatable<DatasetContent>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum Standard for value: standard
+            /// Enum Standard for "standard"
             /// </summary>
             [EnumMember(Value = "standard")]
-            Standard = 1,
+            Standard,
 
             /// <summary>
-            /// Enum Custom for value: custom
+            /// Enum Custom for "custom"
             /// </summary>
             [EnumMember(Value = "custom")]
-            Custom = 2,
+            Custom,
 
             /// <summary>
-            /// Enum Schema for value: schema
+            /// Enum Schema for "schema"
             /// </summary>
             [EnumMember(Value = "schema")]
-            Schema = 3,
+            Schema,
 
             /// <summary>
-            /// Enum Extended for value: extended
+            /// Enum Extended for "extended"
             /// </summary>
             [EnumMember(Value = "extended")]
-            Extended = 4
+            Extended,
+
+            /// <summary>
+            /// Enum Form for "form"
+            /// </summary>
+            [EnumMember(Value = "form")]
+            Form
         }
 
         /// <summary>
@@ -68,41 +74,43 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="StandardContent">StandardContent.</param>
         /// <param name="CustomContent">CustomContent.</param>
         /// <param name="SchemaContent">SchemaContent.</param>
+        /// <param name="FormContent">FormContent.</param>
         /// <param name="ExtendedContent">ExtendedContent.</param>
-        public DatasetContent(TypeEnum? Type = default(TypeEnum?), DatasetStandardContent StandardContent = default(DatasetStandardContent), DatasetCustomContent CustomContent = default(DatasetCustomContent), DatasetSchemaContent SchemaContent = default(DatasetSchemaContent), DatasetExtendedContent ExtendedContent = default(DatasetExtendedContent))
+        public DatasetContent(TypeEnum? Type = default(TypeEnum?), DatasetStandardContent StandardContent = default(DatasetStandardContent), DatasetCustomContent CustomContent = default(DatasetCustomContent), DatasetSchemaContent SchemaContent = default(DatasetSchemaContent), DatasetFormContent FormContent = default(DatasetFormContent), DatasetExtendedContent ExtendedContent = default(DatasetExtendedContent))
         {
             this.Type = Type;
             this.StandardContent = StandardContent;
             this.CustomContent = CustomContent;
             this.SchemaContent = SchemaContent;
+            this.FormContent = FormContent;
             this.ExtendedContent = ExtendedContent;
         }
-
 
         /// <summary>
         /// Gets or Sets StandardContent
         /// </summary>
         [DataMember(Name = "standardContent", EmitDefaultValue = false)]
         public DatasetStandardContent StandardContent { get; set; }
-
         /// <summary>
         /// Gets or Sets CustomContent
         /// </summary>
         [DataMember(Name = "customContent", EmitDefaultValue = false)]
         public DatasetCustomContent CustomContent { get; set; }
-
         /// <summary>
         /// Gets or Sets SchemaContent
         /// </summary>
         [DataMember(Name = "schemaContent", EmitDefaultValue = false)]
         public DatasetSchemaContent SchemaContent { get; set; }
-
+        /// <summary>
+        /// Gets or Sets FormContent
+        /// </summary>
+        [DataMember(Name = "formContent", EmitDefaultValue = false)]
+        public DatasetFormContent FormContent { get; set; }
         /// <summary>
         /// Gets or Sets ExtendedContent
         /// </summary>
         [DataMember(Name = "extendedContent", EmitDefaultValue = false)]
         public DatasetExtendedContent ExtendedContent { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -115,6 +123,7 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("  StandardContent: ").Append(StandardContent).Append("\n");
             sb.Append("  CustomContent: ").Append(CustomContent).Append("\n");
             sb.Append("  SchemaContent: ").Append(SchemaContent).Append("\n");
+            sb.Append("  FormContent: ").Append(FormContent).Append("\n");
             sb.Append("  ExtendedContent: ").Append(ExtendedContent).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -132,48 +141,55 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DatasetContent);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DatasetContent);
         }
 
         /// <summary>
         /// Returns true if DatasetContent instances are equal
         /// </summary>
-        /// <param name="input">Instance of DatasetContent to be compared</param>
+        /// <param name="other">Instance of DatasetContent to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DatasetContent input)
+        public bool Equals(DatasetContent other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.StandardContent == input.StandardContent ||
-                    (this.StandardContent != null &&
-                    this.StandardContent.Equals(input.StandardContent))
+                    this.StandardContent == other.StandardContent ||
+                    this.StandardContent != null &&
+                    this.StandardContent.Equals(other.StandardContent)
                 ) &&
                 (
-                    this.CustomContent == input.CustomContent ||
-                    (this.CustomContent != null &&
-                    this.CustomContent.Equals(input.CustomContent))
+                    this.CustomContent == other.CustomContent ||
+                    this.CustomContent != null &&
+                    this.CustomContent.Equals(other.CustomContent)
                 ) &&
                 (
-                    this.SchemaContent == input.SchemaContent ||
-                    (this.SchemaContent != null &&
-                    this.SchemaContent.Equals(input.SchemaContent))
+                    this.SchemaContent == other.SchemaContent ||
+                    this.SchemaContent != null &&
+                    this.SchemaContent.Equals(other.SchemaContent)
                 ) &&
                 (
-                    this.ExtendedContent == input.ExtendedContent ||
-                    (this.ExtendedContent != null &&
-                    this.ExtendedContent.Equals(input.ExtendedContent))
+                    this.FormContent == other.FormContent ||
+                    this.FormContent != null &&
+                    this.FormContent.Equals(other.FormContent)
+                ) &&
+                (
+                    this.ExtendedContent == other.ExtendedContent ||
+                    this.ExtendedContent != null &&
+                    this.ExtendedContent.Equals(other.ExtendedContent)
                 );
         }
 
@@ -183,29 +199,28 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.StandardContent != null)
-                    hashCode = hashCode * 59 + this.StandardContent.GetHashCode();
+                    hash = hash * 59 + this.StandardContent.GetHashCode();
                 if (this.CustomContent != null)
-                    hashCode = hashCode * 59 + this.CustomContent.GetHashCode();
+                    hash = hash * 59 + this.CustomContent.GetHashCode();
                 if (this.SchemaContent != null)
-                    hashCode = hashCode * 59 + this.SchemaContent.GetHashCode();
+                    hash = hash * 59 + this.SchemaContent.GetHashCode();
+                if (this.FormContent != null)
+                    hash = hash * 59 + this.FormContent.GetHashCode();
                 if (this.ExtendedContent != null)
-                    hashCode = hashCode * 59 + this.ExtendedContent.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.ExtendedContent.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

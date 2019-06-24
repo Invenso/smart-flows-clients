@@ -25,23 +25,23 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class GcpVendorCapabilityRange : IEquatable<GcpVendorCapabilityRange>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum Float for value: float
+            /// Enum Float for "float"
             /// </summary>
             [EnumMember(Value = "float")]
-            Float = 1,
+            Float,
 
             /// <summary>
-            /// Enum Integer for value: integer
+            /// Enum Integer for "integer"
             /// </summary>
             [EnumMember(Value = "integer")]
-            Integer = 2
+            Integer
         }
 
         /// <summary>
@@ -64,25 +64,21 @@ namespace Xpertdoc.SmartFlows.Model
             this.Max = Max;
         }
 
-
         /// <summary>
         /// Gets or Sets _Default
         /// </summary>
         [DataMember(Name = "default", EmitDefaultValue = false)]
         public string _Default { get; set; }
-
         /// <summary>
         /// Gets or Sets Min
         /// </summary>
         [DataMember(Name = "min", EmitDefaultValue = false)]
         public string Min { get; set; }
-
         /// <summary>
         /// Gets or Sets Max
         /// </summary>
         [DataMember(Name = "max", EmitDefaultValue = false)]
         public string Max { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -111,43 +107,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as GcpVendorCapabilityRange);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as GcpVendorCapabilityRange);
         }
 
         /// <summary>
         /// Returns true if GcpVendorCapabilityRange instances are equal
         /// </summary>
-        /// <param name="input">Instance of GcpVendorCapabilityRange to be compared</param>
+        /// <param name="other">Instance of GcpVendorCapabilityRange to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(GcpVendorCapabilityRange input)
+        public bool Equals(GcpVendorCapabilityRange other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this._Default == input._Default ||
-                    (this._Default != null &&
-                    this._Default.Equals(input._Default))
+                    this._Default == other._Default ||
+                    this._Default != null &&
+                    this._Default.Equals(other._Default)
                 ) &&
                 (
-                    this.Min == input.Min ||
-                    (this.Min != null &&
-                    this.Min.Equals(input.Min))
+                    this.Min == other.Min ||
+                    this.Min != null &&
+                    this.Min.Equals(other.Min)
                 ) &&
                 (
-                    this.Max == input.Max ||
-                    (this.Max != null &&
-                    this.Max.Equals(input.Max))
+                    this.Max == other.Max ||
+                    this.Max != null &&
+                    this.Max.Equals(other.Max)
                 );
         }
 
@@ -157,27 +155,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this._Default != null)
-                    hashCode = hashCode * 59 + this._Default.GetHashCode();
+                    hash = hash * 59 + this._Default.GetHashCode();
                 if (this.Min != null)
-                    hashCode = hashCode * 59 + this.Min.GetHashCode();
+                    hash = hash * 59 + this.Min.GetHashCode();
                 if (this.Max != null)
-                    hashCode = hashCode * 59 + this.Max.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Max.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

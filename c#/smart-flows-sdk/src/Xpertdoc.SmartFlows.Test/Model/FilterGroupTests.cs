@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<FilterGroup> (instance, "variable 'instance' is a FilterGroup");
         }
 
-
         /// <summary>
         /// Test the property 'Type'
         /// </summary>

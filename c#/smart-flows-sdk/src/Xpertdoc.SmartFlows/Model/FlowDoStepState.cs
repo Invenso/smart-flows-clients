@@ -25,41 +25,41 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class FlowDoStepState : IEquatable<FlowDoStepState>, IValidatableObject
     {
         /// <summary>
-        /// Defines Status
+        /// Gets or Sets Status
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum StatusEnum
         {
 
             /// <summary>
-            /// Enum Output for value: Output
+            /// Enum Output for "Output"
             /// </summary>
             [EnumMember(Value = "Output")]
-            Output = 1,
+            Output,
 
             /// <summary>
-            /// Enum Error for value: Error
+            /// Enum Error for "Error"
             /// </summary>
             [EnumMember(Value = "Error")]
-            Error = 2,
+            Error,
 
             /// <summary>
-            /// Enum Waiting for value: Waiting
+            /// Enum Waiting for "Waiting"
             /// </summary>
             [EnumMember(Value = "Waiting")]
-            Waiting = 3,
+            Waiting,
 
             /// <summary>
-            /// Enum UserInput for value: UserInput
+            /// Enum UserInput for "UserInput"
             /// </summary>
             [EnumMember(Value = "UserInput")]
-            UserInput = 4,
+            UserInput,
 
             /// <summary>
-            /// Enum Skipped for value: Skipped
+            /// Enum Skipped for "Skipped"
             /// </summary>
             [EnumMember(Value = "Skipped")]
-            Skipped = 5
+            Skipped
         }
 
         /// <summary>
@@ -89,26 +89,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "start", EmitDefaultValue = false)]
         public string Start { get; set; }
-
         /// <summary>
         /// Gets or Sets End
         /// </summary>
         [DataMember(Name = "end", EmitDefaultValue = false)]
         public string End { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Input
         /// </summary>
         [DataMember(Name = "input", EmitDefaultValue = false)]
         public Object Input { get; set; }
-
         /// <summary>
         /// Gets or Sets Output
         /// </summary>
         [DataMember(Name = "output", EmitDefaultValue = false)]
         public Object Output { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -138,48 +133,50 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as FlowDoStepState);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as FlowDoStepState);
         }
 
         /// <summary>
         /// Returns true if FlowDoStepState instances are equal
         /// </summary>
-        /// <param name="input">Instance of FlowDoStepState to be compared</param>
+        /// <param name="other">Instance of FlowDoStepState to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FlowDoStepState input)
+        public bool Equals(FlowDoStepState other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Start == input.Start ||
-                    (this.Start != null &&
-                    this.Start.Equals(input.Start))
+                    this.Start == other.Start ||
+                    this.Start != null &&
+                    this.Start.Equals(other.Start)
                 ) &&
                 (
-                    this.End == input.End ||
-                    (this.End != null &&
-                    this.End.Equals(input.End))
+                    this.End == other.End ||
+                    this.End != null &&
+                    this.End.Equals(other.End)
                 ) &&
                 (
-                    this.Status == input.Status ||
-                    (this.Status != null &&
-                    this.Status.Equals(input.Status))
+                    this.Status == other.Status ||
+                    this.Status != null &&
+                    this.Status.Equals(other.Status)
                 ) &&
                 (
-                    this.Input == input.Input ||
-                    (this.Input != null &&
-                    this.Input.Equals(input.Input))
+                    this.Input == other.Input ||
+                    this.Input != null &&
+                    this.Input.Equals(other.Input)
                 ) &&
                 (
-                    this.Output == input.Output ||
-                    (this.Output != null &&
-                    this.Output.Equals(input.Output))
+                    this.Output == other.Output ||
+                    this.Output != null &&
+                    this.Output.Equals(other.Output)
                 );
         }
 
@@ -189,29 +186,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Start != null)
-                    hashCode = hashCode * 59 + this.Start.GetHashCode();
+                    hash = hash * 59 + this.Start.GetHashCode();
                 if (this.End != null)
-                    hashCode = hashCode * 59 + this.End.GetHashCode();
+                    hash = hash * 59 + this.End.GetHashCode();
                 if (this.Status != null)
-                    hashCode = hashCode * 59 + this.Status.GetHashCode();
+                    hash = hash * 59 + this.Status.GetHashCode();
                 if (this.Input != null)
-                    hashCode = hashCode * 59 + this.Input.GetHashCode();
+                    hash = hash * 59 + this.Input.GetHashCode();
                 if (this.Output != null)
-                    hashCode = hashCode * 59 + this.Output.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Output.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -25,36 +25,31 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class DocGenSettingsResultHtml : IEquatable<DocGenSettingsResultHtml>, IValidatableObject
     {
         /// <summary>
-        /// Defines Format
+        /// Gets or Sets Format
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum FormatEnum
         {
 
             /// <summary>
-            /// Enum Epub for value: epub
+            /// Enum Epub for "epub"
             /// </summary>
             [EnumMember(Value = "epub")]
-            Epub = 1,
+            Epub,
 
             /// <summary>
-            /// Enum Mhtml for value: mhtml
+            /// Enum Mhtml for "mhtml"
             /// </summary>
             [EnumMember(Value = "mhtml")]
-            Mhtml = 2,
+            Mhtml,
 
             /// <summary>
-            /// Enum Html for value: html
+            /// Enum Html for "html"
             /// </summary>
             [EnumMember(Value = "html")]
-            Html = 3
+            Html
         }
 
-        /// <summary>
-        /// Gets or Sets Format
-        /// </summary>
-        [DataMember(Name = "format", EmitDefaultValue = false)]
-        public FormatEnum? Format { get; set; }
         /// <summary>
         /// Specifies how headers and footers are output. None: Headers and footers are not exported. PerSection: Primary headers and footers are exported at the beginning and the end of each section. FirstSectionHeaderLastSectionFooter: Primary header of the first section is exported at the beginning of the document and primary footer is at the end. FirstPageheaderFooterPerSection: First page header and footer are exported at the beginning and the end of each section.
         /// </summary>
@@ -64,30 +59,35 @@ namespace Xpertdoc.SmartFlows.Model
         {
 
             /// <summary>
-            /// Enum FirstPageheaderFooterPerSection for value: firstPageheaderFooterPerSection
+            /// Enum FirstPageheaderFooterPerSection for "firstPageheaderFooterPerSection"
             /// </summary>
             [EnumMember(Value = "firstPageheaderFooterPerSection")]
-            FirstPageheaderFooterPerSection = 1,
+            FirstPageheaderFooterPerSection,
 
             /// <summary>
-            /// Enum PerSection for value: perSection
+            /// Enum PerSection for "perSection"
             /// </summary>
             [EnumMember(Value = "perSection")]
-            PerSection = 2,
+            PerSection,
 
             /// <summary>
-            /// Enum FirstSectionHeaderLastSectionFooter for value: firstSectionHeaderLastSectionFooter
+            /// Enum FirstSectionHeaderLastSectionFooter for "firstSectionHeaderLastSectionFooter"
             /// </summary>
             [EnumMember(Value = "firstSectionHeaderLastSectionFooter")]
-            FirstSectionHeaderLastSectionFooter = 3,
+            FirstSectionHeaderLastSectionFooter,
 
             /// <summary>
-            /// Enum None for value: none
+            /// Enum None for "none"
             /// </summary>
             [EnumMember(Value = "none")]
-            None = 4
+            None
         }
 
+        /// <summary>
+        /// Gets or Sets Format
+        /// </summary>
+        [DataMember(Name = "format", EmitDefaultValue = false)]
+        public FormatEnum? Format { get; set; }
         /// <summary>
         /// Specifies how headers and footers are output. None: Headers and footers are not exported. PerSection: Primary headers and footers are exported at the beginning and the end of each section. FirstSectionHeaderLastSectionFooter: Primary header of the first section is exported at the beginning of the document and primary footer is at the end. FirstPageheaderFooterPerSection: First page header and footer are exported at the beginning and the end of each section.
         /// </summary>
@@ -203,71 +203,60 @@ namespace Xpertdoc.SmartFlows.Model
             }
         }
 
-
         /// <summary>
         /// Specifies the encoding to use
         /// </summary>
         /// <value>Specifies the encoding to use</value>
         [DataMember(Name = "encoding", EmitDefaultValue = false)]
         public string Encoding { get; set; }
-
-
         /// <summary>
         /// Specifies whether page margins is exported
         /// </summary>
         /// <value>Specifies whether page margins is exported</value>
         [DataMember(Name = "exportPageMargins", EmitDefaultValue = false)]
         public bool? ExportPageMargins { get; set; }
-
         /// <summary>
         /// Specifies whether page setup is exported
         /// </summary>
         /// <value>Specifies whether page setup is exported</value>
         [DataMember(Name = "exportPageSetup", EmitDefaultValue = false)]
         public bool? ExportPageSetup { get; set; }
-
         /// <summary>
         /// Specifies whether to write page numbers to table of contents
         /// </summary>
         /// <value>Specifies whether to write page numbers to table of contents</value>
         [DataMember(Name = "exportTOCPageNumbers", EmitDefaultValue = false)]
         public bool? ExportTOCPageNumbers { get; set; }
-
         /// <summary>
         /// Specifies whether font sizes should be output in relative units
         /// </summary>
         /// <value>Specifies whether font sizes should be output in relative units</value>
         [DataMember(Name = "exportRelativeFontSize", EmitDefaultValue = false)]
         public bool? ExportRelativeFontSize { get; set; }
-
         /// <summary>
         /// Specifies the output resolution for images in dpi
         /// </summary>
         /// <value>Specifies the output resolution for images in dpi</value>
         [DataMember(Name = "imageResolution", EmitDefaultValue = false)]
         public decimal? ImageResolution { get; set; }
-
         /// <summary>
         /// Specifies whether images are saved in Base64
         /// </summary>
         /// <value>Specifies whether images are saved in Base64</value>
         [DataMember(Name = "exportImagesAsBase64", EmitDefaultValue = false)]
         public bool? ExportImagesAsBase64 { get; set; }
-
         /// <summary>
         /// Specifies whether original URL should be used as the URL of the linked images
         /// </summary>
         /// <value>Specifies whether original URL should be used as the URL of the linked images</value>
         [DataMember(Name = "maintainLinkToExternalImages", EmitDefaultValue = false)]
         public bool? MaintainLinkToExternalImages { get; set; }
-
         /// <summary>
         /// Specifies whether images are scaled to the bounding shape size when exporting
         /// </summary>
         /// <value>Specifies whether images are scaled to the bounding shape size when exporting</value>
         [DataMember(Name = "scaleImagesToShapeSize", EmitDefaultValue = false)]
         public bool? ScaleImagesToShapeSize { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -303,78 +292,80 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DocGenSettingsResultHtml);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DocGenSettingsResultHtml);
         }
 
         /// <summary>
         /// Returns true if DocGenSettingsResultHtml instances are equal
         /// </summary>
-        /// <param name="input">Instance of DocGenSettingsResultHtml to be compared</param>
+        /// <param name="other">Instance of DocGenSettingsResultHtml to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DocGenSettingsResultHtml input)
+        public bool Equals(DocGenSettingsResultHtml other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Format == input.Format ||
-                    (this.Format != null &&
-                    this.Format.Equals(input.Format))
+                    this.Format == other.Format ||
+                    this.Format != null &&
+                    this.Format.Equals(other.Format)
                 ) &&
                 (
-                    this.Encoding == input.Encoding ||
-                    (this.Encoding != null &&
-                    this.Encoding.Equals(input.Encoding))
+                    this.Encoding == other.Encoding ||
+                    this.Encoding != null &&
+                    this.Encoding.Equals(other.Encoding)
                 ) &&
                 (
-                    this.ExportHeadersFooters == input.ExportHeadersFooters ||
-                    (this.ExportHeadersFooters != null &&
-                    this.ExportHeadersFooters.Equals(input.ExportHeadersFooters))
+                    this.ExportHeadersFooters == other.ExportHeadersFooters ||
+                    this.ExportHeadersFooters != null &&
+                    this.ExportHeadersFooters.Equals(other.ExportHeadersFooters)
                 ) &&
                 (
-                    this.ExportPageMargins == input.ExportPageMargins ||
-                    (this.ExportPageMargins != null &&
-                    this.ExportPageMargins.Equals(input.ExportPageMargins))
+                    this.ExportPageMargins == other.ExportPageMargins ||
+                    this.ExportPageMargins != null &&
+                    this.ExportPageMargins.Equals(other.ExportPageMargins)
                 ) &&
                 (
-                    this.ExportPageSetup == input.ExportPageSetup ||
-                    (this.ExportPageSetup != null &&
-                    this.ExportPageSetup.Equals(input.ExportPageSetup))
+                    this.ExportPageSetup == other.ExportPageSetup ||
+                    this.ExportPageSetup != null &&
+                    this.ExportPageSetup.Equals(other.ExportPageSetup)
                 ) &&
                 (
-                    this.ExportTOCPageNumbers == input.ExportTOCPageNumbers ||
-                    (this.ExportTOCPageNumbers != null &&
-                    this.ExportTOCPageNumbers.Equals(input.ExportTOCPageNumbers))
+                    this.ExportTOCPageNumbers == other.ExportTOCPageNumbers ||
+                    this.ExportTOCPageNumbers != null &&
+                    this.ExportTOCPageNumbers.Equals(other.ExportTOCPageNumbers)
                 ) &&
                 (
-                    this.ExportRelativeFontSize == input.ExportRelativeFontSize ||
-                    (this.ExportRelativeFontSize != null &&
-                    this.ExportRelativeFontSize.Equals(input.ExportRelativeFontSize))
+                    this.ExportRelativeFontSize == other.ExportRelativeFontSize ||
+                    this.ExportRelativeFontSize != null &&
+                    this.ExportRelativeFontSize.Equals(other.ExportRelativeFontSize)
                 ) &&
                 (
-                    this.ImageResolution == input.ImageResolution ||
-                    (this.ImageResolution != null &&
-                    this.ImageResolution.Equals(input.ImageResolution))
+                    this.ImageResolution == other.ImageResolution ||
+                    this.ImageResolution != null &&
+                    this.ImageResolution.Equals(other.ImageResolution)
                 ) &&
                 (
-                    this.ExportImagesAsBase64 == input.ExportImagesAsBase64 ||
-                    (this.ExportImagesAsBase64 != null &&
-                    this.ExportImagesAsBase64.Equals(input.ExportImagesAsBase64))
+                    this.ExportImagesAsBase64 == other.ExportImagesAsBase64 ||
+                    this.ExportImagesAsBase64 != null &&
+                    this.ExportImagesAsBase64.Equals(other.ExportImagesAsBase64)
                 ) &&
                 (
-                    this.MaintainLinkToExternalImages == input.MaintainLinkToExternalImages ||
-                    (this.MaintainLinkToExternalImages != null &&
-                    this.MaintainLinkToExternalImages.Equals(input.MaintainLinkToExternalImages))
+                    this.MaintainLinkToExternalImages == other.MaintainLinkToExternalImages ||
+                    this.MaintainLinkToExternalImages != null &&
+                    this.MaintainLinkToExternalImages.Equals(other.MaintainLinkToExternalImages)
                 ) &&
                 (
-                    this.ScaleImagesToShapeSize == input.ScaleImagesToShapeSize ||
-                    (this.ScaleImagesToShapeSize != null &&
-                    this.ScaleImagesToShapeSize.Equals(input.ScaleImagesToShapeSize))
+                    this.ScaleImagesToShapeSize == other.ScaleImagesToShapeSize ||
+                    this.ScaleImagesToShapeSize != null &&
+                    this.ScaleImagesToShapeSize.Equals(other.ScaleImagesToShapeSize)
                 );
         }
 
@@ -384,41 +375,38 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Format != null)
-                    hashCode = hashCode * 59 + this.Format.GetHashCode();
+                    hash = hash * 59 + this.Format.GetHashCode();
                 if (this.Encoding != null)
-                    hashCode = hashCode * 59 + this.Encoding.GetHashCode();
+                    hash = hash * 59 + this.Encoding.GetHashCode();
                 if (this.ExportHeadersFooters != null)
-                    hashCode = hashCode * 59 + this.ExportHeadersFooters.GetHashCode();
+                    hash = hash * 59 + this.ExportHeadersFooters.GetHashCode();
                 if (this.ExportPageMargins != null)
-                    hashCode = hashCode * 59 + this.ExportPageMargins.GetHashCode();
+                    hash = hash * 59 + this.ExportPageMargins.GetHashCode();
                 if (this.ExportPageSetup != null)
-                    hashCode = hashCode * 59 + this.ExportPageSetup.GetHashCode();
+                    hash = hash * 59 + this.ExportPageSetup.GetHashCode();
                 if (this.ExportTOCPageNumbers != null)
-                    hashCode = hashCode * 59 + this.ExportTOCPageNumbers.GetHashCode();
+                    hash = hash * 59 + this.ExportTOCPageNumbers.GetHashCode();
                 if (this.ExportRelativeFontSize != null)
-                    hashCode = hashCode * 59 + this.ExportRelativeFontSize.GetHashCode();
+                    hash = hash * 59 + this.ExportRelativeFontSize.GetHashCode();
                 if (this.ImageResolution != null)
-                    hashCode = hashCode * 59 + this.ImageResolution.GetHashCode();
+                    hash = hash * 59 + this.ImageResolution.GetHashCode();
                 if (this.ExportImagesAsBase64 != null)
-                    hashCode = hashCode * 59 + this.ExportImagesAsBase64.GetHashCode();
+                    hash = hash * 59 + this.ExportImagesAsBase64.GetHashCode();
                 if (this.MaintainLinkToExternalImages != null)
-                    hashCode = hashCode * 59 + this.MaintainLinkToExternalImages.GetHashCode();
+                    hash = hash * 59 + this.MaintainLinkToExternalImages.GetHashCode();
                 if (this.ScaleImagesToShapeSize != null)
-                    hashCode = hashCode * 59 + this.ScaleImagesToShapeSize.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.ScaleImagesToShapeSize.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

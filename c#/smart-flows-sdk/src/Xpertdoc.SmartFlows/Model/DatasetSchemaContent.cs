@@ -25,17 +25,17 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class DatasetSchemaContent : IEquatable<DatasetSchemaContent>, IValidatableObject
     {
         /// <summary>
-        /// Defines SchemaType
+        /// Gets or Sets SchemaType
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum SchemaTypeEnum
         {
 
             /// <summary>
-            /// Enum Xsd for value: xsd
+            /// Enum Xsd for "xsd"
             /// </summary>
             [EnumMember(Value = "xsd")]
-            Xsd = 1
+            Xsd
         }
 
         /// <summary>
@@ -63,20 +63,16 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "wrapperElementName", EmitDefaultValue = false)]
         public string WrapperElementName { get; set; }
-
         /// <summary>
         /// Gets or Sets PrimaryEntity
         /// </summary>
         [DataMember(Name = "primaryEntity", EmitDefaultValue = false)]
         public string PrimaryEntity { get; set; }
-
         /// <summary>
         /// Gets or Sets SchemaContent
         /// </summary>
         [DataMember(Name = "schemaContent", EmitDefaultValue = false)]
         public byte[] SchemaContent { get; set; }
-
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -105,43 +101,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DatasetSchemaContent);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DatasetSchemaContent);
         }
 
         /// <summary>
         /// Returns true if DatasetSchemaContent instances are equal
         /// </summary>
-        /// <param name="input">Instance of DatasetSchemaContent to be compared</param>
+        /// <param name="other">Instance of DatasetSchemaContent to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DatasetSchemaContent input)
+        public bool Equals(DatasetSchemaContent other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.WrapperElementName == input.WrapperElementName ||
-                    (this.WrapperElementName != null &&
-                    this.WrapperElementName.Equals(input.WrapperElementName))
+                    this.WrapperElementName == other.WrapperElementName ||
+                    this.WrapperElementName != null &&
+                    this.WrapperElementName.Equals(other.WrapperElementName)
                 ) &&
                 (
-                    this.PrimaryEntity == input.PrimaryEntity ||
-                    (this.PrimaryEntity != null &&
-                    this.PrimaryEntity.Equals(input.PrimaryEntity))
+                    this.PrimaryEntity == other.PrimaryEntity ||
+                    this.PrimaryEntity != null &&
+                    this.PrimaryEntity.Equals(other.PrimaryEntity)
                 ) &&
                 (
-                    this.SchemaContent == input.SchemaContent ||
-                    (this.SchemaContent != null &&
-                    this.SchemaContent.Equals(input.SchemaContent))
+                    this.SchemaContent == other.SchemaContent ||
+                    this.SchemaContent != null &&
+                    this.SchemaContent.Equals(other.SchemaContent)
                 ) &&
                 (
-                    this.SchemaType == input.SchemaType ||
-                    (this.SchemaType != null &&
-                    this.SchemaType.Equals(input.SchemaType))
+                    this.SchemaType == other.SchemaType ||
+                    this.SchemaType != null &&
+                    this.SchemaType.Equals(other.SchemaType)
                 );
         }
 
@@ -151,27 +149,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.WrapperElementName != null)
-                    hashCode = hashCode * 59 + this.WrapperElementName.GetHashCode();
+                    hash = hash * 59 + this.WrapperElementName.GetHashCode();
                 if (this.PrimaryEntity != null)
-                    hashCode = hashCode * 59 + this.PrimaryEntity.GetHashCode();
+                    hash = hash * 59 + this.PrimaryEntity.GetHashCode();
                 if (this.SchemaContent != null)
-                    hashCode = hashCode * 59 + this.SchemaContent.GetHashCode();
+                    hash = hash * 59 + this.SchemaContent.GetHashCode();
                 if (this.SchemaType != null)
-                    hashCode = hashCode * 59 + this.SchemaType.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.SchemaType.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

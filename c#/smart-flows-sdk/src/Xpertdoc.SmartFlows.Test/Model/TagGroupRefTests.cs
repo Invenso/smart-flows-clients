@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<TagGroupRef> (instance, "variable 'instance' is a TagGroupRef");
         }
 
-
         /// <summary>
         /// Test the property 'Group'
         /// </summary>

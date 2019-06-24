@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<FlowDoStepState> (instance, "variable 'instance' is a FlowDoStepState");
         }
 
-
         /// <summary>
         /// Test the property 'Start'
         /// </summary>

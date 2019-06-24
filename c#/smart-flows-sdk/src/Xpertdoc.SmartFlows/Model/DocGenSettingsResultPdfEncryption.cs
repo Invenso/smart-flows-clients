@@ -34,16 +34,85 @@ namespace Xpertdoc.SmartFlows.Model
         {
 
             /// <summary>
-            /// Enum _128 for value: rc4_128
+            /// Enum _128 for "rc4_128"
             /// </summary>
             [EnumMember(Value = "rc4_128")]
-            _128 = 1,
+            _128,
 
             /// <summary>
-            /// Enum _40 for value: rc4_40
+            /// Enum _40 for "rc4_40"
             /// </summary>
             [EnumMember(Value = "rc4_40")]
-            _40 = 2
+            _40
+        }
+
+
+        /// <summary>
+        /// Gets or Sets Permissions
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum PermissionsEnum
+        {
+
+            /// <summary>
+            /// Enum DisallowAll for "disallowAll"
+            /// </summary>
+            [EnumMember(Value = "disallowAll")]
+            DisallowAll,
+
+            /// <summary>
+            /// Enum AllowAll for "allowAll"
+            /// </summary>
+            [EnumMember(Value = "allowAll")]
+            AllowAll,
+
+            /// <summary>
+            /// Enum ContentCopy for "contentCopy"
+            /// </summary>
+            [EnumMember(Value = "contentCopy")]
+            ContentCopy,
+
+            /// <summary>
+            /// Enum ContentCopyForAccessibility for "contentCopyForAccessibility"
+            /// </summary>
+            [EnumMember(Value = "contentCopyForAccessibility")]
+            ContentCopyForAccessibility,
+
+            /// <summary>
+            /// Enum ModifyContents for "modifyContents"
+            /// </summary>
+            [EnumMember(Value = "modifyContents")]
+            ModifyContents,
+
+            /// <summary>
+            /// Enum ModifyAnnotations for "modifyAnnotations"
+            /// </summary>
+            [EnumMember(Value = "modifyAnnotations")]
+            ModifyAnnotations,
+
+            /// <summary>
+            /// Enum FillIn for "fillIn"
+            /// </summary>
+            [EnumMember(Value = "fillIn")]
+            FillIn,
+
+            /// <summary>
+            /// Enum DocumentAssembly for "documentAssembly"
+            /// </summary>
+            [EnumMember(Value = "documentAssembly")]
+            DocumentAssembly,
+
+            /// <summary>
+            /// Enum Printing for "printing"
+            /// </summary>
+            [EnumMember(Value = "printing")]
+            Printing,
+
+            /// <summary>
+            /// Enum HighResolutionPrinting for "highResolutionPrinting"
+            /// </summary>
+            [EnumMember(Value = "highResolutionPrinting")]
+            HighResolutionPrinting
         }
 
         /// <summary>
@@ -52,75 +121,6 @@ namespace Xpertdoc.SmartFlows.Model
         /// <value>The encryption algorithm. rc4_40: RC4 encryption, key length of 40 bits. rc4_128: RC4 encryption, key length of 128 bits.</value>
         [DataMember(Name = "algorithm", EmitDefaultValue = false)]
         public AlgorithmEnum? Algorithm { get; set; }
-        /// <summary>
-        /// Defines Permissions
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum PermissionsEnum
-        {
-
-            /// <summary>
-            /// Enum DisallowAll for value: disallowAll
-            /// </summary>
-            [EnumMember(Value = "disallowAll")]
-            DisallowAll = 1,
-
-            /// <summary>
-            /// Enum AllowAll for value: allowAll
-            /// </summary>
-            [EnumMember(Value = "allowAll")]
-            AllowAll = 2,
-
-            /// <summary>
-            /// Enum ContentCopy for value: contentCopy
-            /// </summary>
-            [EnumMember(Value = "contentCopy")]
-            ContentCopy = 3,
-
-            /// <summary>
-            /// Enum ContentCopyForAccessibility for value: contentCopyForAccessibility
-            /// </summary>
-            [EnumMember(Value = "contentCopyForAccessibility")]
-            ContentCopyForAccessibility = 4,
-
-            /// <summary>
-            /// Enum ModifyContents for value: modifyContents
-            /// </summary>
-            [EnumMember(Value = "modifyContents")]
-            ModifyContents = 5,
-
-            /// <summary>
-            /// Enum ModifyAnnotations for value: modifyAnnotations
-            /// </summary>
-            [EnumMember(Value = "modifyAnnotations")]
-            ModifyAnnotations = 6,
-
-            /// <summary>
-            /// Enum FillIn for value: fillIn
-            /// </summary>
-            [EnumMember(Value = "fillIn")]
-            FillIn = 7,
-
-            /// <summary>
-            /// Enum DocumentAssembly for value: documentAssembly
-            /// </summary>
-            [EnumMember(Value = "documentAssembly")]
-            DocumentAssembly = 8,
-
-            /// <summary>
-            /// Enum Printing for value: printing
-            /// </summary>
-            [EnumMember(Value = "printing")]
-            Printing = 9,
-
-            /// <summary>
-            /// Enum HighResolutionPrinting for value: highResolutionPrinting
-            /// </summary>
-            [EnumMember(Value = "highResolutionPrinting")]
-            HighResolutionPrinting = 10
-        }
-
-
         /// <summary>
         /// Gets or Sets Permissions
         /// </summary>
@@ -149,22 +149,18 @@ namespace Xpertdoc.SmartFlows.Model
             this.Permissions = Permissions;
         }
 
-
         /// <summary>
         /// The password for the encrypted document
         /// </summary>
         /// <value>The password for the encrypted document</value>
         [DataMember(Name = "ownerPassword", EmitDefaultValue = false)]
         public string OwnerPassword { get; set; }
-
         /// <summary>
         /// The password required for opening the encrypted document
         /// </summary>
         /// <value>The password required for opening the encrypted document</value>
         [DataMember(Name = "userPassword", EmitDefaultValue = false)]
         public string UserPassword { get; set; }
-
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -193,43 +189,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DocGenSettingsResultPdfEncryption);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DocGenSettingsResultPdfEncryption);
         }
 
         /// <summary>
         /// Returns true if DocGenSettingsResultPdfEncryption instances are equal
         /// </summary>
-        /// <param name="input">Instance of DocGenSettingsResultPdfEncryption to be compared</param>
+        /// <param name="other">Instance of DocGenSettingsResultPdfEncryption to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DocGenSettingsResultPdfEncryption input)
+        public bool Equals(DocGenSettingsResultPdfEncryption other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Algorithm == input.Algorithm ||
-                    (this.Algorithm != null &&
-                    this.Algorithm.Equals(input.Algorithm))
+                    this.Algorithm == other.Algorithm ||
+                    this.Algorithm != null &&
+                    this.Algorithm.Equals(other.Algorithm)
                 ) &&
                 (
-                    this.OwnerPassword == input.OwnerPassword ||
-                    (this.OwnerPassword != null &&
-                    this.OwnerPassword.Equals(input.OwnerPassword))
+                    this.OwnerPassword == other.OwnerPassword ||
+                    this.OwnerPassword != null &&
+                    this.OwnerPassword.Equals(other.OwnerPassword)
                 ) &&
                 (
-                    this.UserPassword == input.UserPassword ||
-                    (this.UserPassword != null &&
-                    this.UserPassword.Equals(input.UserPassword))
+                    this.UserPassword == other.UserPassword ||
+                    this.UserPassword != null &&
+                    this.UserPassword.Equals(other.UserPassword)
                 ) &&
                 (
-                    this.Permissions == input.Permissions ||
+                    this.Permissions == other.Permissions ||
                     this.Permissions != null &&
-                    this.Permissions.SequenceEqual(input.Permissions)
+                    this.Permissions.SequenceEqual(other.Permissions)
                 );
         }
 
@@ -239,27 +237,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Algorithm != null)
-                    hashCode = hashCode * 59 + this.Algorithm.GetHashCode();
+                    hash = hash * 59 + this.Algorithm.GetHashCode();
                 if (this.OwnerPassword != null)
-                    hashCode = hashCode * 59 + this.OwnerPassword.GetHashCode();
+                    hash = hash * 59 + this.OwnerPassword.GetHashCode();
                 if (this.UserPassword != null)
-                    hashCode = hashCode * 59 + this.UserPassword.GetHashCode();
+                    hash = hash * 59 + this.UserPassword.GetHashCode();
                 if (this.Permissions != null)
-                    hashCode = hashCode * 59 + this.Permissions.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Permissions.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

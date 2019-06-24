@@ -26,29 +26,29 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class RestoreContext : IEquatable<RestoreContext>, IValidatableObject
     {
         /// <summary>
-        /// Defines IncludeType
+        /// Gets or Sets IncludeType
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum IncludeTypeEnum
         {
 
             /// <summary>
-            /// Enum All for value: all
+            /// Enum All for "all"
             /// </summary>
             [EnumMember(Value = "all")]
-            All = 1,
+            All,
 
             /// <summary>
-            /// Enum Listed for value: listed
+            /// Enum Listed for "listed"
             /// </summary>
             [EnumMember(Value = "listed")]
-            Listed = 2,
+            Listed,
 
             /// <summary>
-            /// Enum AllButListed for value: allButListed
+            /// Enum AllButListed for "allButListed"
             /// </summary>
             [EnumMember(Value = "allButListed")]
-            AllButListed = 3
+            AllButListed
         }
 
         /// <summary>
@@ -94,26 +94,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "archive", EmitDefaultValue = false)]
         public byte[] Archive { get; set; }
-
         /// <summary>
         /// Gets or Sets DependenciesMap
         /// </summary>
         [DataMember(Name = "dependenciesMap", EmitDefaultValue = false)]
         public List<DependencyMapping> DependenciesMap { get; set; }
-
         /// <summary>
         /// Gets or Sets OverwriteExisting
         /// </summary>
         [DataMember(Name = "overwriteExisting", EmitDefaultValue = false)]
         public bool? OverwriteExisting { get; set; }
-
-
         /// <summary>
         /// Gets or Sets ListedItems
         /// </summary>
         [DataMember(Name = "listedItems", EmitDefaultValue = false)]
         public List<IdWithName> ListedItems { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -143,48 +138,50 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as RestoreContext);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as RestoreContext);
         }
 
         /// <summary>
         /// Returns true if RestoreContext instances are equal
         /// </summary>
-        /// <param name="input">Instance of RestoreContext to be compared</param>
+        /// <param name="other">Instance of RestoreContext to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(RestoreContext input)
+        public bool Equals(RestoreContext other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Archive == input.Archive ||
-                    (this.Archive != null &&
-                    this.Archive.Equals(input.Archive))
+                    this.Archive == other.Archive ||
+                    this.Archive != null &&
+                    this.Archive.Equals(other.Archive)
                 ) &&
                 (
-                    this.DependenciesMap == input.DependenciesMap ||
+                    this.DependenciesMap == other.DependenciesMap ||
                     this.DependenciesMap != null &&
-                    this.DependenciesMap.SequenceEqual(input.DependenciesMap)
+                    this.DependenciesMap.SequenceEqual(other.DependenciesMap)
                 ) &&
                 (
-                    this.OverwriteExisting == input.OverwriteExisting ||
-                    (this.OverwriteExisting != null &&
-                    this.OverwriteExisting.Equals(input.OverwriteExisting))
+                    this.OverwriteExisting == other.OverwriteExisting ||
+                    this.OverwriteExisting != null &&
+                    this.OverwriteExisting.Equals(other.OverwriteExisting)
                 ) &&
                 (
-                    this.IncludeType == input.IncludeType ||
-                    (this.IncludeType != null &&
-                    this.IncludeType.Equals(input.IncludeType))
+                    this.IncludeType == other.IncludeType ||
+                    this.IncludeType != null &&
+                    this.IncludeType.Equals(other.IncludeType)
                 ) &&
                 (
-                    this.ListedItems == input.ListedItems ||
+                    this.ListedItems == other.ListedItems ||
                     this.ListedItems != null &&
-                    this.ListedItems.SequenceEqual(input.ListedItems)
+                    this.ListedItems.SequenceEqual(other.ListedItems)
                 );
         }
 
@@ -194,29 +191,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Archive != null)
-                    hashCode = hashCode * 59 + this.Archive.GetHashCode();
+                    hash = hash * 59 + this.Archive.GetHashCode();
                 if (this.DependenciesMap != null)
-                    hashCode = hashCode * 59 + this.DependenciesMap.GetHashCode();
+                    hash = hash * 59 + this.DependenciesMap.GetHashCode();
                 if (this.OverwriteExisting != null)
-                    hashCode = hashCode * 59 + this.OverwriteExisting.GetHashCode();
+                    hash = hash * 59 + this.OverwriteExisting.GetHashCode();
                 if (this.IncludeType != null)
-                    hashCode = hashCode * 59 + this.IncludeType.GetHashCode();
+                    hash = hash * 59 + this.IncludeType.GetHashCode();
                 if (this.ListedItems != null)
-                    hashCode = hashCode * 59 + this.ListedItems.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.ListedItems.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

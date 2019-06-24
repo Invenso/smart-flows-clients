@@ -28,16 +28,20 @@ namespace Xpertdoc.SmartFlows.Model
         /// Initializes a new instance of the <see cref="EntityDefinition" /> class.
         /// </summary>
         /// <param name="Name">Name.</param>
+        /// <param name="_Namespace">_Namespace.</param>
         /// <param name="DisplayName">DisplayName.</param>
+        /// <param name="SchemaName">SchemaName.</param>
         /// <param name="Description">Description.</param>
         /// <param name="CanBePrimary">CanBePrimary.</param>
         /// <param name="Fields">Fields.</param>
         /// <param name="Lookups">Lookups.</param>
         /// <param name="Relationships">Relationships.</param>
-        public EntityDefinition(string Name = default(string), string DisplayName = default(string), string Description = default(string), bool? CanBePrimary = default(bool?), List<EntityField> Fields = default(List<EntityField>), List<EntityDefinitionLookups> Lookups = default(List<EntityDefinitionLookups>), List<EntityDefinitionRelationships> Relationships = default(List<EntityDefinitionRelationships>))
+        public EntityDefinition(string Name = default(string), string _Namespace = default(string), string DisplayName = default(string), string SchemaName = default(string), string Description = default(string), bool? CanBePrimary = default(bool?), List<EntityField> Fields = default(List<EntityField>), List<EntityDefinitionLookups> Lookups = default(List<EntityDefinitionLookups>), List<EntityDefinitionRelationships> Relationships = default(List<EntityDefinitionRelationships>))
         {
             this.Name = Name;
+            this._Namespace = _Namespace;
             this.DisplayName = DisplayName;
+            this.SchemaName = SchemaName;
             this.Description = Description;
             this.CanBePrimary = CanBePrimary;
             this.Fields = Fields;
@@ -50,43 +54,46 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; }
-
+        /// <summary>
+        /// Gets or Sets _Namespace
+        /// </summary>
+        [DataMember(Name = "namespace", EmitDefaultValue = false)]
+        public string _Namespace { get; set; }
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
+        /// <summary>
+        /// Gets or Sets SchemaName
+        /// </summary>
+        [DataMember(Name = "schemaName", EmitDefaultValue = false)]
+        public string SchemaName { get; set; }
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
         /// <summary>
         /// Gets or Sets CanBePrimary
         /// </summary>
         [DataMember(Name = "canBePrimary", EmitDefaultValue = false)]
         public bool? CanBePrimary { get; set; }
-
         /// <summary>
         /// Gets or Sets Fields
         /// </summary>
         [DataMember(Name = "fields", EmitDefaultValue = false)]
         public List<EntityField> Fields { get; set; }
-
         /// <summary>
         /// Gets or Sets Lookups
         /// </summary>
         [DataMember(Name = "lookups", EmitDefaultValue = false)]
         public List<EntityDefinitionLookups> Lookups { get; set; }
-
         /// <summary>
         /// Gets or Sets Relationships
         /// </summary>
         [DataMember(Name = "relationships", EmitDefaultValue = false)]
         public List<EntityDefinitionRelationships> Relationships { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -96,7 +103,9 @@ namespace Xpertdoc.SmartFlows.Model
             var sb = new StringBuilder();
             sb.Append("class EntityDefinition {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  _Namespace: ").Append(_Namespace).Append("\n");
             sb.Append("  DisplayName: ").Append(DisplayName).Append("\n");
+            sb.Append("  SchemaName: ").Append(SchemaName).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  CanBePrimary: ").Append(CanBePrimary).Append("\n");
             sb.Append("  Fields: ").Append(Fields).Append("\n");
@@ -118,58 +127,70 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as EntityDefinition);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as EntityDefinition);
         }
 
         /// <summary>
         /// Returns true if EntityDefinition instances are equal
         /// </summary>
-        /// <param name="input">Instance of EntityDefinition to be compared</param>
+        /// <param name="other">Instance of EntityDefinition to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(EntityDefinition input)
+        public bool Equals(EntityDefinition other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
+                    this.Name == other.Name ||
+                    this.Name != null &&
+                    this.Name.Equals(other.Name)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this._Namespace == other._Namespace ||
+                    this._Namespace != null &&
+                    this._Namespace.Equals(other._Namespace)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.CanBePrimary == input.CanBePrimary ||
-                    (this.CanBePrimary != null &&
-                    this.CanBePrimary.Equals(input.CanBePrimary))
+                    this.SchemaName == other.SchemaName ||
+                    this.SchemaName != null &&
+                    this.SchemaName.Equals(other.SchemaName)
                 ) &&
                 (
-                    this.Fields == input.Fields ||
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
+                ) &&
+                (
+                    this.CanBePrimary == other.CanBePrimary ||
+                    this.CanBePrimary != null &&
+                    this.CanBePrimary.Equals(other.CanBePrimary)
+                ) &&
+                (
+                    this.Fields == other.Fields ||
                     this.Fields != null &&
-                    this.Fields.SequenceEqual(input.Fields)
+                    this.Fields.SequenceEqual(other.Fields)
                 ) &&
                 (
-                    this.Lookups == input.Lookups ||
+                    this.Lookups == other.Lookups ||
                     this.Lookups != null &&
-                    this.Lookups.SequenceEqual(input.Lookups)
+                    this.Lookups.SequenceEqual(other.Lookups)
                 ) &&
                 (
-                    this.Relationships == input.Relationships ||
+                    this.Relationships == other.Relationships ||
                     this.Relationships != null &&
-                    this.Relationships.SequenceEqual(input.Relationships)
+                    this.Relationships.SequenceEqual(other.Relationships)
                 );
         }
 
@@ -179,33 +200,34 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Name != null)
-                    hashCode = hashCode * 59 + this.Name.GetHashCode();
+                    hash = hash * 59 + this.Name.GetHashCode();
+                if (this._Namespace != null)
+                    hash = hash * 59 + this._Namespace.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
+                if (this.SchemaName != null)
+                    hash = hash * 59 + this.SchemaName.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.CanBePrimary != null)
-                    hashCode = hashCode * 59 + this.CanBePrimary.GetHashCode();
+                    hash = hash * 59 + this.CanBePrimary.GetHashCode();
                 if (this.Fields != null)
-                    hashCode = hashCode * 59 + this.Fields.GetHashCode();
+                    hash = hash * 59 + this.Fields.GetHashCode();
                 if (this.Lookups != null)
-                    hashCode = hashCode * 59 + this.Lookups.GetHashCode();
+                    hash = hash * 59 + this.Lookups.GetHashCode();
                 if (this.Relationships != null)
-                    hashCode = hashCode * 59 + this.Relationships.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Relationships.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Document> (instance, "variable 'instance' is a Document");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>
@@ -175,6 +174,14 @@ namespace Xpertdoc.SmartFlows.Test
         public void UsageTest()
         {
             // TODO unit test for the property 'Usage'
+        }
+        /// <summary>
+        /// Test the property 'FlowExecution'
+        /// </summary>
+        [Test]
+        public void FlowExecutionTest()
+        {
+            // TODO unit test for the property 'FlowExecution'
         }
 
     }

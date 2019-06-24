@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DependencyMapping> (instance, "variable 'instance' is a DependencyMapping");
         }
 
-
         /// <summary>
         /// Test the property 'Source'
         /// </summary>

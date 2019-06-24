@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Tag> (instance, "variable 'instance' is a Tag");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>
@@ -71,6 +70,14 @@ namespace Xpertdoc.SmartFlows.Test
         public void GroupTest()
         {
             // TODO unit test for the property 'Group'
+        }
+        /// <summary>
+        /// Test the property 'PluginGroup'
+        /// </summary>
+        [Test]
+        public void PluginGroupTest()
+        {
+            // TODO unit test for the property 'PluginGroup'
         }
         /// <summary>
         /// Test the property 'Value'

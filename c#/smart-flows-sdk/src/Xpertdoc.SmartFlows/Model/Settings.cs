@@ -30,13 +30,17 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="DefaultPlugin">DefaultPlugin.</param>
         /// <param name="Cleanup">Cleanup.</param>
         /// <param name="UserManagement">UserManagement.</param>
+        /// <param name="OnCreate">OnCreate.</param>
+        /// <param name="Counters">Counters.</param>
         /// <param name="Frontend">Frontend.</param>
-        public Settings(ProjectSettings Project = default(ProjectSettings), DefaultPluginSettings DefaultPlugin = default(DefaultPluginSettings), CleanupSettings Cleanup = default(CleanupSettings), UserManagementSettings UserManagement = default(UserManagementSettings), Object Frontend = default(Object))
+        public Settings(ProjectSettings Project = default(ProjectSettings), DefaultPluginSettings DefaultPlugin = default(DefaultPluginSettings), CleanupSettings Cleanup = default(CleanupSettings), UserManagementSettings UserManagement = default(UserManagementSettings), OnCreateSettings OnCreate = default(OnCreateSettings), CounterSettings Counters = default(CounterSettings), Object Frontend = default(Object))
         {
             this.Project = Project;
             this.DefaultPlugin = DefaultPlugin;
             this.Cleanup = Cleanup;
             this.UserManagement = UserManagement;
+            this.OnCreate = OnCreate;
+            this.Counters = Counters;
             this.Frontend = Frontend;
         }
 
@@ -45,31 +49,36 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "project", EmitDefaultValue = false)]
         public ProjectSettings Project { get; set; }
-
         /// <summary>
         /// Gets or Sets DefaultPlugin
         /// </summary>
         [DataMember(Name = "defaultPlugin", EmitDefaultValue = false)]
         public DefaultPluginSettings DefaultPlugin { get; set; }
-
         /// <summary>
         /// Gets or Sets Cleanup
         /// </summary>
         [DataMember(Name = "cleanup", EmitDefaultValue = false)]
         public CleanupSettings Cleanup { get; set; }
-
         /// <summary>
         /// Gets or Sets UserManagement
         /// </summary>
         [DataMember(Name = "userManagement", EmitDefaultValue = false)]
         public UserManagementSettings UserManagement { get; set; }
-
+        /// <summary>
+        /// Gets or Sets OnCreate
+        /// </summary>
+        [DataMember(Name = "onCreate", EmitDefaultValue = false)]
+        public OnCreateSettings OnCreate { get; set; }
+        /// <summary>
+        /// Gets or Sets Counters
+        /// </summary>
+        [DataMember(Name = "counters", EmitDefaultValue = false)]
+        public CounterSettings Counters { get; set; }
         /// <summary>
         /// Gets or Sets Frontend
         /// </summary>
         [DataMember(Name = "frontend", EmitDefaultValue = false)]
         public Object Frontend { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -82,6 +91,8 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("  DefaultPlugin: ").Append(DefaultPlugin).Append("\n");
             sb.Append("  Cleanup: ").Append(Cleanup).Append("\n");
             sb.Append("  UserManagement: ").Append(UserManagement).Append("\n");
+            sb.Append("  OnCreate: ").Append(OnCreate).Append("\n");
+            sb.Append("  Counters: ").Append(Counters).Append("\n");
             sb.Append("  Frontend: ").Append(Frontend).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -99,48 +110,60 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Settings);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Settings);
         }
 
         /// <summary>
         /// Returns true if Settings instances are equal
         /// </summary>
-        /// <param name="input">Instance of Settings to be compared</param>
+        /// <param name="other">Instance of Settings to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Settings input)
+        public bool Equals(Settings other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Project == input.Project ||
-                    (this.Project != null &&
-                    this.Project.Equals(input.Project))
+                    this.Project == other.Project ||
+                    this.Project != null &&
+                    this.Project.Equals(other.Project)
                 ) &&
                 (
-                    this.DefaultPlugin == input.DefaultPlugin ||
-                    (this.DefaultPlugin != null &&
-                    this.DefaultPlugin.Equals(input.DefaultPlugin))
+                    this.DefaultPlugin == other.DefaultPlugin ||
+                    this.DefaultPlugin != null &&
+                    this.DefaultPlugin.Equals(other.DefaultPlugin)
                 ) &&
                 (
-                    this.Cleanup == input.Cleanup ||
-                    (this.Cleanup != null &&
-                    this.Cleanup.Equals(input.Cleanup))
+                    this.Cleanup == other.Cleanup ||
+                    this.Cleanup != null &&
+                    this.Cleanup.Equals(other.Cleanup)
                 ) &&
                 (
-                    this.UserManagement == input.UserManagement ||
-                    (this.UserManagement != null &&
-                    this.UserManagement.Equals(input.UserManagement))
+                    this.UserManagement == other.UserManagement ||
+                    this.UserManagement != null &&
+                    this.UserManagement.Equals(other.UserManagement)
                 ) &&
                 (
-                    this.Frontend == input.Frontend ||
-                    (this.Frontend != null &&
-                    this.Frontend.Equals(input.Frontend))
+                    this.OnCreate == other.OnCreate ||
+                    this.OnCreate != null &&
+                    this.OnCreate.Equals(other.OnCreate)
+                ) &&
+                (
+                    this.Counters == other.Counters ||
+                    this.Counters != null &&
+                    this.Counters.Equals(other.Counters)
+                ) &&
+                (
+                    this.Frontend == other.Frontend ||
+                    this.Frontend != null &&
+                    this.Frontend.Equals(other.Frontend)
                 );
         }
 
@@ -150,29 +173,30 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Project != null)
-                    hashCode = hashCode * 59 + this.Project.GetHashCode();
+                    hash = hash * 59 + this.Project.GetHashCode();
                 if (this.DefaultPlugin != null)
-                    hashCode = hashCode * 59 + this.DefaultPlugin.GetHashCode();
+                    hash = hash * 59 + this.DefaultPlugin.GetHashCode();
                 if (this.Cleanup != null)
-                    hashCode = hashCode * 59 + this.Cleanup.GetHashCode();
+                    hash = hash * 59 + this.Cleanup.GetHashCode();
                 if (this.UserManagement != null)
-                    hashCode = hashCode * 59 + this.UserManagement.GetHashCode();
+                    hash = hash * 59 + this.UserManagement.GetHashCode();
+                if (this.OnCreate != null)
+                    hash = hash * 59 + this.OnCreate.GetHashCode();
+                if (this.Counters != null)
+                    hash = hash * 59 + this.Counters.GetHashCode();
                 if (this.Frontend != null)
-                    hashCode = hashCode * 59 + this.Frontend.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Frontend.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

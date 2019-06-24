@@ -48,37 +48,31 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "language", EmitDefaultValue = false)]
         public string Language { get; set; }
-
         /// <summary>
         /// Gets or Sets TemplateRef
         /// </summary>
         [DataMember(Name = "templateRef", EmitDefaultValue = false)]
         public ObjectReference TemplateRef { get; set; }
-
         /// <summary>
         /// Gets or Sets Template
         /// </summary>
         [DataMember(Name = "template", EmitDefaultValue = false)]
         public DocGenSettingsTemplate Template { get; set; }
-
         /// <summary>
         /// Gets or Sets DataRefs
         /// </summary>
         [DataMember(Name = "dataRefs", EmitDefaultValue = false)]
         public List<ObjectReference> DataRefs { get; set; }
-
         /// <summary>
         /// Gets or Sets Datas
         /// </summary>
         [DataMember(Name = "datas", EmitDefaultValue = false)]
         public List<DocGenSettingsDatas> Datas { get; set; }
-
         /// <summary>
         /// Gets or Sets Result
         /// </summary>
         [DataMember(Name = "result", EmitDefaultValue = false)]
         public DocGenSettingsResult Result { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -109,53 +103,55 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DocGenSettings);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DocGenSettings);
         }
 
         /// <summary>
         /// Returns true if DocGenSettings instances are equal
         /// </summary>
-        /// <param name="input">Instance of DocGenSettings to be compared</param>
+        /// <param name="other">Instance of DocGenSettings to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DocGenSettings input)
+        public bool Equals(DocGenSettings other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Language == input.Language ||
-                    (this.Language != null &&
-                    this.Language.Equals(input.Language))
+                    this.Language == other.Language ||
+                    this.Language != null &&
+                    this.Language.Equals(other.Language)
                 ) &&
                 (
-                    this.TemplateRef == input.TemplateRef ||
-                    (this.TemplateRef != null &&
-                    this.TemplateRef.Equals(input.TemplateRef))
+                    this.TemplateRef == other.TemplateRef ||
+                    this.TemplateRef != null &&
+                    this.TemplateRef.Equals(other.TemplateRef)
                 ) &&
                 (
-                    this.Template == input.Template ||
-                    (this.Template != null &&
-                    this.Template.Equals(input.Template))
+                    this.Template == other.Template ||
+                    this.Template != null &&
+                    this.Template.Equals(other.Template)
                 ) &&
                 (
-                    this.DataRefs == input.DataRefs ||
+                    this.DataRefs == other.DataRefs ||
                     this.DataRefs != null &&
-                    this.DataRefs.SequenceEqual(input.DataRefs)
+                    this.DataRefs.SequenceEqual(other.DataRefs)
                 ) &&
                 (
-                    this.Datas == input.Datas ||
+                    this.Datas == other.Datas ||
                     this.Datas != null &&
-                    this.Datas.SequenceEqual(input.Datas)
+                    this.Datas.SequenceEqual(other.Datas)
                 ) &&
                 (
-                    this.Result == input.Result ||
-                    (this.Result != null &&
-                    this.Result.Equals(input.Result))
+                    this.Result == other.Result ||
+                    this.Result != null &&
+                    this.Result.Equals(other.Result)
                 );
         }
 
@@ -165,31 +161,28 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Language != null)
-                    hashCode = hashCode * 59 + this.Language.GetHashCode();
+                    hash = hash * 59 + this.Language.GetHashCode();
                 if (this.TemplateRef != null)
-                    hashCode = hashCode * 59 + this.TemplateRef.GetHashCode();
+                    hash = hash * 59 + this.TemplateRef.GetHashCode();
                 if (this.Template != null)
-                    hashCode = hashCode * 59 + this.Template.GetHashCode();
+                    hash = hash * 59 + this.Template.GetHashCode();
                 if (this.DataRefs != null)
-                    hashCode = hashCode * 59 + this.DataRefs.GetHashCode();
+                    hash = hash * 59 + this.DataRefs.GetHashCode();
                 if (this.Datas != null)
-                    hashCode = hashCode * 59 + this.Datas.GetHashCode();
+                    hash = hash * 59 + this.Datas.GetHashCode();
                 if (this.Result != null)
-                    hashCode = hashCode * 59 + this.Result.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Result.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

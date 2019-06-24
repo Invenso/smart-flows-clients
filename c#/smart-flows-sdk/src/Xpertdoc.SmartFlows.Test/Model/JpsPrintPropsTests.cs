@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<JpsPrintProps> (instance, "variable 'instance' is a JpsPrintProps");
         }
 
-
         /// <summary>
         /// Test the property 'Duplexing'
         /// </summary>

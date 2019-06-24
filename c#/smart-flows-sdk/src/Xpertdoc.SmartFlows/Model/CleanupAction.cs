@@ -17,101 +17,99 @@ namespace Xpertdoc.SmartFlows.Model
     /// <summary>
     /// Defines cleanupAction
     /// </summary>
-
     [JsonConverter(typeof(StringEnumConverter))]
-
     public enum CleanupAction
     {
 
         /// <summary>
-        /// Enum RemoveInternalSuccess for value: removeInternalSuccess
+        /// Enum RemoveInternalSuccess for "removeInternalSuccess"
         /// </summary>
         [EnumMember(Value = "removeInternalSuccess")]
-        RemoveInternalSuccess = 1,
+        RemoveInternalSuccess,
 
         /// <summary>
-        /// Enum RemoveOutputSuccess for value: removeOutputSuccess
+        /// Enum RemoveOutputSuccess for "removeOutputSuccess"
         /// </summary>
         [EnumMember(Value = "removeOutputSuccess")]
-        RemoveOutputSuccess = 2,
+        RemoveOutputSuccess,
 
         /// <summary>
-        /// Enum RemoveFullSuccess for value: removeFullSuccess
+        /// Enum RemoveFullSuccess for "removeFullSuccess"
         /// </summary>
         [EnumMember(Value = "removeFullSuccess")]
-        RemoveFullSuccess = 3,
+        RemoveFullSuccess,
 
         /// <summary>
-        /// Enum RemoveInternalError for value: removeInternalError
+        /// Enum RemoveInternalError for "removeInternalError"
         /// </summary>
         [EnumMember(Value = "removeInternalError")]
-        RemoveInternalError = 4,
+        RemoveInternalError,
 
         /// <summary>
-        /// Enum RemoveOutputError for value: removeOutputError
+        /// Enum RemoveOutputError for "removeOutputError"
         /// </summary>
         [EnumMember(Value = "removeOutputError")]
-        RemoveOutputError = 5,
+        RemoveOutputError,
 
         /// <summary>
-        /// Enum RemoveFullError for value: removeFullError
+        /// Enum RemoveFullError for "removeFullError"
         /// </summary>
         [EnumMember(Value = "removeFullError")]
-        RemoveFullError = 6,
+        RemoveFullError,
 
         /// <summary>
-        /// Enum RemoveInternalCancelled for value: removeInternalCancelled
+        /// Enum RemoveInternalCancelled for "removeInternalCancelled"
         /// </summary>
         [EnumMember(Value = "removeInternalCancelled")]
-        RemoveInternalCancelled = 7,
+        RemoveInternalCancelled,
 
         /// <summary>
-        /// Enum RemoveOutputCancelled for value: removeOutputCancelled
+        /// Enum RemoveOutputCancelled for "removeOutputCancelled"
         /// </summary>
         [EnumMember(Value = "removeOutputCancelled")]
-        RemoveOutputCancelled = 8,
+        RemoveOutputCancelled,
 
         /// <summary>
-        /// Enum RemoveFullCancelled for value: removeFullCancelled
+        /// Enum RemoveFullCancelled for "removeFullCancelled"
         /// </summary>
         [EnumMember(Value = "removeFullCancelled")]
-        RemoveFullCancelled = 9,
+        RemoveFullCancelled,
 
         /// <summary>
-        /// Enum RemoveInternalInterrupted for value: removeInternalInterrupted
+        /// Enum RemoveInternalInterrupted for "removeInternalInterrupted"
         /// </summary>
         [EnumMember(Value = "removeInternalInterrupted")]
-        RemoveInternalInterrupted = 10,
+        RemoveInternalInterrupted,
 
         /// <summary>
-        /// Enum RemoveOutputInterrupted for value: removeOutputInterrupted
+        /// Enum RemoveOutputInterrupted for "removeOutputInterrupted"
         /// </summary>
         [EnumMember(Value = "removeOutputInterrupted")]
-        RemoveOutputInterrupted = 11,
+        RemoveOutputInterrupted,
 
         /// <summary>
-        /// Enum RemoveFullInterrupted for value: removeFullInterrupted
+        /// Enum RemoveFullInterrupted for "removeFullInterrupted"
         /// </summary>
         [EnumMember(Value = "removeFullInterrupted")]
-        RemoveFullInterrupted = 12,
+        RemoveFullInterrupted,
 
         /// <summary>
-        /// Enum RemoveSelectFlow for value: removeSelectFlow
+        /// Enum RemoveSelectFlow for "removeSelectFlow"
         /// </summary>
         [EnumMember(Value = "removeSelectFlow")]
-        RemoveSelectFlow = 13,
+        RemoveSelectFlow,
 
         /// <summary>
-        /// Enum InterruptWaiting for value: interruptWaiting
+        /// Enum InterruptWaiting for "interruptWaiting"
         /// </summary>
         [EnumMember(Value = "interruptWaiting")]
-        InterruptWaiting = 14,
+        InterruptWaiting,
 
         /// <summary>
-        /// Enum InterruptUserInput for value: interruptUserInput
+        /// Enum InterruptUserInput for "interruptUserInput"
         /// </summary>
         [EnumMember(Value = "interruptUserInput")]
-        InterruptUserInput = 15
+        InterruptUserInput
     }
 
 }

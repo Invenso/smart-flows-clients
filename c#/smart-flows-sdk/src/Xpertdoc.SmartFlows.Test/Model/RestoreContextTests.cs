@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<RestoreContext> (instance, "variable 'instance' is a RestoreContext");
         }
 
-
         /// <summary>
         /// Test the property 'Archive'
         /// </summary>

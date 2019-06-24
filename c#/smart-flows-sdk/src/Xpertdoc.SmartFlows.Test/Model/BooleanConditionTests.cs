@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<BooleanCondition> (instance, "variable 'instance' is a BooleanCondition");
         }
 
-
         /// <summary>
         /// Test the property '_Operator'
         /// </summary>

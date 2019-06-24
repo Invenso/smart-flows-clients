@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<GcpVendorCapability> (instance, "variable 'instance' is a GcpVendorCapability");
         }
 
-
         /// <summary>
         /// Test the property 'Type'
         /// </summary>

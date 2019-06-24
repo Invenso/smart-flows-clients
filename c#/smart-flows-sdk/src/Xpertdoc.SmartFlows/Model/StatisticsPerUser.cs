@@ -41,19 +41,16 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "user", EmitDefaultValue = false)]
         public IdWithName User { get; set; }
-
         /// <summary>
         /// Gets or Sets Count
         /// </summary>
         [DataMember(Name = "count", EmitDefaultValue = false)]
         public int? Count { get; set; }
-
         /// <summary>
         /// Gets or Sets Percentage
         /// </summary>
         [DataMember(Name = "percentage", EmitDefaultValue = false)]
         public int? Percentage { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -81,38 +78,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as StatisticsPerUser);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as StatisticsPerUser);
         }
 
         /// <summary>
         /// Returns true if StatisticsPerUser instances are equal
         /// </summary>
-        /// <param name="input">Instance of StatisticsPerUser to be compared</param>
+        /// <param name="other">Instance of StatisticsPerUser to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(StatisticsPerUser input)
+        public bool Equals(StatisticsPerUser other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.User == input.User ||
-                    (this.User != null &&
-                    this.User.Equals(input.User))
+                    this.User == other.User ||
+                    this.User != null &&
+                    this.User.Equals(other.User)
                 ) &&
                 (
-                    this.Count == input.Count ||
-                    (this.Count != null &&
-                    this.Count.Equals(input.Count))
+                    this.Count == other.Count ||
+                    this.Count != null &&
+                    this.Count.Equals(other.Count)
                 ) &&
                 (
-                    this.Percentage == input.Percentage ||
-                    (this.Percentage != null &&
-                    this.Percentage.Equals(input.Percentage))
+                    this.Percentage == other.Percentage ||
+                    this.Percentage != null &&
+                    this.Percentage.Equals(other.Percentage)
                 );
         }
 
@@ -122,42 +121,39 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.User != null)
-                    hashCode = hashCode * 59 + this.User.GetHashCode();
+                    hash = hash * 59 + this.User.GetHashCode();
                 if (this.Count != null)
-                    hashCode = hashCode * 59 + this.Count.GetHashCode();
+                    hash = hash * 59 + this.Count.GetHashCode();
                 if (this.Percentage != null)
-                    hashCode = hashCode * 59 + this.Percentage.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Percentage.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // Count (int?) minimum
             if (this.Count < (int?)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Count, must be a value greater than or equal to 0.", new[] { "Count" });
+                yield return new ValidationResult("Invalid value for Count, must be a value greater than or equal to 0.", new[] { "Count" });
             }
 
             // Percentage (int?) maximum
             if (this.Percentage > (int?)100)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Percentage, must be a value less than or equal to 100.", new[] { "Percentage" });
+                yield return new ValidationResult("Invalid value for Percentage, must be a value less than or equal to 100.", new[] { "Percentage" });
             }
 
             // Percentage (int?) minimum
             if (this.Percentage < (int?)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Percentage, must be a value greater than or equal to 0.", new[] { "Percentage" });
+                yield return new ValidationResult("Invalid value for Percentage, must be a value greater than or equal to 0.", new[] { "Percentage" });
             }
 
             yield break;

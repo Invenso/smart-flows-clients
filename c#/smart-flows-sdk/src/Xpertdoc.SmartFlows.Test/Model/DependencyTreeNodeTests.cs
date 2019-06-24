@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DependencyTreeNode> (instance, "variable 'instance' is a DependencyTreeNode");
         }
 
-
         /// <summary>
         /// Test the property 'Target'
         /// </summary>

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Asset> (instance, "variable 'instance' is a Asset");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

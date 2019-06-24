@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Login> (instance, "variable 'instance' is a Login");
         }
 
-
         /// <summary>
         /// Test the property 'Username'
         /// </summary>
@@ -79,6 +78,14 @@ namespace Xpertdoc.SmartFlows.Test
         public void ScopeTest()
         {
             // TODO unit test for the property 'Scope'
+        }
+        /// <summary>
+        /// Test the property 'LoginContext'
+        /// </summary>
+        [Test]
+        public void LoginContextTest()
+        {
+            // TODO unit test for the property 'LoginContext'
         }
 
     }

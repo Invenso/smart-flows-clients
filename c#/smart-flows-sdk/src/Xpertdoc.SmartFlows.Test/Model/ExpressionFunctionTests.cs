@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<ExpressionFunction> (instance, "variable 'instance' is a ExpressionFunction");
         }
 
-
         /// <summary>
         /// Test the property 'Name'
         /// </summary>

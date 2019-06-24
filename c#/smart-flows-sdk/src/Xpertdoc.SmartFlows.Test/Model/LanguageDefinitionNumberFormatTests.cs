@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<LanguageDefinitionNumberFormat> (instance, "variable 'instance' is a LanguageDefinitionNumberFormat");
         }
 
-
         /// <summary>
         /// Test the property 'GroupingSeparator'
         /// </summary>

@@ -51,7 +51,6 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "responseParams", EmitDefaultValue = false)]
         public string ResponseParams { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -77,28 +76,30 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Oauth2Parameters);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Oauth2Parameters);
         }
 
         /// <summary>
         /// Returns true if Oauth2Parameters instances are equal
         /// </summary>
-        /// <param name="input">Instance of Oauth2Parameters to be compared</param>
+        /// <param name="other">Instance of Oauth2Parameters to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Oauth2Parameters input)
+        public bool Equals(Oauth2Parameters other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.ResponseParams == input.ResponseParams ||
-                    (this.ResponseParams != null &&
-                    this.ResponseParams.Equals(input.ResponseParams))
+                    this.ResponseParams == other.ResponseParams ||
+                    this.ResponseParams != null &&
+                    this.ResponseParams.Equals(other.ResponseParams)
                 );
         }
 
@@ -108,21 +109,18 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.ResponseParams != null)
-                    hashCode = hashCode * 59 + this.ResponseParams.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.ResponseParams.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

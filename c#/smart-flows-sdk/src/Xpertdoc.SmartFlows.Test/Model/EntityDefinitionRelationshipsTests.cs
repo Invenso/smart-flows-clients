@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<EntityDefinitionRelationships> (instance, "variable 'instance' is a EntityDefinitionRelationships");
         }
 
-
         /// <summary>
         /// Test the property 'Name'
         /// </summary>

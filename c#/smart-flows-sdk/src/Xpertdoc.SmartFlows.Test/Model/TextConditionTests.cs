@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<TextCondition> (instance, "variable 'instance' is a TextCondition");
         }
 
-
         /// <summary>
         /// Test the property '_Operator'
         /// </summary>

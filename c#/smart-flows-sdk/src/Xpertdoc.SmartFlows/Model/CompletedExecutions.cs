@@ -45,31 +45,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "schedule", EmitDefaultValue = false)]
         public Schedule Schedule { get; set; }
-
         /// <summary>
         /// Gets or Sets Success
         /// </summary>
         [DataMember(Name = "success", EmitDefaultValue = false)]
         public CompletedExecutionsPlan Success { get; set; }
-
         /// <summary>
         /// Gets or Sets Error
         /// </summary>
         [DataMember(Name = "error", EmitDefaultValue = false)]
         public CompletedExecutionsPlan Error { get; set; }
-
         /// <summary>
         /// Gets or Sets Cancelled
         /// </summary>
         [DataMember(Name = "cancelled", EmitDefaultValue = false)]
         public CompletedExecutionsPlan Cancelled { get; set; }
-
         /// <summary>
         /// Gets or Sets Interrupted
         /// </summary>
         [DataMember(Name = "interrupted", EmitDefaultValue = false)]
         public CompletedExecutionsPlan Interrupted { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -99,48 +94,50 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as CompletedExecutions);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as CompletedExecutions);
         }
 
         /// <summary>
         /// Returns true if CompletedExecutions instances are equal
         /// </summary>
-        /// <param name="input">Instance of CompletedExecutions to be compared</param>
+        /// <param name="other">Instance of CompletedExecutions to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CompletedExecutions input)
+        public bool Equals(CompletedExecutions other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Schedule == input.Schedule ||
-                    (this.Schedule != null &&
-                    this.Schedule.Equals(input.Schedule))
+                    this.Schedule == other.Schedule ||
+                    this.Schedule != null &&
+                    this.Schedule.Equals(other.Schedule)
                 ) &&
                 (
-                    this.Success == input.Success ||
-                    (this.Success != null &&
-                    this.Success.Equals(input.Success))
+                    this.Success == other.Success ||
+                    this.Success != null &&
+                    this.Success.Equals(other.Success)
                 ) &&
                 (
-                    this.Error == input.Error ||
-                    (this.Error != null &&
-                    this.Error.Equals(input.Error))
+                    this.Error == other.Error ||
+                    this.Error != null &&
+                    this.Error.Equals(other.Error)
                 ) &&
                 (
-                    this.Cancelled == input.Cancelled ||
-                    (this.Cancelled != null &&
-                    this.Cancelled.Equals(input.Cancelled))
+                    this.Cancelled == other.Cancelled ||
+                    this.Cancelled != null &&
+                    this.Cancelled.Equals(other.Cancelled)
                 ) &&
                 (
-                    this.Interrupted == input.Interrupted ||
-                    (this.Interrupted != null &&
-                    this.Interrupted.Equals(input.Interrupted))
+                    this.Interrupted == other.Interrupted ||
+                    this.Interrupted != null &&
+                    this.Interrupted.Equals(other.Interrupted)
                 );
         }
 
@@ -150,29 +147,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Schedule != null)
-                    hashCode = hashCode * 59 + this.Schedule.GetHashCode();
+                    hash = hash * 59 + this.Schedule.GetHashCode();
                 if (this.Success != null)
-                    hashCode = hashCode * 59 + this.Success.GetHashCode();
+                    hash = hash * 59 + this.Success.GetHashCode();
                 if (this.Error != null)
-                    hashCode = hashCode * 59 + this.Error.GetHashCode();
+                    hash = hash * 59 + this.Error.GetHashCode();
                 if (this.Cancelled != null)
-                    hashCode = hashCode * 59 + this.Cancelled.GetHashCode();
+                    hash = hash * 59 + this.Cancelled.GetHashCode();
                 if (this.Interrupted != null)
-                    hashCode = hashCode * 59 + this.Interrupted.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Interrupted.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

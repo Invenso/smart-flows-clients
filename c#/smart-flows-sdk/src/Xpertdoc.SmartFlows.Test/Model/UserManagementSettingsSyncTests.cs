@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<UserManagementSettingsSync> (instance, "variable 'instance' is a UserManagementSettingsSync");
         }
 
-
         /// <summary>
         /// Test the property 'Enabled'
         /// </summary>

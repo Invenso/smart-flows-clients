@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<EntityDefinition> (instance, "variable 'instance' is a EntityDefinition");
         }
 
-
         /// <summary>
         /// Test the property 'Name'
         /// </summary>
@@ -65,12 +64,28 @@ namespace Xpertdoc.SmartFlows.Test
             // TODO unit test for the property 'Name'
         }
         /// <summary>
+        /// Test the property '_Namespace'
+        /// </summary>
+        [Test]
+        public void _NamespaceTest()
+        {
+            // TODO unit test for the property '_Namespace'
+        }
+        /// <summary>
         /// Test the property 'DisplayName'
         /// </summary>
         [Test]
         public void DisplayNameTest()
         {
             // TODO unit test for the property 'DisplayName'
+        }
+        /// <summary>
+        /// Test the property 'SchemaName'
+        /// </summary>
+        [Test]
+        public void SchemaNameTest()
+        {
+            // TODO unit test for the property 'SchemaName'
         }
         /// <summary>
         /// Test the property 'Description'

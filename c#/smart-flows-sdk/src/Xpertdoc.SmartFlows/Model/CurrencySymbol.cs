@@ -66,25 +66,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "symbol", EmitDefaultValue = false)]
         public string Symbol { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets Names
         /// </summary>
         [DataMember(Name = "names", EmitDefaultValue = false)]
         public List<string> Names { get; set; }
-
         /// <summary>
         /// Gets or Sets IsSystem
         /// </summary>
         [DataMember(Name = "isSystem", EmitDefaultValue = false)]
         public bool? IsSystem { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -113,43 +109,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as CurrencySymbol);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as CurrencySymbol);
         }
 
         /// <summary>
         /// Returns true if CurrencySymbol instances are equal
         /// </summary>
-        /// <param name="input">Instance of CurrencySymbol to be compared</param>
+        /// <param name="other">Instance of CurrencySymbol to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CurrencySymbol input)
+        public bool Equals(CurrencySymbol other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Symbol == input.Symbol ||
-                    (this.Symbol != null &&
-                    this.Symbol.Equals(input.Symbol))
+                    this.Symbol == other.Symbol ||
+                    this.Symbol != null &&
+                    this.Symbol.Equals(other.Symbol)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.Names == input.Names ||
+                    this.Names == other.Names ||
                     this.Names != null &&
-                    this.Names.SequenceEqual(input.Names)
+                    this.Names.SequenceEqual(other.Names)
                 ) &&
                 (
-                    this.IsSystem == input.IsSystem ||
-                    (this.IsSystem != null &&
-                    this.IsSystem.Equals(input.IsSystem))
+                    this.IsSystem == other.IsSystem ||
+                    this.IsSystem != null &&
+                    this.IsSystem.Equals(other.IsSystem)
                 );
         }
 
@@ -159,27 +157,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Symbol != null)
-                    hashCode = hashCode * 59 + this.Symbol.GetHashCode();
+                    hash = hash * 59 + this.Symbol.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.Names != null)
-                    hashCode = hashCode * 59 + this.Names.GetHashCode();
+                    hash = hash * 59 + this.Names.GetHashCode();
                 if (this.IsSystem != null)
-                    hashCode = hashCode * 59 + this.IsSystem.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.IsSystem.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

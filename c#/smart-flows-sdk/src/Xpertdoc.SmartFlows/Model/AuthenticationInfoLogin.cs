@@ -37,7 +37,6 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "enabled", EmitDefaultValue = false)]
         public bool? Enabled { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -63,28 +62,30 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as AuthenticationInfoLogin);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as AuthenticationInfoLogin);
         }
 
         /// <summary>
         /// Returns true if AuthenticationInfoLogin instances are equal
         /// </summary>
-        /// <param name="input">Instance of AuthenticationInfoLogin to be compared</param>
+        /// <param name="other">Instance of AuthenticationInfoLogin to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(AuthenticationInfoLogin input)
+        public bool Equals(AuthenticationInfoLogin other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Enabled == input.Enabled ||
-                    (this.Enabled != null &&
-                    this.Enabled.Equals(input.Enabled))
+                    this.Enabled == other.Enabled ||
+                    this.Enabled != null &&
+                    this.Enabled.Equals(other.Enabled)
                 );
         }
 
@@ -94,21 +95,18 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Enabled != null)
-                    hashCode = hashCode * 59 + this.Enabled.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Enabled.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

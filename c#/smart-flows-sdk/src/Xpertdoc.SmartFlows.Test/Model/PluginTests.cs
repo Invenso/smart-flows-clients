@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Plugin> (instance, "variable 'instance' is a Plugin");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

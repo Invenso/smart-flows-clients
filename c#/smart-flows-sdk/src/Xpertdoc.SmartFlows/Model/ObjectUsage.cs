@@ -17,35 +17,33 @@ namespace Xpertdoc.SmartFlows.Model
     /// <summary>
     /// Defines objectUsage
     /// </summary>
-
     [JsonConverter(typeof(StringEnumConverter))]
-
     public enum ObjectUsage
     {
 
         /// <summary>
-        /// Enum FlowExecutionInput for value: flowExecutionInput
+        /// Enum FlowExecutionInput for "flowExecutionInput"
         /// </summary>
         [EnumMember(Value = "flowExecutionInput")]
-        FlowExecutionInput = 1,
+        FlowExecutionInput,
 
         /// <summary>
-        /// Enum FlowExecutionInternal for value: flowExecutionInternal
+        /// Enum FlowExecutionInternal for "flowExecutionInternal"
         /// </summary>
         [EnumMember(Value = "flowExecutionInternal")]
-        FlowExecutionInternal = 2,
+        FlowExecutionInternal,
 
         /// <summary>
-        /// Enum FlowExecutionOutput for value: flowExecutionOutput
+        /// Enum FlowExecutionOutput for "flowExecutionOutput"
         /// </summary>
         [EnumMember(Value = "flowExecutionOutput")]
-        FlowExecutionOutput = 3,
+        FlowExecutionOutput,
 
         /// <summary>
-        /// Enum UserCreated for value: userCreated
+        /// Enum UserCreated for "userCreated"
         /// </summary>
         [EnumMember(Value = "userCreated")]
-        UserCreated = 4
+        UserCreated
     }
 
 }

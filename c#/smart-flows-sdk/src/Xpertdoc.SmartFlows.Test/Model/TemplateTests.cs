@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Template> (instance, "variable 'instance' is a Template");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>
@@ -151,6 +150,14 @@ namespace Xpertdoc.SmartFlows.Test
         public void ComposedContentTest()
         {
             // TODO unit test for the property 'ComposedContent'
+        }
+        /// <summary>
+        /// Test the property 'PortalContent'
+        /// </summary>
+        [Test]
+        public void PortalContentTest()
+        {
+            // TODO unit test for the property 'PortalContent'
         }
 
     }

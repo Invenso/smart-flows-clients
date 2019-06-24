@@ -26,113 +26,113 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class FilterCondition : IEquatable<FilterCondition>, IValidatableObject
     {
         /// <summary>
-        /// Defines _Operator
+        /// Gets or Sets _Operator
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum OperatorEnum
         {
 
             /// <summary>
-            /// Enum Between for value: between
+            /// Enum Between for "between"
             /// </summary>
             [EnumMember(Value = "between")]
-            Between = 1,
+            Between,
 
             /// <summary>
-            /// Enum NotBetween for value: notBetween
+            /// Enum NotBetween for "notBetween"
             /// </summary>
             [EnumMember(Value = "notBetween")]
-            NotBetween = 2,
+            NotBetween,
 
             /// <summary>
-            /// Enum EqualTo for value: equalTo
+            /// Enum EqualTo for "equalTo"
             /// </summary>
             [EnumMember(Value = "equalTo")]
-            EqualTo = 3,
+            EqualTo,
 
             /// <summary>
-            /// Enum NotEqualTo for value: notEqualTo
+            /// Enum NotEqualTo for "notEqualTo"
             /// </summary>
             [EnumMember(Value = "notEqualTo")]
-            NotEqualTo = 4,
+            NotEqualTo,
 
             /// <summary>
-            /// Enum Like for value: like
+            /// Enum Like for "like"
             /// </summary>
             [EnumMember(Value = "like")]
-            Like = 5,
+            Like,
 
             /// <summary>
-            /// Enum NotLike for value: notLike
+            /// Enum NotLike for "notLike"
             /// </summary>
             [EnumMember(Value = "notLike")]
-            NotLike = 6,
+            NotLike,
 
             /// <summary>
-            /// Enum GreaterThan for value: greaterThan
+            /// Enum GreaterThan for "greaterThan"
             /// </summary>
             [EnumMember(Value = "greaterThan")]
-            GreaterThan = 7,
+            GreaterThan,
 
             /// <summary>
-            /// Enum LessThan for value: lessThan
+            /// Enum LessThan for "lessThan"
             /// </summary>
             [EnumMember(Value = "lessThan")]
-            LessThan = 8,
+            LessThan,
 
             /// <summary>
-            /// Enum GreaterThanOrEqualTo for value: greaterThanOrEqualTo
+            /// Enum GreaterThanOrEqualTo for "greaterThanOrEqualTo"
             /// </summary>
             [EnumMember(Value = "greaterThanOrEqualTo")]
-            GreaterThanOrEqualTo = 9,
+            GreaterThanOrEqualTo,
 
             /// <summary>
-            /// Enum LessThanOrEqualTo for value: lessThanOrEqualTo
+            /// Enum LessThanOrEqualTo for "lessThanOrEqualTo"
             /// </summary>
             [EnumMember(Value = "lessThanOrEqualTo")]
-            LessThanOrEqualTo = 10,
+            LessThanOrEqualTo,
 
             /// <summary>
-            /// Enum IsTrue for value: isTrue
+            /// Enum IsTrue for "isTrue"
             /// </summary>
             [EnumMember(Value = "isTrue")]
-            IsTrue = 11,
+            IsTrue,
 
             /// <summary>
-            /// Enum IsFalse for value: isFalse
+            /// Enum IsFalse for "isFalse"
             /// </summary>
             [EnumMember(Value = "isFalse")]
-            IsFalse = 12,
+            IsFalse,
 
             /// <summary>
-            /// Enum IsBlank for value: isBlank
+            /// Enum IsBlank for "isBlank"
             /// </summary>
             [EnumMember(Value = "isBlank")]
-            IsBlank = 13,
+            IsBlank,
 
             /// <summary>
-            /// Enum NotIsBlank for value: notIsBlank
+            /// Enum NotIsBlank for "notIsBlank"
             /// </summary>
             [EnumMember(Value = "notIsBlank")]
-            NotIsBlank = 14,
+            NotIsBlank,
 
             /// <summary>
-            /// Enum In for value: in
+            /// Enum In for "in"
             /// </summary>
             [EnumMember(Value = "in")]
-            In = 15,
+            In,
 
             /// <summary>
-            /// Enum IsNull for value: isNull
+            /// Enum IsNull for "isNull"
             /// </summary>
             [EnumMember(Value = "isNull")]
-            IsNull = 16,
+            IsNull,
 
             /// <summary>
-            /// Enum IsNotNull for value: isNotNull
+            /// Enum IsNotNull for "isNotNull"
             /// </summary>
             [EnumMember(Value = "isNotNull")]
-            IsNotNull = 17
+            IsNotNull
         }
 
         /// <summary>
@@ -158,14 +158,11 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "key", EmitDefaultValue = false)]
         public string Key { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Values
         /// </summary>
         [DataMember(Name = "values", EmitDefaultValue = false)]
         public List<Object> Values { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -193,38 +190,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as FilterCondition);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as FilterCondition);
         }
 
         /// <summary>
         /// Returns true if FilterCondition instances are equal
         /// </summary>
-        /// <param name="input">Instance of FilterCondition to be compared</param>
+        /// <param name="other">Instance of FilterCondition to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FilterCondition input)
+        public bool Equals(FilterCondition other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Key == input.Key ||
-                    (this.Key != null &&
-                    this.Key.Equals(input.Key))
+                    this.Key == other.Key ||
+                    this.Key != null &&
+                    this.Key.Equals(other.Key)
                 ) &&
                 (
-                    this._Operator == input._Operator ||
-                    (this._Operator != null &&
-                    this._Operator.Equals(input._Operator))
+                    this._Operator == other._Operator ||
+                    this._Operator != null &&
+                    this._Operator.Equals(other._Operator)
                 ) &&
                 (
-                    this.Values == input.Values ||
+                    this.Values == other.Values ||
                     this.Values != null &&
-                    this.Values.SequenceEqual(input.Values)
+                    this.Values.SequenceEqual(other.Values)
                 );
         }
 
@@ -234,25 +233,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Key != null)
-                    hashCode = hashCode * 59 + this.Key.GetHashCode();
+                    hash = hash * 59 + this.Key.GetHashCode();
                 if (this._Operator != null)
-                    hashCode = hashCode * 59 + this._Operator.GetHashCode();
+                    hash = hash * 59 + this._Operator.GetHashCode();
                 if (this.Values != null)
-                    hashCode = hashCode * 59 + this.Values.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Values.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

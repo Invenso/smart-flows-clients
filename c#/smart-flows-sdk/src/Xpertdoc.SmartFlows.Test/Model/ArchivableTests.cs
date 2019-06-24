@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Archivable> (instance, "variable 'instance' is a Archivable");
         }
 
-
         /// <summary>
         /// Test the property 'Identifier'
         /// </summary>
@@ -103,6 +102,14 @@ namespace Xpertdoc.SmartFlows.Test
         public void OutboundDependenciesTest()
         {
             // TODO unit test for the property 'OutboundDependencies'
+        }
+        /// <summary>
+        /// Test the property 'InboundDependencies'
+        /// </summary>
+        [Test]
+        public void InboundDependenciesTest()
+        {
+            // TODO unit test for the property 'InboundDependencies'
         }
 
     }

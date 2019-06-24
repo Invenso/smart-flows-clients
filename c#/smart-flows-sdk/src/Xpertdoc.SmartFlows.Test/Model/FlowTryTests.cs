@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<FlowTry> (instance, "variable 'instance' is a FlowTry");
         }
 
-
         /// <summary>
         /// Test the property 'BodyTry'
         /// </summary>

@@ -25,54 +25,49 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class DocGenSettingsResultImage : IEquatable<DocGenSettingsResultImage>, IValidatableObject
     {
         /// <summary>
-        /// Defines Format
+        /// Gets or Sets Format
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum FormatEnum
         {
 
             /// <summary>
-            /// Enum Png for value: png
+            /// Enum Png for "png"
             /// </summary>
             [EnumMember(Value = "png")]
-            Png = 1,
+            Png,
 
             /// <summary>
-            /// Enum Jpeg for value: jpeg
+            /// Enum Jpeg for "jpeg"
             /// </summary>
             [EnumMember(Value = "jpeg")]
-            Jpeg = 2,
+            Jpeg,
 
             /// <summary>
-            /// Enum Svg for value: svg
+            /// Enum Svg for "svg"
             /// </summary>
             [EnumMember(Value = "svg")]
-            Svg = 3,
+            Svg,
 
             /// <summary>
-            /// Enum Bmp for value: bmp
+            /// Enum Bmp for "bmp"
             /// </summary>
             [EnumMember(Value = "bmp")]
-            Bmp = 4,
+            Bmp,
 
             /// <summary>
-            /// Enum Gif for value: gif
+            /// Enum Gif for "gif"
             /// </summary>
             [EnumMember(Value = "gif")]
-            Gif = 5,
+            Gif,
 
             /// <summary>
-            /// Enum Emf for value: emf
+            /// Enum Emf for "emf"
             /// </summary>
             [EnumMember(Value = "emf")]
-            Emf = 6
+            Emf
         }
 
-        /// <summary>
-        /// Gets or Sets Format
-        /// </summary>
-        [DataMember(Name = "format", EmitDefaultValue = false)]
-        public FormatEnum? Format { get; set; }
         /// <summary>
         /// How colors are rendered. normal: render with unmodified colors. Grayscale: render with colors in a range of gray shades from white to black
         /// </summary>
@@ -82,24 +77,29 @@ namespace Xpertdoc.SmartFlows.Model
         {
 
             /// <summary>
-            /// Enum Normal for value: normal
+            /// Enum Normal for "normal"
             /// </summary>
             [EnumMember(Value = "normal")]
-            Normal = 1,
+            Normal,
 
             /// <summary>
-            /// Enum BlackAndWhite for value: blackAndWhite
+            /// Enum BlackAndWhite for "blackAndWhite"
             /// </summary>
             [EnumMember(Value = "blackAndWhite")]
-            BlackAndWhite = 2,
+            BlackAndWhite,
 
             /// <summary>
-            /// Enum Grayscale for value: grayscale
+            /// Enum Grayscale for "grayscale"
             /// </summary>
             [EnumMember(Value = "grayscale")]
-            Grayscale = 3
+            Grayscale
         }
 
+        /// <summary>
+        /// Gets or Sets Format
+        /// </summary>
+        [DataMember(Name = "format", EmitDefaultValue = false)]
+        public FormatEnum? Format { get; set; }
         /// <summary>
         /// How colors are rendered. normal: render with unmodified colors. Grayscale: render with colors in a range of gray shades from white to black
         /// </summary>
@@ -166,44 +166,36 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "pageing", EmitDefaultValue = false)]
         public DocGenSettingsResultImagePageing Pageing { get; set; }
-
-
         /// <summary>
         /// Whether or not to use anti-aliasing for rendering
         /// </summary>
         /// <value>Whether or not to use anti-aliasing for rendering</value>
         [DataMember(Name = "antiAliasing", EmitDefaultValue = false)]
         public bool? AntiAliasing { get; set; }
-
-
         /// <summary>
         /// Specifies the output resolution for images in dpi
         /// </summary>
         /// <value>Specifies the output resolution for images in dpi</value>
         [DataMember(Name = "resolution", EmitDefaultValue = false)]
         public int? Resolution { get; set; }
-
         /// <summary>
         /// The background (paper) color for the generated images. When rendering pages of a document that specifies its own background color, then the document background color will override the color specified by this property
         /// </summary>
         /// <value>The background (paper) color for the generated images. When rendering pages of a document that specifies its own background color, then the document background color will override the color specified by this property</value>
         [DataMember(Name = "paperColor", EmitDefaultValue = false)]
         public string PaperColor { get; set; }
-
         /// <summary>
         /// The zoom factor for the generated images
         /// </summary>
         /// <value>The zoom factor for the generated images</value>
         [DataMember(Name = "scale", EmitDefaultValue = false)]
         public decimal? Scale { get; set; }
-
         /// <summary>
         /// The quality of JPEG images. 0 means worst quality but maximum compression and 100 means best quality but minimum compression. If quality is 100, it means no compression
         /// </summary>
         /// <value>The quality of JPEG images. 0 means worst quality but maximum compression and 100 means best quality but minimum compression. If quality is 100, it means no compression</value>
         [DataMember(Name = "jpegQuality", EmitDefaultValue = false)]
         public int? JpegQuality { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -236,63 +228,65 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DocGenSettingsResultImage);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DocGenSettingsResultImage);
         }
 
         /// <summary>
         /// Returns true if DocGenSettingsResultImage instances are equal
         /// </summary>
-        /// <param name="input">Instance of DocGenSettingsResultImage to be compared</param>
+        /// <param name="other">Instance of DocGenSettingsResultImage to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DocGenSettingsResultImage input)
+        public bool Equals(DocGenSettingsResultImage other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Pageing == input.Pageing ||
-                    (this.Pageing != null &&
-                    this.Pageing.Equals(input.Pageing))
+                    this.Pageing == other.Pageing ||
+                    this.Pageing != null &&
+                    this.Pageing.Equals(other.Pageing)
                 ) &&
                 (
-                    this.Format == input.Format ||
-                    (this.Format != null &&
-                    this.Format.Equals(input.Format))
+                    this.Format == other.Format ||
+                    this.Format != null &&
+                    this.Format.Equals(other.Format)
                 ) &&
                 (
-                    this.AntiAliasing == input.AntiAliasing ||
-                    (this.AntiAliasing != null &&
-                    this.AntiAliasing.Equals(input.AntiAliasing))
+                    this.AntiAliasing == other.AntiAliasing ||
+                    this.AntiAliasing != null &&
+                    this.AntiAliasing.Equals(other.AntiAliasing)
                 ) &&
                 (
-                    this.ColorMode == input.ColorMode ||
-                    (this.ColorMode != null &&
-                    this.ColorMode.Equals(input.ColorMode))
+                    this.ColorMode == other.ColorMode ||
+                    this.ColorMode != null &&
+                    this.ColorMode.Equals(other.ColorMode)
                 ) &&
                 (
-                    this.Resolution == input.Resolution ||
-                    (this.Resolution != null &&
-                    this.Resolution.Equals(input.Resolution))
+                    this.Resolution == other.Resolution ||
+                    this.Resolution != null &&
+                    this.Resolution.Equals(other.Resolution)
                 ) &&
                 (
-                    this.PaperColor == input.PaperColor ||
-                    (this.PaperColor != null &&
-                    this.PaperColor.Equals(input.PaperColor))
+                    this.PaperColor == other.PaperColor ||
+                    this.PaperColor != null &&
+                    this.PaperColor.Equals(other.PaperColor)
                 ) &&
                 (
-                    this.Scale == input.Scale ||
-                    (this.Scale != null &&
-                    this.Scale.Equals(input.Scale))
+                    this.Scale == other.Scale ||
+                    this.Scale != null &&
+                    this.Scale.Equals(other.Scale)
                 ) &&
                 (
-                    this.JpegQuality == input.JpegQuality ||
-                    (this.JpegQuality != null &&
-                    this.JpegQuality.Equals(input.JpegQuality))
+                    this.JpegQuality == other.JpegQuality ||
+                    this.JpegQuality != null &&
+                    this.JpegQuality.Equals(other.JpegQuality)
                 );
         }
 
@@ -302,52 +296,49 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Pageing != null)
-                    hashCode = hashCode * 59 + this.Pageing.GetHashCode();
+                    hash = hash * 59 + this.Pageing.GetHashCode();
                 if (this.Format != null)
-                    hashCode = hashCode * 59 + this.Format.GetHashCode();
+                    hash = hash * 59 + this.Format.GetHashCode();
                 if (this.AntiAliasing != null)
-                    hashCode = hashCode * 59 + this.AntiAliasing.GetHashCode();
+                    hash = hash * 59 + this.AntiAliasing.GetHashCode();
                 if (this.ColorMode != null)
-                    hashCode = hashCode * 59 + this.ColorMode.GetHashCode();
+                    hash = hash * 59 + this.ColorMode.GetHashCode();
                 if (this.Resolution != null)
-                    hashCode = hashCode * 59 + this.Resolution.GetHashCode();
+                    hash = hash * 59 + this.Resolution.GetHashCode();
                 if (this.PaperColor != null)
-                    hashCode = hashCode * 59 + this.PaperColor.GetHashCode();
+                    hash = hash * 59 + this.PaperColor.GetHashCode();
                 if (this.Scale != null)
-                    hashCode = hashCode * 59 + this.Scale.GetHashCode();
+                    hash = hash * 59 + this.Scale.GetHashCode();
                 if (this.JpegQuality != null)
-                    hashCode = hashCode * 59 + this.JpegQuality.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.JpegQuality.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // Resolution (int?) minimum
             if (this.Resolution < (int?)72)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Resolution, must be a value greater than or equal to 72.", new[] { "Resolution" });
+                yield return new ValidationResult("Invalid value for Resolution, must be a value greater than or equal to 72.", new[] { "Resolution" });
             }
 
             // JpegQuality (int?) maximum
             if (this.JpegQuality > (int?)100)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for JpegQuality, must be a value less than or equal to 100.", new[] { "JpegQuality" });
+                yield return new ValidationResult("Invalid value for JpegQuality, must be a value less than or equal to 100.", new[] { "JpegQuality" });
             }
 
             // JpegQuality (int?) minimum
             if (this.JpegQuality < (int?)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for JpegQuality, must be a value greater than or equal to 0.", new[] { "JpegQuality" });
+                yield return new ValidationResult("Invalid value for JpegQuality, must be a value greater than or equal to 0.", new[] { "JpegQuality" });
             }
 
             yield break;

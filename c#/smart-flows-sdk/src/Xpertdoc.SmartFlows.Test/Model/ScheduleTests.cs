@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Schedule> (instance, "variable 'instance' is a Schedule");
         }
 
-
         /// <summary>
         /// Test the property 'Disabled'
         /// </summary>

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<GeneratedDocumentContent> (instance, "variable 'instance' is a GeneratedDocumentContent");
         }
 
-
         /// <summary>
         /// Test the property 'Entity'
         /// </summary>

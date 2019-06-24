@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Part> (instance, "variable 'instance' is a Part");
         }
 
-
         /// <summary>
         /// Test the property 'Template'
         /// </summary>

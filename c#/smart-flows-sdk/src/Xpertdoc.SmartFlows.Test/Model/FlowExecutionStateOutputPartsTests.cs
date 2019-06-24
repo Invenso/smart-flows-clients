@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<FlowExecutionStateOutputParts> (instance, "variable 'instance' is a FlowExecutionStateOutputParts");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Period> (instance, "variable 'instance' is a Period");
         }
 
-
         /// <summary>
         /// Test the property '_Period'
         /// </summary>

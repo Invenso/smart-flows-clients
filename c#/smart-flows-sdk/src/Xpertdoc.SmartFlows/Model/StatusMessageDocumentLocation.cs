@@ -45,31 +45,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "template", EmitDefaultValue = false)]
         public IdWithName Template { get; set; }
-
         /// <summary>
         /// Gets or Sets Instruction
         /// </summary>
         [DataMember(Name = "instruction", EmitDefaultValue = false)]
         public string Instruction { get; set; }
-
         /// <summary>
         /// Gets or Sets InstructionField
         /// </summary>
         [DataMember(Name = "instructionField", EmitDefaultValue = false)]
         public string InstructionField { get; set; }
-
         /// <summary>
         /// Gets or Sets Field
         /// </summary>
         [DataMember(Name = "field", EmitDefaultValue = false)]
         public string Field { get; set; }
-
         /// <summary>
         /// Gets or Sets FieldValue
         /// </summary>
         [DataMember(Name = "fieldValue", EmitDefaultValue = false)]
         public string FieldValue { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -99,48 +94,50 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as StatusMessageDocumentLocation);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as StatusMessageDocumentLocation);
         }
 
         /// <summary>
         /// Returns true if StatusMessageDocumentLocation instances are equal
         /// </summary>
-        /// <param name="input">Instance of StatusMessageDocumentLocation to be compared</param>
+        /// <param name="other">Instance of StatusMessageDocumentLocation to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(StatusMessageDocumentLocation input)
+        public bool Equals(StatusMessageDocumentLocation other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Template == input.Template ||
-                    (this.Template != null &&
-                    this.Template.Equals(input.Template))
+                    this.Template == other.Template ||
+                    this.Template != null &&
+                    this.Template.Equals(other.Template)
                 ) &&
                 (
-                    this.Instruction == input.Instruction ||
-                    (this.Instruction != null &&
-                    this.Instruction.Equals(input.Instruction))
+                    this.Instruction == other.Instruction ||
+                    this.Instruction != null &&
+                    this.Instruction.Equals(other.Instruction)
                 ) &&
                 (
-                    this.InstructionField == input.InstructionField ||
-                    (this.InstructionField != null &&
-                    this.InstructionField.Equals(input.InstructionField))
+                    this.InstructionField == other.InstructionField ||
+                    this.InstructionField != null &&
+                    this.InstructionField.Equals(other.InstructionField)
                 ) &&
                 (
-                    this.Field == input.Field ||
-                    (this.Field != null &&
-                    this.Field.Equals(input.Field))
+                    this.Field == other.Field ||
+                    this.Field != null &&
+                    this.Field.Equals(other.Field)
                 ) &&
                 (
-                    this.FieldValue == input.FieldValue ||
-                    (this.FieldValue != null &&
-                    this.FieldValue.Equals(input.FieldValue))
+                    this.FieldValue == other.FieldValue ||
+                    this.FieldValue != null &&
+                    this.FieldValue.Equals(other.FieldValue)
                 );
         }
 
@@ -150,29 +147,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Template != null)
-                    hashCode = hashCode * 59 + this.Template.GetHashCode();
+                    hash = hash * 59 + this.Template.GetHashCode();
                 if (this.Instruction != null)
-                    hashCode = hashCode * 59 + this.Instruction.GetHashCode();
+                    hash = hash * 59 + this.Instruction.GetHashCode();
                 if (this.InstructionField != null)
-                    hashCode = hashCode * 59 + this.InstructionField.GetHashCode();
+                    hash = hash * 59 + this.InstructionField.GetHashCode();
                 if (this.Field != null)
-                    hashCode = hashCode * 59 + this.Field.GetHashCode();
+                    hash = hash * 59 + this.Field.GetHashCode();
                 if (this.FieldValue != null)
-                    hashCode = hashCode * 59 + this.FieldValue.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.FieldValue.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

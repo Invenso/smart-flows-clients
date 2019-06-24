@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Version> (instance, "variable 'instance' is a Version");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

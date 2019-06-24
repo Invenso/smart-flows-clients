@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DefaultPluginSettings> (instance, "variable 'instance' is a DefaultPluginSettings");
         }
 
-
         /// <summary>
         /// Test the property 'ConnectorType'
         /// </summary>

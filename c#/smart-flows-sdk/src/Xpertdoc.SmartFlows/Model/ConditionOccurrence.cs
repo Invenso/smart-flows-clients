@@ -49,19 +49,16 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "emptyElementsAreNoneExistant", EmitDefaultValue = false)]
         public bool? EmptyElementsAreNoneExistant { get; set; }
-
         /// <summary>
         /// Gets or Sets Value
         /// </summary>
         [DataMember(Name = "value", EmitDefaultValue = false)]
         public ConditionValue Value { get; set; }
-
         /// <summary>
         /// Gets or Sets OccurrenceCount
         /// </summary>
         [DataMember(Name = "occurrenceCount", EmitDefaultValue = false)]
         public NumberCondition OccurrenceCount { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -89,38 +86,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as ConditionOccurrence);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ConditionOccurrence);
         }
 
         /// <summary>
         /// Returns true if ConditionOccurrence instances are equal
         /// </summary>
-        /// <param name="input">Instance of ConditionOccurrence to be compared</param>
+        /// <param name="other">Instance of ConditionOccurrence to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ConditionOccurrence input)
+        public bool Equals(ConditionOccurrence other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.EmptyElementsAreNoneExistant == input.EmptyElementsAreNoneExistant ||
-                    (this.EmptyElementsAreNoneExistant != null &&
-                    this.EmptyElementsAreNoneExistant.Equals(input.EmptyElementsAreNoneExistant))
+                    this.EmptyElementsAreNoneExistant == other.EmptyElementsAreNoneExistant ||
+                    this.EmptyElementsAreNoneExistant != null &&
+                    this.EmptyElementsAreNoneExistant.Equals(other.EmptyElementsAreNoneExistant)
                 ) &&
                 (
-                    this.Value == input.Value ||
-                    (this.Value != null &&
-                    this.Value.Equals(input.Value))
+                    this.Value == other.Value ||
+                    this.Value != null &&
+                    this.Value.Equals(other.Value)
                 ) &&
                 (
-                    this.OccurrenceCount == input.OccurrenceCount ||
-                    (this.OccurrenceCount != null &&
-                    this.OccurrenceCount.Equals(input.OccurrenceCount))
+                    this.OccurrenceCount == other.OccurrenceCount ||
+                    this.OccurrenceCount != null &&
+                    this.OccurrenceCount.Equals(other.OccurrenceCount)
                 );
         }
 
@@ -130,25 +129,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.EmptyElementsAreNoneExistant != null)
-                    hashCode = hashCode * 59 + this.EmptyElementsAreNoneExistant.GetHashCode();
+                    hash = hash * 59 + this.EmptyElementsAreNoneExistant.GetHashCode();
                 if (this.Value != null)
-                    hashCode = hashCode * 59 + this.Value.GetHashCode();
+                    hash = hash * 59 + this.Value.GetHashCode();
                 if (this.OccurrenceCount != null)
-                    hashCode = hashCode * 59 + this.OccurrenceCount.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.OccurrenceCount.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

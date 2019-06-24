@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Flow> (instance, "variable 'instance' is a Flow");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>
@@ -159,6 +158,14 @@ namespace Xpertdoc.SmartFlows.Test
         public void PrimaryTemplateTest()
         {
             // TODO unit test for the property 'PrimaryTemplate'
+        }
+        /// <summary>
+        /// Test the property 'Outputs'
+        /// </summary>
+        [Test]
+        public void OutputsTest()
+        {
+            // TODO unit test for the property 'Outputs'
         }
         /// <summary>
         /// Test the property 'Settings'

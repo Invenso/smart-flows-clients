@@ -25,35 +25,35 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class FormattedValue : IEquatable<FormattedValue>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum Number for value: number
+            /// Enum Number for "number"
             /// </summary>
             [EnumMember(Value = "number")]
-            Number = 1,
+            Number,
 
             /// <summary>
-            /// Enum Date for value: date
+            /// Enum Date for "date"
             /// </summary>
             [EnumMember(Value = "date")]
-            Date = 2,
+            Date,
 
             /// <summary>
-            /// Enum Time for value: time
+            /// Enum Time for "time"
             /// </summary>
             [EnumMember(Value = "time")]
-            Time = 3,
+            Time,
 
             /// <summary>
-            /// Enum DateTime for value: dateTime
+            /// Enum DateTime for "dateTime"
             /// </summary>
             [EnumMember(Value = "dateTime")]
-            DateTime = 4
+            DateTime
         }
 
         /// <summary>
@@ -81,20 +81,16 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "value", EmitDefaultValue = false)]
         public string Value { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Pattern
         /// </summary>
         [DataMember(Name = "pattern", EmitDefaultValue = false)]
         public string Pattern { get; set; }
-
         /// <summary>
         /// Gets or Sets Result
         /// </summary>
         [DataMember(Name = "result", EmitDefaultValue = false)]
         public string Result { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -123,43 +119,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as FormattedValue);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as FormattedValue);
         }
 
         /// <summary>
         /// Returns true if FormattedValue instances are equal
         /// </summary>
-        /// <param name="input">Instance of FormattedValue to be compared</param>
+        /// <param name="other">Instance of FormattedValue to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FormattedValue input)
+        public bool Equals(FormattedValue other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Value == input.Value ||
-                    (this.Value != null &&
-                    this.Value.Equals(input.Value))
+                    this.Value == other.Value ||
+                    this.Value != null &&
+                    this.Value.Equals(other.Value)
                 ) &&
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.Pattern == input.Pattern ||
-                    (this.Pattern != null &&
-                    this.Pattern.Equals(input.Pattern))
+                    this.Pattern == other.Pattern ||
+                    this.Pattern != null &&
+                    this.Pattern.Equals(other.Pattern)
                 ) &&
                 (
-                    this.Result == input.Result ||
-                    (this.Result != null &&
-                    this.Result.Equals(input.Result))
+                    this.Result == other.Result ||
+                    this.Result != null &&
+                    this.Result.Equals(other.Result)
                 );
         }
 
@@ -169,27 +167,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Value != null)
-                    hashCode = hashCode * 59 + this.Value.GetHashCode();
+                    hash = hash * 59 + this.Value.GetHashCode();
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.Pattern != null)
-                    hashCode = hashCode * 59 + this.Pattern.GetHashCode();
+                    hash = hash * 59 + this.Pattern.GetHashCode();
                 if (this.Result != null)
-                    hashCode = hashCode * 59 + this.Result.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Result.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -42,19 +42,16 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets RelatedEntities
         /// </summary>
         [DataMember(Name = "relatedEntities", EmitDefaultValue = false)]
         public List<string> RelatedEntities { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -82,38 +79,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as EntityReferenceLookups);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as EntityReferenceLookups);
         }
 
         /// <summary>
         /// Returns true if EntityReferenceLookups instances are equal
         /// </summary>
-        /// <param name="input">Instance of EntityReferenceLookups to be compared</param>
+        /// <param name="other">Instance of EntityReferenceLookups to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(EntityReferenceLookups input)
+        public bool Equals(EntityReferenceLookups other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
+                    this.Name == other.Name ||
+                    this.Name != null &&
+                    this.Name.Equals(other.Name)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.RelatedEntities == input.RelatedEntities ||
+                    this.RelatedEntities == other.RelatedEntities ||
                     this.RelatedEntities != null &&
-                    this.RelatedEntities.SequenceEqual(input.RelatedEntities)
+                    this.RelatedEntities.SequenceEqual(other.RelatedEntities)
                 );
         }
 
@@ -123,25 +122,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Name != null)
-                    hashCode = hashCode * 59 + this.Name.GetHashCode();
+                    hash = hash * 59 + this.Name.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.RelatedEntities != null)
-                    hashCode = hashCode * 59 + this.RelatedEntities.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.RelatedEntities.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -44,25 +44,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets Header
         /// </summary>
         [DataMember(Name = "header", EmitDefaultValue = false)]
         public string Header { get; set; }
-
         /// <summary>
         /// Gets or Sets Index
         /// </summary>
         [DataMember(Name = "index", EmitDefaultValue = false)]
         public int? Index { get; set; }
-
         /// <summary>
         /// Gets or Sets Values
         /// </summary>
         [DataMember(Name = "values", EmitDefaultValue = false)]
         public List<ChartValue> Values { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -91,43 +87,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as GeneratedDocumentSeries);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as GeneratedDocumentSeries);
         }
 
         /// <summary>
         /// Returns true if GeneratedDocumentSeries instances are equal
         /// </summary>
-        /// <param name="input">Instance of GeneratedDocumentSeries to be compared</param>
+        /// <param name="other">Instance of GeneratedDocumentSeries to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(GeneratedDocumentSeries input)
+        public bool Equals(GeneratedDocumentSeries other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.Header == input.Header ||
-                    (this.Header != null &&
-                    this.Header.Equals(input.Header))
+                    this.Header == other.Header ||
+                    this.Header != null &&
+                    this.Header.Equals(other.Header)
                 ) &&
                 (
-                    this.Index == input.Index ||
-                    (this.Index != null &&
-                    this.Index.Equals(input.Index))
+                    this.Index == other.Index ||
+                    this.Index != null &&
+                    this.Index.Equals(other.Index)
                 ) &&
                 (
-                    this.Values == input.Values ||
+                    this.Values == other.Values ||
                     this.Values != null &&
-                    this.Values.SequenceEqual(input.Values)
+                    this.Values.SequenceEqual(other.Values)
                 );
         }
 
@@ -137,27 +135,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.Header != null)
-                    hashCode = hashCode * 59 + this.Header.GetHashCode();
+                    hash = hash * 59 + this.Header.GetHashCode();
                 if (this.Index != null)
-                    hashCode = hashCode * 59 + this.Index.GetHashCode();
+                    hash = hash * 59 + this.Index.GetHashCode();
                 if (this.Values != null)
-                    hashCode = hashCode * 59 + this.Values.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Values.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

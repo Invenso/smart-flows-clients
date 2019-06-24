@@ -33,16 +33,16 @@ namespace Xpertdoc.SmartFlows.Model
         {
 
             /// <summary>
-            /// Enum Odt for value: odt
+            /// Enum Odt for "odt"
             /// </summary>
             [EnumMember(Value = "odt")]
-            Odt = 1,
+            Odt,
 
             /// <summary>
-            /// Enum Ott for value: ott
+            /// Enum Ott for "ott"
             /// </summary>
             [EnumMember(Value = "ott")]
-            Ott = 2
+            Ott
         }
 
         /// <summary>
@@ -78,14 +78,12 @@ namespace Xpertdoc.SmartFlows.Model
             }
         }
 
-
         /// <summary>
         /// Specifies whether export should correspond to ODT specification 1.1 strictly. OOo 3.0 displays files correctly when they contain elements and attributes of ODT 1.2. Use false for this purpose, or true for strict conformity of specification 1.1
         /// </summary>
         /// <value>Specifies whether export should correspond to ODT specification 1.1 strictly. OOo 3.0 displays files correctly when they contain elements and attributes of ODT 1.2. Use false for this purpose, or true for strict conformity of specification 1.1</value>
         [DataMember(Name = "isStrictSchema11", EmitDefaultValue = false)]
         public bool? IsStrictSchema11 { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -112,33 +110,35 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DocGenSettingsResultOdt);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DocGenSettingsResultOdt);
         }
 
         /// <summary>
         /// Returns true if DocGenSettingsResultOdt instances are equal
         /// </summary>
-        /// <param name="input">Instance of DocGenSettingsResultOdt to be compared</param>
+        /// <param name="other">Instance of DocGenSettingsResultOdt to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DocGenSettingsResultOdt input)
+        public bool Equals(DocGenSettingsResultOdt other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Format == input.Format ||
-                    (this.Format != null &&
-                    this.Format.Equals(input.Format))
+                    this.Format == other.Format ||
+                    this.Format != null &&
+                    this.Format.Equals(other.Format)
                 ) &&
                 (
-                    this.IsStrictSchema11 == input.IsStrictSchema11 ||
-                    (this.IsStrictSchema11 != null &&
-                    this.IsStrictSchema11.Equals(input.IsStrictSchema11))
+                    this.IsStrictSchema11 == other.IsStrictSchema11 ||
+                    this.IsStrictSchema11 != null &&
+                    this.IsStrictSchema11.Equals(other.IsStrictSchema11)
                 );
         }
 
@@ -148,23 +148,20 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Format != null)
-                    hashCode = hashCode * 59 + this.Format.GetHashCode();
+                    hash = hash * 59 + this.Format.GetHashCode();
                 if (this.IsStrictSchema11 != null)
-                    hashCode = hashCode * 59 + this.IsStrictSchema11.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.IsStrictSchema11.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

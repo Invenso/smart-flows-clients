@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<LicenseInformation> (instance, "variable 'instance' is a LicenseInformation");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>
@@ -71,6 +70,22 @@ namespace Xpertdoc.SmartFlows.Test
         public void DisplayNameTest()
         {
             // TODO unit test for the property 'DisplayName'
+        }
+        /// <summary>
+        /// Test the property 'Edition'
+        /// </summary>
+        [Test]
+        public void EditionTest()
+        {
+            // TODO unit test for the property 'Edition'
+        }
+        /// <summary>
+        /// Test the property 'Flavour'
+        /// </summary>
+        [Test]
+        public void FlavourTest()
+        {
+            // TODO unit test for the property 'Flavour'
         }
         /// <summary>
         /// Test the property 'Expiry'
@@ -95,6 +110,22 @@ namespace Xpertdoc.SmartFlows.Test
         public void ExpiredTest()
         {
             // TODO unit test for the property 'Expired'
+        }
+        /// <summary>
+        /// Test the property 'Limits'
+        /// </summary>
+        [Test]
+        public void LimitsTest()
+        {
+            // TODO unit test for the property 'Limits'
+        }
+        /// <summary>
+        /// Test the property 'Plugins'
+        /// </summary>
+        [Test]
+        public void PluginsTest()
+        {
+            // TODO unit test for the property 'Plugins'
         }
 
     }

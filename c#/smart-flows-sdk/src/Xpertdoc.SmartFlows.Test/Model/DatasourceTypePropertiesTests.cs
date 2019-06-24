@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DatasourceTypeProperties> (instance, "variable 'instance' is a DatasourceTypeProperties");
         }
 
-
         /// <summary>
         /// Test the property 'DisplayName'
         /// </summary>

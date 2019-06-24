@@ -26,23 +26,23 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class FilterGroup : IEquatable<FilterGroup>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum And for value: and
+            /// Enum And for "and"
             /// </summary>
             [EnumMember(Value = "and")]
-            And = 1,
+            And,
 
             /// <summary>
-            /// Enum Or for value: or
+            /// Enum Or for "or"
             /// </summary>
             [EnumMember(Value = "or")]
-            Or = 2
+            Or
         }
 
         /// <summary>
@@ -69,13 +69,11 @@ namespace Xpertdoc.SmartFlows.Model
             this.Nodes = Nodes;
         }
 
-
         /// <summary>
         /// Gets or Sets Nodes
         /// </summary>
         [DataMember(Name = "nodes", EmitDefaultValue = false)]
         public List<FilterGroupNode> Nodes { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -102,33 +100,35 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as FilterGroup);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as FilterGroup);
         }
 
         /// <summary>
         /// Returns true if FilterGroup instances are equal
         /// </summary>
-        /// <param name="input">Instance of FilterGroup to be compared</param>
+        /// <param name="other">Instance of FilterGroup to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FilterGroup input)
+        public bool Equals(FilterGroup other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.Nodes == input.Nodes ||
+                    this.Nodes == other.Nodes ||
                     this.Nodes != null &&
-                    this.Nodes.SequenceEqual(input.Nodes)
+                    this.Nodes.SequenceEqual(other.Nodes)
                 );
         }
 
@@ -138,23 +138,20 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.Nodes != null)
-                    hashCode = hashCode * 59 + this.Nodes.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Nodes.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

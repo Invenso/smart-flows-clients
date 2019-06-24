@@ -25,47 +25,47 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class ChartValue : IEquatable<ChartValue>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum String for value: string
+            /// Enum String for "string"
             /// </summary>
             [EnumMember(Value = "string")]
-            String = 1,
+            String,
 
             /// <summary>
-            /// Enum Number for value: number
+            /// Enum Number for "number"
             /// </summary>
             [EnumMember(Value = "number")]
-            Number = 2,
+            Number,
 
             /// <summary>
-            /// Enum Boolean for value: boolean
+            /// Enum Boolean for "boolean"
             /// </summary>
             [EnumMember(Value = "boolean")]
-            Boolean = 3,
+            Boolean,
 
             /// <summary>
-            /// Enum DateTime for value: dateTime
+            /// Enum DateTime for "dateTime"
             /// </summary>
             [EnumMember(Value = "dateTime")]
-            DateTime = 4,
+            DateTime,
 
             /// <summary>
-            /// Enum Date for value: date
+            /// Enum Date for "date"
             /// </summary>
             [EnumMember(Value = "date")]
-            Date = 5,
+            Date,
 
             /// <summary>
-            /// Enum Time for value: time
+            /// Enum Time for "time"
             /// </summary>
             [EnumMember(Value = "time")]
-            Time = 6
+            Time
         }
 
         /// <summary>
@@ -93,20 +93,16 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "value", EmitDefaultValue = false)]
         public string Value { get; set; }
-
         /// <summary>
         /// Gets or Sets NumberValue
         /// </summary>
         [DataMember(Name = "numberValue", EmitDefaultValue = false)]
         public decimal? NumberValue { get; set; }
-
         /// <summary>
         /// Gets or Sets DateTimeValue
         /// </summary>
         [DataMember(Name = "dateTimeValue", EmitDefaultValue = false)]
         public string DateTimeValue { get; set; }
-
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -135,43 +131,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as ChartValue);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ChartValue);
         }
 
         /// <summary>
         /// Returns true if ChartValue instances are equal
         /// </summary>
-        /// <param name="input">Instance of ChartValue to be compared</param>
+        /// <param name="other">Instance of ChartValue to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ChartValue input)
+        public bool Equals(ChartValue other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Value == input.Value ||
-                    (this.Value != null &&
-                    this.Value.Equals(input.Value))
+                    this.Value == other.Value ||
+                    this.Value != null &&
+                    this.Value.Equals(other.Value)
                 ) &&
                 (
-                    this.NumberValue == input.NumberValue ||
-                    (this.NumberValue != null &&
-                    this.NumberValue.Equals(input.NumberValue))
+                    this.NumberValue == other.NumberValue ||
+                    this.NumberValue != null &&
+                    this.NumberValue.Equals(other.NumberValue)
                 ) &&
                 (
-                    this.DateTimeValue == input.DateTimeValue ||
-                    (this.DateTimeValue != null &&
-                    this.DateTimeValue.Equals(input.DateTimeValue))
+                    this.DateTimeValue == other.DateTimeValue ||
+                    this.DateTimeValue != null &&
+                    this.DateTimeValue.Equals(other.DateTimeValue)
                 ) &&
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 );
         }
 
@@ -181,27 +179,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Value != null)
-                    hashCode = hashCode * 59 + this.Value.GetHashCode();
+                    hash = hash * 59 + this.Value.GetHashCode();
                 if (this.NumberValue != null)
-                    hashCode = hashCode * 59 + this.NumberValue.GetHashCode();
+                    hash = hash * 59 + this.NumberValue.GetHashCode();
                 if (this.DateTimeValue != null)
-                    hashCode = hashCode * 59 + this.DateTimeValue.GetHashCode();
+                    hash = hash * 59 + this.DateTimeValue.GetHashCode();
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Type.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

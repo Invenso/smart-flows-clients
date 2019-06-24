@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<UserIdentity> (instance, "variable 'instance' is a UserIdentity");
         }
 
-
         /// <summary>
         /// Test the property 'Type'
         /// </summary>

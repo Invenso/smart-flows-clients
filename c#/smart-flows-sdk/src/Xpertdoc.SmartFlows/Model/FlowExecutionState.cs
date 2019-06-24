@@ -33,7 +33,11 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="Iterations">if the input supports multiple iterations, these are the iterations.</param>
         /// <param name="Report">if the input supports multiple iterations, but groupToSingleDocument is enabled, these are the post processing zones. If the input does not support multiple iterations, these are the flow zones.</param>
         /// <param name="WaitingFor">WaitingFor.</param>
-        public FlowExecutionState(IdWithName InputData = default(IdWithName), FlowExecutionStateOutput Output = default(FlowExecutionStateOutput), List<FlowExecutionStage> Stages = default(List<FlowExecutionStage>), List<FlowExecutionIteration> Iterations = default(List<FlowExecutionIteration>), List<FlowZoneState> Report = default(List<FlowZoneState>), string WaitingFor = default(string))
+        /// <param name="LanguageCode">LanguageCode.</param>
+        /// <param name="TimeZoneId">TimeZoneId.</param>
+        /// <param name="Warnings">Warnings.</param>
+        /// <param name="Errors">Errors.</param>
+        public FlowExecutionState(IdWithName InputData = default(IdWithName), FlowExecutionStateOutput Output = default(FlowExecutionStateOutput), List<FlowExecutionStage> Stages = default(List<FlowExecutionStage>), List<FlowExecutionIteration> Iterations = default(List<FlowExecutionIteration>), List<FlowZoneState> Report = default(List<FlowZoneState>), string WaitingFor = default(string), string LanguageCode = default(string), string TimeZoneId = default(string), List<FlowException> Warnings = default(List<FlowException>), List<FlowException> Errors = default(List<FlowException>))
         {
             this.InputData = InputData;
             this.Output = Output;
@@ -41,6 +45,10 @@ namespace Xpertdoc.SmartFlows.Model
             this.Iterations = Iterations;
             this.Report = Report;
             this.WaitingFor = WaitingFor;
+            this.LanguageCode = LanguageCode;
+            this.TimeZoneId = TimeZoneId;
+            this.Warnings = Warnings;
+            this.Errors = Errors;
         }
 
         /// <summary>
@@ -48,39 +56,53 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "inputData", EmitDefaultValue = false)]
         public IdWithName InputData { get; set; }
-
         /// <summary>
         /// Gets or Sets Output
         /// </summary>
         [DataMember(Name = "output", EmitDefaultValue = false)]
         public FlowExecutionStateOutput Output { get; set; }
-
         /// <summary>
         /// Gets or Sets Stages
         /// </summary>
         [DataMember(Name = "stages", EmitDefaultValue = false)]
         public List<FlowExecutionStage> Stages { get; set; }
-
         /// <summary>
         /// if the input supports multiple iterations, these are the iterations
         /// </summary>
         /// <value>if the input supports multiple iterations, these are the iterations</value>
         [DataMember(Name = "iterations", EmitDefaultValue = false)]
         public List<FlowExecutionIteration> Iterations { get; set; }
-
         /// <summary>
         /// if the input supports multiple iterations, but groupToSingleDocument is enabled, these are the post processing zones. If the input does not support multiple iterations, these are the flow zones
         /// </summary>
         /// <value>if the input supports multiple iterations, but groupToSingleDocument is enabled, these are the post processing zones. If the input does not support multiple iterations, these are the flow zones</value>
         [DataMember(Name = "report", EmitDefaultValue = false)]
         public List<FlowZoneState> Report { get; set; }
-
         /// <summary>
         /// Gets or Sets WaitingFor
         /// </summary>
         [DataMember(Name = "waitingFor", EmitDefaultValue = false)]
         public string WaitingFor { get; set; }
-
+        /// <summary>
+        /// Gets or Sets LanguageCode
+        /// </summary>
+        [DataMember(Name = "languageCode", EmitDefaultValue = false)]
+        public string LanguageCode { get; set; }
+        /// <summary>
+        /// Gets or Sets TimeZoneId
+        /// </summary>
+        [DataMember(Name = "timeZoneId", EmitDefaultValue = false)]
+        public string TimeZoneId { get; set; }
+        /// <summary>
+        /// Gets or Sets Warnings
+        /// </summary>
+        [DataMember(Name = "warnings", EmitDefaultValue = false)]
+        public List<FlowException> Warnings { get; set; }
+        /// <summary>
+        /// Gets or Sets Errors
+        /// </summary>
+        [DataMember(Name = "errors", EmitDefaultValue = false)]
+        public List<FlowException> Errors { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -95,6 +117,10 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("  Iterations: ").Append(Iterations).Append("\n");
             sb.Append("  Report: ").Append(Report).Append("\n");
             sb.Append("  WaitingFor: ").Append(WaitingFor).Append("\n");
+            sb.Append("  LanguageCode: ").Append(LanguageCode).Append("\n");
+            sb.Append("  TimeZoneId: ").Append(TimeZoneId).Append("\n");
+            sb.Append("  Warnings: ").Append(Warnings).Append("\n");
+            sb.Append("  Errors: ").Append(Errors).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -111,53 +137,75 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as FlowExecutionState);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as FlowExecutionState);
         }
 
         /// <summary>
         /// Returns true if FlowExecutionState instances are equal
         /// </summary>
-        /// <param name="input">Instance of FlowExecutionState to be compared</param>
+        /// <param name="other">Instance of FlowExecutionState to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FlowExecutionState input)
+        public bool Equals(FlowExecutionState other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.InputData == input.InputData ||
-                    (this.InputData != null &&
-                    this.InputData.Equals(input.InputData))
+                    this.InputData == other.InputData ||
+                    this.InputData != null &&
+                    this.InputData.Equals(other.InputData)
                 ) &&
                 (
-                    this.Output == input.Output ||
-                    (this.Output != null &&
-                    this.Output.Equals(input.Output))
+                    this.Output == other.Output ||
+                    this.Output != null &&
+                    this.Output.Equals(other.Output)
                 ) &&
                 (
-                    this.Stages == input.Stages ||
+                    this.Stages == other.Stages ||
                     this.Stages != null &&
-                    this.Stages.SequenceEqual(input.Stages)
+                    this.Stages.SequenceEqual(other.Stages)
                 ) &&
                 (
-                    this.Iterations == input.Iterations ||
+                    this.Iterations == other.Iterations ||
                     this.Iterations != null &&
-                    this.Iterations.SequenceEqual(input.Iterations)
+                    this.Iterations.SequenceEqual(other.Iterations)
                 ) &&
                 (
-                    this.Report == input.Report ||
+                    this.Report == other.Report ||
                     this.Report != null &&
-                    this.Report.SequenceEqual(input.Report)
+                    this.Report.SequenceEqual(other.Report)
                 ) &&
                 (
-                    this.WaitingFor == input.WaitingFor ||
-                    (this.WaitingFor != null &&
-                    this.WaitingFor.Equals(input.WaitingFor))
+                    this.WaitingFor == other.WaitingFor ||
+                    this.WaitingFor != null &&
+                    this.WaitingFor.Equals(other.WaitingFor)
+                ) &&
+                (
+                    this.LanguageCode == other.LanguageCode ||
+                    this.LanguageCode != null &&
+                    this.LanguageCode.Equals(other.LanguageCode)
+                ) &&
+                (
+                    this.TimeZoneId == other.TimeZoneId ||
+                    this.TimeZoneId != null &&
+                    this.TimeZoneId.Equals(other.TimeZoneId)
+                ) &&
+                (
+                    this.Warnings == other.Warnings ||
+                    this.Warnings != null &&
+                    this.Warnings.SequenceEqual(other.Warnings)
+                ) &&
+                (
+                    this.Errors == other.Errors ||
+                    this.Errors != null &&
+                    this.Errors.SequenceEqual(other.Errors)
                 );
         }
 
@@ -167,31 +215,36 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.InputData != null)
-                    hashCode = hashCode * 59 + this.InputData.GetHashCode();
+                    hash = hash * 59 + this.InputData.GetHashCode();
                 if (this.Output != null)
-                    hashCode = hashCode * 59 + this.Output.GetHashCode();
+                    hash = hash * 59 + this.Output.GetHashCode();
                 if (this.Stages != null)
-                    hashCode = hashCode * 59 + this.Stages.GetHashCode();
+                    hash = hash * 59 + this.Stages.GetHashCode();
                 if (this.Iterations != null)
-                    hashCode = hashCode * 59 + this.Iterations.GetHashCode();
+                    hash = hash * 59 + this.Iterations.GetHashCode();
                 if (this.Report != null)
-                    hashCode = hashCode * 59 + this.Report.GetHashCode();
+                    hash = hash * 59 + this.Report.GetHashCode();
                 if (this.WaitingFor != null)
-                    hashCode = hashCode * 59 + this.WaitingFor.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.WaitingFor.GetHashCode();
+                if (this.LanguageCode != null)
+                    hash = hash * 59 + this.LanguageCode.GetHashCode();
+                if (this.TimeZoneId != null)
+                    hash = hash * 59 + this.TimeZoneId.GetHashCode();
+                if (this.Warnings != null)
+                    hash = hash * 59 + this.Warnings.GetHashCode();
+                if (this.Errors != null)
+                    hash = hash * 59 + this.Errors.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

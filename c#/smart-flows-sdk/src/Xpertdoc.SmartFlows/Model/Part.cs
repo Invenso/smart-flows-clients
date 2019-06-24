@@ -26,117 +26,117 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class Part : IEquatable<Part>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum Body for value: body
+            /// Enum Body for "body"
             /// </summary>
             [EnumMember(Value = "body")]
-            Body = 1,
+            Body,
 
             /// <summary>
-            /// Enum Header for value: header
+            /// Enum Header for "header"
             /// </summary>
             [EnumMember(Value = "header")]
-            Header = 2,
+            Header,
 
             /// <summary>
-            /// Enum Footer for value: footer
+            /// Enum Footer for "footer"
             /// </summary>
             [EnumMember(Value = "footer")]
-            Footer = 3,
+            Footer,
 
             /// <summary>
-            /// Enum Addition for value: addition
+            /// Enum Addition for "addition"
             /// </summary>
             [EnumMember(Value = "addition")]
-            Addition = 4
+            Addition
         }
 
         /// <summary>
-        /// Gets or Sets Type
-        /// </summary>
-        [DataMember(Name = "type", EmitDefaultValue = false)]
-        public TypeEnum Type { get; set; }
-        /// <summary>
-        /// Defines _Break
+        /// Gets or Sets _Break
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum BreakEnum
         {
 
             /// <summary>
-            /// Enum None for value: none
+            /// Enum None for "none"
             /// </summary>
             [EnumMember(Value = "none")]
-            None = 1,
+            None,
 
             /// <summary>
-            /// Enum Continuous for value: continuous
+            /// Enum Continuous for "continuous"
             /// </summary>
             [EnumMember(Value = "continuous")]
-            Continuous = 2,
+            Continuous,
 
             /// <summary>
-            /// Enum NewColumn for value: newColumn
+            /// Enum NewColumn for "newColumn"
             /// </summary>
             [EnumMember(Value = "newColumn")]
-            NewColumn = 3,
+            NewColumn,
 
             /// <summary>
-            /// Enum NewPage for value: newPage
+            /// Enum NewPage for "newPage"
             /// </summary>
             [EnumMember(Value = "newPage")]
-            NewPage = 4,
+            NewPage,
 
             /// <summary>
-            /// Enum EvenPage for value: evenPage
+            /// Enum EvenPage for "evenPage"
             /// </summary>
             [EnumMember(Value = "evenPage")]
-            EvenPage = 5,
+            EvenPage,
 
             /// <summary>
-            /// Enum OddPage for value: oddPage
+            /// Enum OddPage for "oddPage"
             /// </summary>
             [EnumMember(Value = "oddPage")]
-            OddPage = 6
+            OddPage
         }
 
         /// <summary>
-        /// Gets or Sets _Break
-        /// </summary>
-        [DataMember(Name = "break", EmitDefaultValue = false)]
-        public BreakEnum? _Break { get; set; }
-        /// <summary>
-        /// Defines Occurrence
+        /// Gets or Sets Occurrence
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum OccurrenceEnum
         {
 
             /// <summary>
-            /// Enum Primary for value: primary
+            /// Enum Primary for "primary"
             /// </summary>
             [EnumMember(Value = "primary")]
-            Primary = 1,
+            Primary,
 
             /// <summary>
-            /// Enum FirstPage for value: firstPage
+            /// Enum FirstPage for "firstPage"
             /// </summary>
             [EnumMember(Value = "firstPage")]
-            FirstPage = 2,
+            FirstPage,
 
             /// <summary>
-            /// Enum EvenPage for value: evenPage
+            /// Enum EvenPage for "evenPage"
             /// </summary>
             [EnumMember(Value = "evenPage")]
-            EvenPage = 3
+            EvenPage
         }
 
+        /// <summary>
+        /// Gets or Sets Type
+        /// </summary>
+        [DataMember(Name = "type", EmitDefaultValue = false)]
+        public TypeEnum? Type { get; set; }
+        /// <summary>
+        /// Gets or Sets _Break
+        /// </summary>
+        [DataMember(Name = "break", EmitDefaultValue = false)]
+        public BreakEnum? _Break { get; set; }
         /// <summary>
         /// Gets or Sets Occurrence
         /// </summary>
@@ -157,7 +157,7 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="LinkHeaders">LinkHeaders (default to true).</param>
         /// <param name="Occurrence">Occurrence (default to OccurrenceEnum.Primary).</param>
         /// <param name="Conditions">Conditions.</param>
-        public Part(string Template = default(string), string TemplateDisplayName = default(string), TypeEnum Type = default(TypeEnum), BreakEnum? _Break = default(BreakEnum?), bool? LinkHeaders = true, OccurrenceEnum? Occurrence = OccurrenceEnum.Primary, ConditionGroup Conditions = default(ConditionGroup))
+        public Part(string Template = default(string), string TemplateDisplayName = default(string), TypeEnum? Type = default(TypeEnum?), BreakEnum? _Break = default(BreakEnum?), bool? LinkHeaders = true, OccurrenceEnum? Occurrence = OccurrenceEnum.Primary, ConditionGroup Conditions = default(ConditionGroup))
         {
             // to ensure "Template" is required (not null)
             if (Template == null)
@@ -205,29 +205,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "template", EmitDefaultValue = false)]
         public string Template { get; set; }
-
         /// <summary>
         /// Read-only, will contain the displayName of the linked template at the moment of retrieval
         /// </summary>
         /// <value>Read-only, will contain the displayName of the linked template at the moment of retrieval</value>
         [DataMember(Name = "templateDisplayName", EmitDefaultValue = false)]
         public string TemplateDisplayName { get; set; }
-
-
-
         /// <summary>
         /// Gets or Sets LinkHeaders
         /// </summary>
         [DataMember(Name = "linkHeaders", EmitDefaultValue = false)]
         public bool? LinkHeaders { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Conditions
         /// </summary>
         [DataMember(Name = "conditions", EmitDefaultValue = false)]
         public ConditionGroup Conditions { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -259,58 +252,60 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Part);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Part);
         }
 
         /// <summary>
         /// Returns true if Part instances are equal
         /// </summary>
-        /// <param name="input">Instance of Part to be compared</param>
+        /// <param name="other">Instance of Part to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Part input)
+        public bool Equals(Part other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Template == input.Template ||
-                    (this.Template != null &&
-                    this.Template.Equals(input.Template))
+                    this.Template == other.Template ||
+                    this.Template != null &&
+                    this.Template.Equals(other.Template)
                 ) &&
                 (
-                    this.TemplateDisplayName == input.TemplateDisplayName ||
-                    (this.TemplateDisplayName != null &&
-                    this.TemplateDisplayName.Equals(input.TemplateDisplayName))
+                    this.TemplateDisplayName == other.TemplateDisplayName ||
+                    this.TemplateDisplayName != null &&
+                    this.TemplateDisplayName.Equals(other.TemplateDisplayName)
                 ) &&
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this._Break == input._Break ||
-                    (this._Break != null &&
-                    this._Break.Equals(input._Break))
+                    this._Break == other._Break ||
+                    this._Break != null &&
+                    this._Break.Equals(other._Break)
                 ) &&
                 (
-                    this.LinkHeaders == input.LinkHeaders ||
-                    (this.LinkHeaders != null &&
-                    this.LinkHeaders.Equals(input.LinkHeaders))
+                    this.LinkHeaders == other.LinkHeaders ||
+                    this.LinkHeaders != null &&
+                    this.LinkHeaders.Equals(other.LinkHeaders)
                 ) &&
                 (
-                    this.Occurrence == input.Occurrence ||
-                    (this.Occurrence != null &&
-                    this.Occurrence.Equals(input.Occurrence))
+                    this.Occurrence == other.Occurrence ||
+                    this.Occurrence != null &&
+                    this.Occurrence.Equals(other.Occurrence)
                 ) &&
                 (
-                    this.Conditions == input.Conditions ||
-                    (this.Conditions != null &&
-                    this.Conditions.Equals(input.Conditions))
+                    this.Conditions == other.Conditions ||
+                    this.Conditions != null &&
+                    this.Conditions.Equals(other.Conditions)
                 );
         }
 
@@ -320,33 +315,30 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Template != null)
-                    hashCode = hashCode * 59 + this.Template.GetHashCode();
+                    hash = hash * 59 + this.Template.GetHashCode();
                 if (this.TemplateDisplayName != null)
-                    hashCode = hashCode * 59 + this.TemplateDisplayName.GetHashCode();
+                    hash = hash * 59 + this.TemplateDisplayName.GetHashCode();
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this._Break != null)
-                    hashCode = hashCode * 59 + this._Break.GetHashCode();
+                    hash = hash * 59 + this._Break.GetHashCode();
                 if (this.LinkHeaders != null)
-                    hashCode = hashCode * 59 + this.LinkHeaders.GetHashCode();
+                    hash = hash * 59 + this.LinkHeaders.GetHashCode();
                 if (this.Occurrence != null)
-                    hashCode = hashCode * 59 + this.Occurrence.GetHashCode();
+                    hash = hash * 59 + this.Occurrence.GetHashCode();
                 if (this.Conditions != null)
-                    hashCode = hashCode * 59 + this.Conditions.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Conditions.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

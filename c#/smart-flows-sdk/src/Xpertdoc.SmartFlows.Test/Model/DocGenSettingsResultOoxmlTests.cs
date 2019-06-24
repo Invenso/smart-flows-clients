@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DocGenSettingsResultOoxml> (instance, "variable 'instance' is a DocGenSettingsResultOoxml");
         }
 
-
         /// <summary>
         /// Test the property 'Format'
         /// </summary>

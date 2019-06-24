@@ -52,49 +52,41 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets Percentage
         /// </summary>
         [DataMember(Name = "percentage", EmitDefaultValue = false)]
         public int? Percentage { get; set; }
-
         /// <summary>
         /// Gets or Sets CurrentData
         /// </summary>
         [DataMember(Name = "currentData", EmitDefaultValue = false)]
         public IdWithName CurrentData { get; set; }
-
         /// <summary>
         /// Gets or Sets Message
         /// </summary>
         [DataMember(Name = "message", EmitDefaultValue = false)]
         public string Message { get; set; }
-
         /// <summary>
         /// Gets or Sets Status
         /// </summary>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public FlowExecutionStatus Status { get; set; }
-
         /// <summary>
         /// Gets or Sets Schema
         /// </summary>
         [DataMember(Name = "schema", EmitDefaultValue = false)]
         public Object Schema { get; set; }
-
         /// <summary>
         /// Gets or Sets Model
         /// </summary>
         [DataMember(Name = "model", EmitDefaultValue = false)]
         public Object Model { get; set; }
-
         /// <summary>
         /// Gets or Sets Form
         /// </summary>
         [DataMember(Name = "form", EmitDefaultValue = false)]
         public List<Object> Form { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -127,63 +119,65 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as FlowExecutionProgress);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as FlowExecutionProgress);
         }
 
         /// <summary>
         /// Returns true if FlowExecutionProgress instances are equal
         /// </summary>
-        /// <param name="input">Instance of FlowExecutionProgress to be compared</param>
+        /// <param name="other">Instance of FlowExecutionProgress to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FlowExecutionProgress input)
+        public bool Equals(FlowExecutionProgress other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.Percentage == input.Percentage ||
-                    (this.Percentage != null &&
-                    this.Percentage.Equals(input.Percentage))
+                    this.Percentage == other.Percentage ||
+                    this.Percentage != null &&
+                    this.Percentage.Equals(other.Percentage)
                 ) &&
                 (
-                    this.CurrentData == input.CurrentData ||
-                    (this.CurrentData != null &&
-                    this.CurrentData.Equals(input.CurrentData))
+                    this.CurrentData == other.CurrentData ||
+                    this.CurrentData != null &&
+                    this.CurrentData.Equals(other.CurrentData)
                 ) &&
                 (
-                    this.Message == input.Message ||
-                    (this.Message != null &&
-                    this.Message.Equals(input.Message))
+                    this.Message == other.Message ||
+                    this.Message != null &&
+                    this.Message.Equals(other.Message)
                 ) &&
                 (
-                    this.Status == input.Status ||
-                    (this.Status != null &&
-                    this.Status.Equals(input.Status))
+                    this.Status == other.Status ||
+                    this.Status != null &&
+                    this.Status.Equals(other.Status)
                 ) &&
                 (
-                    this.Schema == input.Schema ||
-                    (this.Schema != null &&
-                    this.Schema.Equals(input.Schema))
+                    this.Schema == other.Schema ||
+                    this.Schema != null &&
+                    this.Schema.Equals(other.Schema)
                 ) &&
                 (
-                    this.Model == input.Model ||
-                    (this.Model != null &&
-                    this.Model.Equals(input.Model))
+                    this.Model == other.Model ||
+                    this.Model != null &&
+                    this.Model.Equals(other.Model)
                 ) &&
                 (
-                    this.Form == input.Form ||
+                    this.Form == other.Form ||
                     this.Form != null &&
-                    this.Form.SequenceEqual(input.Form)
+                    this.Form.SequenceEqual(other.Form)
                 );
         }
 
@@ -193,46 +187,43 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.Percentage != null)
-                    hashCode = hashCode * 59 + this.Percentage.GetHashCode();
+                    hash = hash * 59 + this.Percentage.GetHashCode();
                 if (this.CurrentData != null)
-                    hashCode = hashCode * 59 + this.CurrentData.GetHashCode();
+                    hash = hash * 59 + this.CurrentData.GetHashCode();
                 if (this.Message != null)
-                    hashCode = hashCode * 59 + this.Message.GetHashCode();
+                    hash = hash * 59 + this.Message.GetHashCode();
                 if (this.Status != null)
-                    hashCode = hashCode * 59 + this.Status.GetHashCode();
+                    hash = hash * 59 + this.Status.GetHashCode();
                 if (this.Schema != null)
-                    hashCode = hashCode * 59 + this.Schema.GetHashCode();
+                    hash = hash * 59 + this.Schema.GetHashCode();
                 if (this.Model != null)
-                    hashCode = hashCode * 59 + this.Model.GetHashCode();
+                    hash = hash * 59 + this.Model.GetHashCode();
                 if (this.Form != null)
-                    hashCode = hashCode * 59 + this.Form.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Form.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // Percentage (int?) maximum
             if (this.Percentage > (int?)100)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Percentage, must be a value less than or equal to 100.", new[] { "Percentage" });
+                yield return new ValidationResult("Invalid value for Percentage, must be a value less than or equal to 100.", new[] { "Percentage" });
             }
 
             // Percentage (int?) minimum
             if (this.Percentage < (int?)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Percentage, must be a value greater than or equal to 0.", new[] { "Percentage" });
+                yield return new ValidationResult("Invalid value for Percentage, must be a value greater than or equal to 0.", new[] { "Percentage" });
             }
 
             yield break;

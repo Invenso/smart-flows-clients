@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<EntityReferenceFields> (instance, "variable 'instance' is a EntityReferenceFields");
         }
 
-
         /// <summary>
         /// Test the property 'Name'
         /// </summary>

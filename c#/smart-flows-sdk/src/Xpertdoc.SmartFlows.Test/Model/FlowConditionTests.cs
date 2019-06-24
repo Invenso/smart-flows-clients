@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<FlowCondition> (instance, "variable 'instance' is a FlowCondition");
         }
 
-
         /// <summary>
         /// Test the property 'Conditions'
         /// </summary>

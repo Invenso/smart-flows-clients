@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<GcpPrintProps> (instance, "variable 'instance' is a GcpPrintProps");
         }
 
-
         /// <summary>
         /// Test the property 'Duplexing'
         /// </summary>

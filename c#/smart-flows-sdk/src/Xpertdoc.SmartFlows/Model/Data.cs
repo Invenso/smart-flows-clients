@@ -25,23 +25,23 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class Data : IEquatable<Data>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum Reference for value: reference
+            /// Enum Reference for "reference"
             /// </summary>
             [EnumMember(Value = "reference")]
-            Reference = 1,
+            Reference,
 
             /// <summary>
-            /// Enum Value for value: value
+            /// Enum Value for "value"
             /// </summary>
             [EnumMember(Value = "value")]
-            Value = 2
+            Value
         }
 
         /// <summary>
@@ -95,98 +95,81 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedAt
         /// </summary>
         [DataMember(Name = "createdAt", EmitDefaultValue = false)]
         public string CreatedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedBy
         /// </summary>
         [DataMember(Name = "createdBy", EmitDefaultValue = false)]
         public IdWithName CreatedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedAt
         /// </summary>
         [DataMember(Name = "modifiedAt", EmitDefaultValue = false)]
         public string ModifiedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedBy
         /// </summary>
         [DataMember(Name = "modifiedBy", EmitDefaultValue = false)]
         public IdWithName ModifiedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets Dataset
         /// </summary>
         [DataMember(Name = "dataset", EmitDefaultValue = false)]
         public IdWithName Dataset { get; set; }
-
         /// <summary>
         /// Gets or Sets PluginDataset
         /// </summary>
         [DataMember(Name = "pluginDataset", EmitDefaultValue = false)]
         public IdWithName PluginDataset { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Value
         /// </summary>
         [DataMember(Name = "value", EmitDefaultValue = false)]
         public DataValue Value { get; set; }
-
         /// <summary>
         /// Gets or Sets Reference
         /// </summary>
         [DataMember(Name = "reference", EmitDefaultValue = false)]
         public DataReference Reference { get; set; }
-
         /// <summary>
         /// Gets or Sets DataAvailable
         /// </summary>
         [DataMember(Name = "dataAvailable", EmitDefaultValue = false)]
         public bool? DataAvailable { get; set; }
-
         /// <summary>
         /// Gets or Sets Expiration
         /// </summary>
         [DataMember(Name = "expiration", EmitDefaultValue = false)]
         public string Expiration { get; set; }
-
         /// <summary>
         /// Gets or Sets Usage
         /// </summary>
         [DataMember(Name = "usage", EmitDefaultValue = false)]
         public ObjectUsage Usage { get; set; }
-
         /// <summary>
         /// Gets or Sets FlowExecution
         /// </summary>
         [DataMember(Name = "flowExecution", EmitDefaultValue = false)]
         public FlowExecution FlowExecution { get; set; }
-
         /// <summary>
         /// Gets or Sets ContentType
         /// </summary>
         [DataMember(Name = "contentType", EmitDefaultValue = false)]
         public string ContentType { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -228,108 +211,110 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Data);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Data);
         }
 
         /// <summary>
         /// Returns true if Data instances are equal
         /// </summary>
-        /// <param name="input">Instance of Data to be compared</param>
+        /// <param name="other">Instance of Data to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Data input)
+        public bool Equals(Data other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.CreatedAt == input.CreatedAt ||
-                    (this.CreatedAt != null &&
-                    this.CreatedAt.Equals(input.CreatedAt))
+                    this.CreatedAt == other.CreatedAt ||
+                    this.CreatedAt != null &&
+                    this.CreatedAt.Equals(other.CreatedAt)
                 ) &&
                 (
-                    this.CreatedBy == input.CreatedBy ||
-                    (this.CreatedBy != null &&
-                    this.CreatedBy.Equals(input.CreatedBy))
+                    this.CreatedBy == other.CreatedBy ||
+                    this.CreatedBy != null &&
+                    this.CreatedBy.Equals(other.CreatedBy)
                 ) &&
                 (
-                    this.ModifiedAt == input.ModifiedAt ||
-                    (this.ModifiedAt != null &&
-                    this.ModifiedAt.Equals(input.ModifiedAt))
+                    this.ModifiedAt == other.ModifiedAt ||
+                    this.ModifiedAt != null &&
+                    this.ModifiedAt.Equals(other.ModifiedAt)
                 ) &&
                 (
-                    this.ModifiedBy == input.ModifiedBy ||
-                    (this.ModifiedBy != null &&
-                    this.ModifiedBy.Equals(input.ModifiedBy))
+                    this.ModifiedBy == other.ModifiedBy ||
+                    this.ModifiedBy != null &&
+                    this.ModifiedBy.Equals(other.ModifiedBy)
                 ) &&
                 (
-                    this.Dataset == input.Dataset ||
-                    (this.Dataset != null &&
-                    this.Dataset.Equals(input.Dataset))
+                    this.Dataset == other.Dataset ||
+                    this.Dataset != null &&
+                    this.Dataset.Equals(other.Dataset)
                 ) &&
                 (
-                    this.PluginDataset == input.PluginDataset ||
-                    (this.PluginDataset != null &&
-                    this.PluginDataset.Equals(input.PluginDataset))
+                    this.PluginDataset == other.PluginDataset ||
+                    this.PluginDataset != null &&
+                    this.PluginDataset.Equals(other.PluginDataset)
                 ) &&
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.Value == input.Value ||
-                    (this.Value != null &&
-                    this.Value.Equals(input.Value))
+                    this.Value == other.Value ||
+                    this.Value != null &&
+                    this.Value.Equals(other.Value)
                 ) &&
                 (
-                    this.Reference == input.Reference ||
-                    (this.Reference != null &&
-                    this.Reference.Equals(input.Reference))
+                    this.Reference == other.Reference ||
+                    this.Reference != null &&
+                    this.Reference.Equals(other.Reference)
                 ) &&
                 (
-                    this.DataAvailable == input.DataAvailable ||
-                    (this.DataAvailable != null &&
-                    this.DataAvailable.Equals(input.DataAvailable))
+                    this.DataAvailable == other.DataAvailable ||
+                    this.DataAvailable != null &&
+                    this.DataAvailable.Equals(other.DataAvailable)
                 ) &&
                 (
-                    this.Expiration == input.Expiration ||
-                    (this.Expiration != null &&
-                    this.Expiration.Equals(input.Expiration))
+                    this.Expiration == other.Expiration ||
+                    this.Expiration != null &&
+                    this.Expiration.Equals(other.Expiration)
                 ) &&
                 (
-                    this.Usage == input.Usage ||
-                    (this.Usage != null &&
-                    this.Usage.Equals(input.Usage))
+                    this.Usage == other.Usage ||
+                    this.Usage != null &&
+                    this.Usage.Equals(other.Usage)
                 ) &&
                 (
-                    this.FlowExecution == input.FlowExecution ||
-                    (this.FlowExecution != null &&
-                    this.FlowExecution.Equals(input.FlowExecution))
+                    this.FlowExecution == other.FlowExecution ||
+                    this.FlowExecution != null &&
+                    this.FlowExecution.Equals(other.FlowExecution)
                 ) &&
                 (
-                    this.ContentType == input.ContentType ||
-                    (this.ContentType != null &&
-                    this.ContentType.Equals(input.ContentType))
+                    this.ContentType == other.ContentType ||
+                    this.ContentType != null &&
+                    this.ContentType.Equals(other.ContentType)
                 );
         }
 
@@ -339,64 +324,61 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.CreatedAt != null)
-                    hashCode = hashCode * 59 + this.CreatedAt.GetHashCode();
+                    hash = hash * 59 + this.CreatedAt.GetHashCode();
                 if (this.CreatedBy != null)
-                    hashCode = hashCode * 59 + this.CreatedBy.GetHashCode();
+                    hash = hash * 59 + this.CreatedBy.GetHashCode();
                 if (this.ModifiedAt != null)
-                    hashCode = hashCode * 59 + this.ModifiedAt.GetHashCode();
+                    hash = hash * 59 + this.ModifiedAt.GetHashCode();
                 if (this.ModifiedBy != null)
-                    hashCode = hashCode * 59 + this.ModifiedBy.GetHashCode();
+                    hash = hash * 59 + this.ModifiedBy.GetHashCode();
                 if (this.Dataset != null)
-                    hashCode = hashCode * 59 + this.Dataset.GetHashCode();
+                    hash = hash * 59 + this.Dataset.GetHashCode();
                 if (this.PluginDataset != null)
-                    hashCode = hashCode * 59 + this.PluginDataset.GetHashCode();
+                    hash = hash * 59 + this.PluginDataset.GetHashCode();
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.Value != null)
-                    hashCode = hashCode * 59 + this.Value.GetHashCode();
+                    hash = hash * 59 + this.Value.GetHashCode();
                 if (this.Reference != null)
-                    hashCode = hashCode * 59 + this.Reference.GetHashCode();
+                    hash = hash * 59 + this.Reference.GetHashCode();
                 if (this.DataAvailable != null)
-                    hashCode = hashCode * 59 + this.DataAvailable.GetHashCode();
+                    hash = hash * 59 + this.DataAvailable.GetHashCode();
                 if (this.Expiration != null)
-                    hashCode = hashCode * 59 + this.Expiration.GetHashCode();
+                    hash = hash * 59 + this.Expiration.GetHashCode();
                 if (this.Usage != null)
-                    hashCode = hashCode * 59 + this.Usage.GetHashCode();
+                    hash = hash * 59 + this.Usage.GetHashCode();
                 if (this.FlowExecution != null)
-                    hashCode = hashCode * 59 + this.FlowExecution.GetHashCode();
+                    hash = hash * 59 + this.FlowExecution.GetHashCode();
                 if (this.ContentType != null)
-                    hashCode = hashCode * 59 + this.ContentType.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.ContentType.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // DisplayName (string) maxLength
             if (this.DisplayName != null && this.DisplayName.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
+                yield return new ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
             }
 
             // Description (string) maxLength
             if (this.Description != null && this.Description.Length > 2048)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
+                yield return new ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
             }
 
             yield break;

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<FlowExecution> (instance, "variable 'instance' is a FlowExecution");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>
@@ -81,6 +80,14 @@ namespace Xpertdoc.SmartFlows.Test
             // TODO unit test for the property 'CreatedBy'
         }
         /// <summary>
+        /// Test the property 'CreatedFor'
+        /// </summary>
+        [Test]
+        public void CreatedForTest()
+        {
+            // TODO unit test for the property 'CreatedFor'
+        }
+        /// <summary>
         /// Test the property 'ModifiedAt'
         /// </summary>
         [Test]
@@ -95,6 +102,14 @@ namespace Xpertdoc.SmartFlows.Test
         public void ModifiedByTest()
         {
             // TODO unit test for the property 'ModifiedBy'
+        }
+        /// <summary>
+        /// Test the property 'Priority'
+        /// </summary>
+        [Test]
+        public void PriorityTest()
+        {
+            // TODO unit test for the property 'Priority'
         }
         /// <summary>
         /// Test the property 'Status'
@@ -119,6 +134,22 @@ namespace Xpertdoc.SmartFlows.Test
         public void StateTest()
         {
             // TODO unit test for the property 'State'
+        }
+        /// <summary>
+        /// Test the property 'Mode'
+        /// </summary>
+        [Test]
+        public void ModeTest()
+        {
+            // TODO unit test for the property 'Mode'
+        }
+        /// <summary>
+        /// Test the property 'Outputs'
+        /// </summary>
+        [Test]
+        public void OutputsTest()
+        {
+            // TODO unit test for the property 'Outputs'
         }
 
     }

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<ArchivableContent> (instance, "variable 'instance' is a ArchivableContent");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

@@ -26,23 +26,23 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class OperationStatus : IEquatable<OperationStatus>, IValidatableObject
     {
         /// <summary>
-        /// Defines Status
+        /// Gets or Sets Status
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum StatusEnum
         {
 
             /// <summary>
-            /// Enum Successful for value: successful
+            /// Enum Successful for "successful"
             /// </summary>
             [EnumMember(Value = "successful")]
-            Successful = 1,
+            Successful,
 
             /// <summary>
-            /// Enum Failed for value: failed
+            /// Enum Failed for "failed"
             /// </summary>
             [EnumMember(Value = "failed")]
-            Failed = 2
+            Failed
         }
 
         /// <summary>
@@ -63,19 +63,16 @@ namespace Xpertdoc.SmartFlows.Model
             this.Messages = Messages;
         }
 
-
         /// <summary>
         /// Gets or Sets HasWarnings
         /// </summary>
         [DataMember(Name = "hasWarnings", EmitDefaultValue = false)]
         public bool? HasWarnings { get; set; }
-
         /// <summary>
         /// Gets or Sets Messages
         /// </summary>
         [DataMember(Name = "messages", EmitDefaultValue = false)]
         public List<StatusMessage> Messages { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -103,38 +100,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as OperationStatus);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as OperationStatus);
         }
 
         /// <summary>
         /// Returns true if OperationStatus instances are equal
         /// </summary>
-        /// <param name="input">Instance of OperationStatus to be compared</param>
+        /// <param name="other">Instance of OperationStatus to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(OperationStatus input)
+        public bool Equals(OperationStatus other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Status == input.Status ||
-                    (this.Status != null &&
-                    this.Status.Equals(input.Status))
+                    this.Status == other.Status ||
+                    this.Status != null &&
+                    this.Status.Equals(other.Status)
                 ) &&
                 (
-                    this.HasWarnings == input.HasWarnings ||
-                    (this.HasWarnings != null &&
-                    this.HasWarnings.Equals(input.HasWarnings))
+                    this.HasWarnings == other.HasWarnings ||
+                    this.HasWarnings != null &&
+                    this.HasWarnings.Equals(other.HasWarnings)
                 ) &&
                 (
-                    this.Messages == input.Messages ||
+                    this.Messages == other.Messages ||
                     this.Messages != null &&
-                    this.Messages.SequenceEqual(input.Messages)
+                    this.Messages.SequenceEqual(other.Messages)
                 );
         }
 
@@ -144,25 +143,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Status != null)
-                    hashCode = hashCode * 59 + this.Status.GetHashCode();
+                    hash = hash * 59 + this.Status.GetHashCode();
                 if (this.HasWarnings != null)
-                    hashCode = hashCode * 59 + this.HasWarnings.GetHashCode();
+                    hash = hash * 59 + this.HasWarnings.GetHashCode();
                 if (this.Messages != null)
-                    hashCode = hashCode * 59 + this.Messages.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Messages.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -55,37 +55,31 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
         /// <summary>
         /// Gets or Sets To
         /// </summary>
         [DataMember(Name = "to", EmitDefaultValue = false)]
         public string To { get; set; }
-
         /// <summary>
         /// Gets or Sets ToField
         /// </summary>
         [DataMember(Name = "toField", EmitDefaultValue = false)]
         public string ToField { get; set; }
-
         /// <summary>
         /// Gets or Sets ManyToMany
         /// </summary>
         [DataMember(Name = "manyToMany", EmitDefaultValue = false)]
         public bool? ManyToMany { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -116,53 +110,55 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as EntityDefinitionRelationships);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as EntityDefinitionRelationships);
         }
 
         /// <summary>
         /// Returns true if EntityDefinitionRelationships instances are equal
         /// </summary>
-        /// <param name="input">Instance of EntityDefinitionRelationships to be compared</param>
+        /// <param name="other">Instance of EntityDefinitionRelationships to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(EntityDefinitionRelationships input)
+        public bool Equals(EntityDefinitionRelationships other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
+                    this.Name == other.Name ||
+                    this.Name != null &&
+                    this.Name.Equals(other.Name)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.To == input.To ||
-                    (this.To != null &&
-                    this.To.Equals(input.To))
+                    this.To == other.To ||
+                    this.To != null &&
+                    this.To.Equals(other.To)
                 ) &&
                 (
-                    this.ToField == input.ToField ||
-                    (this.ToField != null &&
-                    this.ToField.Equals(input.ToField))
+                    this.ToField == other.ToField ||
+                    this.ToField != null &&
+                    this.ToField.Equals(other.ToField)
                 ) &&
                 (
-                    this.ManyToMany == input.ManyToMany ||
-                    (this.ManyToMany != null &&
-                    this.ManyToMany.Equals(input.ManyToMany))
+                    this.ManyToMany == other.ManyToMany ||
+                    this.ManyToMany != null &&
+                    this.ManyToMany.Equals(other.ManyToMany)
                 );
         }
 
@@ -172,31 +168,28 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Name != null)
-                    hashCode = hashCode * 59 + this.Name.GetHashCode();
+                    hash = hash * 59 + this.Name.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.To != null)
-                    hashCode = hashCode * 59 + this.To.GetHashCode();
+                    hash = hash * 59 + this.To.GetHashCode();
                 if (this.ToField != null)
-                    hashCode = hashCode * 59 + this.ToField.GetHashCode();
+                    hash = hash * 59 + this.ToField.GetHashCode();
                 if (this.ManyToMany != null)
-                    hashCode = hashCode * 59 + this.ManyToMany.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.ManyToMany.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -25,59 +25,59 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class NumberCondition : IEquatable<NumberCondition>, IValidatableObject
     {
         /// <summary>
-        /// Defines _Operator
+        /// Gets or Sets _Operator
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum OperatorEnum
         {
 
             /// <summary>
-            /// Enum Between for value: between
+            /// Enum Between for "between"
             /// </summary>
             [EnumMember(Value = "between")]
-            Between = 1,
+            Between,
 
             /// <summary>
-            /// Enum NotBetween for value: notBetween
+            /// Enum NotBetween for "notBetween"
             /// </summary>
             [EnumMember(Value = "notBetween")]
-            NotBetween = 2,
+            NotBetween,
 
             /// <summary>
-            /// Enum EqualTo for value: equalTo
+            /// Enum EqualTo for "equalTo"
             /// </summary>
             [EnumMember(Value = "equalTo")]
-            EqualTo = 3,
+            EqualTo,
 
             /// <summary>
-            /// Enum NotEqualTo for value: notEqualTo
+            /// Enum NotEqualTo for "notEqualTo"
             /// </summary>
             [EnumMember(Value = "notEqualTo")]
-            NotEqualTo = 4,
+            NotEqualTo,
 
             /// <summary>
-            /// Enum GreaterThan for value: greaterThan
+            /// Enum GreaterThan for "greaterThan"
             /// </summary>
             [EnumMember(Value = "greaterThan")]
-            GreaterThan = 5,
+            GreaterThan,
 
             /// <summary>
-            /// Enum LessThan for value: lessThan
+            /// Enum LessThan for "lessThan"
             /// </summary>
             [EnumMember(Value = "lessThan")]
-            LessThan = 6,
+            LessThan,
 
             /// <summary>
-            /// Enum GreaterThanOrEqualTo for value: greaterThanOrEqualTo
+            /// Enum GreaterThanOrEqualTo for "greaterThanOrEqualTo"
             /// </summary>
             [EnumMember(Value = "greaterThanOrEqualTo")]
-            GreaterThanOrEqualTo = 7,
+            GreaterThanOrEqualTo,
 
             /// <summary>
-            /// Enum LessThanOrEqualTo for value: lessThanOrEqualTo
+            /// Enum LessThanOrEqualTo for "lessThanOrEqualTo"
             /// </summary>
             [EnumMember(Value = "lessThanOrEqualTo")]
-            LessThanOrEqualTo = 8
+            LessThanOrEqualTo
         }
 
         /// <summary>
@@ -100,25 +100,21 @@ namespace Xpertdoc.SmartFlows.Model
             this.ValueFormat = ValueFormat;
         }
 
-
         /// <summary>
         /// Gets or Sets Value1
         /// </summary>
         [DataMember(Name = "value1", EmitDefaultValue = false)]
         public ConditionValue Value1 { get; set; }
-
         /// <summary>
         /// Gets or Sets Value2
         /// </summary>
         [DataMember(Name = "value2", EmitDefaultValue = false)]
         public ConditionValue Value2 { get; set; }
-
         /// <summary>
         /// Gets or Sets ValueFormat
         /// </summary>
         [DataMember(Name = "valueFormat", EmitDefaultValue = false)]
         public string ValueFormat { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -147,43 +143,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as NumberCondition);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as NumberCondition);
         }
 
         /// <summary>
         /// Returns true if NumberCondition instances are equal
         /// </summary>
-        /// <param name="input">Instance of NumberCondition to be compared</param>
+        /// <param name="other">Instance of NumberCondition to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(NumberCondition input)
+        public bool Equals(NumberCondition other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this._Operator == input._Operator ||
-                    (this._Operator != null &&
-                    this._Operator.Equals(input._Operator))
+                    this._Operator == other._Operator ||
+                    this._Operator != null &&
+                    this._Operator.Equals(other._Operator)
                 ) &&
                 (
-                    this.Value1 == input.Value1 ||
-                    (this.Value1 != null &&
-                    this.Value1.Equals(input.Value1))
+                    this.Value1 == other.Value1 ||
+                    this.Value1 != null &&
+                    this.Value1.Equals(other.Value1)
                 ) &&
                 (
-                    this.Value2 == input.Value2 ||
-                    (this.Value2 != null &&
-                    this.Value2.Equals(input.Value2))
+                    this.Value2 == other.Value2 ||
+                    this.Value2 != null &&
+                    this.Value2.Equals(other.Value2)
                 ) &&
                 (
-                    this.ValueFormat == input.ValueFormat ||
-                    (this.ValueFormat != null &&
-                    this.ValueFormat.Equals(input.ValueFormat))
+                    this.ValueFormat == other.ValueFormat ||
+                    this.ValueFormat != null &&
+                    this.ValueFormat.Equals(other.ValueFormat)
                 );
         }
 
@@ -193,27 +191,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this._Operator != null)
-                    hashCode = hashCode * 59 + this._Operator.GetHashCode();
+                    hash = hash * 59 + this._Operator.GetHashCode();
                 if (this.Value1 != null)
-                    hashCode = hashCode * 59 + this.Value1.GetHashCode();
+                    hash = hash * 59 + this.Value1.GetHashCode();
                 if (this.Value2 != null)
-                    hashCode = hashCode * 59 + this.Value2.GetHashCode();
+                    hash = hash * 59 + this.Value2.GetHashCode();
                 if (this.ValueFormat != null)
-                    hashCode = hashCode * 59 + this.ValueFormat.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.ValueFormat.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

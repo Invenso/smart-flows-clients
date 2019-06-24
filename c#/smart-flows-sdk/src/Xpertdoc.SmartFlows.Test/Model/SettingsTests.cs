@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Settings> (instance, "variable 'instance' is a Settings");
         }
 
-
         /// <summary>
         /// Test the property 'Project'
         /// </summary>
@@ -87,6 +86,22 @@ namespace Xpertdoc.SmartFlows.Test
         public void UserManagementTest()
         {
             // TODO unit test for the property 'UserManagement'
+        }
+        /// <summary>
+        /// Test the property 'OnCreate'
+        /// </summary>
+        [Test]
+        public void OnCreateTest()
+        {
+            // TODO unit test for the property 'OnCreate'
+        }
+        /// <summary>
+        /// Test the property 'Counters'
+        /// </summary>
+        [Test]
+        public void CountersTest()
+        {
+            // TODO unit test for the property 'Counters'
         }
         /// <summary>
         /// Test the property 'Frontend'

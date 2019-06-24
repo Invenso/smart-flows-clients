@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DocGenSettingsResultPdfEncryption> (instance, "variable 'instance' is a DocGenSettingsResultPdfEncryption");
         }
 
-
         /// <summary>
         /// Test the property 'Algorithm'
         /// </summary>

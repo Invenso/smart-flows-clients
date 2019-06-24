@@ -26,42 +26,42 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class Period : IEquatable<Period>, IValidatableObject
     {
         /// <summary>
-        /// Defines TimeUnit
+        /// Gets or Sets TimeUnit
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TimeUnitEnum
         {
 
             /// <summary>
-            /// Enum Seconds for value: seconds
+            /// Enum Seconds for "seconds"
             /// </summary>
             [EnumMember(Value = "seconds")]
-            Seconds = 1,
+            Seconds,
 
             /// <summary>
-            /// Enum Minutes for value: minutes
+            /// Enum Minutes for "minutes"
             /// </summary>
             [EnumMember(Value = "minutes")]
-            Minutes = 2,
+            Minutes,
 
             /// <summary>
-            /// Enum Hours for value: hours
+            /// Enum Hours for "hours"
             /// </summary>
             [EnumMember(Value = "hours")]
-            Hours = 3,
+            Hours,
 
             /// <summary>
-            /// Enum Days for value: days
+            /// Enum Days for "days"
             /// </summary>
             [EnumMember(Value = "days")]
-            Days = 4
+            Days
         }
 
         /// <summary>
         /// Gets or Sets TimeUnit
         /// </summary>
         [DataMember(Name = "timeUnit", EmitDefaultValue = false)]
-        public TimeUnitEnum TimeUnit { get; set; }
+        public TimeUnitEnum? TimeUnit { get; set; }
         /// <summary>
         /// Initializes a new instance of the <see cref="Period" /> class.
         /// </summary>
@@ -72,7 +72,7 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         /// <param name="_Period">_Period (required).</param>
         /// <param name="TimeUnit">TimeUnit (required).</param>
-        public Period(int? _Period = default(int?), TimeUnitEnum TimeUnit = default(TimeUnitEnum))
+        public Period(int? _Period = default(int?), TimeUnitEnum? TimeUnit = default(TimeUnitEnum?))
         {
             // to ensure "_Period" is required (not null)
             if (_Period == null)
@@ -99,8 +99,6 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "period", EmitDefaultValue = false)]
         public int? _Period { get; set; }
-
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -127,33 +125,35 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Period);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Period);
         }
 
         /// <summary>
         /// Returns true if Period instances are equal
         /// </summary>
-        /// <param name="input">Instance of Period to be compared</param>
+        /// <param name="other">Instance of Period to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Period input)
+        public bool Equals(Period other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this._Period == input._Period ||
-                    (this._Period != null &&
-                    this._Period.Equals(input._Period))
+                    this._Period == other._Period ||
+                    this._Period != null &&
+                    this._Period.Equals(other._Period)
                 ) &&
                 (
-                    this.TimeUnit == input.TimeUnit ||
-                    (this.TimeUnit != null &&
-                    this.TimeUnit.Equals(input.TimeUnit))
+                    this.TimeUnit == other.TimeUnit ||
+                    this.TimeUnit != null &&
+                    this.TimeUnit.Equals(other.TimeUnit)
                 );
         }
 
@@ -163,23 +163,20 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this._Period != null)
-                    hashCode = hashCode * 59 + this._Period.GetHashCode();
+                    hash = hash * 59 + this._Period.GetHashCode();
                 if (this.TimeUnit != null)
-                    hashCode = hashCode * 59 + this.TimeUnit.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.TimeUnit.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -25,23 +25,29 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class SystemInfoDefaults : IEquatable<SystemInfoDefaults>, IValidatableObject
     {
         /// <summary>
-        /// Defines EsignProvider
+        /// Gets or Sets EsignProvider
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum EsignProviderEnum
         {
 
             /// <summary>
-            /// Enum DocuSign for value: DocuSign
+            /// Enum DocuSign for "DocuSign"
             /// </summary>
             [EnumMember(Value = "DocuSign")]
-            DocuSign = 1,
+            DocuSign,
 
             /// <summary>
-            /// Enum Sertifi for value: Sertifi
+            /// Enum Sertifi for "Sertifi"
             /// </summary>
             [EnumMember(Value = "Sertifi")]
-            Sertifi = 2
+            Sertifi,
+
+            /// <summary>
+            /// Enum OneSpan for "OneSpan"
+            /// </summary>
+            [EnumMember(Value = "OneSpan")]
+            OneSpan
         }
 
         /// <summary>
@@ -57,7 +63,6 @@ namespace Xpertdoc.SmartFlows.Model
         {
             this.EsignProvider = EsignProvider;
         }
-
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -84,28 +89,30 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as SystemInfoDefaults);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as SystemInfoDefaults);
         }
 
         /// <summary>
         /// Returns true if SystemInfoDefaults instances are equal
         /// </summary>
-        /// <param name="input">Instance of SystemInfoDefaults to be compared</param>
+        /// <param name="other">Instance of SystemInfoDefaults to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(SystemInfoDefaults input)
+        public bool Equals(SystemInfoDefaults other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.EsignProvider == input.EsignProvider ||
-                    (this.EsignProvider != null &&
-                    this.EsignProvider.Equals(input.EsignProvider))
+                    this.EsignProvider == other.EsignProvider ||
+                    this.EsignProvider != null &&
+                    this.EsignProvider.Equals(other.EsignProvider)
                 );
         }
 
@@ -115,21 +122,18 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.EsignProvider != null)
-                    hashCode = hashCode * 59 + this.EsignProvider.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.EsignProvider.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

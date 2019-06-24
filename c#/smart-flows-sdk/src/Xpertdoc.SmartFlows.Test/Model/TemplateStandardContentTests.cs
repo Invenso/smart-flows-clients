@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<TemplateStandardContent> (instance, "variable 'instance' is a TemplateStandardContent");
         }
 
-
         /// <summary>
         /// Test the property 'SupportedLanguages'
         /// </summary>

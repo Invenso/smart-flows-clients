@@ -43,25 +43,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "start", EmitDefaultValue = false)]
         public string Start { get; set; }
-
         /// <summary>
         /// Gets or Sets End
         /// </summary>
         [DataMember(Name = "end", EmitDefaultValue = false)]
         public string End { get; set; }
-
         /// <summary>
         /// Gets or Sets Input
         /// </summary>
         [DataMember(Name = "input", EmitDefaultValue = false)]
         public Object Input { get; set; }
-
         /// <summary>
         /// Gets or Sets LastProgress
         /// </summary>
         [DataMember(Name = "lastProgress", EmitDefaultValue = false)]
         public FlowExecutionProgress LastProgress { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -90,43 +86,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as FlowExecutionStage);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as FlowExecutionStage);
         }
 
         /// <summary>
         /// Returns true if FlowExecutionStage instances are equal
         /// </summary>
-        /// <param name="input">Instance of FlowExecutionStage to be compared</param>
+        /// <param name="other">Instance of FlowExecutionStage to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FlowExecutionStage input)
+        public bool Equals(FlowExecutionStage other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Start == input.Start ||
-                    (this.Start != null &&
-                    this.Start.Equals(input.Start))
+                    this.Start == other.Start ||
+                    this.Start != null &&
+                    this.Start.Equals(other.Start)
                 ) &&
                 (
-                    this.End == input.End ||
-                    (this.End != null &&
-                    this.End.Equals(input.End))
+                    this.End == other.End ||
+                    this.End != null &&
+                    this.End.Equals(other.End)
                 ) &&
                 (
-                    this.Input == input.Input ||
-                    (this.Input != null &&
-                    this.Input.Equals(input.Input))
+                    this.Input == other.Input ||
+                    this.Input != null &&
+                    this.Input.Equals(other.Input)
                 ) &&
                 (
-                    this.LastProgress == input.LastProgress ||
-                    (this.LastProgress != null &&
-                    this.LastProgress.Equals(input.LastProgress))
+                    this.LastProgress == other.LastProgress ||
+                    this.LastProgress != null &&
+                    this.LastProgress.Equals(other.LastProgress)
                 );
         }
 
@@ -136,27 +134,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Start != null)
-                    hashCode = hashCode * 59 + this.Start.GetHashCode();
+                    hash = hash * 59 + this.Start.GetHashCode();
                 if (this.End != null)
-                    hashCode = hashCode * 59 + this.End.GetHashCode();
+                    hash = hash * 59 + this.End.GetHashCode();
                 if (this.Input != null)
-                    hashCode = hashCode * 59 + this.Input.GetHashCode();
+                    hash = hash * 59 + this.Input.GetHashCode();
                 if (this.LastProgress != null)
-                    hashCode = hashCode * 59 + this.LastProgress.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.LastProgress.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

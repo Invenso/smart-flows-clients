@@ -27,23 +27,29 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class Template : IEquatable<Template>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum Standard for value: standard
+            /// Enum Standard for "standard"
             /// </summary>
             [EnumMember(Value = "standard")]
-            Standard = 1,
+            Standard,
 
             /// <summary>
-            /// Enum Composed for value: composed
+            /// Enum Composed for "composed"
             /// </summary>
             [EnumMember(Value = "composed")]
-            Composed = 2
+            Composed,
+
+            /// <summary>
+            /// Enum Portal for "portal"
+            /// </summary>
+            [EnumMember(Value = "portal")]
+            Portal
         }
 
         /// <summary>
@@ -71,7 +77,8 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="TagGroups">TagGroups.</param>
         /// <param name="StandardContent">StandardContent.</param>
         /// <param name="ComposedContent">ComposedContent.</param>
-        public Template(string Id = default(string), string DisplayName = default(string), string Description = default(string), string CreatedAt = default(string), IdWithName CreatedBy = default(IdWithName), string ModifiedAt = default(string), IdWithName ModifiedBy = default(IdWithName), List<TemplateDatasets> Datasets = default(List<TemplateDatasets>), TypeEnum? Type = default(TypeEnum?), List<TagGroupRef> TagGroups = default(List<TagGroupRef>), TemplateStandardContent StandardContent = default(TemplateStandardContent), TemplateComposedContent ComposedContent = default(TemplateComposedContent))
+        /// <param name="PortalContent">PortalContent.</param>
+        public Template(string Id = default(string), string DisplayName = default(string), string Description = default(string), string CreatedAt = default(string), IdWithName CreatedBy = default(IdWithName), string ModifiedAt = default(string), IdWithName ModifiedBy = default(IdWithName), List<TemplateDatasets> Datasets = default(List<TemplateDatasets>), TypeEnum? Type = default(TypeEnum?), List<TagGroupRef> TagGroups = default(List<TagGroupRef>), TemplateStandardContent StandardContent = default(TemplateStandardContent), TemplateComposedContent ComposedContent = default(TemplateComposedContent), TemplatePortalContent PortalContent = default(TemplatePortalContent))
         {
             // to ensure "DisplayName" is required (not null)
             if (DisplayName == null)
@@ -93,6 +100,7 @@ namespace Xpertdoc.SmartFlows.Model
             this.TagGroups = TagGroups;
             this.StandardContent = StandardContent;
             this.ComposedContent = ComposedContent;
+            this.PortalContent = PortalContent;
         }
 
         /// <summary>
@@ -100,68 +108,61 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedAt
         /// </summary>
         [DataMember(Name = "createdAt", EmitDefaultValue = false)]
         public string CreatedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedBy
         /// </summary>
         [DataMember(Name = "createdBy", EmitDefaultValue = false)]
         public IdWithName CreatedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedAt
         /// </summary>
         [DataMember(Name = "modifiedAt", EmitDefaultValue = false)]
         public string ModifiedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedBy
         /// </summary>
         [DataMember(Name = "modifiedBy", EmitDefaultValue = false)]
         public IdWithName ModifiedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets Datasets
         /// </summary>
         [DataMember(Name = "datasets", EmitDefaultValue = false)]
         public List<TemplateDatasets> Datasets { get; set; }
-
-
         /// <summary>
         /// Gets or Sets TagGroups
         /// </summary>
         [DataMember(Name = "tagGroups", EmitDefaultValue = false)]
         public List<TagGroupRef> TagGroups { get; set; }
-
         /// <summary>
         /// Gets or Sets StandardContent
         /// </summary>
         [DataMember(Name = "standardContent", EmitDefaultValue = false)]
         public TemplateStandardContent StandardContent { get; set; }
-
         /// <summary>
         /// Gets or Sets ComposedContent
         /// </summary>
         [DataMember(Name = "composedContent", EmitDefaultValue = false)]
         public TemplateComposedContent ComposedContent { get; set; }
-
+        /// <summary>
+        /// Gets or Sets PortalContent
+        /// </summary>
+        [DataMember(Name = "portalContent", EmitDefaultValue = false)]
+        public TemplatePortalContent PortalContent { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -182,6 +183,7 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("  TagGroups: ").Append(TagGroups).Append("\n");
             sb.Append("  StandardContent: ").Append(StandardContent).Append("\n");
             sb.Append("  ComposedContent: ").Append(ComposedContent).Append("\n");
+            sb.Append("  PortalContent: ").Append(PortalContent).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -198,83 +200,90 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Template);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Template);
         }
 
         /// <summary>
         /// Returns true if Template instances are equal
         /// </summary>
-        /// <param name="input">Instance of Template to be compared</param>
+        /// <param name="other">Instance of Template to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Template input)
+        public bool Equals(Template other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.CreatedAt == input.CreatedAt ||
-                    (this.CreatedAt != null &&
-                    this.CreatedAt.Equals(input.CreatedAt))
+                    this.CreatedAt == other.CreatedAt ||
+                    this.CreatedAt != null &&
+                    this.CreatedAt.Equals(other.CreatedAt)
                 ) &&
                 (
-                    this.CreatedBy == input.CreatedBy ||
-                    (this.CreatedBy != null &&
-                    this.CreatedBy.Equals(input.CreatedBy))
+                    this.CreatedBy == other.CreatedBy ||
+                    this.CreatedBy != null &&
+                    this.CreatedBy.Equals(other.CreatedBy)
                 ) &&
                 (
-                    this.ModifiedAt == input.ModifiedAt ||
-                    (this.ModifiedAt != null &&
-                    this.ModifiedAt.Equals(input.ModifiedAt))
+                    this.ModifiedAt == other.ModifiedAt ||
+                    this.ModifiedAt != null &&
+                    this.ModifiedAt.Equals(other.ModifiedAt)
                 ) &&
                 (
-                    this.ModifiedBy == input.ModifiedBy ||
-                    (this.ModifiedBy != null &&
-                    this.ModifiedBy.Equals(input.ModifiedBy))
+                    this.ModifiedBy == other.ModifiedBy ||
+                    this.ModifiedBy != null &&
+                    this.ModifiedBy.Equals(other.ModifiedBy)
                 ) &&
                 (
-                    this.Datasets == input.Datasets ||
+                    this.Datasets == other.Datasets ||
                     this.Datasets != null &&
-                    this.Datasets.SequenceEqual(input.Datasets)
+                    this.Datasets.SequenceEqual(other.Datasets)
                 ) &&
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.TagGroups == input.TagGroups ||
+                    this.TagGroups == other.TagGroups ||
                     this.TagGroups != null &&
-                    this.TagGroups.SequenceEqual(input.TagGroups)
+                    this.TagGroups.SequenceEqual(other.TagGroups)
                 ) &&
                 (
-                    this.StandardContent == input.StandardContent ||
-                    (this.StandardContent != null &&
-                    this.StandardContent.Equals(input.StandardContent))
+                    this.StandardContent == other.StandardContent ||
+                    this.StandardContent != null &&
+                    this.StandardContent.Equals(other.StandardContent)
                 ) &&
                 (
-                    this.ComposedContent == input.ComposedContent ||
-                    (this.ComposedContent != null &&
-                    this.ComposedContent.Equals(input.ComposedContent))
+                    this.ComposedContent == other.ComposedContent ||
+                    this.ComposedContent != null &&
+                    this.ComposedContent.Equals(other.ComposedContent)
+                ) &&
+                (
+                    this.PortalContent == other.PortalContent ||
+                    this.PortalContent != null &&
+                    this.PortalContent.Equals(other.PortalContent)
                 );
         }
 
@@ -284,54 +293,53 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.CreatedAt != null)
-                    hashCode = hashCode * 59 + this.CreatedAt.GetHashCode();
+                    hash = hash * 59 + this.CreatedAt.GetHashCode();
                 if (this.CreatedBy != null)
-                    hashCode = hashCode * 59 + this.CreatedBy.GetHashCode();
+                    hash = hash * 59 + this.CreatedBy.GetHashCode();
                 if (this.ModifiedAt != null)
-                    hashCode = hashCode * 59 + this.ModifiedAt.GetHashCode();
+                    hash = hash * 59 + this.ModifiedAt.GetHashCode();
                 if (this.ModifiedBy != null)
-                    hashCode = hashCode * 59 + this.ModifiedBy.GetHashCode();
+                    hash = hash * 59 + this.ModifiedBy.GetHashCode();
                 if (this.Datasets != null)
-                    hashCode = hashCode * 59 + this.Datasets.GetHashCode();
+                    hash = hash * 59 + this.Datasets.GetHashCode();
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.TagGroups != null)
-                    hashCode = hashCode * 59 + this.TagGroups.GetHashCode();
+                    hash = hash * 59 + this.TagGroups.GetHashCode();
                 if (this.StandardContent != null)
-                    hashCode = hashCode * 59 + this.StandardContent.GetHashCode();
+                    hash = hash * 59 + this.StandardContent.GetHashCode();
                 if (this.ComposedContent != null)
-                    hashCode = hashCode * 59 + this.ComposedContent.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.ComposedContent.GetHashCode();
+                if (this.PortalContent != null)
+                    hash = hash * 59 + this.PortalContent.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // DisplayName (string) maxLength
             if (this.DisplayName != null && this.DisplayName.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
+                yield return new ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
             }
 
             // Description (string) maxLength
             if (this.Description != null && this.Description.Length > 2048)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
+                yield return new ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
             }
 
             yield break;

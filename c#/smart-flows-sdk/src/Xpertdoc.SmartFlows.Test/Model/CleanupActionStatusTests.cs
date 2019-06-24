@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<CleanupActionStatus> (instance, "variable 'instance' is a CleanupActionStatus");
         }
 
-
         /// <summary>
         /// Test the property 'Action'
         /// </summary>

@@ -43,25 +43,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "schedule", EmitDefaultValue = false)]
         public Schedule Schedule { get; set; }
-
         /// <summary>
         /// Gets or Sets _Internal
         /// </summary>
         [DataMember(Name = "internal", EmitDefaultValue = false)]
         public CleanupActionSettings _Internal { get; set; }
-
         /// <summary>
         /// Gets or Sets Output
         /// </summary>
         [DataMember(Name = "output", EmitDefaultValue = false)]
         public CleanupActionSettings Output { get; set; }
-
         /// <summary>
         /// Gets or Sets Full
         /// </summary>
         [DataMember(Name = "full", EmitDefaultValue = false)]
         public CleanupActionSettings Full { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -90,43 +86,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as CompletedExecutionsPlan);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as CompletedExecutionsPlan);
         }
 
         /// <summary>
         /// Returns true if CompletedExecutionsPlan instances are equal
         /// </summary>
-        /// <param name="input">Instance of CompletedExecutionsPlan to be compared</param>
+        /// <param name="other">Instance of CompletedExecutionsPlan to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CompletedExecutionsPlan input)
+        public bool Equals(CompletedExecutionsPlan other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Schedule == input.Schedule ||
-                    (this.Schedule != null &&
-                    this.Schedule.Equals(input.Schedule))
+                    this.Schedule == other.Schedule ||
+                    this.Schedule != null &&
+                    this.Schedule.Equals(other.Schedule)
                 ) &&
                 (
-                    this._Internal == input._Internal ||
-                    (this._Internal != null &&
-                    this._Internal.Equals(input._Internal))
+                    this._Internal == other._Internal ||
+                    this._Internal != null &&
+                    this._Internal.Equals(other._Internal)
                 ) &&
                 (
-                    this.Output == input.Output ||
-                    (this.Output != null &&
-                    this.Output.Equals(input.Output))
+                    this.Output == other.Output ||
+                    this.Output != null &&
+                    this.Output.Equals(other.Output)
                 ) &&
                 (
-                    this.Full == input.Full ||
-                    (this.Full != null &&
-                    this.Full.Equals(input.Full))
+                    this.Full == other.Full ||
+                    this.Full != null &&
+                    this.Full.Equals(other.Full)
                 );
         }
 
@@ -136,27 +134,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Schedule != null)
-                    hashCode = hashCode * 59 + this.Schedule.GetHashCode();
+                    hash = hash * 59 + this.Schedule.GetHashCode();
                 if (this._Internal != null)
-                    hashCode = hashCode * 59 + this._Internal.GetHashCode();
+                    hash = hash * 59 + this._Internal.GetHashCode();
                 if (this.Output != null)
-                    hashCode = hashCode * 59 + this.Output.GetHashCode();
+                    hash = hash * 59 + this.Output.GetHashCode();
                 if (this.Full != null)
-                    hashCode = hashCode * 59 + this.Full.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Full.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

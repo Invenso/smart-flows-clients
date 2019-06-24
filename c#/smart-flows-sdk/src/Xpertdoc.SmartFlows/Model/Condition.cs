@@ -25,41 +25,41 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class Condition : IEquatable<Condition>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum None for value: none
+            /// Enum None for "none"
             /// </summary>
             [EnumMember(Value = "none")]
-            None = 1,
+            None,
 
             /// <summary>
-            /// Enum OccursOne for value: occursOne
+            /// Enum OccursOne for "occursOne"
             /// </summary>
             [EnumMember(Value = "occursOne")]
-            OccursOne = 2,
+            OccursOne,
 
             /// <summary>
-            /// Enum Occurrence for value: occurrence
+            /// Enum Occurrence for "occurrence"
             /// </summary>
             [EnumMember(Value = "occurrence")]
-            Occurrence = 3,
+            Occurrence,
 
             /// <summary>
-            /// Enum CheckValue for value: checkValue
+            /// Enum CheckValue for "checkValue"
             /// </summary>
             [EnumMember(Value = "checkValue")]
-            CheckValue = 4,
+            CheckValue,
 
             /// <summary>
-            /// Enum Expression for value: expression
+            /// Enum Expression for "expression"
             /// </summary>
             [EnumMember(Value = "expression")]
-            Expression = 5
+            Expression
         }
 
         /// <summary>
@@ -89,26 +89,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
-
         /// <summary>
         /// Gets or Sets CheckValue
         /// </summary>
         [DataMember(Name = "checkValue", EmitDefaultValue = false)]
         public ConditionCheckValue CheckValue { get; set; }
-
         /// <summary>
         /// Gets or Sets Expression
         /// </summary>
         [DataMember(Name = "expression", EmitDefaultValue = false)]
         public string Expression { get; set; }
-
         /// <summary>
         /// Gets or Sets Occurrence
         /// </summary>
         [DataMember(Name = "occurrence", EmitDefaultValue = false)]
         public ConditionOccurrence Occurrence { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -138,48 +133,50 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Condition);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Condition);
         }
 
         /// <summary>
         /// Returns true if Condition instances are equal
         /// </summary>
-        /// <param name="input">Instance of Condition to be compared</param>
+        /// <param name="other">Instance of Condition to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Condition input)
+        public bool Equals(Condition other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.CheckValue == input.CheckValue ||
-                    (this.CheckValue != null &&
-                    this.CheckValue.Equals(input.CheckValue))
+                    this.CheckValue == other.CheckValue ||
+                    this.CheckValue != null &&
+                    this.CheckValue.Equals(other.CheckValue)
                 ) &&
                 (
-                    this.Expression == input.Expression ||
-                    (this.Expression != null &&
-                    this.Expression.Equals(input.Expression))
+                    this.Expression == other.Expression ||
+                    this.Expression != null &&
+                    this.Expression.Equals(other.Expression)
                 ) &&
                 (
-                    this.Occurrence == input.Occurrence ||
-                    (this.Occurrence != null &&
-                    this.Occurrence.Equals(input.Occurrence))
+                    this.Occurrence == other.Occurrence ||
+                    this.Occurrence != null &&
+                    this.Occurrence.Equals(other.Occurrence)
                 );
         }
 
@@ -189,29 +186,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.CheckValue != null)
-                    hashCode = hashCode * 59 + this.CheckValue.GetHashCode();
+                    hash = hash * 59 + this.CheckValue.GetHashCode();
                 if (this.Expression != null)
-                    hashCode = hashCode * 59 + this.Expression.GetHashCode();
+                    hash = hash * 59 + this.Expression.GetHashCode();
                 if (this.Occurrence != null)
-                    hashCode = hashCode * 59 + this.Occurrence.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Occurrence.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

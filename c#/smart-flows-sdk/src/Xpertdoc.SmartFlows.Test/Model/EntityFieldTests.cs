@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<EntityField> (instance, "variable 'instance' is a EntityField");
         }
 
-
         /// <summary>
         /// Test the property 'Name'
         /// </summary>
@@ -95,6 +94,14 @@ namespace Xpertdoc.SmartFlows.Test
         public void AdvancedTest()
         {
             // TODO unit test for the property 'Advanced'
+        }
+        /// <summary>
+        /// Test the property '_Namespace'
+        /// </summary>
+        [Test]
+        public void _NamespaceTest()
+        {
+            // TODO unit test for the property '_Namespace'
         }
 
     }

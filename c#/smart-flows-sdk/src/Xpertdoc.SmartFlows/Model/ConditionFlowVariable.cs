@@ -43,25 +43,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "blockId", EmitDefaultValue = false)]
         public string BlockId { get; set; }
-
         /// <summary>
         /// Gets or Sets OutputId
         /// </summary>
         [DataMember(Name = "outputId", EmitDefaultValue = false)]
         public string OutputId { get; set; }
-
         /// <summary>
         /// Gets or Sets _Parameter
         /// </summary>
         [DataMember(Name = "parameter", EmitDefaultValue = false)]
         public string _Parameter { get; set; }
-
         /// <summary>
         /// Gets or Sets DataPath
         /// </summary>
         [DataMember(Name = "dataPath", EmitDefaultValue = false)]
         public string DataPath { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -90,43 +86,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as ConditionFlowVariable);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ConditionFlowVariable);
         }
 
         /// <summary>
         /// Returns true if ConditionFlowVariable instances are equal
         /// </summary>
-        /// <param name="input">Instance of ConditionFlowVariable to be compared</param>
+        /// <param name="other">Instance of ConditionFlowVariable to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ConditionFlowVariable input)
+        public bool Equals(ConditionFlowVariable other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.BlockId == input.BlockId ||
-                    (this.BlockId != null &&
-                    this.BlockId.Equals(input.BlockId))
+                    this.BlockId == other.BlockId ||
+                    this.BlockId != null &&
+                    this.BlockId.Equals(other.BlockId)
                 ) &&
                 (
-                    this.OutputId == input.OutputId ||
-                    (this.OutputId != null &&
-                    this.OutputId.Equals(input.OutputId))
+                    this.OutputId == other.OutputId ||
+                    this.OutputId != null &&
+                    this.OutputId.Equals(other.OutputId)
                 ) &&
                 (
-                    this._Parameter == input._Parameter ||
-                    (this._Parameter != null &&
-                    this._Parameter.Equals(input._Parameter))
+                    this._Parameter == other._Parameter ||
+                    this._Parameter != null &&
+                    this._Parameter.Equals(other._Parameter)
                 ) &&
                 (
-                    this.DataPath == input.DataPath ||
-                    (this.DataPath != null &&
-                    this.DataPath.Equals(input.DataPath))
+                    this.DataPath == other.DataPath ||
+                    this.DataPath != null &&
+                    this.DataPath.Equals(other.DataPath)
                 );
         }
 
@@ -136,27 +134,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.BlockId != null)
-                    hashCode = hashCode * 59 + this.BlockId.GetHashCode();
+                    hash = hash * 59 + this.BlockId.GetHashCode();
                 if (this.OutputId != null)
-                    hashCode = hashCode * 59 + this.OutputId.GetHashCode();
+                    hash = hash * 59 + this.OutputId.GetHashCode();
                 if (this._Parameter != null)
-                    hashCode = hashCode * 59 + this._Parameter.GetHashCode();
+                    hash = hash * 59 + this._Parameter.GetHashCode();
                 if (this.DataPath != null)
-                    hashCode = hashCode * 59 + this.DataPath.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.DataPath.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

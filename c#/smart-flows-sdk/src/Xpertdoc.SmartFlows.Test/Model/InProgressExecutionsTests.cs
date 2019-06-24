@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<InProgressExecutions> (instance, "variable 'instance' is a InProgressExecutions");
         }
 
-
         /// <summary>
         /// Test the property 'Schedule'
         /// </summary>

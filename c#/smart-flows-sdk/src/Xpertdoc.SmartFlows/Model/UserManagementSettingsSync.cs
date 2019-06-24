@@ -39,13 +39,11 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "enabled", EmitDefaultValue = false)]
         public bool? Enabled { get; set; }
-
         /// <summary>
         /// Gets or Sets Schedule
         /// </summary>
         [DataMember(Name = "schedule", EmitDefaultValue = false)]
         public string Schedule { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -72,33 +70,35 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as UserManagementSettingsSync);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as UserManagementSettingsSync);
         }
 
         /// <summary>
         /// Returns true if UserManagementSettingsSync instances are equal
         /// </summary>
-        /// <param name="input">Instance of UserManagementSettingsSync to be compared</param>
+        /// <param name="other">Instance of UserManagementSettingsSync to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(UserManagementSettingsSync input)
+        public bool Equals(UserManagementSettingsSync other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Enabled == input.Enabled ||
-                    (this.Enabled != null &&
-                    this.Enabled.Equals(input.Enabled))
+                    this.Enabled == other.Enabled ||
+                    this.Enabled != null &&
+                    this.Enabled.Equals(other.Enabled)
                 ) &&
                 (
-                    this.Schedule == input.Schedule ||
-                    (this.Schedule != null &&
-                    this.Schedule.Equals(input.Schedule))
+                    this.Schedule == other.Schedule ||
+                    this.Schedule != null &&
+                    this.Schedule.Equals(other.Schedule)
                 );
         }
 
@@ -108,23 +108,20 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Enabled != null)
-                    hashCode = hashCode * 59 + this.Enabled.GetHashCode();
+                    hash = hash * 59 + this.Enabled.GetHashCode();
                 if (this.Schedule != null)
-                    hashCode = hashCode * 59 + this.Schedule.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Schedule.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

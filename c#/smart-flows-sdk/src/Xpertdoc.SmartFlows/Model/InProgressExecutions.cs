@@ -43,25 +43,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "schedule", EmitDefaultValue = false)]
         public Schedule Schedule { get; set; }
-
         /// <summary>
         /// Gets or Sets SelectFlow
         /// </summary>
         [DataMember(Name = "selectFlow", EmitDefaultValue = false)]
         public CleanupActionSettings SelectFlow { get; set; }
-
         /// <summary>
         /// Gets or Sets UserInput
         /// </summary>
         [DataMember(Name = "userInput", EmitDefaultValue = false)]
         public CleanupActionSettings UserInput { get; set; }
-
         /// <summary>
         /// Gets or Sets Waiting
         /// </summary>
         [DataMember(Name = "waiting", EmitDefaultValue = false)]
         public CleanupActionSettings Waiting { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -90,43 +86,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as InProgressExecutions);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as InProgressExecutions);
         }
 
         /// <summary>
         /// Returns true if InProgressExecutions instances are equal
         /// </summary>
-        /// <param name="input">Instance of InProgressExecutions to be compared</param>
+        /// <param name="other">Instance of InProgressExecutions to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(InProgressExecutions input)
+        public bool Equals(InProgressExecutions other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Schedule == input.Schedule ||
-                    (this.Schedule != null &&
-                    this.Schedule.Equals(input.Schedule))
+                    this.Schedule == other.Schedule ||
+                    this.Schedule != null &&
+                    this.Schedule.Equals(other.Schedule)
                 ) &&
                 (
-                    this.SelectFlow == input.SelectFlow ||
-                    (this.SelectFlow != null &&
-                    this.SelectFlow.Equals(input.SelectFlow))
+                    this.SelectFlow == other.SelectFlow ||
+                    this.SelectFlow != null &&
+                    this.SelectFlow.Equals(other.SelectFlow)
                 ) &&
                 (
-                    this.UserInput == input.UserInput ||
-                    (this.UserInput != null &&
-                    this.UserInput.Equals(input.UserInput))
+                    this.UserInput == other.UserInput ||
+                    this.UserInput != null &&
+                    this.UserInput.Equals(other.UserInput)
                 ) &&
                 (
-                    this.Waiting == input.Waiting ||
-                    (this.Waiting != null &&
-                    this.Waiting.Equals(input.Waiting))
+                    this.Waiting == other.Waiting ||
+                    this.Waiting != null &&
+                    this.Waiting.Equals(other.Waiting)
                 );
         }
 
@@ -136,27 +134,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Schedule != null)
-                    hashCode = hashCode * 59 + this.Schedule.GetHashCode();
+                    hash = hash * 59 + this.Schedule.GetHashCode();
                 if (this.SelectFlow != null)
-                    hashCode = hashCode * 59 + this.SelectFlow.GetHashCode();
+                    hash = hash * 59 + this.SelectFlow.GetHashCode();
                 if (this.UserInput != null)
-                    hashCode = hashCode * 59 + this.UserInput.GetHashCode();
+                    hash = hash * 59 + this.UserInput.GetHashCode();
                 if (this.Waiting != null)
-                    hashCode = hashCode * 59 + this.Waiting.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Waiting.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

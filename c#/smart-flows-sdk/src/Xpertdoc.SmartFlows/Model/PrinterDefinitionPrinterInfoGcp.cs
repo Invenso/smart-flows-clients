@@ -26,35 +26,35 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class PrinterDefinitionPrinterInfoGcp : IEquatable<PrinterDefinitionPrinterInfoGcp>, IValidatableObject
     {
         /// <summary>
-        /// Defines ConnectionStatus
+        /// Gets or Sets ConnectionStatus
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum ConnectionStatusEnum
         {
 
             /// <summary>
-            /// Enum Unknown for value: unknown
+            /// Enum Unknown for "unknown"
             /// </summary>
             [EnumMember(Value = "unknown")]
-            Unknown = 1,
+            Unknown,
 
             /// <summary>
-            /// Enum Online for value: online
+            /// Enum Online for "online"
             /// </summary>
             [EnumMember(Value = "online")]
-            Online = 2,
+            Online,
 
             /// <summary>
-            /// Enum Offline for value: offline
+            /// Enum Offline for "offline"
             /// </summary>
             [EnumMember(Value = "offline")]
-            Offline = 3,
+            Offline,
 
             /// <summary>
-            /// Enum Dormant for value: dormant
+            /// Enum Dormant for "dormant"
             /// </summary>
             [EnumMember(Value = "dormant")]
-            Dormant = 4
+            Dormant
         }
 
         /// <summary>
@@ -86,32 +86,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "connector", EmitDefaultValue = false)]
         public IdWithName Connector { get; set; }
-
         /// <summary>
         /// Gets or Sets CreateTime
         /// </summary>
         [DataMember(Name = "createTime", EmitDefaultValue = false)]
         public string CreateTime { get; set; }
-
         /// <summary>
         /// Gets or Sets UpdateTime
         /// </summary>
         [DataMember(Name = "updateTime", EmitDefaultValue = false)]
         public string UpdateTime { get; set; }
-
         /// <summary>
         /// Gets or Sets AccessTime
         /// </summary>
         [DataMember(Name = "accessTime", EmitDefaultValue = false)]
         public string AccessTime { get; set; }
-
-
         /// <summary>
         /// Gets or Sets VendorCapabilities
         /// </summary>
         [DataMember(Name = "vendorCapabilities", EmitDefaultValue = false)]
         public List<GcpVendorCapability> VendorCapabilities { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -142,53 +136,55 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as PrinterDefinitionPrinterInfoGcp);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as PrinterDefinitionPrinterInfoGcp);
         }
 
         /// <summary>
         /// Returns true if PrinterDefinitionPrinterInfoGcp instances are equal
         /// </summary>
-        /// <param name="input">Instance of PrinterDefinitionPrinterInfoGcp to be compared</param>
+        /// <param name="other">Instance of PrinterDefinitionPrinterInfoGcp to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(PrinterDefinitionPrinterInfoGcp input)
+        public bool Equals(PrinterDefinitionPrinterInfoGcp other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Connector == input.Connector ||
-                    (this.Connector != null &&
-                    this.Connector.Equals(input.Connector))
+                    this.Connector == other.Connector ||
+                    this.Connector != null &&
+                    this.Connector.Equals(other.Connector)
                 ) &&
                 (
-                    this.CreateTime == input.CreateTime ||
-                    (this.CreateTime != null &&
-                    this.CreateTime.Equals(input.CreateTime))
+                    this.CreateTime == other.CreateTime ||
+                    this.CreateTime != null &&
+                    this.CreateTime.Equals(other.CreateTime)
                 ) &&
                 (
-                    this.UpdateTime == input.UpdateTime ||
-                    (this.UpdateTime != null &&
-                    this.UpdateTime.Equals(input.UpdateTime))
+                    this.UpdateTime == other.UpdateTime ||
+                    this.UpdateTime != null &&
+                    this.UpdateTime.Equals(other.UpdateTime)
                 ) &&
                 (
-                    this.AccessTime == input.AccessTime ||
-                    (this.AccessTime != null &&
-                    this.AccessTime.Equals(input.AccessTime))
+                    this.AccessTime == other.AccessTime ||
+                    this.AccessTime != null &&
+                    this.AccessTime.Equals(other.AccessTime)
                 ) &&
                 (
-                    this.ConnectionStatus == input.ConnectionStatus ||
-                    (this.ConnectionStatus != null &&
-                    this.ConnectionStatus.Equals(input.ConnectionStatus))
+                    this.ConnectionStatus == other.ConnectionStatus ||
+                    this.ConnectionStatus != null &&
+                    this.ConnectionStatus.Equals(other.ConnectionStatus)
                 ) &&
                 (
-                    this.VendorCapabilities == input.VendorCapabilities ||
+                    this.VendorCapabilities == other.VendorCapabilities ||
                     this.VendorCapabilities != null &&
-                    this.VendorCapabilities.SequenceEqual(input.VendorCapabilities)
+                    this.VendorCapabilities.SequenceEqual(other.VendorCapabilities)
                 );
         }
 
@@ -198,31 +194,28 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Connector != null)
-                    hashCode = hashCode * 59 + this.Connector.GetHashCode();
+                    hash = hash * 59 + this.Connector.GetHashCode();
                 if (this.CreateTime != null)
-                    hashCode = hashCode * 59 + this.CreateTime.GetHashCode();
+                    hash = hash * 59 + this.CreateTime.GetHashCode();
                 if (this.UpdateTime != null)
-                    hashCode = hashCode * 59 + this.UpdateTime.GetHashCode();
+                    hash = hash * 59 + this.UpdateTime.GetHashCode();
                 if (this.AccessTime != null)
-                    hashCode = hashCode * 59 + this.AccessTime.GetHashCode();
+                    hash = hash * 59 + this.AccessTime.GetHashCode();
                 if (this.ConnectionStatus != null)
-                    hashCode = hashCode * 59 + this.ConnectionStatus.GetHashCode();
+                    hash = hash * 59 + this.ConnectionStatus.GetHashCode();
                 if (this.VendorCapabilities != null)
-                    hashCode = hashCode * 59 + this.VendorCapabilities.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.VendorCapabilities.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

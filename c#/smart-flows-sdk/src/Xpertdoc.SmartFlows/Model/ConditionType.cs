@@ -17,47 +17,45 @@ namespace Xpertdoc.SmartFlows.Model
     /// <summary>
     /// Defines conditionType
     /// </summary>
-
     [JsonConverter(typeof(StringEnumConverter))]
-
     public enum ConditionType
     {
 
         /// <summary>
-        /// Enum Date for value: date
+        /// Enum Date for "date"
         /// </summary>
         [EnumMember(Value = "date")]
-        Date = 1,
+        Date,
 
         /// <summary>
-        /// Enum Time for value: time
+        /// Enum Time for "time"
         /// </summary>
         [EnumMember(Value = "time")]
-        Time = 2,
+        Time,
 
         /// <summary>
-        /// Enum DateTime for value: dateTime
+        /// Enum DateTime for "dateTime"
         /// </summary>
         [EnumMember(Value = "dateTime")]
-        DateTime = 3,
+        DateTime,
 
         /// <summary>
-        /// Enum Number for value: number
+        /// Enum Number for "number"
         /// </summary>
         [EnumMember(Value = "number")]
-        Number = 4,
+        Number,
 
         /// <summary>
-        /// Enum Text for value: text
+        /// Enum Text for "text"
         /// </summary>
         [EnumMember(Value = "text")]
-        Text = 5,
+        Text,
 
         /// <summary>
-        /// Enum Boolean for value: boolean
+        /// Enum Boolean for "boolean"
         /// </summary>
         [EnumMember(Value = "boolean")]
-        Boolean = 6
+        Boolean
     }
 
 }

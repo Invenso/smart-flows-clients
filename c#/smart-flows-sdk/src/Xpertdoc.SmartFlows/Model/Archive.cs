@@ -27,18 +27,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Archive" /> class.
         /// </summary>
+        /// <param name="General">General.</param>
         /// <param name="Items">Items.</param>
-        public Archive(List<Archivable> Items = default(List<Archivable>))
+        public Archive(ArchiveGeneral General = default(ArchiveGeneral), List<Archivable> Items = default(List<Archivable>))
         {
+            this.General = General;
             this.Items = Items;
         }
 
+        /// <summary>
+        /// Gets or Sets General
+        /// </summary>
+        [DataMember(Name = "general", EmitDefaultValue = false)]
+        public ArchiveGeneral General { get; set; }
         /// <summary>
         /// Gets or Sets Items
         /// </summary>
         [DataMember(Name = "items", EmitDefaultValue = false)]
         public List<Archivable> Items { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -47,6 +53,7 @@ namespace Xpertdoc.SmartFlows.Model
         {
             var sb = new StringBuilder();
             sb.Append("class Archive {\n");
+            sb.Append("  General: ").Append(General).Append("\n");
             sb.Append("  Items: ").Append(Items).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -64,28 +71,35 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Archive);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Archive);
         }
 
         /// <summary>
         /// Returns true if Archive instances are equal
         /// </summary>
-        /// <param name="input">Instance of Archive to be compared</param>
+        /// <param name="other">Instance of Archive to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Archive input)
+        public bool Equals(Archive other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Items == input.Items ||
+                    this.General == other.General ||
+                    this.General != null &&
+                    this.General.Equals(other.General)
+                ) &&
+                (
+                    this.Items == other.Items ||
                     this.Items != null &&
-                    this.Items.SequenceEqual(input.Items)
+                    this.Items.SequenceEqual(other.Items)
                 );
         }
 
@@ -95,21 +109,20 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
+                if (this.General != null)
+                    hash = hash * 59 + this.General.GetHashCode();
                 if (this.Items != null)
-                    hashCode = hashCode * 59 + this.Items.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Items.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<SyncResult> (instance, "variable 'instance' is a SyncResult");
         }
 
-
         /// <summary>
         /// Test the property 'AddCount'
         /// </summary>

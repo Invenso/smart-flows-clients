@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<EntityReferenceLookups> (instance, "variable 'instance' is a EntityReferenceLookups");
         }
 
-
         /// <summary>
         /// Test the property 'Name'
         /// </summary>

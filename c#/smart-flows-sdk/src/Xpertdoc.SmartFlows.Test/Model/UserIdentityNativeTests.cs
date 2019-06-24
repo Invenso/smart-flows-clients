@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<UserIdentityNative> (instance, "variable 'instance' is a UserIdentityNative");
         }
 
-
         /// <summary>
         /// Test the property 'Password'
         /// </summary>

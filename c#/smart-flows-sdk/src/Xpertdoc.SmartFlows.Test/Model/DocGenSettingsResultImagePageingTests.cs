@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DocGenSettingsResultImagePageing> (instance, "variable 'instance' is a DocGenSettingsResultImagePageing");
         }
 
-
         /// <summary>
         /// Test the property 'FirstPageIndex'
         /// </summary>

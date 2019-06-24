@@ -17,95 +17,123 @@ namespace Xpertdoc.SmartFlows.Model
     /// <summary>
     /// Defines objectType
     /// </summary>
-
     [JsonConverter(typeof(StringEnumConverter))]
-
     public enum ObjectType
     {
 
         /// <summary>
-        /// Enum Asset for value: asset
+        /// Enum Asset for "asset"
         /// </summary>
         [EnumMember(Value = "asset")]
-        Asset = 1,
+        Asset,
 
         /// <summary>
-        /// Enum Connector for value: connector
+        /// Enum Connector for "connector"
         /// </summary>
         [EnumMember(Value = "connector")]
-        Connector = 2,
+        Connector,
 
         /// <summary>
-        /// Enum Datasource for value: datasource
+        /// Enum ConnectorType for "connectorType"
+        /// </summary>
+        [EnumMember(Value = "connectorType")]
+        ConnectorType,
+
+        /// <summary>
+        /// Enum Datasource for "datasource"
         /// </summary>
         [EnumMember(Value = "datasource")]
-        Datasource = 3,
+        Datasource,
 
         /// <summary>
-        /// Enum Data for value: data
+        /// Enum Data for "data"
         /// </summary>
         [EnumMember(Value = "data")]
-        Data = 4,
+        Data,
 
         /// <summary>
-        /// Enum Dataset for value: dataset
+        /// Enum Dataset for "dataset"
         /// </summary>
         [EnumMember(Value = "dataset")]
-        Dataset = 5,
+        Dataset,
 
         /// <summary>
-        /// Enum Document for value: document
+        /// Enum Document for "document"
         /// </summary>
         [EnumMember(Value = "document")]
-        Document = 6,
+        Document,
 
         /// <summary>
-        /// Enum EntityReference for value: entityReference
+        /// Enum EntityReference for "entityReference"
         /// </summary>
         [EnumMember(Value = "entityReference")]
-        EntityReference = 7,
+        EntityReference,
 
         /// <summary>
-        /// Enum Flow for value: flow
+        /// Enum Flow for "flow"
         /// </summary>
         [EnumMember(Value = "flow")]
-        Flow = 8,
+        Flow,
 
         /// <summary>
-        /// Enum Language for value: language
+        /// Enum Language for "language"
         /// </summary>
         [EnumMember(Value = "language")]
-        Language = 9,
+        Language,
 
         /// <summary>
-        /// Enum Printer for value: printer
+        /// Enum Printer for "printer"
         /// </summary>
         [EnumMember(Value = "printer")]
-        Printer = 10,
+        Printer,
 
         /// <summary>
-        /// Enum Tag for value: tag
+        /// Enum Tag for "tag"
         /// </summary>
         [EnumMember(Value = "tag")]
-        Tag = 11,
+        Tag,
 
         /// <summary>
-        /// Enum TagGroup for value: tagGroup
+        /// Enum TagGroup for "tagGroup"
         /// </summary>
         [EnumMember(Value = "tagGroup")]
-        TagGroup = 12,
+        TagGroup,
 
         /// <summary>
-        /// Enum Template for value: template
+        /// Enum Template for "template"
         /// </summary>
         [EnumMember(Value = "template")]
-        Template = 13,
+        Template,
 
         /// <summary>
-        /// Enum User for value: user
+        /// Enum TemplateLibrary for "templateLibrary"
+        /// </summary>
+        [EnumMember(Value = "templateLibrary")]
+        TemplateLibrary,
+
+        /// <summary>
+        /// Enum User for "user"
         /// </summary>
         [EnumMember(Value = "user")]
-        User = 14
+        User,
+
+        /// <summary>
+        /// Enum PortalLibrary for "portalLibrary"
+        /// </summary>
+        [EnumMember(Value = "portalLibrary")]
+        PortalLibrary,
+
+        /// <summary>
+        /// Enum PortalGroup for "portalGroup"
+        /// </summary>
+        [EnumMember(Value = "portalGroup")]
+        PortalGroup,
+
+        /// <summary>
+        /// Enum PortalTemplate for "portalTemplate"
+        /// </summary>
+        [EnumMember(Value = "portalTemplate")]
+        PortalTemplate
     }
 
 }

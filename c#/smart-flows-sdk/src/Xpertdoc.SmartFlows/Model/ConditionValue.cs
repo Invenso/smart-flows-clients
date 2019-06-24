@@ -49,43 +49,36 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets Type
         /// </summary>
         [DataMember(Name = "type", EmitDefaultValue = false)]
         public ConditionValueType Type { get; set; }
-
         /// <summary>
         /// Gets or Sets DocPropName
         /// </summary>
         [DataMember(Name = "docPropName", EmitDefaultValue = false)]
         public string DocPropName { get; set; }
-
         /// <summary>
         /// Gets or Sets Constant
         /// </summary>
         [DataMember(Name = "constant", EmitDefaultValue = false)]
         public string Constant { get; set; }
-
         /// <summary>
         /// Gets or Sets Field
         /// </summary>
         [DataMember(Name = "field", EmitDefaultValue = false)]
         public string Field { get; set; }
-
         /// <summary>
         /// Gets or Sets Expression
         /// </summary>
         [DataMember(Name = "expression", EmitDefaultValue = false)]
         public string Expression { get; set; }
-
         /// <summary>
         /// Gets or Sets FlowVariable
         /// </summary>
         [DataMember(Name = "flowVariable", EmitDefaultValue = false)]
         public ConditionFlowVariable FlowVariable { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -117,58 +110,60 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as ConditionValue);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ConditionValue);
         }
 
         /// <summary>
         /// Returns true if ConditionValue instances are equal
         /// </summary>
-        /// <param name="input">Instance of ConditionValue to be compared</param>
+        /// <param name="other">Instance of ConditionValue to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ConditionValue input)
+        public bool Equals(ConditionValue other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.DocPropName == input.DocPropName ||
-                    (this.DocPropName != null &&
-                    this.DocPropName.Equals(input.DocPropName))
+                    this.DocPropName == other.DocPropName ||
+                    this.DocPropName != null &&
+                    this.DocPropName.Equals(other.DocPropName)
                 ) &&
                 (
-                    this.Constant == input.Constant ||
-                    (this.Constant != null &&
-                    this.Constant.Equals(input.Constant))
+                    this.Constant == other.Constant ||
+                    this.Constant != null &&
+                    this.Constant.Equals(other.Constant)
                 ) &&
                 (
-                    this.Field == input.Field ||
-                    (this.Field != null &&
-                    this.Field.Equals(input.Field))
+                    this.Field == other.Field ||
+                    this.Field != null &&
+                    this.Field.Equals(other.Field)
                 ) &&
                 (
-                    this.Expression == input.Expression ||
-                    (this.Expression != null &&
-                    this.Expression.Equals(input.Expression))
+                    this.Expression == other.Expression ||
+                    this.Expression != null &&
+                    this.Expression.Equals(other.Expression)
                 ) &&
                 (
-                    this.FlowVariable == input.FlowVariable ||
-                    (this.FlowVariable != null &&
-                    this.FlowVariable.Equals(input.FlowVariable))
+                    this.FlowVariable == other.FlowVariable ||
+                    this.FlowVariable != null &&
+                    this.FlowVariable.Equals(other.FlowVariable)
                 );
         }
 
@@ -178,33 +173,30 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.DocPropName != null)
-                    hashCode = hashCode * 59 + this.DocPropName.GetHashCode();
+                    hash = hash * 59 + this.DocPropName.GetHashCode();
                 if (this.Constant != null)
-                    hashCode = hashCode * 59 + this.Constant.GetHashCode();
+                    hash = hash * 59 + this.Constant.GetHashCode();
                 if (this.Field != null)
-                    hashCode = hashCode * 59 + this.Field.GetHashCode();
+                    hash = hash * 59 + this.Field.GetHashCode();
                 if (this.Expression != null)
-                    hashCode = hashCode * 59 + this.Expression.GetHashCode();
+                    hash = hash * 59 + this.Expression.GetHashCode();
                 if (this.FlowVariable != null)
-                    hashCode = hashCode * 59 + this.FlowVariable.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.FlowVariable.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

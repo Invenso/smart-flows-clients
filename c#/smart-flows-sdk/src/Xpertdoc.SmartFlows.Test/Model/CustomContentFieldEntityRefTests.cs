@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<CustomContentFieldEntityRef> (instance, "variable 'instance' is a CustomContentFieldEntityRef");
         }
 
-
         /// <summary>
         /// Test the property 'Options'
         /// </summary>

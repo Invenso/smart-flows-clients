@@ -52,49 +52,41 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedAt
         /// </summary>
         [DataMember(Name = "createdAt", EmitDefaultValue = false)]
         public string CreatedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedBy
         /// </summary>
         [DataMember(Name = "createdBy", EmitDefaultValue = false)]
         public IdWithName CreatedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets Properties
         /// </summary>
         [DataMember(Name = "properties", EmitDefaultValue = false)]
         public GeneratedDocumentProperties Properties { get; set; }
-
         /// <summary>
         /// Gets or Sets Content
         /// </summary>
         [DataMember(Name = "content", EmitDefaultValue = false)]
         public GeneratedDocumentContent Content { get; set; }
-
         /// <summary>
         /// Gets or Sets Pages
         /// </summary>
         [DataMember(Name = "pages", EmitDefaultValue = false)]
         public List<GeneratedDocumentPages> Pages { get; set; }
-
         /// <summary>
         /// Gets or Sets Charts
         /// </summary>
         [DataMember(Name = "charts", EmitDefaultValue = false)]
         public List<GeneratedDocumentCharts> Charts { get; set; }
-
         /// <summary>
         /// Gets or Sets Messages
         /// </summary>
         [DataMember(Name = "messages", EmitDefaultValue = false)]
         public List<StatusMessage> Messages { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -127,63 +119,65 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as GeneratedDocument);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as GeneratedDocument);
         }
 
         /// <summary>
         /// Returns true if GeneratedDocument instances are equal
         /// </summary>
-        /// <param name="input">Instance of GeneratedDocument to be compared</param>
+        /// <param name="other">Instance of GeneratedDocument to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(GeneratedDocument input)
+        public bool Equals(GeneratedDocument other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.CreatedAt == input.CreatedAt ||
-                    (this.CreatedAt != null &&
-                    this.CreatedAt.Equals(input.CreatedAt))
+                    this.CreatedAt == other.CreatedAt ||
+                    this.CreatedAt != null &&
+                    this.CreatedAt.Equals(other.CreatedAt)
                 ) &&
                 (
-                    this.CreatedBy == input.CreatedBy ||
-                    (this.CreatedBy != null &&
-                    this.CreatedBy.Equals(input.CreatedBy))
+                    this.CreatedBy == other.CreatedBy ||
+                    this.CreatedBy != null &&
+                    this.CreatedBy.Equals(other.CreatedBy)
                 ) &&
                 (
-                    this.Properties == input.Properties ||
-                    (this.Properties != null &&
-                    this.Properties.Equals(input.Properties))
+                    this.Properties == other.Properties ||
+                    this.Properties != null &&
+                    this.Properties.Equals(other.Properties)
                 ) &&
                 (
-                    this.Content == input.Content ||
-                    (this.Content != null &&
-                    this.Content.Equals(input.Content))
+                    this.Content == other.Content ||
+                    this.Content != null &&
+                    this.Content.Equals(other.Content)
                 ) &&
                 (
-                    this.Pages == input.Pages ||
+                    this.Pages == other.Pages ||
                     this.Pages != null &&
-                    this.Pages.SequenceEqual(input.Pages)
+                    this.Pages.SequenceEqual(other.Pages)
                 ) &&
                 (
-                    this.Charts == input.Charts ||
+                    this.Charts == other.Charts ||
                     this.Charts != null &&
-                    this.Charts.SequenceEqual(input.Charts)
+                    this.Charts.SequenceEqual(other.Charts)
                 ) &&
                 (
-                    this.Messages == input.Messages ||
+                    this.Messages == other.Messages ||
                     this.Messages != null &&
-                    this.Messages.SequenceEqual(input.Messages)
+                    this.Messages.SequenceEqual(other.Messages)
                 );
         }
 
@@ -193,40 +187,37 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.CreatedAt != null)
-                    hashCode = hashCode * 59 + this.CreatedAt.GetHashCode();
+                    hash = hash * 59 + this.CreatedAt.GetHashCode();
                 if (this.CreatedBy != null)
-                    hashCode = hashCode * 59 + this.CreatedBy.GetHashCode();
+                    hash = hash * 59 + this.CreatedBy.GetHashCode();
                 if (this.Properties != null)
-                    hashCode = hashCode * 59 + this.Properties.GetHashCode();
+                    hash = hash * 59 + this.Properties.GetHashCode();
                 if (this.Content != null)
-                    hashCode = hashCode * 59 + this.Content.GetHashCode();
+                    hash = hash * 59 + this.Content.GetHashCode();
                 if (this.Pages != null)
-                    hashCode = hashCode * 59 + this.Pages.GetHashCode();
+                    hash = hash * 59 + this.Pages.GetHashCode();
                 if (this.Charts != null)
-                    hashCode = hashCode * 59 + this.Charts.GetHashCode();
+                    hash = hash * 59 + this.Charts.GetHashCode();
                 if (this.Messages != null)
-                    hashCode = hashCode * 59 + this.Messages.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Messages.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // DisplayName (string) maxLength
             if (this.DisplayName != null && this.DisplayName.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
+                yield return new ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
             }
 
             yield break;

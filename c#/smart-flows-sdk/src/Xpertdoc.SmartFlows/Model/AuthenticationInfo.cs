@@ -28,11 +28,15 @@ namespace Xpertdoc.SmartFlows.Model
         /// Initializes a new instance of the <see cref="AuthenticationInfo" /> class.
         /// </summary>
         /// <param name="Login">Login.</param>
+        /// <param name="ResetPasswordSupported">ResetPasswordSupported.</param>
         /// <param name="Oauth2">Oauth2.</param>
-        public AuthenticationInfo(AuthenticationInfoLogin Login = default(AuthenticationInfoLogin), List<AuthenticationInfoOauth2> Oauth2 = default(List<AuthenticationInfoOauth2>))
+        /// <param name="Methods">Methods.</param>
+        public AuthenticationInfo(AuthenticationInfoLogin Login = default(AuthenticationInfoLogin), bool? ResetPasswordSupported = default(bool?), List<AuthenticationInfoOauth2> Oauth2 = default(List<AuthenticationInfoOauth2>), List<AuthenticationInfoMethods> Methods = default(List<AuthenticationInfoMethods>))
         {
             this.Login = Login;
+            this.ResetPasswordSupported = ResetPasswordSupported;
             this.Oauth2 = Oauth2;
+            this.Methods = Methods;
         }
 
         /// <summary>
@@ -40,13 +44,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "login", EmitDefaultValue = false)]
         public AuthenticationInfoLogin Login { get; set; }
-
+        /// <summary>
+        /// Gets or Sets ResetPasswordSupported
+        /// </summary>
+        [DataMember(Name = "resetPasswordSupported", EmitDefaultValue = false)]
+        public bool? ResetPasswordSupported { get; set; }
         /// <summary>
         /// Gets or Sets Oauth2
         /// </summary>
         [DataMember(Name = "oauth2", EmitDefaultValue = false)]
         public List<AuthenticationInfoOauth2> Oauth2 { get; set; }
-
+        /// <summary>
+        /// Gets or Sets Methods
+        /// </summary>
+        [DataMember(Name = "methods", EmitDefaultValue = false)]
+        public List<AuthenticationInfoMethods> Methods { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -56,7 +68,9 @@ namespace Xpertdoc.SmartFlows.Model
             var sb = new StringBuilder();
             sb.Append("class AuthenticationInfo {\n");
             sb.Append("  Login: ").Append(Login).Append("\n");
+            sb.Append("  ResetPasswordSupported: ").Append(ResetPasswordSupported).Append("\n");
             sb.Append("  Oauth2: ").Append(Oauth2).Append("\n");
+            sb.Append("  Methods: ").Append(Methods).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -73,33 +87,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as AuthenticationInfo);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as AuthenticationInfo);
         }
 
         /// <summary>
         /// Returns true if AuthenticationInfo instances are equal
         /// </summary>
-        /// <param name="input">Instance of AuthenticationInfo to be compared</param>
+        /// <param name="other">Instance of AuthenticationInfo to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(AuthenticationInfo input)
+        public bool Equals(AuthenticationInfo other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Login == input.Login ||
-                    (this.Login != null &&
-                    this.Login.Equals(input.Login))
+                    this.Login == other.Login ||
+                    this.Login != null &&
+                    this.Login.Equals(other.Login)
                 ) &&
                 (
-                    this.Oauth2 == input.Oauth2 ||
+                    this.ResetPasswordSupported == other.ResetPasswordSupported ||
+                    this.ResetPasswordSupported != null &&
+                    this.ResetPasswordSupported.Equals(other.ResetPasswordSupported)
+                ) &&
+                (
+                    this.Oauth2 == other.Oauth2 ||
                     this.Oauth2 != null &&
-                    this.Oauth2.SequenceEqual(input.Oauth2)
+                    this.Oauth2.SequenceEqual(other.Oauth2)
+                ) &&
+                (
+                    this.Methods == other.Methods ||
+                    this.Methods != null &&
+                    this.Methods.SequenceEqual(other.Methods)
                 );
         }
 
@@ -109,23 +135,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Login != null)
-                    hashCode = hashCode * 59 + this.Login.GetHashCode();
+                    hash = hash * 59 + this.Login.GetHashCode();
+                if (this.ResetPasswordSupported != null)
+                    hash = hash * 59 + this.ResetPasswordSupported.GetHashCode();
                 if (this.Oauth2 != null)
-                    hashCode = hashCode * 59 + this.Oauth2.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Oauth2.GetHashCode();
+                if (this.Methods != null)
+                    hash = hash * 59 + this.Methods.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

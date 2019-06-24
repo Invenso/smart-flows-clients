@@ -41,19 +41,16 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "general", EmitDefaultValue = false)]
         public GeneralPrintProps General { get; set; }
-
         /// <summary>
         /// Gets or Sets Jps
         /// </summary>
         [DataMember(Name = "jps", EmitDefaultValue = false)]
         public JpsPrintProps Jps { get; set; }
-
         /// <summary>
         /// Gets or Sets Gcp
         /// </summary>
         [DataMember(Name = "gcp", EmitDefaultValue = false)]
         public GcpPrintProps Gcp { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -81,38 +78,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as PrinterProperties);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as PrinterProperties);
         }
 
         /// <summary>
         /// Returns true if PrinterProperties instances are equal
         /// </summary>
-        /// <param name="input">Instance of PrinterProperties to be compared</param>
+        /// <param name="other">Instance of PrinterProperties to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(PrinterProperties input)
+        public bool Equals(PrinterProperties other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.General == input.General ||
-                    (this.General != null &&
-                    this.General.Equals(input.General))
+                    this.General == other.General ||
+                    this.General != null &&
+                    this.General.Equals(other.General)
                 ) &&
                 (
-                    this.Jps == input.Jps ||
-                    (this.Jps != null &&
-                    this.Jps.Equals(input.Jps))
+                    this.Jps == other.Jps ||
+                    this.Jps != null &&
+                    this.Jps.Equals(other.Jps)
                 ) &&
                 (
-                    this.Gcp == input.Gcp ||
-                    (this.Gcp != null &&
-                    this.Gcp.Equals(input.Gcp))
+                    this.Gcp == other.Gcp ||
+                    this.Gcp != null &&
+                    this.Gcp.Equals(other.Gcp)
                 );
         }
 
@@ -122,25 +121,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.General != null)
-                    hashCode = hashCode * 59 + this.General.GetHashCode();
+                    hash = hash * 59 + this.General.GetHashCode();
                 if (this.Jps != null)
-                    hashCode = hashCode * 59 + this.Jps.GetHashCode();
+                    hash = hash * 59 + this.Jps.GetHashCode();
                 if (this.Gcp != null)
-                    hashCode = hashCode * 59 + this.Gcp.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Gcp.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

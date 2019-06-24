@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<FlowBody> (instance, "variable 'instance' is a FlowBody");
         }
 
-
         /// <summary>
         /// Test the property 'PostProcessingSteps'
         /// </summary>

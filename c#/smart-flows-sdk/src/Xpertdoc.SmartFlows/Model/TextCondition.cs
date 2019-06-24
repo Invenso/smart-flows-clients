@@ -25,47 +25,47 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class TextCondition : IEquatable<TextCondition>, IValidatableObject
     {
         /// <summary>
-        /// Defines _Operator
+        /// Gets or Sets _Operator
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum OperatorEnum
         {
 
             /// <summary>
-            /// Enum Contains for value: contains
+            /// Enum Contains for "contains"
             /// </summary>
             [EnumMember(Value = "contains")]
-            Contains = 1,
+            Contains,
 
             /// <summary>
-            /// Enum NotContains for value: notContains
+            /// Enum NotContains for "notContains"
             /// </summary>
             [EnumMember(Value = "notContains")]
-            NotContains = 2,
+            NotContains,
 
             /// <summary>
-            /// Enum EqualTo for value: equalTo
+            /// Enum EqualTo for "equalTo"
             /// </summary>
             [EnumMember(Value = "equalTo")]
-            EqualTo = 3,
+            EqualTo,
 
             /// <summary>
-            /// Enum NotEqualTo for value: notEqualTo
+            /// Enum NotEqualTo for "notEqualTo"
             /// </summary>
             [EnumMember(Value = "notEqualTo")]
-            NotEqualTo = 4,
+            NotEqualTo,
 
             /// <summary>
-            /// Enum IsBlank for value: isBlank
+            /// Enum IsBlank for "isBlank"
             /// </summary>
             [EnumMember(Value = "isBlank")]
-            IsBlank = 5,
+            IsBlank,
 
             /// <summary>
-            /// Enum NotIsBlank for value: notIsBlank
+            /// Enum NotIsBlank for "notIsBlank"
             /// </summary>
             [EnumMember(Value = "notIsBlank")]
-            NotIsBlank = 6
+            NotIsBlank
         }
 
         /// <summary>
@@ -86,19 +86,16 @@ namespace Xpertdoc.SmartFlows.Model
             this.Value2 = Value2;
         }
 
-
         /// <summary>
         /// Gets or Sets Value1
         /// </summary>
         [DataMember(Name = "value1", EmitDefaultValue = false)]
         public ConditionValue Value1 { get; set; }
-
         /// <summary>
         /// Gets or Sets Value2
         /// </summary>
         [DataMember(Name = "value2", EmitDefaultValue = false)]
         public ConditionValue Value2 { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -126,38 +123,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as TextCondition);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as TextCondition);
         }
 
         /// <summary>
         /// Returns true if TextCondition instances are equal
         /// </summary>
-        /// <param name="input">Instance of TextCondition to be compared</param>
+        /// <param name="other">Instance of TextCondition to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(TextCondition input)
+        public bool Equals(TextCondition other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this._Operator == input._Operator ||
-                    (this._Operator != null &&
-                    this._Operator.Equals(input._Operator))
+                    this._Operator == other._Operator ||
+                    this._Operator != null &&
+                    this._Operator.Equals(other._Operator)
                 ) &&
                 (
-                    this.Value1 == input.Value1 ||
-                    (this.Value1 != null &&
-                    this.Value1.Equals(input.Value1))
+                    this.Value1 == other.Value1 ||
+                    this.Value1 != null &&
+                    this.Value1.Equals(other.Value1)
                 ) &&
                 (
-                    this.Value2 == input.Value2 ||
-                    (this.Value2 != null &&
-                    this.Value2.Equals(input.Value2))
+                    this.Value2 == other.Value2 ||
+                    this.Value2 != null &&
+                    this.Value2.Equals(other.Value2)
                 );
         }
 
@@ -167,25 +166,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this._Operator != null)
-                    hashCode = hashCode * 59 + this._Operator.GetHashCode();
+                    hash = hash * 59 + this._Operator.GetHashCode();
                 if (this.Value1 != null)
-                    hashCode = hashCode * 59 + this.Value1.GetHashCode();
+                    hash = hash * 59 + this.Value1.GetHashCode();
                 if (this.Value2 != null)
-                    hashCode = hashCode * 59 + this.Value2.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Value2.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

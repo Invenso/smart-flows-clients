@@ -42,19 +42,16 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "switchValue", EmitDefaultValue = false)]
         public Object SwitchValue { get; set; }
-
         /// <summary>
         /// Gets or Sets Cases
         /// </summary>
         [DataMember(Name = "cases", EmitDefaultValue = false)]
         public List<FlowSwitchCases> Cases { get; set; }
-
         /// <summary>
         /// Gets or Sets _Default
         /// </summary>
         [DataMember(Name = "default", EmitDefaultValue = false)]
         public List<FlowZone> _Default { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -82,38 +79,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as FlowSwitch);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as FlowSwitch);
         }
 
         /// <summary>
         /// Returns true if FlowSwitch instances are equal
         /// </summary>
-        /// <param name="input">Instance of FlowSwitch to be compared</param>
+        /// <param name="other">Instance of FlowSwitch to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FlowSwitch input)
+        public bool Equals(FlowSwitch other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.SwitchValue == input.SwitchValue ||
-                    (this.SwitchValue != null &&
-                    this.SwitchValue.Equals(input.SwitchValue))
+                    this.SwitchValue == other.SwitchValue ||
+                    this.SwitchValue != null &&
+                    this.SwitchValue.Equals(other.SwitchValue)
                 ) &&
                 (
-                    this.Cases == input.Cases ||
+                    this.Cases == other.Cases ||
                     this.Cases != null &&
-                    this.Cases.SequenceEqual(input.Cases)
+                    this.Cases.SequenceEqual(other.Cases)
                 ) &&
                 (
-                    this._Default == input._Default ||
+                    this._Default == other._Default ||
                     this._Default != null &&
-                    this._Default.SequenceEqual(input._Default)
+                    this._Default.SequenceEqual(other._Default)
                 );
         }
 
@@ -123,25 +122,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.SwitchValue != null)
-                    hashCode = hashCode * 59 + this.SwitchValue.GetHashCode();
+                    hash = hash * 59 + this.SwitchValue.GetHashCode();
                 if (this.Cases != null)
-                    hashCode = hashCode * 59 + this.Cases.GetHashCode();
+                    hash = hash * 59 + this.Cases.GetHashCode();
                 if (this._Default != null)
-                    hashCode = hashCode * 59 + this._Default.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this._Default.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

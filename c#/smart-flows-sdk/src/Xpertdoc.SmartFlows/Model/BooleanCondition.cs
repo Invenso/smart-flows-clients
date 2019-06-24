@@ -25,35 +25,35 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class BooleanCondition : IEquatable<BooleanCondition>, IValidatableObject
     {
         /// <summary>
-        /// Defines _Operator
+        /// Gets or Sets _Operator
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum OperatorEnum
         {
 
             /// <summary>
-            /// Enum IsTrue for value: isTrue
+            /// Enum IsTrue for "isTrue"
             /// </summary>
             [EnumMember(Value = "isTrue")]
-            IsTrue = 1,
+            IsTrue,
 
             /// <summary>
-            /// Enum IsFalse for value: isFalse
+            /// Enum IsFalse for "isFalse"
             /// </summary>
             [EnumMember(Value = "isFalse")]
-            IsFalse = 2,
+            IsFalse,
 
             /// <summary>
-            /// Enum EqualTo for value: equalTo
+            /// Enum EqualTo for "equalTo"
             /// </summary>
             [EnumMember(Value = "equalTo")]
-            EqualTo = 3,
+            EqualTo,
 
             /// <summary>
-            /// Enum NotEqualTo for value: notEqualTo
+            /// Enum NotEqualTo for "notEqualTo"
             /// </summary>
             [EnumMember(Value = "notEqualTo")]
-            NotEqualTo = 4
+            NotEqualTo
         }
 
         /// <summary>
@@ -72,13 +72,11 @@ namespace Xpertdoc.SmartFlows.Model
             this.Value = Value;
         }
 
-
         /// <summary>
         /// Gets or Sets Value
         /// </summary>
         [DataMember(Name = "value", EmitDefaultValue = false)]
         public ConditionValue Value { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -105,33 +103,35 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as BooleanCondition);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as BooleanCondition);
         }
 
         /// <summary>
         /// Returns true if BooleanCondition instances are equal
         /// </summary>
-        /// <param name="input">Instance of BooleanCondition to be compared</param>
+        /// <param name="other">Instance of BooleanCondition to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(BooleanCondition input)
+        public bool Equals(BooleanCondition other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this._Operator == input._Operator ||
-                    (this._Operator != null &&
-                    this._Operator.Equals(input._Operator))
+                    this._Operator == other._Operator ||
+                    this._Operator != null &&
+                    this._Operator.Equals(other._Operator)
                 ) &&
                 (
-                    this.Value == input.Value ||
-                    (this.Value != null &&
-                    this.Value.Equals(input.Value))
+                    this.Value == other.Value ||
+                    this.Value != null &&
+                    this.Value.Equals(other.Value)
                 );
         }
 
@@ -141,23 +141,20 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this._Operator != null)
-                    hashCode = hashCode * 59 + this._Operator.GetHashCode();
+                    hash = hash * 59 + this._Operator.GetHashCode();
                 if (this.Value != null)
-                    hashCode = hashCode * 59 + this.Value.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Value.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

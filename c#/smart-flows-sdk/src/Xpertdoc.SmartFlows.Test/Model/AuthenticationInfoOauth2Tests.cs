@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<AuthenticationInfoOauth2> (instance, "variable 'instance' is a AuthenticationInfoOauth2");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

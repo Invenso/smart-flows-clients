@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<SystemInfo> (instance, "variable 'instance' is a SystemInfo");
         }
 
-
         /// <summary>
         /// Test the property 'Version'
         /// </summary>
@@ -71,6 +70,14 @@ namespace Xpertdoc.SmartFlows.Test
         public void DisplayNameTest()
         {
             // TODO unit test for the property 'DisplayName'
+        }
+        /// <summary>
+        /// Test the property 'ProjectId'
+        /// </summary>
+        [Test]
+        public void ProjectIdTest()
+        {
+            // TODO unit test for the property 'ProjectId'
         }
         /// <summary>
         /// Test the property 'Description'

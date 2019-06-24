@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<ConditionCheckValueSettings> (instance, "variable 'instance' is a ConditionCheckValueSettings");
         }
 
-
         /// <summary>
         /// Test the property 'Date'
         /// </summary>

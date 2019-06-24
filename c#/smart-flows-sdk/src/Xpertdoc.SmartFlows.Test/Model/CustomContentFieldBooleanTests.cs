@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<CustomContentFieldBoolean> (instance, "variable 'instance' is a CustomContentFieldBoolean");
         }
 
-
         /// <summary>
         /// Test the property '_Default'
         /// </summary>

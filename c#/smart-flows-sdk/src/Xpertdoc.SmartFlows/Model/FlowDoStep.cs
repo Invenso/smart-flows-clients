@@ -43,25 +43,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "stepId", EmitDefaultValue = false)]
         public string StepId { get; set; }
-
         /// <summary>
         /// Gets or Sets UserSelectable
         /// </summary>
         [DataMember(Name = "userSelectable", EmitDefaultValue = false)]
         public bool? UserSelectable { get; set; }
-
         /// <summary>
         /// Gets or Sets UserSelectableDefault
         /// </summary>
         [DataMember(Name = "userSelectableDefault", EmitDefaultValue = false)]
         public bool? UserSelectableDefault { get; set; }
-
         /// <summary>
         /// Gets or Sets Parameters
         /// </summary>
         [DataMember(Name = "parameters", EmitDefaultValue = false)]
         public Object Parameters { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -90,43 +86,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as FlowDoStep);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as FlowDoStep);
         }
 
         /// <summary>
         /// Returns true if FlowDoStep instances are equal
         /// </summary>
-        /// <param name="input">Instance of FlowDoStep to be compared</param>
+        /// <param name="other">Instance of FlowDoStep to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FlowDoStep input)
+        public bool Equals(FlowDoStep other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.StepId == input.StepId ||
-                    (this.StepId != null &&
-                    this.StepId.Equals(input.StepId))
+                    this.StepId == other.StepId ||
+                    this.StepId != null &&
+                    this.StepId.Equals(other.StepId)
                 ) &&
                 (
-                    this.UserSelectable == input.UserSelectable ||
-                    (this.UserSelectable != null &&
-                    this.UserSelectable.Equals(input.UserSelectable))
+                    this.UserSelectable == other.UserSelectable ||
+                    this.UserSelectable != null &&
+                    this.UserSelectable.Equals(other.UserSelectable)
                 ) &&
                 (
-                    this.UserSelectableDefault == input.UserSelectableDefault ||
-                    (this.UserSelectableDefault != null &&
-                    this.UserSelectableDefault.Equals(input.UserSelectableDefault))
+                    this.UserSelectableDefault == other.UserSelectableDefault ||
+                    this.UserSelectableDefault != null &&
+                    this.UserSelectableDefault.Equals(other.UserSelectableDefault)
                 ) &&
                 (
-                    this.Parameters == input.Parameters ||
-                    (this.Parameters != null &&
-                    this.Parameters.Equals(input.Parameters))
+                    this.Parameters == other.Parameters ||
+                    this.Parameters != null &&
+                    this.Parameters.Equals(other.Parameters)
                 );
         }
 
@@ -136,27 +134,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.StepId != null)
-                    hashCode = hashCode * 59 + this.StepId.GetHashCode();
+                    hash = hash * 59 + this.StepId.GetHashCode();
                 if (this.UserSelectable != null)
-                    hashCode = hashCode * 59 + this.UserSelectable.GetHashCode();
+                    hash = hash * 59 + this.UserSelectable.GetHashCode();
                 if (this.UserSelectableDefault != null)
-                    hashCode = hashCode * 59 + this.UserSelectableDefault.GetHashCode();
+                    hash = hash * 59 + this.UserSelectableDefault.GetHashCode();
                 if (this.Parameters != null)
-                    hashCode = hashCode * 59 + this.Parameters.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Parameters.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<LanguageDefinition> (instance, "variable 'instance' is a LanguageDefinition");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

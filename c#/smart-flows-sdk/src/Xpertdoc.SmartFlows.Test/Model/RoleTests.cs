@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Role> (instance, "variable 'instance' is a Role");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

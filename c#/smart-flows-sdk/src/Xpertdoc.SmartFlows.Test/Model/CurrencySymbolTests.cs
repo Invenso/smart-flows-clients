@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<CurrencySymbol> (instance, "variable 'instance' is a CurrencySymbol");
         }
 
-
         /// <summary>
         /// Test the property 'Symbol'
         /// </summary>

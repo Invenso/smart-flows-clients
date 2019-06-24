@@ -44,25 +44,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "postProcessingSteps", EmitDefaultValue = false)]
         public List<IdWithName> PostProcessingSteps { get; set; }
-
         /// <summary>
         /// Gets or Sets PreZones
         /// </summary>
         [DataMember(Name = "preZones", EmitDefaultValue = false)]
         public List<FlowZone> PreZones { get; set; }
-
         /// <summary>
         /// Gets or Sets GenDocZone
         /// </summary>
         [DataMember(Name = "genDocZone", EmitDefaultValue = false)]
         public FlowZone GenDocZone { get; set; }
-
         /// <summary>
         /// Gets or Sets PostZones
         /// </summary>
         [DataMember(Name = "postZones", EmitDefaultValue = false)]
         public List<FlowZone> PostZones { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -91,43 +87,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as FlowBody);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as FlowBody);
         }
 
         /// <summary>
         /// Returns true if FlowBody instances are equal
         /// </summary>
-        /// <param name="input">Instance of FlowBody to be compared</param>
+        /// <param name="other">Instance of FlowBody to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(FlowBody input)
+        public bool Equals(FlowBody other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.PostProcessingSteps == input.PostProcessingSteps ||
+                    this.PostProcessingSteps == other.PostProcessingSteps ||
                     this.PostProcessingSteps != null &&
-                    this.PostProcessingSteps.SequenceEqual(input.PostProcessingSteps)
+                    this.PostProcessingSteps.SequenceEqual(other.PostProcessingSteps)
                 ) &&
                 (
-                    this.PreZones == input.PreZones ||
+                    this.PreZones == other.PreZones ||
                     this.PreZones != null &&
-                    this.PreZones.SequenceEqual(input.PreZones)
+                    this.PreZones.SequenceEqual(other.PreZones)
                 ) &&
                 (
-                    this.GenDocZone == input.GenDocZone ||
-                    (this.GenDocZone != null &&
-                    this.GenDocZone.Equals(input.GenDocZone))
+                    this.GenDocZone == other.GenDocZone ||
+                    this.GenDocZone != null &&
+                    this.GenDocZone.Equals(other.GenDocZone)
                 ) &&
                 (
-                    this.PostZones == input.PostZones ||
+                    this.PostZones == other.PostZones ||
                     this.PostZones != null &&
-                    this.PostZones.SequenceEqual(input.PostZones)
+                    this.PostZones.SequenceEqual(other.PostZones)
                 );
         }
 
@@ -137,27 +135,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.PostProcessingSteps != null)
-                    hashCode = hashCode * 59 + this.PostProcessingSteps.GetHashCode();
+                    hash = hash * 59 + this.PostProcessingSteps.GetHashCode();
                 if (this.PreZones != null)
-                    hashCode = hashCode * 59 + this.PreZones.GetHashCode();
+                    hash = hash * 59 + this.PreZones.GetHashCode();
                 if (this.GenDocZone != null)
-                    hashCode = hashCode * 59 + this.GenDocZone.GetHashCode();
+                    hash = hash * 59 + this.GenDocZone.GetHashCode();
                 if (this.PostZones != null)
-                    hashCode = hashCode * 59 + this.PostZones.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.PostZones.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

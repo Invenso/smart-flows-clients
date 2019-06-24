@@ -19,7 +19,7 @@ using System.Text;
 namespace Xpertdoc.SmartFlows.Model
 {
     /// <summary>
-    /// The content of the template when type is composed. Content of standard templates should be retrieved using the contentLink
+    /// The content of the template when type is composed
     /// </summary>
     [DataContract]
     public partial class TemplateComposedContent : IEquatable<TemplateComposedContent>, IValidatableObject
@@ -44,25 +44,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "bodies", EmitDefaultValue = false)]
         public List<Part> Bodies { get; set; }
-
         /// <summary>
         /// Gets or Sets Headers
         /// </summary>
         [DataMember(Name = "headers", EmitDefaultValue = false)]
         public List<Part> Headers { get; set; }
-
         /// <summary>
         /// Gets or Sets Footers
         /// </summary>
         [DataMember(Name = "footers", EmitDefaultValue = false)]
         public List<Part> Footers { get; set; }
-
         /// <summary>
         /// Gets or Sets Additions
         /// </summary>
         [DataMember(Name = "additions", EmitDefaultValue = false)]
         public List<Part> Additions { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -91,43 +87,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as TemplateComposedContent);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as TemplateComposedContent);
         }
 
         /// <summary>
         /// Returns true if TemplateComposedContent instances are equal
         /// </summary>
-        /// <param name="input">Instance of TemplateComposedContent to be compared</param>
+        /// <param name="other">Instance of TemplateComposedContent to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(TemplateComposedContent input)
+        public bool Equals(TemplateComposedContent other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Bodies == input.Bodies ||
+                    this.Bodies == other.Bodies ||
                     this.Bodies != null &&
-                    this.Bodies.SequenceEqual(input.Bodies)
+                    this.Bodies.SequenceEqual(other.Bodies)
                 ) &&
                 (
-                    this.Headers == input.Headers ||
+                    this.Headers == other.Headers ||
                     this.Headers != null &&
-                    this.Headers.SequenceEqual(input.Headers)
+                    this.Headers.SequenceEqual(other.Headers)
                 ) &&
                 (
-                    this.Footers == input.Footers ||
+                    this.Footers == other.Footers ||
                     this.Footers != null &&
-                    this.Footers.SequenceEqual(input.Footers)
+                    this.Footers.SequenceEqual(other.Footers)
                 ) &&
                 (
-                    this.Additions == input.Additions ||
+                    this.Additions == other.Additions ||
                     this.Additions != null &&
-                    this.Additions.SequenceEqual(input.Additions)
+                    this.Additions.SequenceEqual(other.Additions)
                 );
         }
 
@@ -137,27 +135,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Bodies != null)
-                    hashCode = hashCode * 59 + this.Bodies.GetHashCode();
+                    hash = hash * 59 + this.Bodies.GetHashCode();
                 if (this.Headers != null)
-                    hashCode = hashCode * 59 + this.Headers.GetHashCode();
+                    hash = hash * 59 + this.Headers.GetHashCode();
                 if (this.Footers != null)
-                    hashCode = hashCode * 59 + this.Footers.GetHashCode();
+                    hash = hash * 59 + this.Footers.GetHashCode();
                 if (this.Additions != null)
-                    hashCode = hashCode * 59 + this.Additions.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Additions.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

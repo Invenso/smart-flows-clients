@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DatasetContent> (instance, "variable 'instance' is a DatasetContent");
         }
 
-
         /// <summary>
         /// Test the property 'Type'
         /// </summary>
@@ -87,6 +86,14 @@ namespace Xpertdoc.SmartFlows.Test
         public void SchemaContentTest()
         {
             // TODO unit test for the property 'SchemaContent'
+        }
+        /// <summary>
+        /// Test the property 'FormContent'
+        /// </summary>
+        [Test]
+        public void FormContentTest()
+        {
+            // TODO unit test for the property 'FormContent'
         }
         /// <summary>
         /// Test the property 'ExtendedContent'

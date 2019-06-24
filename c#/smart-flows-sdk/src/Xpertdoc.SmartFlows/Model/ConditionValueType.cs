@@ -17,47 +17,45 @@ namespace Xpertdoc.SmartFlows.Model
     /// <summary>
     /// Defines conditionValueType
     /// </summary>
-
     [JsonConverter(typeof(StringEnumConverter))]
-
     public enum ConditionValueType
     {
 
         /// <summary>
-        /// Enum Nothing for value: nothing
+        /// Enum Nothing for "nothing"
         /// </summary>
         [EnumMember(Value = "nothing")]
-        Nothing = 1,
+        Nothing,
 
         /// <summary>
-        /// Enum DocProp for value: docProp
+        /// Enum DocProp for "docProp"
         /// </summary>
         [EnumMember(Value = "docProp")]
-        DocProp = 2,
+        DocProp,
 
         /// <summary>
-        /// Enum Constant for value: constant
+        /// Enum Constant for "constant"
         /// </summary>
         [EnumMember(Value = "constant")]
-        Constant = 3,
+        Constant,
 
         /// <summary>
-        /// Enum Field for value: field
+        /// Enum Field for "field"
         /// </summary>
         [EnumMember(Value = "field")]
-        Field = 4,
+        Field,
 
         /// <summary>
-        /// Enum Expression for value: expression
+        /// Enum Expression for "expression"
         /// </summary>
         [EnumMember(Value = "expression")]
-        Expression = 5,
+        Expression,
 
         /// <summary>
-        /// Enum FlowVariable for value: flowVariable
+        /// Enum FlowVariable for "flowVariable"
         /// </summary>
         [EnumMember(Value = "flowVariable")]
-        FlowVariable = 6
+        FlowVariable
     }
 
 }

@@ -38,8 +38,9 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="JavaType">JavaType.</param>
         /// <param name="ReadSchema">ReadSchema.</param>
         /// <param name="WriteSchema">WriteSchema.</param>
+        /// <param name="SupportsLogin">SupportsLogin.</param>
         /// <param name="ResourceFetch">ResourceFetch.</param>
-        public ConnectorType(string Id = default(string), string DisplayName = default(string), string Description = default(string), string JavaType = default(string), Object ReadSchema = default(Object), Object WriteSchema = default(Object), ConnectorTypeResourceFetch ResourceFetch = default(ConnectorTypeResourceFetch))
+        public ConnectorType(string Id = default(string), string DisplayName = default(string), string Description = default(string), string JavaType = default(string), Object ReadSchema = default(Object), Object WriteSchema = default(Object), bool? SupportsLogin = default(bool?), ConnectorTypeResourceFetch ResourceFetch = default(ConnectorTypeResourceFetch))
         {
             // to ensure "DisplayName" is required (not null)
             if (DisplayName == null)
@@ -55,6 +56,7 @@ namespace Xpertdoc.SmartFlows.Model
             this.JavaType = JavaType;
             this.ReadSchema = ReadSchema;
             this.WriteSchema = WriteSchema;
+            this.SupportsLogin = SupportsLogin;
             this.ResourceFetch = ResourceFetch;
         }
 
@@ -63,43 +65,41 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
         /// <summary>
         /// Gets or Sets JavaType
         /// </summary>
         [DataMember(Name = "javaType", EmitDefaultValue = false)]
         public string JavaType { get; set; }
-
         /// <summary>
         /// Gets or Sets ReadSchema
         /// </summary>
         [DataMember(Name = "readSchema", EmitDefaultValue = false)]
         public Object ReadSchema { get; set; }
-
         /// <summary>
         /// Gets or Sets WriteSchema
         /// </summary>
         [DataMember(Name = "writeSchema", EmitDefaultValue = false)]
         public Object WriteSchema { get; set; }
-
+        /// <summary>
+        /// Gets or Sets SupportsLogin
+        /// </summary>
+        [DataMember(Name = "supportsLogin", EmitDefaultValue = false)]
+        public bool? SupportsLogin { get; set; }
         /// <summary>
         /// Gets or Sets ResourceFetch
         /// </summary>
         [DataMember(Name = "resourceFetch", EmitDefaultValue = false)]
         public ConnectorTypeResourceFetch ResourceFetch { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -114,6 +114,7 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("  JavaType: ").Append(JavaType).Append("\n");
             sb.Append("  ReadSchema: ").Append(ReadSchema).Append("\n");
             sb.Append("  WriteSchema: ").Append(WriteSchema).Append("\n");
+            sb.Append("  SupportsLogin: ").Append(SupportsLogin).Append("\n");
             sb.Append("  ResourceFetch: ").Append(ResourceFetch).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -131,58 +132,65 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as ConnectorType);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ConnectorType);
         }
 
         /// <summary>
         /// Returns true if ConnectorType instances are equal
         /// </summary>
-        /// <param name="input">Instance of ConnectorType to be compared</param>
+        /// <param name="other">Instance of ConnectorType to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ConnectorType input)
+        public bool Equals(ConnectorType other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.JavaType == input.JavaType ||
-                    (this.JavaType != null &&
-                    this.JavaType.Equals(input.JavaType))
+                    this.JavaType == other.JavaType ||
+                    this.JavaType != null &&
+                    this.JavaType.Equals(other.JavaType)
                 ) &&
                 (
-                    this.ReadSchema == input.ReadSchema ||
-                    (this.ReadSchema != null &&
-                    this.ReadSchema.Equals(input.ReadSchema))
+                    this.ReadSchema == other.ReadSchema ||
+                    this.ReadSchema != null &&
+                    this.ReadSchema.Equals(other.ReadSchema)
                 ) &&
                 (
-                    this.WriteSchema == input.WriteSchema ||
-                    (this.WriteSchema != null &&
-                    this.WriteSchema.Equals(input.WriteSchema))
+                    this.WriteSchema == other.WriteSchema ||
+                    this.WriteSchema != null &&
+                    this.WriteSchema.Equals(other.WriteSchema)
                 ) &&
                 (
-                    this.ResourceFetch == input.ResourceFetch ||
-                    (this.ResourceFetch != null &&
-                    this.ResourceFetch.Equals(input.ResourceFetch))
+                    this.SupportsLogin == other.SupportsLogin ||
+                    this.SupportsLogin != null &&
+                    this.SupportsLogin.Equals(other.SupportsLogin)
+                ) &&
+                (
+                    this.ResourceFetch == other.ResourceFetch ||
+                    this.ResourceFetch != null &&
+                    this.ResourceFetch.Equals(other.ResourceFetch)
                 );
         }
 
@@ -192,44 +200,43 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.JavaType != null)
-                    hashCode = hashCode * 59 + this.JavaType.GetHashCode();
+                    hash = hash * 59 + this.JavaType.GetHashCode();
                 if (this.ReadSchema != null)
-                    hashCode = hashCode * 59 + this.ReadSchema.GetHashCode();
+                    hash = hash * 59 + this.ReadSchema.GetHashCode();
                 if (this.WriteSchema != null)
-                    hashCode = hashCode * 59 + this.WriteSchema.GetHashCode();
+                    hash = hash * 59 + this.WriteSchema.GetHashCode();
+                if (this.SupportsLogin != null)
+                    hash = hash * 59 + this.SupportsLogin.GetHashCode();
                 if (this.ResourceFetch != null)
-                    hashCode = hashCode * 59 + this.ResourceFetch.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.ResourceFetch.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // DisplayName (string) maxLength
             if (this.DisplayName != null && this.DisplayName.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
+                yield return new ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
             }
 
             // Description (string) maxLength
             if (this.Description != null && this.Description.Length > 2048)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
+                yield return new ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
             }
 
             yield break;

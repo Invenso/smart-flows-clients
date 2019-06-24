@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<CompletedExecutionsPlan> (instance, "variable 'instance' is a CompletedExecutionsPlan");
         }
 
-
         /// <summary>
         /// Test the property 'Schedule'
         /// </summary>

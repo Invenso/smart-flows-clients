@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<SchemaContent> (instance, "variable 'instance' is a SchemaContent");
         }
 
-
         /// <summary>
         /// Test the property 'Content'
         /// </summary>

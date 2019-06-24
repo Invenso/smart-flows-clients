@@ -39,13 +39,11 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "jps", EmitDefaultValue = false)]
         public PrinterDefinitionPrinterInfoJps Jps { get; set; }
-
         /// <summary>
         /// Gets or Sets Gcp
         /// </summary>
         [DataMember(Name = "gcp", EmitDefaultValue = false)]
         public PrinterDefinitionPrinterInfoGcp Gcp { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -72,33 +70,35 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as PrinterDefinitionPrinterInfo);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as PrinterDefinitionPrinterInfo);
         }
 
         /// <summary>
         /// Returns true if PrinterDefinitionPrinterInfo instances are equal
         /// </summary>
-        /// <param name="input">Instance of PrinterDefinitionPrinterInfo to be compared</param>
+        /// <param name="other">Instance of PrinterDefinitionPrinterInfo to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(PrinterDefinitionPrinterInfo input)
+        public bool Equals(PrinterDefinitionPrinterInfo other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Jps == input.Jps ||
-                    (this.Jps != null &&
-                    this.Jps.Equals(input.Jps))
+                    this.Jps == other.Jps ||
+                    this.Jps != null &&
+                    this.Jps.Equals(other.Jps)
                 ) &&
                 (
-                    this.Gcp == input.Gcp ||
-                    (this.Gcp != null &&
-                    this.Gcp.Equals(input.Gcp))
+                    this.Gcp == other.Gcp ||
+                    this.Gcp != null &&
+                    this.Gcp.Equals(other.Gcp)
                 );
         }
 
@@ -108,23 +108,20 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Jps != null)
-                    hashCode = hashCode * 59 + this.Jps.GetHashCode();
+                    hash = hash * 59 + this.Jps.GetHashCode();
                 if (this.Gcp != null)
-                    hashCode = hashCode * 59 + this.Gcp.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Gcp.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

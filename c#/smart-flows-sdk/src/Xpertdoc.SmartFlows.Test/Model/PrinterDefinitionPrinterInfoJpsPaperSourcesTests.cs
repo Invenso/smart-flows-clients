@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<PrinterDefinitionPrinterInfoJpsPaperSources> (instance, "variable 'instance' is a PrinterDefinitionPrinterInfoJpsPaperSources");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

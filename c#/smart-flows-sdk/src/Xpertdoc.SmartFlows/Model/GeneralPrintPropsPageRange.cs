@@ -25,29 +25,29 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class GeneralPrintPropsPageRange : IEquatable<GeneralPrintPropsPageRange>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum Default for value: default
+            /// Enum Default for "default"
             /// </summary>
             [EnumMember(Value = "default")]
-            Default = 1,
+            Default,
 
             /// <summary>
-            /// Enum AllPages for value: allPages
+            /// Enum AllPages for "allPages"
             /// </summary>
             [EnumMember(Value = "allPages")]
-            AllPages = 2,
+            AllPages,
 
             /// <summary>
-            /// Enum SomePages for value: somePages
+            /// Enum SomePages for "somePages"
             /// </summary>
             [EnumMember(Value = "somePages")]
-            SomePages = 3
+            SomePages
         }
 
         /// <summary>
@@ -68,19 +68,16 @@ namespace Xpertdoc.SmartFlows.Model
             this.To = To;
         }
 
-
         /// <summary>
         /// Gets or Sets From
         /// </summary>
         [DataMember(Name = "from", EmitDefaultValue = false)]
         public int? From { get; set; }
-
         /// <summary>
         /// Gets or Sets To
         /// </summary>
         [DataMember(Name = "to", EmitDefaultValue = false)]
         public int? To { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -108,38 +105,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as GeneralPrintPropsPageRange);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as GeneralPrintPropsPageRange);
         }
 
         /// <summary>
         /// Returns true if GeneralPrintPropsPageRange instances are equal
         /// </summary>
-        /// <param name="input">Instance of GeneralPrintPropsPageRange to be compared</param>
+        /// <param name="other">Instance of GeneralPrintPropsPageRange to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(GeneralPrintPropsPageRange input)
+        public bool Equals(GeneralPrintPropsPageRange other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.From == input.From ||
-                    (this.From != null &&
-                    this.From.Equals(input.From))
+                    this.From == other.From ||
+                    this.From != null &&
+                    this.From.Equals(other.From)
                 ) &&
                 (
-                    this.To == input.To ||
-                    (this.To != null &&
-                    this.To.Equals(input.To))
+                    this.To == other.To ||
+                    this.To != null &&
+                    this.To.Equals(other.To)
                 );
         }
 
@@ -149,25 +148,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.From != null)
-                    hashCode = hashCode * 59 + this.From.GetHashCode();
+                    hash = hash * 59 + this.From.GetHashCode();
                 if (this.To != null)
-                    hashCode = hashCode * 59 + this.To.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.To.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

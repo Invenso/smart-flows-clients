@@ -108,103 +108,86 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets UserName
         /// </summary>
         [DataMember(Name = "userName", EmitDefaultValue = false)]
         public string UserName { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets FirstName
         /// </summary>
         [DataMember(Name = "firstName", EmitDefaultValue = false)]
         public string FirstName { get; set; }
-
         /// <summary>
         /// Gets or Sets LastName
         /// </summary>
         [DataMember(Name = "lastName", EmitDefaultValue = false)]
         public string LastName { get; set; }
-
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
         /// <summary>
         /// Gets or Sets EmailAddress
         /// </summary>
         [DataMember(Name = "emailAddress", EmitDefaultValue = false)]
         public string EmailAddress { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedAt
         /// </summary>
         [DataMember(Name = "createdAt", EmitDefaultValue = false)]
         public string CreatedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedBy
         /// </summary>
         [DataMember(Name = "createdBy", EmitDefaultValue = false)]
         public IdWithName CreatedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedAt
         /// </summary>
         [DataMember(Name = "modifiedAt", EmitDefaultValue = false)]
         public string ModifiedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedBy
         /// </summary>
         [DataMember(Name = "modifiedBy", EmitDefaultValue = false)]
         public IdWithName ModifiedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets LastLogin
         /// </summary>
         [DataMember(Name = "lastLogin", EmitDefaultValue = false)]
         public string LastLogin { get; set; }
-
         /// <summary>
         /// Gets or Sets LoginCount
         /// </summary>
         [DataMember(Name = "loginCount", EmitDefaultValue = false)]
         public int? LoginCount { get; set; }
-
         /// <summary>
         /// Gets or Sets Active
         /// </summary>
         [DataMember(Name = "active", EmitDefaultValue = false)]
         public bool? Active { get; set; }
-
         /// <summary>
         /// Gets or Sets Identity
         /// </summary>
         [DataMember(Name = "identity", EmitDefaultValue = false)]
         public UserIdentity Identity { get; set; }
-
         /// <summary>
         /// Gets or Sets Settings
         /// </summary>
         [DataMember(Name = "settings", EmitDefaultValue = false)]
         public Object Settings { get; set; }
-
         /// <summary>
         /// Gets or Sets Roles
         /// </summary>
         [DataMember(Name = "roles", EmitDefaultValue = false)]
         public List<Role> Roles { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -246,108 +229,110 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as User);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as User);
         }
 
         /// <summary>
         /// Returns true if User instances are equal
         /// </summary>
-        /// <param name="input">Instance of User to be compared</param>
+        /// <param name="other">Instance of User to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(User input)
+        public bool Equals(User other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.UserName == input.UserName ||
-                    (this.UserName != null &&
-                    this.UserName.Equals(input.UserName))
+                    this.UserName == other.UserName ||
+                    this.UserName != null &&
+                    this.UserName.Equals(other.UserName)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.FirstName == input.FirstName ||
-                    (this.FirstName != null &&
-                    this.FirstName.Equals(input.FirstName))
+                    this.FirstName == other.FirstName ||
+                    this.FirstName != null &&
+                    this.FirstName.Equals(other.FirstName)
                 ) &&
                 (
-                    this.LastName == input.LastName ||
-                    (this.LastName != null &&
-                    this.LastName.Equals(input.LastName))
+                    this.LastName == other.LastName ||
+                    this.LastName != null &&
+                    this.LastName.Equals(other.LastName)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.EmailAddress == input.EmailAddress ||
-                    (this.EmailAddress != null &&
-                    this.EmailAddress.Equals(input.EmailAddress))
+                    this.EmailAddress == other.EmailAddress ||
+                    this.EmailAddress != null &&
+                    this.EmailAddress.Equals(other.EmailAddress)
                 ) &&
                 (
-                    this.CreatedAt == input.CreatedAt ||
-                    (this.CreatedAt != null &&
-                    this.CreatedAt.Equals(input.CreatedAt))
+                    this.CreatedAt == other.CreatedAt ||
+                    this.CreatedAt != null &&
+                    this.CreatedAt.Equals(other.CreatedAt)
                 ) &&
                 (
-                    this.CreatedBy == input.CreatedBy ||
-                    (this.CreatedBy != null &&
-                    this.CreatedBy.Equals(input.CreatedBy))
+                    this.CreatedBy == other.CreatedBy ||
+                    this.CreatedBy != null &&
+                    this.CreatedBy.Equals(other.CreatedBy)
                 ) &&
                 (
-                    this.ModifiedAt == input.ModifiedAt ||
-                    (this.ModifiedAt != null &&
-                    this.ModifiedAt.Equals(input.ModifiedAt))
+                    this.ModifiedAt == other.ModifiedAt ||
+                    this.ModifiedAt != null &&
+                    this.ModifiedAt.Equals(other.ModifiedAt)
                 ) &&
                 (
-                    this.ModifiedBy == input.ModifiedBy ||
-                    (this.ModifiedBy != null &&
-                    this.ModifiedBy.Equals(input.ModifiedBy))
+                    this.ModifiedBy == other.ModifiedBy ||
+                    this.ModifiedBy != null &&
+                    this.ModifiedBy.Equals(other.ModifiedBy)
                 ) &&
                 (
-                    this.LastLogin == input.LastLogin ||
-                    (this.LastLogin != null &&
-                    this.LastLogin.Equals(input.LastLogin))
+                    this.LastLogin == other.LastLogin ||
+                    this.LastLogin != null &&
+                    this.LastLogin.Equals(other.LastLogin)
                 ) &&
                 (
-                    this.LoginCount == input.LoginCount ||
-                    (this.LoginCount != null &&
-                    this.LoginCount.Equals(input.LoginCount))
+                    this.LoginCount == other.LoginCount ||
+                    this.LoginCount != null &&
+                    this.LoginCount.Equals(other.LoginCount)
                 ) &&
                 (
-                    this.Active == input.Active ||
-                    (this.Active != null &&
-                    this.Active.Equals(input.Active))
+                    this.Active == other.Active ||
+                    this.Active != null &&
+                    this.Active.Equals(other.Active)
                 ) &&
                 (
-                    this.Identity == input.Identity ||
-                    (this.Identity != null &&
-                    this.Identity.Equals(input.Identity))
+                    this.Identity == other.Identity ||
+                    this.Identity != null &&
+                    this.Identity.Equals(other.Identity)
                 ) &&
                 (
-                    this.Settings == input.Settings ||
-                    (this.Settings != null &&
-                    this.Settings.Equals(input.Settings))
+                    this.Settings == other.Settings ||
+                    this.Settings != null &&
+                    this.Settings.Equals(other.Settings)
                 ) &&
                 (
-                    this.Roles == input.Roles ||
+                    this.Roles == other.Roles ||
                     this.Roles != null &&
-                    this.Roles.SequenceEqual(input.Roles)
+                    this.Roles.SequenceEqual(other.Roles)
                 );
         }
 
@@ -357,88 +342,85 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.UserName != null)
-                    hashCode = hashCode * 59 + this.UserName.GetHashCode();
+                    hash = hash * 59 + this.UserName.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.FirstName != null)
-                    hashCode = hashCode * 59 + this.FirstName.GetHashCode();
+                    hash = hash * 59 + this.FirstName.GetHashCode();
                 if (this.LastName != null)
-                    hashCode = hashCode * 59 + this.LastName.GetHashCode();
+                    hash = hash * 59 + this.LastName.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.EmailAddress != null)
-                    hashCode = hashCode * 59 + this.EmailAddress.GetHashCode();
+                    hash = hash * 59 + this.EmailAddress.GetHashCode();
                 if (this.CreatedAt != null)
-                    hashCode = hashCode * 59 + this.CreatedAt.GetHashCode();
+                    hash = hash * 59 + this.CreatedAt.GetHashCode();
                 if (this.CreatedBy != null)
-                    hashCode = hashCode * 59 + this.CreatedBy.GetHashCode();
+                    hash = hash * 59 + this.CreatedBy.GetHashCode();
                 if (this.ModifiedAt != null)
-                    hashCode = hashCode * 59 + this.ModifiedAt.GetHashCode();
+                    hash = hash * 59 + this.ModifiedAt.GetHashCode();
                 if (this.ModifiedBy != null)
-                    hashCode = hashCode * 59 + this.ModifiedBy.GetHashCode();
+                    hash = hash * 59 + this.ModifiedBy.GetHashCode();
                 if (this.LastLogin != null)
-                    hashCode = hashCode * 59 + this.LastLogin.GetHashCode();
+                    hash = hash * 59 + this.LastLogin.GetHashCode();
                 if (this.LoginCount != null)
-                    hashCode = hashCode * 59 + this.LoginCount.GetHashCode();
+                    hash = hash * 59 + this.LoginCount.GetHashCode();
                 if (this.Active != null)
-                    hashCode = hashCode * 59 + this.Active.GetHashCode();
+                    hash = hash * 59 + this.Active.GetHashCode();
                 if (this.Identity != null)
-                    hashCode = hashCode * 59 + this.Identity.GetHashCode();
+                    hash = hash * 59 + this.Identity.GetHashCode();
                 if (this.Settings != null)
-                    hashCode = hashCode * 59 + this.Settings.GetHashCode();
+                    hash = hash * 59 + this.Settings.GetHashCode();
                 if (this.Roles != null)
-                    hashCode = hashCode * 59 + this.Roles.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Roles.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // UserName (string) maxLength
             if (this.UserName != null && this.UserName.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for UserName, length must be less than 255.", new[] { "UserName" });
+                yield return new ValidationResult("Invalid value for UserName, length must be less than 255.", new[] { "UserName" });
             }
 
             // FirstName (string) maxLength
             if (this.FirstName != null && this.FirstName.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for FirstName, length must be less than 255.", new[] { "FirstName" });
+                yield return new ValidationResult("Invalid value for FirstName, length must be less than 255.", new[] { "FirstName" });
             }
 
             // LastName (string) maxLength
             if (this.LastName != null && this.LastName.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for LastName, length must be less than 255.", new[] { "LastName" });
+                yield return new ValidationResult("Invalid value for LastName, length must be less than 255.", new[] { "LastName" });
             }
 
             // Description (string) maxLength
             if (this.Description != null && this.Description.Length > 2048)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
+                yield return new ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
             }
 
             // EmailAddress (string) maxLength
             if (this.EmailAddress != null && this.EmailAddress.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for EmailAddress, length must be less than 255.", new[] { "EmailAddress" });
+                yield return new ValidationResult("Invalid value for EmailAddress, length must be less than 255.", new[] { "EmailAddress" });
             }
 
             // LoginCount (int?) minimum
             if (this.LoginCount < (int?)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for LoginCount, must be a value greater than or equal to 0.", new[] { "LoginCount" });
+                yield return new ValidationResult("Invalid value for LoginCount, must be a value greater than or equal to 0.", new[] { "LoginCount" });
             }
 
             yield break;

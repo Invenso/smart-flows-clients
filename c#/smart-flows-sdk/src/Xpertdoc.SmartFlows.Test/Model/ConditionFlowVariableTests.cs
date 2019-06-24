@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<ConditionFlowVariable> (instance, "variable 'instance' is a ConditionFlowVariable");
         }
 
-
         /// <summary>
         /// Test the property 'BlockId'
         /// </summary>

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<CleanupSettings> (instance, "variable 'instance' is a CleanupSettings");
         }
 
-
         /// <summary>
         /// Test the property 'FlowExecutions'
         /// </summary>

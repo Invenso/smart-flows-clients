@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<GeneratedDocumentSeries> (instance, "variable 'instance' is a GeneratedDocumentSeries");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

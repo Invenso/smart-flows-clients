@@ -39,13 +39,11 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "index", EmitDefaultValue = false)]
         public int? Index { get; set; }
-
         /// <summary>
         /// Gets or Sets Content
         /// </summary>
         [DataMember(Name = "content", EmitDefaultValue = false)]
         public byte[] Content { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -72,33 +70,35 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as GeneratedDocumentPages);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as GeneratedDocumentPages);
         }
 
         /// <summary>
         /// Returns true if GeneratedDocumentPages instances are equal
         /// </summary>
-        /// <param name="input">Instance of GeneratedDocumentPages to be compared</param>
+        /// <param name="other">Instance of GeneratedDocumentPages to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(GeneratedDocumentPages input)
+        public bool Equals(GeneratedDocumentPages other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Index == input.Index ||
-                    (this.Index != null &&
-                    this.Index.Equals(input.Index))
+                    this.Index == other.Index ||
+                    this.Index != null &&
+                    this.Index.Equals(other.Index)
                 ) &&
                 (
-                    this.Content == input.Content ||
-                    (this.Content != null &&
-                    this.Content.Equals(input.Content))
+                    this.Content == other.Content ||
+                    this.Content != null &&
+                    this.Content.Equals(other.Content)
                 );
         }
 
@@ -108,28 +108,25 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Index != null)
-                    hashCode = hashCode * 59 + this.Index.GetHashCode();
+                    hash = hash * 59 + this.Index.GetHashCode();
                 if (this.Content != null)
-                    hashCode = hashCode * 59 + this.Content.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Content.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // Index (int?) minimum
             if (this.Index < (int?)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Index, must be a value greater than or equal to 0.", new[] { "Index" });
+                yield return new ValidationResult("Invalid value for Index, must be a value greater than or equal to 0.", new[] { "Index" });
             }
 
             yield break;

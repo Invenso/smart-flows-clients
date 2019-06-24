@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DocumentPostProcessing> (instance, "variable 'instance' is a DocumentPostProcessing");
         }
 
-
         /// <summary>
         /// Test the property 'Message'
         /// </summary>

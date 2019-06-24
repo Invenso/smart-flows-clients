@@ -26,23 +26,23 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class DatasourceLayout : IEquatable<DatasourceLayout>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum Hierarchical for value: hierarchical
+            /// Enum Hierarchical for "hierarchical"
             /// </summary>
             [EnumMember(Value = "hierarchical")]
-            Hierarchical = 1,
+            Hierarchical,
 
             /// <summary>
-            /// Enum Relational for value: relational
+            /// Enum Relational for "relational"
             /// </summary>
             [EnumMember(Value = "relational")]
-            Relational = 2
+            Relational
         }
 
         /// <summary>
@@ -68,14 +68,11 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "datasourceType", EmitDefaultValue = false)]
         public IdWithName DatasourceType { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Entities
         /// </summary>
         [DataMember(Name = "entities", EmitDefaultValue = false)]
         public List<EntityDefinition> Entities { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -103,38 +100,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DatasourceLayout);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DatasourceLayout);
         }
 
         /// <summary>
         /// Returns true if DatasourceLayout instances are equal
         /// </summary>
-        /// <param name="input">Instance of DatasourceLayout to be compared</param>
+        /// <param name="other">Instance of DatasourceLayout to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DatasourceLayout input)
+        public bool Equals(DatasourceLayout other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.DatasourceType == input.DatasourceType ||
-                    (this.DatasourceType != null &&
-                    this.DatasourceType.Equals(input.DatasourceType))
+                    this.DatasourceType == other.DatasourceType ||
+                    this.DatasourceType != null &&
+                    this.DatasourceType.Equals(other.DatasourceType)
                 ) &&
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.Entities == input.Entities ||
+                    this.Entities == other.Entities ||
                     this.Entities != null &&
-                    this.Entities.SequenceEqual(input.Entities)
+                    this.Entities.SequenceEqual(other.Entities)
                 );
         }
 
@@ -144,25 +143,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.DatasourceType != null)
-                    hashCode = hashCode * 59 + this.DatasourceType.GetHashCode();
+                    hash = hash * 59 + this.DatasourceType.GetHashCode();
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.Entities != null)
-                    hashCode = hashCode * 59 + this.Entities.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Entities.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<ArchiveRequest> (instance, "variable 'instance' is a ArchiveRequest");
         }
 
-
         /// <summary>
         /// Test the property 'Items'
         /// </summary>

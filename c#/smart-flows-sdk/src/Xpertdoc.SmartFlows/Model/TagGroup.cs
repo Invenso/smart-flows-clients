@@ -9,6 +9,7 @@
  */
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,6 +26,31 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class TagGroup : IEquatable<TagGroup>, IValidatableObject
     {
         /// <summary>
+        /// Gets or Sets DefinedBy
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum DefinedByEnum
+        {
+
+            /// <summary>
+            /// Enum User for "user"
+            /// </summary>
+            [EnumMember(Value = "user")]
+            User,
+
+            /// <summary>
+            /// Enum System for "system"
+            /// </summary>
+            [EnumMember(Value = "system")]
+            System
+        }
+
+        /// <summary>
+        /// Gets or Sets DefinedBy
+        /// </summary>
+        [DataMember(Name = "definedBy", EmitDefaultValue = false)]
+        public DefinedByEnum? DefinedBy { get; set; }
+        /// <summary>
         /// Initializes a new instance of the <see cref="TagGroup" /> class.
         /// </summary>
         /// <param name="Id">Id.</param>
@@ -35,7 +61,8 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="ModifiedAt">ModifiedAt.</param>
         /// <param name="ModifiedBy">ModifiedBy.</param>
         /// <param name="Tags">All possible tags for a group.</param>
-        public TagGroup(string Id = default(string), string DisplayName = default(string), string Description = default(string), string CreatedAt = default(string), IdWithName CreatedBy = default(IdWithName), string ModifiedAt = default(string), IdWithName ModifiedBy = default(IdWithName), List<string> Tags = default(List<string>))
+        /// <param name="DefinedBy">DefinedBy (default to DefinedByEnum.User).</param>
+        public TagGroup(string Id = default(string), string DisplayName = default(string), string Description = default(string), string CreatedAt = default(string), IdWithName CreatedBy = default(IdWithName), string ModifiedAt = default(string), IdWithName ModifiedBy = default(IdWithName), List<string> Tags = default(List<string>), DefinedByEnum? DefinedBy = DefinedByEnum.User)
         {
             this.Id = Id;
             this.DisplayName = DisplayName;
@@ -45,6 +72,15 @@ namespace Xpertdoc.SmartFlows.Model
             this.ModifiedAt = ModifiedAt;
             this.ModifiedBy = ModifiedBy;
             this.Tags = Tags;
+            // use default value if no "DefinedBy" provided
+            if (DefinedBy == null)
+            {
+                this.DefinedBy = DefinedByEnum.User;
+            }
+            else
+            {
+                this.DefinedBy = DefinedBy;
+            }
         }
 
         /// <summary>
@@ -52,50 +88,42 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedAt
         /// </summary>
         [DataMember(Name = "createdAt", EmitDefaultValue = false)]
         public string CreatedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedBy
         /// </summary>
         [DataMember(Name = "createdBy", EmitDefaultValue = false)]
         public IdWithName CreatedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedAt
         /// </summary>
         [DataMember(Name = "modifiedAt", EmitDefaultValue = false)]
         public string ModifiedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedBy
         /// </summary>
         [DataMember(Name = "modifiedBy", EmitDefaultValue = false)]
         public IdWithName ModifiedBy { get; set; }
-
         /// <summary>
         /// All possible tags for a group
         /// </summary>
         /// <value>All possible tags for a group</value>
         [DataMember(Name = "tags", EmitDefaultValue = false)]
         public List<string> Tags { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -112,6 +140,7 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("  ModifiedAt: ").Append(ModifiedAt).Append("\n");
             sb.Append("  ModifiedBy: ").Append(ModifiedBy).Append("\n");
             sb.Append("  Tags: ").Append(Tags).Append("\n");
+            sb.Append("  DefinedBy: ").Append(DefinedBy).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -128,63 +157,70 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as TagGroup);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as TagGroup);
         }
 
         /// <summary>
         /// Returns true if TagGroup instances are equal
         /// </summary>
-        /// <param name="input">Instance of TagGroup to be compared</param>
+        /// <param name="other">Instance of TagGroup to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(TagGroup input)
+        public bool Equals(TagGroup other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.CreatedAt == input.CreatedAt ||
-                    (this.CreatedAt != null &&
-                    this.CreatedAt.Equals(input.CreatedAt))
+                    this.CreatedAt == other.CreatedAt ||
+                    this.CreatedAt != null &&
+                    this.CreatedAt.Equals(other.CreatedAt)
                 ) &&
                 (
-                    this.CreatedBy == input.CreatedBy ||
-                    (this.CreatedBy != null &&
-                    this.CreatedBy.Equals(input.CreatedBy))
+                    this.CreatedBy == other.CreatedBy ||
+                    this.CreatedBy != null &&
+                    this.CreatedBy.Equals(other.CreatedBy)
                 ) &&
                 (
-                    this.ModifiedAt == input.ModifiedAt ||
-                    (this.ModifiedAt != null &&
-                    this.ModifiedAt.Equals(input.ModifiedAt))
+                    this.ModifiedAt == other.ModifiedAt ||
+                    this.ModifiedAt != null &&
+                    this.ModifiedAt.Equals(other.ModifiedAt)
                 ) &&
                 (
-                    this.ModifiedBy == input.ModifiedBy ||
-                    (this.ModifiedBy != null &&
-                    this.ModifiedBy.Equals(input.ModifiedBy))
+                    this.ModifiedBy == other.ModifiedBy ||
+                    this.ModifiedBy != null &&
+                    this.ModifiedBy.Equals(other.ModifiedBy)
                 ) &&
                 (
-                    this.Tags == input.Tags ||
+                    this.Tags == other.Tags ||
                     this.Tags != null &&
-                    this.Tags.SequenceEqual(input.Tags)
+                    this.Tags.SequenceEqual(other.Tags)
+                ) &&
+                (
+                    this.DefinedBy == other.DefinedBy ||
+                    this.DefinedBy != null &&
+                    this.DefinedBy.Equals(other.DefinedBy)
                 );
         }
 
@@ -194,46 +230,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.CreatedAt != null)
-                    hashCode = hashCode * 59 + this.CreatedAt.GetHashCode();
+                    hash = hash * 59 + this.CreatedAt.GetHashCode();
                 if (this.CreatedBy != null)
-                    hashCode = hashCode * 59 + this.CreatedBy.GetHashCode();
+                    hash = hash * 59 + this.CreatedBy.GetHashCode();
                 if (this.ModifiedAt != null)
-                    hashCode = hashCode * 59 + this.ModifiedAt.GetHashCode();
+                    hash = hash * 59 + this.ModifiedAt.GetHashCode();
                 if (this.ModifiedBy != null)
-                    hashCode = hashCode * 59 + this.ModifiedBy.GetHashCode();
+                    hash = hash * 59 + this.ModifiedBy.GetHashCode();
                 if (this.Tags != null)
-                    hashCode = hashCode * 59 + this.Tags.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Tags.GetHashCode();
+                if (this.DefinedBy != null)
+                    hash = hash * 59 + this.DefinedBy.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // DisplayName (string) maxLength
             if (this.DisplayName != null && this.DisplayName.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
+                yield return new ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
             }
 
             // Description (string) maxLength
             if (this.Description != null && this.Description.Length > 2048)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
+                yield return new ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
             }
 
             yield break;

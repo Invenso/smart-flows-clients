@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<UserIdentityExternal> (instance, "variable 'instance' is a UserIdentityExternal");
         }
 
-
         /// <summary>
         /// Test the property 'ConnectorId'
         /// </summary>

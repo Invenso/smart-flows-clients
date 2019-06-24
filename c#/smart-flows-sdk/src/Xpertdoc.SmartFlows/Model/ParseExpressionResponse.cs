@@ -42,19 +42,16 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "value", EmitDefaultValue = false)]
         public string Value { get; set; }
-
         /// <summary>
         /// Gets or Sets Indented
         /// </summary>
         [DataMember(Name = "indented", EmitDefaultValue = false)]
         public bool? Indented { get; set; }
-
         /// <summary>
         /// Gets or Sets Errors
         /// </summary>
         [DataMember(Name = "errors", EmitDefaultValue = false)]
         public List<ParseExpressionResponseErrors> Errors { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -82,38 +79,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as ParseExpressionResponse);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ParseExpressionResponse);
         }
 
         /// <summary>
         /// Returns true if ParseExpressionResponse instances are equal
         /// </summary>
-        /// <param name="input">Instance of ParseExpressionResponse to be compared</param>
+        /// <param name="other">Instance of ParseExpressionResponse to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ParseExpressionResponse input)
+        public bool Equals(ParseExpressionResponse other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Value == input.Value ||
-                    (this.Value != null &&
-                    this.Value.Equals(input.Value))
+                    this.Value == other.Value ||
+                    this.Value != null &&
+                    this.Value.Equals(other.Value)
                 ) &&
                 (
-                    this.Indented == input.Indented ||
-                    (this.Indented != null &&
-                    this.Indented.Equals(input.Indented))
+                    this.Indented == other.Indented ||
+                    this.Indented != null &&
+                    this.Indented.Equals(other.Indented)
                 ) &&
                 (
-                    this.Errors == input.Errors ||
+                    this.Errors == other.Errors ||
                     this.Errors != null &&
-                    this.Errors.SequenceEqual(input.Errors)
+                    this.Errors.SequenceEqual(other.Errors)
                 );
         }
 
@@ -123,25 +122,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Value != null)
-                    hashCode = hashCode * 59 + this.Value.GetHashCode();
+                    hash = hash * 59 + this.Value.GetHashCode();
                 if (this.Indented != null)
-                    hashCode = hashCode * 59 + this.Indented.GetHashCode();
+                    hash = hash * 59 + this.Indented.GetHashCode();
                 if (this.Errors != null)
-                    hashCode = hashCode * 59 + this.Errors.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Errors.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

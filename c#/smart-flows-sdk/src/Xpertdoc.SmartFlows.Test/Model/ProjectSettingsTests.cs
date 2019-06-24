@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<ProjectSettings> (instance, "variable 'instance' is a ProjectSettings");
         }
 
-
         /// <summary>
         /// Test the property 'DisplayName'
         /// </summary>
@@ -87,6 +86,22 @@ namespace Xpertdoc.SmartFlows.Test
         public void TimeZoneTest()
         {
             // TODO unit test for the property 'TimeZone'
+        }
+        /// <summary>
+        /// Test the property 'SystemLanguage'
+        /// </summary>
+        [Test]
+        public void SystemLanguageTest()
+        {
+            // TODO unit test for the property 'SystemLanguage'
+        }
+        /// <summary>
+        /// Test the property 'DefaultPriority'
+        /// </summary>
+        [Test]
+        public void DefaultPriorityTest()
+        {
+            // TODO unit test for the property 'DefaultPriority'
         }
 
     }

@@ -25,26 +25,26 @@ namespace Xpertdoc.SmartFlows.Model
     [DataContract]
     public partial class DatasetStandardContent : IEquatable<DatasetStandardContent>, IValidatableObject
     {
+
         /// <summary>
-        /// Defines AllowedTypesOfData
+        /// Gets or Sets AllowedTypesOfData
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum AllowedTypesOfDataEnum
         {
 
             /// <summary>
-            /// Enum Value for value: value
+            /// Enum Value for "value"
             /// </summary>
             [EnumMember(Value = "value")]
-            Value = 1,
+            Value,
 
             /// <summary>
-            /// Enum Reference for value: reference
+            /// Enum Reference for "reference"
             /// </summary>
             [EnumMember(Value = "reference")]
-            Reference = 2
+            Reference
         }
-
 
         /// <summary>
         /// Gets or Sets AllowedTypesOfData
@@ -73,26 +73,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "wrapperElementName", EmitDefaultValue = false)]
         public string WrapperElementName { get; set; }
-
         /// <summary>
         /// Gets or Sets PrimaryEntity
         /// </summary>
         [DataMember(Name = "primaryEntity", EmitDefaultValue = false)]
         public string PrimaryEntity { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Entities
         /// </summary>
         [DataMember(Name = "entities", EmitDefaultValue = false)]
         public List<EntityReference> Entities { get; set; }
-
         /// <summary>
         /// Gets or Sets Queries
         /// </summary>
         [DataMember(Name = "queries", EmitDefaultValue = false)]
         public DatasetStandardContentQueries Queries { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -122,48 +117,50 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DatasetStandardContent);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DatasetStandardContent);
         }
 
         /// <summary>
         /// Returns true if DatasetStandardContent instances are equal
         /// </summary>
-        /// <param name="input">Instance of DatasetStandardContent to be compared</param>
+        /// <param name="other">Instance of DatasetStandardContent to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DatasetStandardContent input)
+        public bool Equals(DatasetStandardContent other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.WrapperElementName == input.WrapperElementName ||
-                    (this.WrapperElementName != null &&
-                    this.WrapperElementName.Equals(input.WrapperElementName))
+                    this.WrapperElementName == other.WrapperElementName ||
+                    this.WrapperElementName != null &&
+                    this.WrapperElementName.Equals(other.WrapperElementName)
                 ) &&
                 (
-                    this.PrimaryEntity == input.PrimaryEntity ||
-                    (this.PrimaryEntity != null &&
-                    this.PrimaryEntity.Equals(input.PrimaryEntity))
+                    this.PrimaryEntity == other.PrimaryEntity ||
+                    this.PrimaryEntity != null &&
+                    this.PrimaryEntity.Equals(other.PrimaryEntity)
                 ) &&
                 (
-                    this.AllowedTypesOfData == input.AllowedTypesOfData ||
+                    this.AllowedTypesOfData == other.AllowedTypesOfData ||
                     this.AllowedTypesOfData != null &&
-                    this.AllowedTypesOfData.SequenceEqual(input.AllowedTypesOfData)
+                    this.AllowedTypesOfData.SequenceEqual(other.AllowedTypesOfData)
                 ) &&
                 (
-                    this.Entities == input.Entities ||
+                    this.Entities == other.Entities ||
                     this.Entities != null &&
-                    this.Entities.SequenceEqual(input.Entities)
+                    this.Entities.SequenceEqual(other.Entities)
                 ) &&
                 (
-                    this.Queries == input.Queries ||
-                    (this.Queries != null &&
-                    this.Queries.Equals(input.Queries))
+                    this.Queries == other.Queries ||
+                    this.Queries != null &&
+                    this.Queries.Equals(other.Queries)
                 );
         }
 
@@ -173,29 +170,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.WrapperElementName != null)
-                    hashCode = hashCode * 59 + this.WrapperElementName.GetHashCode();
+                    hash = hash * 59 + this.WrapperElementName.GetHashCode();
                 if (this.PrimaryEntity != null)
-                    hashCode = hashCode * 59 + this.PrimaryEntity.GetHashCode();
+                    hash = hash * 59 + this.PrimaryEntity.GetHashCode();
                 if (this.AllowedTypesOfData != null)
-                    hashCode = hashCode * 59 + this.AllowedTypesOfData.GetHashCode();
+                    hash = hash * 59 + this.AllowedTypesOfData.GetHashCode();
                 if (this.Entities != null)
-                    hashCode = hashCode * 59 + this.Entities.GetHashCode();
+                    hash = hash * 59 + this.Entities.GetHashCode();
                 if (this.Queries != null)
-                    hashCode = hashCode * 59 + this.Queries.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Queries.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

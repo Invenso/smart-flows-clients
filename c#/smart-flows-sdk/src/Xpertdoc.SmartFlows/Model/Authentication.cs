@@ -40,13 +40,11 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "user", EmitDefaultValue = false)]
         public User User { get; set; }
-
         /// <summary>
         /// Gets or Sets Tokens
         /// </summary>
         [DataMember(Name = "tokens", EmitDefaultValue = false)]
         public List<AuthenticationTokens> Tokens { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -73,33 +71,35 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Authentication);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Authentication);
         }
 
         /// <summary>
         /// Returns true if Authentication instances are equal
         /// </summary>
-        /// <param name="input">Instance of Authentication to be compared</param>
+        /// <param name="other">Instance of Authentication to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Authentication input)
+        public bool Equals(Authentication other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.User == input.User ||
-                    (this.User != null &&
-                    this.User.Equals(input.User))
+                    this.User == other.User ||
+                    this.User != null &&
+                    this.User.Equals(other.User)
                 ) &&
                 (
-                    this.Tokens == input.Tokens ||
+                    this.Tokens == other.Tokens ||
                     this.Tokens != null &&
-                    this.Tokens.SequenceEqual(input.Tokens)
+                    this.Tokens.SequenceEqual(other.Tokens)
                 );
         }
 
@@ -109,23 +109,20 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.User != null)
-                    hashCode = hashCode * 59 + this.User.GetHashCode();
+                    hash = hash * 59 + this.User.GetHashCode();
                 if (this.Tokens != null)
-                    hashCode = hashCode * 59 + this.Tokens.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Tokens.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

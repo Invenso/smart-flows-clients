@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<FlowExecutionState> (instance, "variable 'instance' is a FlowExecutionState");
         }
 
-
         /// <summary>
         /// Test the property 'InputData'
         /// </summary>
@@ -103,6 +102,38 @@ namespace Xpertdoc.SmartFlows.Test
         public void WaitingForTest()
         {
             // TODO unit test for the property 'WaitingFor'
+        }
+        /// <summary>
+        /// Test the property 'LanguageCode'
+        /// </summary>
+        [Test]
+        public void LanguageCodeTest()
+        {
+            // TODO unit test for the property 'LanguageCode'
+        }
+        /// <summary>
+        /// Test the property 'TimeZoneId'
+        /// </summary>
+        [Test]
+        public void TimeZoneIdTest()
+        {
+            // TODO unit test for the property 'TimeZoneId'
+        }
+        /// <summary>
+        /// Test the property 'Warnings'
+        /// </summary>
+        [Test]
+        public void WarningsTest()
+        {
+            // TODO unit test for the property 'Warnings'
+        }
+        /// <summary>
+        /// Test the property 'Errors'
+        /// </summary>
+        [Test]
+        public void ErrorsTest()
+        {
+            // TODO unit test for the property 'Errors'
         }
 
     }

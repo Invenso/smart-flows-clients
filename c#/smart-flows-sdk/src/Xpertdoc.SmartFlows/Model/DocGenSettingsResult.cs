@@ -25,35 +25,91 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class DocGenSettingsResult : IEquatable<DocGenSettingsResult>, IValidatableObject
     {
         /// <summary>
-        /// Defines Content
+        /// Gets or Sets Content
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum ContentEnum
         {
 
             /// <summary>
-            /// Enum ReturnContent for value: returnContent
+            /// Enum ReturnContent for "returnContent"
             /// </summary>
             [EnumMember(Value = "returnContent")]
-            ReturnContent = 1,
+            ReturnContent,
 
             /// <summary>
-            /// Enum StoreContent for value: storeContent
+            /// Enum StoreContent for "storeContent"
             /// </summary>
             [EnumMember(Value = "storeContent")]
-            StoreContent = 2,
+            StoreContent,
 
             /// <summary>
-            /// Enum StoreAndReturnContent for value: storeAndReturnContent
+            /// Enum StoreAndReturnContent for "storeAndReturnContent"
             /// </summary>
             [EnumMember(Value = "storeAndReturnContent")]
-            StoreAndReturnContent = 3,
+            StoreAndReturnContent,
 
             /// <summary>
-            /// Enum NoStoreNoReturn for value: noStoreNoReturn
+            /// Enum NoStoreNoReturn for "noStoreNoReturn"
             /// </summary>
             [EnumMember(Value = "noStoreNoReturn")]
-            NoStoreNoReturn = 4
+            NoStoreNoReturn
+        }
+
+        /// <summary>
+        /// Gets or Sets Format
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum FormatEnum
+        {
+
+            /// <summary>
+            /// Enum Ooxml for "ooxml"
+            /// </summary>
+            [EnumMember(Value = "ooxml")]
+            Ooxml,
+
+            /// <summary>
+            /// Enum Pdf for "pdf"
+            /// </summary>
+            [EnumMember(Value = "pdf")]
+            Pdf,
+
+            /// <summary>
+            /// Enum Html for "html"
+            /// </summary>
+            [EnumMember(Value = "html")]
+            Html,
+
+            /// <summary>
+            /// Enum Text for "text"
+            /// </summary>
+            [EnumMember(Value = "text")]
+            Text,
+
+            /// <summary>
+            /// Enum Xps for "xps"
+            /// </summary>
+            [EnumMember(Value = "xps")]
+            Xps,
+
+            /// <summary>
+            /// Enum Odt for "odt"
+            /// </summary>
+            [EnumMember(Value = "odt")]
+            Odt,
+
+            /// <summary>
+            /// Enum Rtf for "rtf"
+            /// </summary>
+            [EnumMember(Value = "rtf")]
+            Rtf,
+
+            /// <summary>
+            /// Enum Image for "image"
+            /// </summary>
+            [EnumMember(Value = "image")]
+            Image
         }
 
         /// <summary>
@@ -61,62 +117,6 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "content", EmitDefaultValue = false)]
         public ContentEnum? Content { get; set; }
-        /// <summary>
-        /// Defines Format
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum FormatEnum
-        {
-
-            /// <summary>
-            /// Enum Ooxml for value: ooxml
-            /// </summary>
-            [EnumMember(Value = "ooxml")]
-            Ooxml = 1,
-
-            /// <summary>
-            /// Enum Pdf for value: pdf
-            /// </summary>
-            [EnumMember(Value = "pdf")]
-            Pdf = 2,
-
-            /// <summary>
-            /// Enum Html for value: html
-            /// </summary>
-            [EnumMember(Value = "html")]
-            Html = 3,
-
-            /// <summary>
-            /// Enum Text for value: text
-            /// </summary>
-            [EnumMember(Value = "text")]
-            Text = 4,
-
-            /// <summary>
-            /// Enum Xps for value: xps
-            /// </summary>
-            [EnumMember(Value = "xps")]
-            Xps = 5,
-
-            /// <summary>
-            /// Enum Odt for value: odt
-            /// </summary>
-            [EnumMember(Value = "odt")]
-            Odt = 6,
-
-            /// <summary>
-            /// Enum Rtf for value: rtf
-            /// </summary>
-            [EnumMember(Value = "rtf")]
-            Rtf = 7,
-
-            /// <summary>
-            /// Enum Image for value: image
-            /// </summary>
-            [EnumMember(Value = "image")]
-            Image = 8
-        }
-
         /// <summary>
         /// Gets or Sets Format
         /// </summary>
@@ -163,50 +163,41 @@ namespace Xpertdoc.SmartFlows.Model
             this.Odt = Odt;
         }
 
-
         /// <summary>
         /// Gets or Sets ChartData
         /// </summary>
         [DataMember(Name = "chartData", EmitDefaultValue = false)]
         public DocGenSettingsResultChartData ChartData { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Ooxml
         /// </summary>
         [DataMember(Name = "ooxml", EmitDefaultValue = false)]
         public DocGenSettingsResultOoxml Ooxml { get; set; }
-
         /// <summary>
         /// Gets or Sets Image
         /// </summary>
         [DataMember(Name = "image", EmitDefaultValue = false)]
         public DocGenSettingsResultImage Image { get; set; }
-
         /// <summary>
         /// Gets or Sets Pdf
         /// </summary>
         [DataMember(Name = "pdf", EmitDefaultValue = false)]
         public DocGenSettingsResultPdf Pdf { get; set; }
-
         /// <summary>
         /// Gets or Sets Html
         /// </summary>
         [DataMember(Name = "html", EmitDefaultValue = false)]
         public DocGenSettingsResultHtml Html { get; set; }
-
         /// <summary>
         /// Gets or Sets Text
         /// </summary>
         [DataMember(Name = "text", EmitDefaultValue = false)]
         public DocGenSettingsResultText Text { get; set; }
-
         /// <summary>
         /// Gets or Sets Odt
         /// </summary>
         [DataMember(Name = "odt", EmitDefaultValue = false)]
         public DocGenSettingsResultOdt Odt { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -240,68 +231,70 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as DocGenSettingsResult);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as DocGenSettingsResult);
         }
 
         /// <summary>
         /// Returns true if DocGenSettingsResult instances are equal
         /// </summary>
-        /// <param name="input">Instance of DocGenSettingsResult to be compared</param>
+        /// <param name="other">Instance of DocGenSettingsResult to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(DocGenSettingsResult input)
+        public bool Equals(DocGenSettingsResult other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Content == input.Content ||
-                    (this.Content != null &&
-                    this.Content.Equals(input.Content))
+                    this.Content == other.Content ||
+                    this.Content != null &&
+                    this.Content.Equals(other.Content)
                 ) &&
                 (
-                    this.ChartData == input.ChartData ||
-                    (this.ChartData != null &&
-                    this.ChartData.Equals(input.ChartData))
+                    this.ChartData == other.ChartData ||
+                    this.ChartData != null &&
+                    this.ChartData.Equals(other.ChartData)
                 ) &&
                 (
-                    this.Format == input.Format ||
-                    (this.Format != null &&
-                    this.Format.Equals(input.Format))
+                    this.Format == other.Format ||
+                    this.Format != null &&
+                    this.Format.Equals(other.Format)
                 ) &&
                 (
-                    this.Ooxml == input.Ooxml ||
-                    (this.Ooxml != null &&
-                    this.Ooxml.Equals(input.Ooxml))
+                    this.Ooxml == other.Ooxml ||
+                    this.Ooxml != null &&
+                    this.Ooxml.Equals(other.Ooxml)
                 ) &&
                 (
-                    this.Image == input.Image ||
-                    (this.Image != null &&
-                    this.Image.Equals(input.Image))
+                    this.Image == other.Image ||
+                    this.Image != null &&
+                    this.Image.Equals(other.Image)
                 ) &&
                 (
-                    this.Pdf == input.Pdf ||
-                    (this.Pdf != null &&
-                    this.Pdf.Equals(input.Pdf))
+                    this.Pdf == other.Pdf ||
+                    this.Pdf != null &&
+                    this.Pdf.Equals(other.Pdf)
                 ) &&
                 (
-                    this.Html == input.Html ||
-                    (this.Html != null &&
-                    this.Html.Equals(input.Html))
+                    this.Html == other.Html ||
+                    this.Html != null &&
+                    this.Html.Equals(other.Html)
                 ) &&
                 (
-                    this.Text == input.Text ||
-                    (this.Text != null &&
-                    this.Text.Equals(input.Text))
+                    this.Text == other.Text ||
+                    this.Text != null &&
+                    this.Text.Equals(other.Text)
                 ) &&
                 (
-                    this.Odt == input.Odt ||
-                    (this.Odt != null &&
-                    this.Odt.Equals(input.Odt))
+                    this.Odt == other.Odt ||
+                    this.Odt != null &&
+                    this.Odt.Equals(other.Odt)
                 );
         }
 
@@ -311,37 +304,34 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Content != null)
-                    hashCode = hashCode * 59 + this.Content.GetHashCode();
+                    hash = hash * 59 + this.Content.GetHashCode();
                 if (this.ChartData != null)
-                    hashCode = hashCode * 59 + this.ChartData.GetHashCode();
+                    hash = hash * 59 + this.ChartData.GetHashCode();
                 if (this.Format != null)
-                    hashCode = hashCode * 59 + this.Format.GetHashCode();
+                    hash = hash * 59 + this.Format.GetHashCode();
                 if (this.Ooxml != null)
-                    hashCode = hashCode * 59 + this.Ooxml.GetHashCode();
+                    hash = hash * 59 + this.Ooxml.GetHashCode();
                 if (this.Image != null)
-                    hashCode = hashCode * 59 + this.Image.GetHashCode();
+                    hash = hash * 59 + this.Image.GetHashCode();
                 if (this.Pdf != null)
-                    hashCode = hashCode * 59 + this.Pdf.GetHashCode();
+                    hash = hash * 59 + this.Pdf.GetHashCode();
                 if (this.Html != null)
-                    hashCode = hashCode * 59 + this.Html.GetHashCode();
+                    hash = hash * 59 + this.Html.GetHashCode();
                 if (this.Text != null)
-                    hashCode = hashCode * 59 + this.Text.GetHashCode();
+                    hash = hash * 59 + this.Text.GetHashCode();
                 if (this.Odt != null)
-                    hashCode = hashCode * 59 + this.Odt.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Odt.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<ConnectorTypeResourceFetch> (instance, "variable 'instance' is a ConnectorTypeResourceFetch");
         }
 
-
         /// <summary>
         /// Test the property 'IsSupported'
         /// </summary>

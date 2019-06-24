@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Dataset> (instance, "variable 'instance' is a Dataset");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>
@@ -119,6 +118,14 @@ namespace Xpertdoc.SmartFlows.Test
         public void DatasourcesTest()
         {
             // TODO unit test for the property 'Datasources'
+        }
+        /// <summary>
+        /// Test the property 'Plugin'
+        /// </summary>
+        [Test]
+        public void PluginTest()
+        {
+            // TODO unit test for the property 'Plugin'
         }
         /// <summary>
         /// Test the property 'TagGroups'

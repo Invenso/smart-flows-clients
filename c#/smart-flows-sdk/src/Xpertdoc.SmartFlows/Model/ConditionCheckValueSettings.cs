@@ -43,25 +43,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "date", EmitDefaultValue = false)]
         public DateCondition Date { get; set; }
-
         /// <summary>
         /// Gets or Sets Number
         /// </summary>
         [DataMember(Name = "number", EmitDefaultValue = false)]
         public NumberCondition Number { get; set; }
-
         /// <summary>
         /// Gets or Sets Text
         /// </summary>
         [DataMember(Name = "text", EmitDefaultValue = false)]
         public TextCondition Text { get; set; }
-
         /// <summary>
         /// Gets or Sets Boolean
         /// </summary>
         [DataMember(Name = "boolean", EmitDefaultValue = false)]
         public BooleanCondition Boolean { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -90,43 +86,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as ConditionCheckValueSettings);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ConditionCheckValueSettings);
         }
 
         /// <summary>
         /// Returns true if ConditionCheckValueSettings instances are equal
         /// </summary>
-        /// <param name="input">Instance of ConditionCheckValueSettings to be compared</param>
+        /// <param name="other">Instance of ConditionCheckValueSettings to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ConditionCheckValueSettings input)
+        public bool Equals(ConditionCheckValueSettings other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Date == input.Date ||
-                    (this.Date != null &&
-                    this.Date.Equals(input.Date))
+                    this.Date == other.Date ||
+                    this.Date != null &&
+                    this.Date.Equals(other.Date)
                 ) &&
                 (
-                    this.Number == input.Number ||
-                    (this.Number != null &&
-                    this.Number.Equals(input.Number))
+                    this.Number == other.Number ||
+                    this.Number != null &&
+                    this.Number.Equals(other.Number)
                 ) &&
                 (
-                    this.Text == input.Text ||
-                    (this.Text != null &&
-                    this.Text.Equals(input.Text))
+                    this.Text == other.Text ||
+                    this.Text != null &&
+                    this.Text.Equals(other.Text)
                 ) &&
                 (
-                    this.Boolean == input.Boolean ||
-                    (this.Boolean != null &&
-                    this.Boolean.Equals(input.Boolean))
+                    this.Boolean == other.Boolean ||
+                    this.Boolean != null &&
+                    this.Boolean.Equals(other.Boolean)
                 );
         }
 
@@ -136,27 +134,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Date != null)
-                    hashCode = hashCode * 59 + this.Date.GetHashCode();
+                    hash = hash * 59 + this.Date.GetHashCode();
                 if (this.Number != null)
-                    hashCode = hashCode * 59 + this.Number.GetHashCode();
+                    hash = hash * 59 + this.Number.GetHashCode();
                 if (this.Text != null)
-                    hashCode = hashCode * 59 + this.Text.GetHashCode();
+                    hash = hash * 59 + this.Text.GetHashCode();
                 if (this.Boolean != null)
-                    hashCode = hashCode * 59 + this.Boolean.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Boolean.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

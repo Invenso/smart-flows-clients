@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DocGenSettingsTemplate> (instance, "variable 'instance' is a DocGenSettingsTemplate");
         }
 
-
         /// <summary>
         /// Test the property 'Type'
         /// </summary>

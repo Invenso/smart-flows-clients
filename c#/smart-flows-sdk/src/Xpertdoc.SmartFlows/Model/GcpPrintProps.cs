@@ -26,35 +26,137 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class GcpPrintProps : IEquatable<GcpPrintProps>, IValidatableObject
     {
         /// <summary>
-        /// Defines Duplexing
+        /// Gets or Sets Duplexing
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum DuplexingEnum
         {
 
             /// <summary>
-            /// Enum Default for value: default
+            /// Enum Default for "default"
             /// </summary>
             [EnumMember(Value = "default")]
-            Default = 1,
+            Default,
 
             /// <summary>
-            /// Enum NoDuplex for value: noDuplex
+            /// Enum NoDuplex for "noDuplex"
             /// </summary>
             [EnumMember(Value = "noDuplex")]
-            NoDuplex = 2,
+            NoDuplex,
 
             /// <summary>
-            /// Enum LongEdge for value: longEdge
+            /// Enum LongEdge for "longEdge"
             /// </summary>
             [EnumMember(Value = "longEdge")]
-            LongEdge = 3,
+            LongEdge,
 
             /// <summary>
-            /// Enum ShortEdge for value: shortEdge
+            /// Enum ShortEdge for "shortEdge"
             /// </summary>
             [EnumMember(Value = "shortEdge")]
-            ShortEdge = 4
+            ShortEdge
+        }
+
+        /// <summary>
+        /// Gets or Sets Collate
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum CollateEnum
+        {
+
+            /// <summary>
+            /// Enum Default for "default"
+            /// </summary>
+            [EnumMember(Value = "default")]
+            Default,
+
+            /// <summary>
+            /// Enum True for "true"
+            /// </summary>
+            [EnumMember(Value = "true")]
+            True,
+
+            /// <summary>
+            /// Enum False for "false"
+            /// </summary>
+            [EnumMember(Value = "false")]
+            False
+        }
+
+        /// <summary>
+        /// Gets or Sets Color
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum ColorEnum
+        {
+
+            /// <summary>
+            /// Enum Default for "default"
+            /// </summary>
+            [EnumMember(Value = "default")]
+            Default,
+
+            /// <summary>
+            /// Enum Auto for "auto"
+            /// </summary>
+            [EnumMember(Value = "auto")]
+            Auto,
+
+            /// <summary>
+            /// Enum StandardColor for "standardColor"
+            /// </summary>
+            [EnumMember(Value = "standardColor")]
+            StandardColor,
+
+            /// <summary>
+            /// Enum StandardMonochrome for "standardMonochrome"
+            /// </summary>
+            [EnumMember(Value = "standardMonochrome")]
+            StandardMonochrome,
+
+            /// <summary>
+            /// Enum CustomColor for "customColor"
+            /// </summary>
+            [EnumMember(Value = "customColor")]
+            CustomColor,
+
+            /// <summary>
+            /// Enum CustomMonochrome for "customMonochrome"
+            /// </summary>
+            [EnumMember(Value = "customMonochrome")]
+            CustomMonochrome
+        }
+
+        /// <summary>
+        /// Gets or Sets Orientation
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum OrientationEnum
+        {
+
+            /// <summary>
+            /// Enum Default for "default"
+            /// </summary>
+            [EnumMember(Value = "default")]
+            Default,
+
+            /// <summary>
+            /// Enum Auto for "auto"
+            /// </summary>
+            [EnumMember(Value = "auto")]
+            Auto,
+
+            /// <summary>
+            /// Enum Portrait for "portrait"
+            /// </summary>
+            [EnumMember(Value = "portrait")]
+            Portrait,
+
+            /// <summary>
+            /// Enum Landscape for "landscape"
+            /// </summary>
+            [EnumMember(Value = "landscape")]
+            Landscape
         }
 
         /// <summary>
@@ -63,117 +165,15 @@ namespace Xpertdoc.SmartFlows.Model
         [DataMember(Name = "duplexing", EmitDefaultValue = false)]
         public DuplexingEnum? Duplexing { get; set; }
         /// <summary>
-        /// Defines Collate
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum CollateEnum
-        {
-
-            /// <summary>
-            /// Enum Default for value: default
-            /// </summary>
-            [EnumMember(Value = "default")]
-            Default = 1,
-
-            /// <summary>
-            /// Enum True for value: true
-            /// </summary>
-            [EnumMember(Value = "true")]
-            True = 2,
-
-            /// <summary>
-            /// Enum False for value: false
-            /// </summary>
-            [EnumMember(Value = "false")]
-            False = 3
-        }
-
-        /// <summary>
         /// Gets or Sets Collate
         /// </summary>
         [DataMember(Name = "collate", EmitDefaultValue = false)]
         public CollateEnum? Collate { get; set; }
         /// <summary>
-        /// Defines Color
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum ColorEnum
-        {
-
-            /// <summary>
-            /// Enum Default for value: default
-            /// </summary>
-            [EnumMember(Value = "default")]
-            Default = 1,
-
-            /// <summary>
-            /// Enum Auto for value: auto
-            /// </summary>
-            [EnumMember(Value = "auto")]
-            Auto = 2,
-
-            /// <summary>
-            /// Enum StandardColor for value: standardColor
-            /// </summary>
-            [EnumMember(Value = "standardColor")]
-            StandardColor = 3,
-
-            /// <summary>
-            /// Enum StandardMonochrome for value: standardMonochrome
-            /// </summary>
-            [EnumMember(Value = "standardMonochrome")]
-            StandardMonochrome = 4,
-
-            /// <summary>
-            /// Enum CustomColor for value: customColor
-            /// </summary>
-            [EnumMember(Value = "customColor")]
-            CustomColor = 5,
-
-            /// <summary>
-            /// Enum CustomMonochrome for value: customMonochrome
-            /// </summary>
-            [EnumMember(Value = "customMonochrome")]
-            CustomMonochrome = 6
-        }
-
-        /// <summary>
         /// Gets or Sets Color
         /// </summary>
         [DataMember(Name = "color", EmitDefaultValue = false)]
         public ColorEnum? Color { get; set; }
-        /// <summary>
-        /// Defines Orientation
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum OrientationEnum
-        {
-
-            /// <summary>
-            /// Enum Default for value: default
-            /// </summary>
-            [EnumMember(Value = "default")]
-            Default = 1,
-
-            /// <summary>
-            /// Enum Auto for value: auto
-            /// </summary>
-            [EnumMember(Value = "auto")]
-            Auto = 2,
-
-            /// <summary>
-            /// Enum Portrait for value: portrait
-            /// </summary>
-            [EnumMember(Value = "portrait")]
-            Portrait = 3,
-
-            /// <summary>
-            /// Enum Landscape for value: landscape
-            /// </summary>
-            [EnumMember(Value = "landscape")]
-            Landscape = 4
-        }
-
         /// <summary>
         /// Gets or Sets Orientation
         /// </summary>
@@ -196,16 +196,11 @@ namespace Xpertdoc.SmartFlows.Model
             this.VendorCapabilities = VendorCapabilities;
         }
 
-
-
-
-
         /// <summary>
         /// Gets or Sets VendorCapabilities
         /// </summary>
         [DataMember(Name = "vendorCapabilities", EmitDefaultValue = false)]
         public List<Dictionary<string, string>> VendorCapabilities { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -235,48 +230,50 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as GcpPrintProps);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as GcpPrintProps);
         }
 
         /// <summary>
         /// Returns true if GcpPrintProps instances are equal
         /// </summary>
-        /// <param name="input">Instance of GcpPrintProps to be compared</param>
+        /// <param name="other">Instance of GcpPrintProps to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(GcpPrintProps input)
+        public bool Equals(GcpPrintProps other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Duplexing == input.Duplexing ||
-                    (this.Duplexing != null &&
-                    this.Duplexing.Equals(input.Duplexing))
+                    this.Duplexing == other.Duplexing ||
+                    this.Duplexing != null &&
+                    this.Duplexing.Equals(other.Duplexing)
                 ) &&
                 (
-                    this.Collate == input.Collate ||
-                    (this.Collate != null &&
-                    this.Collate.Equals(input.Collate))
+                    this.Collate == other.Collate ||
+                    this.Collate != null &&
+                    this.Collate.Equals(other.Collate)
                 ) &&
                 (
-                    this.Color == input.Color ||
-                    (this.Color != null &&
-                    this.Color.Equals(input.Color))
+                    this.Color == other.Color ||
+                    this.Color != null &&
+                    this.Color.Equals(other.Color)
                 ) &&
                 (
-                    this.Orientation == input.Orientation ||
-                    (this.Orientation != null &&
-                    this.Orientation.Equals(input.Orientation))
+                    this.Orientation == other.Orientation ||
+                    this.Orientation != null &&
+                    this.Orientation.Equals(other.Orientation)
                 ) &&
                 (
-                    this.VendorCapabilities == input.VendorCapabilities ||
+                    this.VendorCapabilities == other.VendorCapabilities ||
                     this.VendorCapabilities != null &&
-                    this.VendorCapabilities.SequenceEqual(input.VendorCapabilities)
+                    this.VendorCapabilities.SequenceEqual(other.VendorCapabilities)
                 );
         }
 
@@ -286,29 +283,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Duplexing != null)
-                    hashCode = hashCode * 59 + this.Duplexing.GetHashCode();
+                    hash = hash * 59 + this.Duplexing.GetHashCode();
                 if (this.Collate != null)
-                    hashCode = hashCode * 59 + this.Collate.GetHashCode();
+                    hash = hash * 59 + this.Collate.GetHashCode();
                 if (this.Color != null)
-                    hashCode = hashCode * 59 + this.Color.GetHashCode();
+                    hash = hash * 59 + this.Color.GetHashCode();
                 if (this.Orientation != null)
-                    hashCode = hashCode * 59 + this.Orientation.GetHashCode();
+                    hash = hash * 59 + this.Orientation.GetHashCode();
                 if (this.VendorCapabilities != null)
-                    hashCode = hashCode * 59 + this.VendorCapabilities.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.VendorCapabilities.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

@@ -25,77 +25,77 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class CustomContentField : IEquatable<CustomContentField>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum Text for value: text
+            /// Enum Text for "text"
             /// </summary>
             [EnumMember(Value = "text")]
-            Text = 1,
+            Text,
 
             /// <summary>
-            /// Enum MultiLineText for value: multiLineText
+            /// Enum MultiLineText for "multiLineText"
             /// </summary>
             [EnumMember(Value = "multiLineText")]
-            MultiLineText = 2,
+            MultiLineText,
 
             /// <summary>
-            /// Enum RichText for value: richText
+            /// Enum RichText for "richText"
             /// </summary>
             [EnumMember(Value = "richText")]
-            RichText = 3,
+            RichText,
 
             /// <summary>
-            /// Enum Number for value: number
+            /// Enum Number for "number"
             /// </summary>
             [EnumMember(Value = "number")]
-            Number = 4,
+            Number,
 
             /// <summary>
-            /// Enum Boolean for value: boolean
+            /// Enum Boolean for "boolean"
             /// </summary>
             [EnumMember(Value = "boolean")]
-            Boolean = 5,
+            Boolean,
 
             /// <summary>
-            /// Enum EntityRef for value: entityRef
+            /// Enum EntityRef for "entityRef"
             /// </summary>
             [EnumMember(Value = "entityRef")]
-            EntityRef = 6,
+            EntityRef,
 
             /// <summary>
-            /// Enum Data for value: data
+            /// Enum Data for "data"
             /// </summary>
             [EnumMember(Value = "data")]
-            Data = 7,
+            Data,
 
             /// <summary>
-            /// Enum Date for value: date
+            /// Enum Date for "date"
             /// </summary>
             [EnumMember(Value = "date")]
-            Date = 8,
+            Date,
 
             /// <summary>
-            /// Enum Time for value: time
+            /// Enum Time for "time"
             /// </summary>
             [EnumMember(Value = "time")]
-            Time = 9,
+            Time,
 
             /// <summary>
-            /// Enum DateTime for value: dateTime
+            /// Enum DateTime for "dateTime"
             /// </summary>
             [EnumMember(Value = "dateTime")]
-            DateTime = 10,
+            DateTime,
 
             /// <summary>
-            /// Enum Optionset for value: optionset
+            /// Enum Optionset for "optionset"
             /// </summary>
             [EnumMember(Value = "optionset")]
-            Optionset = 11
+            Optionset
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="Date">Date.</param>
         /// <param name="Time">Time.</param>
         /// <param name="DateTime">DateTime.</param>
-        public CustomContentField(string Id = default(string), string DisplayName = default(string), string FieldName = default(string), string Description = default(string), TypeEnum? Type = default(TypeEnum?), bool? Required = false, bool? Repeating = false, CustomContentFieldText Text = default(CustomContentFieldText), CustomContentFieldText MultiLineText = default(CustomContentFieldText), CustomContentFieldText RichText = default(CustomContentFieldText), CustomContentFieldOptionset Optionset = default(CustomContentFieldOptionset), CustomContentFieldNumber Number = default(CustomContentFieldNumber), CustomContentFieldBoolean Boolean = default(CustomContentFieldBoolean), CustomContentFieldEntityRef EntityRef = default(CustomContentFieldEntityRef), CustomContentFieldData Data = default(CustomContentFieldData), CustomContentFieldDate Date = default(CustomContentFieldDate), CustomContentFieldTime Time = default(CustomContentFieldTime), CustomContentFieldDateTime DateTime = default(CustomContentFieldDateTime))
+        public CustomContentField(string Id = default(string), string DisplayName = default(string), string FieldName = default(string), string Description = default(string), TypeEnum? Type = default(TypeEnum?), bool? Required = false, bool? Repeating = false, CustomContentFieldText Text = default(CustomContentFieldText), CustomContentFieldText MultiLineText = default(CustomContentFieldText), CustomContentFieldText RichText = default(CustomContentFieldText), CustomContentFieldOptionset Optionset = default(CustomContentFieldOptionset), CustomContentFieldNumber Number = default(CustomContentFieldNumber), CustomContentFieldBoolean Boolean = default(CustomContentFieldBoolean), CustomContentFieldEntityRef EntityRef = default(CustomContentFieldEntityRef), CustomContentFieldData Data = default(CustomContentFieldData), CustomContentFieldStringDefault Date = default(CustomContentFieldStringDefault), CustomContentFieldStringDefault Time = default(CustomContentFieldStringDefault), CustomContentFieldDateTime DateTime = default(CustomContentFieldDateTime))
         {
             this.Id = Id;
             this.DisplayName = DisplayName;
@@ -167,104 +167,86 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets FieldName
         /// </summary>
         [DataMember(Name = "fieldName", EmitDefaultValue = false)]
         public string FieldName { get; set; }
-
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Required
         /// </summary>
         [DataMember(Name = "required", EmitDefaultValue = false)]
         public bool? Required { get; set; }
-
         /// <summary>
         /// Gets or Sets Repeating
         /// </summary>
         [DataMember(Name = "repeating", EmitDefaultValue = false)]
         public bool? Repeating { get; set; }
-
         /// <summary>
         /// Gets or Sets Text
         /// </summary>
         [DataMember(Name = "text", EmitDefaultValue = false)]
         public CustomContentFieldText Text { get; set; }
-
         /// <summary>
         /// Gets or Sets MultiLineText
         /// </summary>
         [DataMember(Name = "multiLineText", EmitDefaultValue = false)]
         public CustomContentFieldText MultiLineText { get; set; }
-
         /// <summary>
         /// Gets or Sets RichText
         /// </summary>
         [DataMember(Name = "richText", EmitDefaultValue = false)]
         public CustomContentFieldText RichText { get; set; }
-
         /// <summary>
         /// Gets or Sets Optionset
         /// </summary>
         [DataMember(Name = "optionset", EmitDefaultValue = false)]
         public CustomContentFieldOptionset Optionset { get; set; }
-
         /// <summary>
         /// Gets or Sets Number
         /// </summary>
         [DataMember(Name = "number", EmitDefaultValue = false)]
         public CustomContentFieldNumber Number { get; set; }
-
         /// <summary>
         /// Gets or Sets Boolean
         /// </summary>
         [DataMember(Name = "boolean", EmitDefaultValue = false)]
         public CustomContentFieldBoolean Boolean { get; set; }
-
         /// <summary>
         /// Gets or Sets EntityRef
         /// </summary>
         [DataMember(Name = "entityRef", EmitDefaultValue = false)]
         public CustomContentFieldEntityRef EntityRef { get; set; }
-
         /// <summary>
         /// Gets or Sets Data
         /// </summary>
         [DataMember(Name = "data", EmitDefaultValue = false)]
         public CustomContentFieldData Data { get; set; }
-
         /// <summary>
         /// Gets or Sets Date
         /// </summary>
         [DataMember(Name = "date", EmitDefaultValue = false)]
-        public CustomContentFieldDate Date { get; set; }
-
+        public CustomContentFieldStringDefault Date { get; set; }
         /// <summary>
         /// Gets or Sets Time
         /// </summary>
         [DataMember(Name = "time", EmitDefaultValue = false)]
-        public CustomContentFieldTime Time { get; set; }
-
+        public CustomContentFieldStringDefault Time { get; set; }
         /// <summary>
         /// Gets or Sets DateTime
         /// </summary>
         [DataMember(Name = "dateTime", EmitDefaultValue = false)]
         public CustomContentFieldDateTime DateTime { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -307,113 +289,115 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as CustomContentField);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as CustomContentField);
         }
 
         /// <summary>
         /// Returns true if CustomContentField instances are equal
         /// </summary>
-        /// <param name="input">Instance of CustomContentField to be compared</param>
+        /// <param name="other">Instance of CustomContentField to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CustomContentField input)
+        public bool Equals(CustomContentField other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.FieldName == input.FieldName ||
-                    (this.FieldName != null &&
-                    this.FieldName.Equals(input.FieldName))
+                    this.FieldName == other.FieldName ||
+                    this.FieldName != null &&
+                    this.FieldName.Equals(other.FieldName)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.Required == input.Required ||
-                    (this.Required != null &&
-                    this.Required.Equals(input.Required))
+                    this.Required == other.Required ||
+                    this.Required != null &&
+                    this.Required.Equals(other.Required)
                 ) &&
                 (
-                    this.Repeating == input.Repeating ||
-                    (this.Repeating != null &&
-                    this.Repeating.Equals(input.Repeating))
+                    this.Repeating == other.Repeating ||
+                    this.Repeating != null &&
+                    this.Repeating.Equals(other.Repeating)
                 ) &&
                 (
-                    this.Text == input.Text ||
-                    (this.Text != null &&
-                    this.Text.Equals(input.Text))
+                    this.Text == other.Text ||
+                    this.Text != null &&
+                    this.Text.Equals(other.Text)
                 ) &&
                 (
-                    this.MultiLineText == input.MultiLineText ||
-                    (this.MultiLineText != null &&
-                    this.MultiLineText.Equals(input.MultiLineText))
+                    this.MultiLineText == other.MultiLineText ||
+                    this.MultiLineText != null &&
+                    this.MultiLineText.Equals(other.MultiLineText)
                 ) &&
                 (
-                    this.RichText == input.RichText ||
-                    (this.RichText != null &&
-                    this.RichText.Equals(input.RichText))
+                    this.RichText == other.RichText ||
+                    this.RichText != null &&
+                    this.RichText.Equals(other.RichText)
                 ) &&
                 (
-                    this.Optionset == input.Optionset ||
-                    (this.Optionset != null &&
-                    this.Optionset.Equals(input.Optionset))
+                    this.Optionset == other.Optionset ||
+                    this.Optionset != null &&
+                    this.Optionset.Equals(other.Optionset)
                 ) &&
                 (
-                    this.Number == input.Number ||
-                    (this.Number != null &&
-                    this.Number.Equals(input.Number))
+                    this.Number == other.Number ||
+                    this.Number != null &&
+                    this.Number.Equals(other.Number)
                 ) &&
                 (
-                    this.Boolean == input.Boolean ||
-                    (this.Boolean != null &&
-                    this.Boolean.Equals(input.Boolean))
+                    this.Boolean == other.Boolean ||
+                    this.Boolean != null &&
+                    this.Boolean.Equals(other.Boolean)
                 ) &&
                 (
-                    this.EntityRef == input.EntityRef ||
-                    (this.EntityRef != null &&
-                    this.EntityRef.Equals(input.EntityRef))
+                    this.EntityRef == other.EntityRef ||
+                    this.EntityRef != null &&
+                    this.EntityRef.Equals(other.EntityRef)
                 ) &&
                 (
-                    this.Data == input.Data ||
-                    (this.Data != null &&
-                    this.Data.Equals(input.Data))
+                    this.Data == other.Data ||
+                    this.Data != null &&
+                    this.Data.Equals(other.Data)
                 ) &&
                 (
-                    this.Date == input.Date ||
-                    (this.Date != null &&
-                    this.Date.Equals(input.Date))
+                    this.Date == other.Date ||
+                    this.Date != null &&
+                    this.Date.Equals(other.Date)
                 ) &&
                 (
-                    this.Time == input.Time ||
-                    (this.Time != null &&
-                    this.Time.Equals(input.Time))
+                    this.Time == other.Time ||
+                    this.Time != null &&
+                    this.Time.Equals(other.Time)
                 ) &&
                 (
-                    this.DateTime == input.DateTime ||
-                    (this.DateTime != null &&
-                    this.DateTime.Equals(input.DateTime))
+                    this.DateTime == other.DateTime ||
+                    this.DateTime != null &&
+                    this.DateTime.Equals(other.DateTime)
                 );
         }
 
@@ -423,66 +407,63 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.FieldName != null)
-                    hashCode = hashCode * 59 + this.FieldName.GetHashCode();
+                    hash = hash * 59 + this.FieldName.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.Required != null)
-                    hashCode = hashCode * 59 + this.Required.GetHashCode();
+                    hash = hash * 59 + this.Required.GetHashCode();
                 if (this.Repeating != null)
-                    hashCode = hashCode * 59 + this.Repeating.GetHashCode();
+                    hash = hash * 59 + this.Repeating.GetHashCode();
                 if (this.Text != null)
-                    hashCode = hashCode * 59 + this.Text.GetHashCode();
+                    hash = hash * 59 + this.Text.GetHashCode();
                 if (this.MultiLineText != null)
-                    hashCode = hashCode * 59 + this.MultiLineText.GetHashCode();
+                    hash = hash * 59 + this.MultiLineText.GetHashCode();
                 if (this.RichText != null)
-                    hashCode = hashCode * 59 + this.RichText.GetHashCode();
+                    hash = hash * 59 + this.RichText.GetHashCode();
                 if (this.Optionset != null)
-                    hashCode = hashCode * 59 + this.Optionset.GetHashCode();
+                    hash = hash * 59 + this.Optionset.GetHashCode();
                 if (this.Number != null)
-                    hashCode = hashCode * 59 + this.Number.GetHashCode();
+                    hash = hash * 59 + this.Number.GetHashCode();
                 if (this.Boolean != null)
-                    hashCode = hashCode * 59 + this.Boolean.GetHashCode();
+                    hash = hash * 59 + this.Boolean.GetHashCode();
                 if (this.EntityRef != null)
-                    hashCode = hashCode * 59 + this.EntityRef.GetHashCode();
+                    hash = hash * 59 + this.EntityRef.GetHashCode();
                 if (this.Data != null)
-                    hashCode = hashCode * 59 + this.Data.GetHashCode();
+                    hash = hash * 59 + this.Data.GetHashCode();
                 if (this.Date != null)
-                    hashCode = hashCode * 59 + this.Date.GetHashCode();
+                    hash = hash * 59 + this.Date.GetHashCode();
                 if (this.Time != null)
-                    hashCode = hashCode * 59 + this.Time.GetHashCode();
+                    hash = hash * 59 + this.Time.GetHashCode();
                 if (this.DateTime != null)
-                    hashCode = hashCode * 59 + this.DateTime.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.DateTime.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // DisplayName (string) maxLength
             if (this.DisplayName != null && this.DisplayName.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
+                yield return new ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
             }
 
             // Description (string) maxLength
             if (this.Description != null && this.Description.Length > 2048)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
+                yield return new ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
             }
 
             yield break;

@@ -17,41 +17,39 @@ namespace Xpertdoc.SmartFlows.Model
     /// <summary>
     /// Defines dateFormatStyle
     /// </summary>
-
     [JsonConverter(typeof(StringEnumConverter))]
-
     public enum DateFormatStyle
     {
 
         /// <summary>
-        /// Enum Full for value: full
+        /// Enum Full for "full"
         /// </summary>
         [EnumMember(Value = "full")]
-        Full = 1,
+        Full,
 
         /// <summary>
-        /// Enum Long for value: long
+        /// Enum Long for "long"
         /// </summary>
         [EnumMember(Value = "long")]
-        Long = 2,
+        Long,
 
         /// <summary>
-        /// Enum Medium for value: medium
+        /// Enum Medium for "medium"
         /// </summary>
         [EnumMember(Value = "medium")]
-        Medium = 3,
+        Medium,
 
         /// <summary>
-        /// Enum Short for value: short
+        /// Enum Short for "short"
         /// </summary>
         [EnumMember(Value = "short")]
-        Short = 4,
+        Short,
 
         /// <summary>
-        /// Enum Unspecified for value: unspecified
+        /// Enum Unspecified for "unspecified"
         /// </summary>
         [EnumMember(Value = "unspecified")]
-        Unspecified = 5
+        Unspecified
     }
 
 }

@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<DataReference> (instance, "variable 'instance' is a DataReference");
         }
 
-
         /// <summary>
         /// Test the property 'Query'
         /// </summary>

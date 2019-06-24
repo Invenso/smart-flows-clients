@@ -30,11 +30,15 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="Archive">Archive.</param>
         /// <param name="TopLevelItems">TopLevelItems.</param>
         /// <param name="SuggestedMappings">SuggestedMappings.</param>
-        public ImportInformation(Archive Archive = default(Archive), List<IdWithName> TopLevelItems = default(List<IdWithName>), List<MultiDependencyMapping> SuggestedMappings = default(List<MultiDependencyMapping>))
+        /// <param name="MissingConnectors">MissingConnectors.</param>
+        /// <param name="MissingConnectorTypes">MissingConnectorTypes.</param>
+        public ImportInformation(Archive Archive = default(Archive), List<IdWithName> TopLevelItems = default(List<IdWithName>), List<MultiDependencyMapping> SuggestedMappings = default(List<MultiDependencyMapping>), List<ImportInformationMissingConnectors> MissingConnectors = default(List<ImportInformationMissingConnectors>), List<ConnectorType> MissingConnectorTypes = default(List<ConnectorType>))
         {
             this.Archive = Archive;
             this.TopLevelItems = TopLevelItems;
             this.SuggestedMappings = SuggestedMappings;
+            this.MissingConnectors = MissingConnectors;
+            this.MissingConnectorTypes = MissingConnectorTypes;
         }
 
         /// <summary>
@@ -42,19 +46,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "archive", EmitDefaultValue = false)]
         public Archive Archive { get; set; }
-
         /// <summary>
         /// Gets or Sets TopLevelItems
         /// </summary>
         [DataMember(Name = "topLevelItems", EmitDefaultValue = false)]
         public List<IdWithName> TopLevelItems { get; set; }
-
         /// <summary>
         /// Gets or Sets SuggestedMappings
         /// </summary>
         [DataMember(Name = "suggestedMappings", EmitDefaultValue = false)]
         public List<MultiDependencyMapping> SuggestedMappings { get; set; }
-
+        /// <summary>
+        /// Gets or Sets MissingConnectors
+        /// </summary>
+        [DataMember(Name = "missingConnectors", EmitDefaultValue = false)]
+        public List<ImportInformationMissingConnectors> MissingConnectors { get; set; }
+        /// <summary>
+        /// Gets or Sets MissingConnectorTypes
+        /// </summary>
+        [DataMember(Name = "missingConnectorTypes", EmitDefaultValue = false)]
+        public List<ConnectorType> MissingConnectorTypes { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -66,6 +77,8 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("  Archive: ").Append(Archive).Append("\n");
             sb.Append("  TopLevelItems: ").Append(TopLevelItems).Append("\n");
             sb.Append("  SuggestedMappings: ").Append(SuggestedMappings).Append("\n");
+            sb.Append("  MissingConnectors: ").Append(MissingConnectors).Append("\n");
+            sb.Append("  MissingConnectorTypes: ").Append(MissingConnectorTypes).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -82,38 +95,50 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as ImportInformation);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as ImportInformation);
         }
 
         /// <summary>
         /// Returns true if ImportInformation instances are equal
         /// </summary>
-        /// <param name="input">Instance of ImportInformation to be compared</param>
+        /// <param name="other">Instance of ImportInformation to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(ImportInformation input)
+        public bool Equals(ImportInformation other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Archive == input.Archive ||
-                    (this.Archive != null &&
-                    this.Archive.Equals(input.Archive))
+                    this.Archive == other.Archive ||
+                    this.Archive != null &&
+                    this.Archive.Equals(other.Archive)
                 ) &&
                 (
-                    this.TopLevelItems == input.TopLevelItems ||
+                    this.TopLevelItems == other.TopLevelItems ||
                     this.TopLevelItems != null &&
-                    this.TopLevelItems.SequenceEqual(input.TopLevelItems)
+                    this.TopLevelItems.SequenceEqual(other.TopLevelItems)
                 ) &&
                 (
-                    this.SuggestedMappings == input.SuggestedMappings ||
+                    this.SuggestedMappings == other.SuggestedMappings ||
                     this.SuggestedMappings != null &&
-                    this.SuggestedMappings.SequenceEqual(input.SuggestedMappings)
+                    this.SuggestedMappings.SequenceEqual(other.SuggestedMappings)
+                ) &&
+                (
+                    this.MissingConnectors == other.MissingConnectors ||
+                    this.MissingConnectors != null &&
+                    this.MissingConnectors.SequenceEqual(other.MissingConnectors)
+                ) &&
+                (
+                    this.MissingConnectorTypes == other.MissingConnectorTypes ||
+                    this.MissingConnectorTypes != null &&
+                    this.MissingConnectorTypes.SequenceEqual(other.MissingConnectorTypes)
                 );
         }
 
@@ -123,25 +148,26 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Archive != null)
-                    hashCode = hashCode * 59 + this.Archive.GetHashCode();
+                    hash = hash * 59 + this.Archive.GetHashCode();
                 if (this.TopLevelItems != null)
-                    hashCode = hashCode * 59 + this.TopLevelItems.GetHashCode();
+                    hash = hash * 59 + this.TopLevelItems.GetHashCode();
                 if (this.SuggestedMappings != null)
-                    hashCode = hashCode * 59 + this.SuggestedMappings.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.SuggestedMappings.GetHashCode();
+                if (this.MissingConnectors != null)
+                    hash = hash * 59 + this.MissingConnectors.GetHashCode();
+                if (this.MissingConnectorTypes != null)
+                    hash = hash * 59 + this.MissingConnectorTypes.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

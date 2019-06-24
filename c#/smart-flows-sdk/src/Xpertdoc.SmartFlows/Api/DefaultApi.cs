@@ -11,11 +11,10 @@
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using Xpertdoc.SmartFlows.Client;
 using Xpertdoc.SmartFlows.Model;
+using Version = Xpertdoc.SmartFlows.Model.Version;
 
 namespace Xpertdoc.SmartFlows.Api
 {
@@ -53,8 +52,9 @@ namespace Xpertdoc.SmartFlows.Api
         /// Get info about the login methods
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="prompt">Specifies whether the Authorization Server prompts the End-User for reauthentication and consent. Allowed values are none, login, consent and select_account. When not specified, parameters is omitted from auth url. (optional)</param>
         /// <returns>AuthenticationInfo</returns>
-        AuthenticationInfo AuthenticateGet();
+        AuthenticationInfo AuthenticateGet(string prompt = null);
 
         /// <summary>
         /// 
@@ -63,8 +63,9 @@ namespace Xpertdoc.SmartFlows.Api
         /// Get info about the login methods
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="prompt">Specifies whether the Authorization Server prompts the End-User for reauthentication and consent. Allowed values are none, login, consent and select_account. When not specified, parameters is omitted from auth url. (optional)</param>
         /// <returns>ApiResponse of AuthenticationInfo</returns>
-        ApiResponse<AuthenticationInfo> AuthenticateGetWithHttpInfo();
+        ApiResponse<AuthenticationInfo> AuthenticateGetWithHttpInfo(string prompt = null);
         /// <summary>
         /// 
         /// </summary>
@@ -107,6 +108,27 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="body">The authorization code (optional)</param>
         /// <returns>ApiResponse of Authentication</returns>
         ApiResponse<Authentication> AuthenticateOauth2PostWithHttpInfo(Oauth2Parameters body = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Reset the password of a user
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The new password (optional)</param>
+        /// <returns></returns>
+        void AuthorizeResetPassword(UserResetPasswordParameters body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Reset the password of a user
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The new password (optional)</param>
+        /// <returns>ApiResponse of Object(void)</returns>
+        ApiResponse<Object> AuthorizeResetPasswordWithHttpInfo(UserResetPasswordParameters body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -291,8 +313,9 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="body">The settings for the archive to create (optional)</param>
         /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
         /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
+        /// <param name="includeUserData">Whether to include data objects that are created by users (samples) (optional, default to true)</param>
         /// <returns>System.IO.Stream</returns>
-        System.IO.Stream CreateExport(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null);
+        System.IO.Stream CreateExport(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null, bool? includeUserData = null);
 
         /// <summary>
         /// 
@@ -304,33 +327,9 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="body">The settings for the archive to create (optional)</param>
         /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
         /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
+        /// <param name="includeUserData">Whether to include data objects that are created by users (samples) (optional, default to true)</param>
         /// <returns>ApiResponse of System.IO.Stream</returns>
-        ApiResponse<System.IO.Stream> CreateExportWithHttpInfo(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// Create an export for the given request
-        /// </remarks>
-        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The settings for the archive to create (optional)</param>
-        /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
-        /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
-        /// <returns>FlatArchive</returns>
-        FlatArchive CreateFlatExport(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// Create an export for the given request
-        /// </remarks>
-        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The settings for the archive to create (optional)</param>
-        /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
-        /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
-        /// <returns>ApiResponse of FlatArchive</returns>
-        ApiResponse<FlatArchive> CreateFlatExportWithHttpInfo(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null);
+        ApiResponse<System.IO.Stream> CreateExportWithHttpInfo(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null, bool? includeUserData = null);
         /// <summary>
         /// 
         /// </summary>
@@ -457,6 +456,29 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="body">The settings for the user to create (optional)</param>
         /// <returns>ApiResponse of User</returns>
         ApiResponse<User> CreateUserWithHttpInfo(User body = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Create a user personal access token
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <param name="body">The user token to create, only name will be used (optional)</param>
+        /// <returns>UserToken</returns>
+        UserToken CreateUserToken(string user, UserToken body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Create a user personal access token
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <param name="body">The user token to create, only name will be used (optional)</param>
+        /// <returns>ApiResponse of UserToken</returns>
+        ApiResponse<UserToken> CreateUserTokenWithHttpInfo(string user, UserToken body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -718,23 +740,25 @@ namespace Xpertdoc.SmartFlows.Api
         /// 
         /// </summary>
         /// <remarks>
-        /// Import the content from the given archive
+        /// Delete personal access token
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The flat archive content (optional)</param>
+        /// <param name="user">The id of the user</param>
+        /// <param name="token">The id of the token</param>
         /// <returns></returns>
-        void ExecuteFlatImport(FlatArchive body = null);
+        void DeleteUserToken(string user, string token);
 
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>
-        /// Import the content from the given archive
+        /// Delete personal access token
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The flat archive content (optional)</param>
+        /// <param name="user">The id of the user</param>
+        /// <param name="token">The id of the token</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> ExecuteFlatImportWithHttpInfo(FlatArchive body = null);
+        ApiResponse<Object> DeleteUserTokenWithHttpInfo(string user, string token);
         /// <summary>
         /// 
         /// </summary>
@@ -1452,8 +1476,8 @@ namespace Xpertdoc.SmartFlows.Api
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="documentId">The id of the document</param>
-        /// <returns></returns>
-        byte[] GetDocumentContent(string documentId);
+        /// <returns>System.IO.Stream</returns>
+        System.IO.Stream GetDocumentContent(string documentId);
 
         /// <summary>
         /// 
@@ -1463,8 +1487,8 @@ namespace Xpertdoc.SmartFlows.Api
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="documentId">The id of the document</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetDocumentContentWithHttpInfo(string documentId);
+        /// <returns>ApiResponse of System.IO.Stream</returns>
+        ApiResponse<System.IO.Stream> GetDocumentContentWithHttpInfo(string documentId);
         /// <summary>
         /// 
         /// </summary>
@@ -1841,6 +1865,29 @@ namespace Xpertdoc.SmartFlows.Api
         /// 
         /// </summary>
         /// <remarks>
+        /// Get a specific callback
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="callbackId">The id of the callback</param>
+        /// <param name="executionId">The id to identify the execution (optional)</param>
+        /// <returns>Object</returns>
+        Object GetFlowCallback(string callbackId, string executionId = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Get a specific callback
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="callbackId">The id of the callback</param>
+        /// <param name="executionId">The id to identify the execution (optional)</param>
+        /// <returns>ApiResponse of Object</returns>
+        ApiResponse<Object> GetFlowCallbackWithHttpInfo(string callbackId, string executionId = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
         /// Get all the input and output parameters the flow defines based on the steps it contains and the values that are specified for all parameters in each step
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
@@ -1927,6 +1974,29 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="filter">The filter (optional)</param>
         /// <returns>ApiResponse of Statistics</returns>
         ApiResponse<Statistics> GetFlowExecutionStatisticsWithHttpInfo(string groupTimeBy = null, FilterGroupNode filter = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Find out the status of an existing batch execution
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="executionId">The id of the flow execution</param>
+        /// <param name="output">The id or name of the flow output to include in the result. When nothing specified, all outputs will be returned. (optional)</param>
+        /// <returns>FlowExecution</returns>
+        FlowExecution GetFlowExecutionStatus(string executionId, string output = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Find out the status of an existing batch execution
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="executionId">The id of the flow execution</param>
+        /// <param name="output">The id or name of the flow output to include in the result. When nothing specified, all outputs will be returned. (optional)</param>
+        /// <returns>ApiResponse of FlowExecution</returns>
+        ApiResponse<FlowExecution> GetFlowExecutionStatusWithHttpInfo(string executionId, string output = null);
         /// <summary>
         /// 
         /// </summary>
@@ -2159,6 +2229,25 @@ namespace Xpertdoc.SmartFlows.Api
         /// 
         /// </summary>
         /// <remarks>
+        /// Return the current notifications
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Notification</returns>
+        Notification GetNotifications();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Return the current notifications
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of Notification</returns>
+        ApiResponse<Notification> GetNotificationsWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
         /// Returns all datasets defined by plugins
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
@@ -2178,6 +2267,44 @@ namespace Xpertdoc.SmartFlows.Api
         /// 
         /// </summary>
         /// <remarks>
+        /// Returns all output datasets defined by plugins
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>List&lt;Dataset&gt;</returns>
+        List<Dataset> GetPluginOutputDatasets();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all output datasets defined by plugins
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of List&lt;Dataset&gt;</returns>
+        ApiResponse<List<Dataset>> GetPluginOutputDatasetsWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all tag groups defined by plugins
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>List&lt;TagGroup&gt;</returns>
+        List<TagGroup> GetPluginTagGroups();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all tag groups defined by plugins
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of List&lt;TagGroup&gt;</returns>
+        ApiResponse<List<TagGroup>> GetPluginTagGroupsWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
         /// Gets all Plugins registered in this project
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
@@ -2193,6 +2320,122 @@ namespace Xpertdoc.SmartFlows.Api
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;Plugin&gt;</returns>
         ApiResponse<List<Plugin>> GetPluginsWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal Smart Forms
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>List&lt;IdWithName&gt;</returns>
+        List<IdWithName> GetPortalForms(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal Smart Forms
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>ApiResponse of List&lt;IdWithName&gt;</returns>
+        ApiResponse<List<IdWithName>> GetPortalFormsWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal template groups
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>List&lt;IdWithName&gt;</returns>
+        List<IdWithName> GetPortalTemplateGroups(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal template groups
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>ApiResponse of List&lt;IdWithName&gt;</returns>
+        ApiResponse<List<IdWithName>> GetPortalTemplateGroupsWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal template libraries
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>List&lt;IdWithName&gt;</returns>
+        List<IdWithName> GetPortalTemplateLibraries(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal template libraries
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>ApiResponse of List&lt;IdWithName&gt;</returns>
+        ApiResponse<List<IdWithName>> GetPortalTemplateLibrariesWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal templates
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>List&lt;IdWithName&gt;</returns>
+        List<IdWithName> GetPortalTemplates(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal templates
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>ApiResponse of List&lt;IdWithName&gt;</returns>
+        ApiResponse<List<IdWithName>> GetPortalTemplatesWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
         /// <summary>
         /// 
         /// </summary>
@@ -2233,6 +2476,25 @@ namespace Xpertdoc.SmartFlows.Api
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;Printer&gt;</returns>
         ApiResponse<List<Printer>> GetPrintersWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Get settings that are publicly available
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>PublicSettings</returns>
+        PublicSettings GetPublicSettings();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Get settings that are publicly available
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of PublicSettings</returns>
+        ApiResponse<PublicSettings> GetPublicSettingsWithHttpInfo();
         /// <summary>
         /// 
         /// </summary>
@@ -2585,7 +2847,7 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="size">The size of the page, defaults to 20 (optional)</param>
         /// <param name="sort">The fields to sort on (optional)</param>
         /// <returns>List&lt;Version&gt;</returns>
-        List<Model.Version> GetTemplateHistory(string templateId, string lang = null, int? page = null, int? size = null, string sort = null);
+        List<Version> GetTemplateHistory(string templateId, string lang = null, int? page = null, int? size = null, string sort = null);
 
         /// <summary>
         /// 
@@ -2600,7 +2862,7 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="size">The size of the page, defaults to 20 (optional)</param>
         /// <param name="sort">The fields to sort on (optional)</param>
         /// <returns>ApiResponse of List&lt;Version&gt;</returns>
-        ApiResponse<List<Model.Version>> GetTemplateHistoryWithHttpInfo(string templateId, string lang = null, int? page = null, int? size = null, string sort = null);
+        ApiResponse<List<Version>> GetTemplateHistoryWithHttpInfo(string templateId, string lang = null, int? page = null, int? size = null, string sort = null);
         /// <summary>
         /// 
         /// </summary>
@@ -2678,6 +2940,25 @@ namespace Xpertdoc.SmartFlows.Api
         /// 
         /// </summary>
         /// <remarks>
+        /// Lists all the languages that are availabled for the user interface
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>List&lt;LanguageReference&gt;</returns>
+        List<LanguageReference> GetUiLanguages();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Lists all the languages that are availabled for the user interface
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of List&lt;LanguageReference&gt;</returns>
+        ApiResponse<List<LanguageReference>> GetUiLanguagesWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
         /// Get a single user
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
@@ -2695,6 +2976,27 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="user">The id of the user</param>
         /// <returns>ApiResponse of User</returns>
         ApiResponse<User> GetUserWithHttpInfo(string user);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// List all user personal access tokens, secrets or keys will not be returned
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <returns>List&lt;UserToken&gt;</returns>
+        List<UserToken> GetUserTokens(string user);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// List all user personal access tokens, secrets or keys will not be returned
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <returns>ApiResponse of List&lt;UserToken&gt;</returns>
+        ApiResponse<List<UserToken>> GetUserTokensWithHttpInfo(string user);
         /// <summary>
         /// 
         /// </summary>
@@ -2831,6 +3133,27 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="connectorId">The id of the connector</param>
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> RefreshConnectorWithHttpInfo(string connectorId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Send a reset user password email
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The username (optional)</param>
+        /// <returns></returns>
+        void ResetPassword(UserResetParameters body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Send a reset user password email
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The username (optional)</param>
+        /// <returns>ApiResponse of Object(void)</returns>
+        ApiResponse<Object> ResetPasswordWithHttpInfo(UserResetParameters body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -3074,6 +3397,50 @@ namespace Xpertdoc.SmartFlows.Api
         /// 
         /// </summary>
         /// <remarks>
+        /// Sorts the given list of pseudofields
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The result object for the language (optional)</param>
+        /// <returns>List&lt;PseudoElementInformation&gt;</returns>
+        List<PseudoElementInformation> SortPseudoFields(StandardTemplateDefinition body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Sorts the given list of pseudofields
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The result object for the language (optional)</param>
+        /// <returns>ApiResponse of List&lt;PseudoElementInformation&gt;</returns>
+        ApiResponse<List<PseudoElementInformation>> SortPseudoFieldsWithHttpInfo(StandardTemplateDefinition body = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Start a flow without asking any user input
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="flow">The id or name of the flow.</param>
+        /// <param name="body">The input object for the flow (optional)</param>
+        /// <returns>FlowExecution</returns>
+        FlowExecution StartFlow(string flow, Object body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Start a flow without asking any user input
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="flow">The id or name of the flow.</param>
+        /// <param name="body">The input object for the flow (optional)</param>
+        /// <returns>ApiResponse of FlowExecution</returns>
+        ApiResponse<FlowExecution> StartFlowWithHttpInfo(string flow, Object body = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
         /// Syncs all users with the login connector
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
@@ -3089,6 +3456,25 @@ namespace Xpertdoc.SmartFlows.Api
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of SyncResult</returns>
         ApiResponse<SyncResult> SyncExternalUsersWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Synchronize &amp; fetch all tag groups defined by plugins
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>List&lt;TagGroup&gt;</returns>
+        List<TagGroup> SyncPluginTagGroups();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Synchronize &amp; fetch all tag groups defined by plugins
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of List&lt;TagGroup&gt;</returns>
+        ApiResponse<List<TagGroup>> SyncPluginTagGroupsWithHttpInfo();
         /// <summary>
         /// 
         /// </summary>
@@ -3464,8 +3850,9 @@ namespace Xpertdoc.SmartFlows.Api
         /// Get info about the login methods
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="prompt">Specifies whether the Authorization Server prompts the End-User for reauthentication and consent. Allowed values are none, login, consent and select_account. When not specified, parameters is omitted from auth url. (optional)</param>
         /// <returns>Task of AuthenticationInfo</returns>
-        System.Threading.Tasks.Task<AuthenticationInfo> AuthenticateGetAsync();
+        System.Threading.Tasks.Task<AuthenticationInfo> AuthenticateGetAsync(string prompt = null);
 
         /// <summary>
         /// 
@@ -3474,8 +3861,9 @@ namespace Xpertdoc.SmartFlows.Api
         /// Get info about the login methods
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="prompt">Specifies whether the Authorization Server prompts the End-User for reauthentication and consent. Allowed values are none, login, consent and select_account. When not specified, parameters is omitted from auth url. (optional)</param>
         /// <returns>Task of ApiResponse (AuthenticationInfo)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AuthenticationInfo>> AuthenticateGetAsyncWithHttpInfo();
+        System.Threading.Tasks.Task<ApiResponse<AuthenticationInfo>> AuthenticateGetAsyncWithHttpInfo(string prompt = null);
         /// <summary>
         /// 
         /// </summary>
@@ -3518,6 +3906,27 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="body">The authorization code (optional)</param>
         /// <returns>Task of ApiResponse (Authentication)</returns>
         System.Threading.Tasks.Task<ApiResponse<Authentication>> AuthenticateOauth2PostAsyncWithHttpInfo(Oauth2Parameters body = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Reset the password of a user
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The new password (optional)</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task AuthorizeResetPasswordAsync(UserResetPasswordParameters body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Reset the password of a user
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The new password (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> AuthorizeResetPasswordAsyncWithHttpInfo(UserResetPasswordParameters body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -3702,8 +4111,9 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="body">The settings for the archive to create (optional)</param>
         /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
         /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
+        /// <param name="includeUserData">Whether to include data objects that are created by users (samples) (optional, default to true)</param>
         /// <returns>Task of System.IO.Stream</returns>
-        System.Threading.Tasks.Task<System.IO.Stream> CreateExportAsync(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null);
+        System.Threading.Tasks.Task<System.IO.Stream> CreateExportAsync(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null, bool? includeUserData = null);
 
         /// <summary>
         /// 
@@ -3715,33 +4125,9 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="body">The settings for the archive to create (optional)</param>
         /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
         /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
+        /// <param name="includeUserData">Whether to include data objects that are created by users (samples) (optional, default to true)</param>
         /// <returns>Task of ApiResponse (System.IO.Stream)</returns>
-        System.Threading.Tasks.Task<ApiResponse<System.IO.Stream>> CreateExportAsyncWithHttpInfo(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// Create an export for the given request
-        /// </remarks>
-        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The settings for the archive to create (optional)</param>
-        /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
-        /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
-        /// <returns>Task of FlatArchive</returns>
-        System.Threading.Tasks.Task<FlatArchive> CreateFlatExportAsync(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// Create an export for the given request
-        /// </remarks>
-        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The settings for the archive to create (optional)</param>
-        /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
-        /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
-        /// <returns>Task of ApiResponse (FlatArchive)</returns>
-        System.Threading.Tasks.Task<ApiResponse<FlatArchive>> CreateFlatExportAsyncWithHttpInfo(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null);
+        System.Threading.Tasks.Task<ApiResponse<System.IO.Stream>> CreateExportAsyncWithHttpInfo(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null, bool? includeUserData = null);
         /// <summary>
         /// 
         /// </summary>
@@ -3868,6 +4254,29 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="body">The settings for the user to create (optional)</param>
         /// <returns>Task of ApiResponse (User)</returns>
         System.Threading.Tasks.Task<ApiResponse<User>> CreateUserAsyncWithHttpInfo(User body = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Create a user personal access token
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <param name="body">The user token to create, only name will be used (optional)</param>
+        /// <returns>Task of UserToken</returns>
+        System.Threading.Tasks.Task<UserToken> CreateUserTokenAsync(string user, UserToken body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Create a user personal access token
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <param name="body">The user token to create, only name will be used (optional)</param>
+        /// <returns>Task of ApiResponse (UserToken)</returns>
+        System.Threading.Tasks.Task<ApiResponse<UserToken>> CreateUserTokenAsyncWithHttpInfo(string user, UserToken body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -4129,23 +4538,25 @@ namespace Xpertdoc.SmartFlows.Api
         /// 
         /// </summary>
         /// <remarks>
-        /// Import the content from the given archive
+        /// Delete personal access token
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The flat archive content (optional)</param>
+        /// <param name="user">The id of the user</param>
+        /// <param name="token">The id of the token</param>
         /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task ExecuteFlatImportAsync(FlatArchive body = null);
+        System.Threading.Tasks.Task DeleteUserTokenAsync(string user, string token);
 
         /// <summary>
         /// 
         /// </summary>
         /// <remarks>
-        /// Import the content from the given archive
+        /// Delete personal access token
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The flat archive content (optional)</param>
+        /// <param name="user">The id of the user</param>
+        /// <param name="token">The id of the token</param>
         /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> ExecuteFlatImportAsyncWithHttpInfo(FlatArchive body = null);
+        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteUserTokenAsyncWithHttpInfo(string user, string token);
         /// <summary>
         /// 
         /// </summary>
@@ -4863,8 +5274,8 @@ namespace Xpertdoc.SmartFlows.Api
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="documentId">The id of the document</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetDocumentContentAsync(string documentId);
+        /// <returns>Task of System.IO.Stream</returns>
+        System.Threading.Tasks.Task<System.IO.Stream> GetDocumentContentAsync(string documentId);
 
         /// <summary>
         /// 
@@ -4874,8 +5285,8 @@ namespace Xpertdoc.SmartFlows.Api
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="documentId">The id of the document</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetDocumentContentAsyncWithHttpInfo(string documentId);
+        /// <returns>Task of ApiResponse (System.IO.Stream)</returns>
+        System.Threading.Tasks.Task<ApiResponse<System.IO.Stream>> GetDocumentContentAsyncWithHttpInfo(string documentId);
         /// <summary>
         /// 
         /// </summary>
@@ -5252,6 +5663,29 @@ namespace Xpertdoc.SmartFlows.Api
         /// 
         /// </summary>
         /// <remarks>
+        /// Get a specific callback
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="callbackId">The id of the callback</param>
+        /// <param name="executionId">The id to identify the execution (optional)</param>
+        /// <returns>Task of Object</returns>
+        System.Threading.Tasks.Task<Object> GetFlowCallbackAsync(string callbackId, string executionId = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Get a specific callback
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="callbackId">The id of the callback</param>
+        /// <param name="executionId">The id to identify the execution (optional)</param>
+        /// <returns>Task of ApiResponse (Object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> GetFlowCallbackAsyncWithHttpInfo(string callbackId, string executionId = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
         /// Get all the input and output parameters the flow defines based on the steps it contains and the values that are specified for all parameters in each step
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
@@ -5338,6 +5772,29 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="filter">The filter (optional)</param>
         /// <returns>Task of ApiResponse (Statistics)</returns>
         System.Threading.Tasks.Task<ApiResponse<Statistics>> GetFlowExecutionStatisticsAsyncWithHttpInfo(string groupTimeBy = null, FilterGroupNode filter = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Find out the status of an existing batch execution
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="executionId">The id of the flow execution</param>
+        /// <param name="output">The id or name of the flow output to include in the result. When nothing specified, all outputs will be returned. (optional)</param>
+        /// <returns>Task of FlowExecution</returns>
+        System.Threading.Tasks.Task<FlowExecution> GetFlowExecutionStatusAsync(string executionId, string output = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Find out the status of an existing batch execution
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="executionId">The id of the flow execution</param>
+        /// <param name="output">The id or name of the flow output to include in the result. When nothing specified, all outputs will be returned. (optional)</param>
+        /// <returns>Task of ApiResponse (FlowExecution)</returns>
+        System.Threading.Tasks.Task<ApiResponse<FlowExecution>> GetFlowExecutionStatusAsyncWithHttpInfo(string executionId, string output = null);
         /// <summary>
         /// 
         /// </summary>
@@ -5570,6 +6027,25 @@ namespace Xpertdoc.SmartFlows.Api
         /// 
         /// </summary>
         /// <remarks>
+        /// Return the current notifications
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of Notification</returns>
+        System.Threading.Tasks.Task<Notification> GetNotificationsAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Return the current notifications
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (Notification)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Notification>> GetNotificationsAsyncWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
         /// Returns all datasets defined by plugins
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
@@ -5589,6 +6065,44 @@ namespace Xpertdoc.SmartFlows.Api
         /// 
         /// </summary>
         /// <remarks>
+        /// Returns all output datasets defined by plugins
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of List&lt;Dataset&gt;</returns>
+        System.Threading.Tasks.Task<List<Dataset>> GetPluginOutputDatasetsAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all output datasets defined by plugins
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (List&lt;Dataset&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<Dataset>>> GetPluginOutputDatasetsAsyncWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all tag groups defined by plugins
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of List&lt;TagGroup&gt;</returns>
+        System.Threading.Tasks.Task<List<TagGroup>> GetPluginTagGroupsAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all tag groups defined by plugins
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (List&lt;TagGroup&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<TagGroup>>> GetPluginTagGroupsAsyncWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
         /// Gets all Plugins registered in this project
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
@@ -5604,6 +6118,122 @@ namespace Xpertdoc.SmartFlows.Api
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Plugin&gt;)</returns>
         System.Threading.Tasks.Task<ApiResponse<List<Plugin>>> GetPluginsAsyncWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal Smart Forms
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of List&lt;IdWithName&gt;</returns>
+        System.Threading.Tasks.Task<List<IdWithName>> GetPortalFormsAsync(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal Smart Forms
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of ApiResponse (List&lt;IdWithName&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<IdWithName>>> GetPortalFormsAsyncWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal template groups
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of List&lt;IdWithName&gt;</returns>
+        System.Threading.Tasks.Task<List<IdWithName>> GetPortalTemplateGroupsAsync(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal template groups
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of ApiResponse (List&lt;IdWithName&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<IdWithName>>> GetPortalTemplateGroupsAsyncWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal template libraries
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of List&lt;IdWithName&gt;</returns>
+        System.Threading.Tasks.Task<List<IdWithName>> GetPortalTemplateLibrariesAsync(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal template libraries
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of ApiResponse (List&lt;IdWithName&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<IdWithName>>> GetPortalTemplateLibrariesAsyncWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal templates
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of List&lt;IdWithName&gt;</returns>
+        System.Threading.Tasks.Task<List<IdWithName>> GetPortalTemplatesAsync(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Returns all Portal templates
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of ApiResponse (List&lt;IdWithName&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<IdWithName>>> GetPortalTemplatesAsyncWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null);
         /// <summary>
         /// 
         /// </summary>
@@ -5644,6 +6274,25 @@ namespace Xpertdoc.SmartFlows.Api
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (List&lt;Printer&gt;)</returns>
         System.Threading.Tasks.Task<ApiResponse<List<Printer>>> GetPrintersAsyncWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Get settings that are publicly available
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of PublicSettings</returns>
+        System.Threading.Tasks.Task<PublicSettings> GetPublicSettingsAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Get settings that are publicly available
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (PublicSettings)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PublicSettings>> GetPublicSettingsAsyncWithHttpInfo();
         /// <summary>
         /// 
         /// </summary>
@@ -5996,7 +6645,7 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="size">The size of the page, defaults to 20 (optional)</param>
         /// <param name="sort">The fields to sort on (optional)</param>
         /// <returns>Task of List&lt;Version&gt;</returns>
-        System.Threading.Tasks.Task<List<Model.Version>> GetTemplateHistoryAsync(string templateId, string lang = null, int? page = null, int? size = null, string sort = null);
+        System.Threading.Tasks.Task<List<Version>> GetTemplateHistoryAsync(string templateId, string lang = null, int? page = null, int? size = null, string sort = null);
 
         /// <summary>
         /// 
@@ -6011,7 +6660,7 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="size">The size of the page, defaults to 20 (optional)</param>
         /// <param name="sort">The fields to sort on (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;Version&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<Model.Version>>> GetTemplateHistoryAsyncWithHttpInfo(string templateId, string lang = null, int? page = null, int? size = null, string sort = null);
+        System.Threading.Tasks.Task<ApiResponse<List<Version>>> GetTemplateHistoryAsyncWithHttpInfo(string templateId, string lang = null, int? page = null, int? size = null, string sort = null);
         /// <summary>
         /// 
         /// </summary>
@@ -6089,6 +6738,25 @@ namespace Xpertdoc.SmartFlows.Api
         /// 
         /// </summary>
         /// <remarks>
+        /// Lists all the languages that are availabled for the user interface
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of List&lt;LanguageReference&gt;</returns>
+        System.Threading.Tasks.Task<List<LanguageReference>> GetUiLanguagesAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Lists all the languages that are availabled for the user interface
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (List&lt;LanguageReference&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<LanguageReference>>> GetUiLanguagesAsyncWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
         /// Get a single user
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
@@ -6106,6 +6774,27 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="user">The id of the user</param>
         /// <returns>Task of ApiResponse (User)</returns>
         System.Threading.Tasks.Task<ApiResponse<User>> GetUserAsyncWithHttpInfo(string user);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// List all user personal access tokens, secrets or keys will not be returned
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <returns>Task of List&lt;UserToken&gt;</returns>
+        System.Threading.Tasks.Task<List<UserToken>> GetUserTokensAsync(string user);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// List all user personal access tokens, secrets or keys will not be returned
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <returns>Task of ApiResponse (List&lt;UserToken&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<UserToken>>> GetUserTokensAsyncWithHttpInfo(string user);
         /// <summary>
         /// 
         /// </summary>
@@ -6242,6 +6931,27 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="connectorId">The id of the connector</param>
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> RefreshConnectorAsyncWithHttpInfo(string connectorId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Send a reset user password email
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The username (optional)</param>
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task ResetPasswordAsync(UserResetParameters body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Send a reset user password email
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The username (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> ResetPasswordAsyncWithHttpInfo(UserResetParameters body = null);
         /// <summary>
         /// 
         /// </summary>
@@ -6485,6 +7195,50 @@ namespace Xpertdoc.SmartFlows.Api
         /// 
         /// </summary>
         /// <remarks>
+        /// Sorts the given list of pseudofields
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The result object for the language (optional)</param>
+        /// <returns>Task of List&lt;PseudoElementInformation&gt;</returns>
+        System.Threading.Tasks.Task<List<PseudoElementInformation>> SortPseudoFieldsAsync(StandardTemplateDefinition body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Sorts the given list of pseudofields
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The result object for the language (optional)</param>
+        /// <returns>Task of ApiResponse (List&lt;PseudoElementInformation&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<PseudoElementInformation>>> SortPseudoFieldsAsyncWithHttpInfo(StandardTemplateDefinition body = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Start a flow without asking any user input
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="flow">The id or name of the flow.</param>
+        /// <param name="body">The input object for the flow (optional)</param>
+        /// <returns>Task of FlowExecution</returns>
+        System.Threading.Tasks.Task<FlowExecution> StartFlowAsync(string flow, Object body = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Start a flow without asking any user input
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="flow">The id or name of the flow.</param>
+        /// <param name="body">The input object for the flow (optional)</param>
+        /// <returns>Task of ApiResponse (FlowExecution)</returns>
+        System.Threading.Tasks.Task<ApiResponse<FlowExecution>> StartFlowAsyncWithHttpInfo(string flow, Object body = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
         /// Syncs all users with the login connector
         /// </remarks>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
@@ -6500,6 +7254,25 @@ namespace Xpertdoc.SmartFlows.Api
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>Task of ApiResponse (SyncResult)</returns>
         System.Threading.Tasks.Task<ApiResponse<SyncResult>> SyncExternalUsersAsyncWithHttpInfo();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Synchronize &amp; fetch all tag groups defined by plugins
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of List&lt;TagGroup&gt;</returns>
+        System.Threading.Tasks.Task<List<TagGroup>> SyncPluginTagGroupsAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Synchronize &amp; fetch all tag groups defined by plugins
+        /// </remarks>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (List&lt;TagGroup&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<TagGroup>>> SyncPluginTagGroupsAsyncWithHttpInfo();
         /// <summary>
         /// 
         /// </summary>
@@ -6861,9 +7634,15 @@ namespace Xpertdoc.SmartFlows.Api
         /// <returns></returns>
         public DefaultApi(String basePath)
         {
-            this.Configuration = new Configuration { BasePath = basePath };
+            this.Configuration = new Configuration(new ApiClient(basePath));
 
             ExceptionFactory = Xpertdoc.SmartFlows.Client.Configuration.DefaultExceptionFactory;
+
+            // ensure API client has configuration ready
+            if (Configuration.ApiClient.Configuration == null)
+            {
+                this.Configuration.ApiClient.Configuration = this.Configuration;
+            }
         }
 
         /// <summary>
@@ -6880,6 +7659,12 @@ namespace Xpertdoc.SmartFlows.Api
                 this.Configuration = configuration;
 
             ExceptionFactory = Xpertdoc.SmartFlows.Client.Configuration.DefaultExceptionFactory;
+
+            // ensure API client has configuration ready
+            if (Configuration.ApiClient.Configuration == null)
+            {
+                this.Configuration.ApiClient.Configuration = this.Configuration;
+            }
         }
 
         /// <summary>
@@ -6928,9 +7713,9 @@ namespace Xpertdoc.SmartFlows.Api
         /// </summary>
         /// <returns>Dictionary of HTTP header</returns>
         [Obsolete("DefaultHeader is deprecated, please use Configuration.DefaultHeader instead.")]
-        public IDictionary<String, String> DefaultHeader()
+        public Dictionary<String, String> DefaultHeader()
         {
-            return new ReadOnlyDictionary<string, string>(this.Configuration.DefaultHeader);
+            return this.Configuration.DefaultHeader;
         }
 
         /// <summary>
@@ -6968,7 +7753,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -6986,6 +7771,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -6995,7 +7783,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -7018,6 +7806,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Asset>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Asset)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Asset)));
+
         }
 
         /// <summary>
@@ -7044,7 +7833,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7062,6 +7851,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -7071,7 +7863,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -7094,16 +7886,18 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Asset>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Asset)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Asset)));
+
         }
 
         /// <summary>
         ///  Get info about the login methods
         /// </summary>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="prompt">Specifies whether the Authorization Server prompts the End-User for reauthentication and consent. Allowed values are none, login, consent and select_account. When not specified, parameters is omitted from auth url. (optional)</param>
         /// <returns>AuthenticationInfo</returns>
-        public AuthenticationInfo AuthenticateGet()
+        public AuthenticationInfo AuthenticateGet(string prompt = null)
         {
-            ApiResponse<AuthenticationInfo> localVarResponse = AuthenticateGetWithHttpInfo();
+            ApiResponse<AuthenticationInfo> localVarResponse = AuthenticateGetWithHttpInfo(prompt);
             return localVarResponse.Data;
         }
 
@@ -7111,13 +7905,14 @@ namespace Xpertdoc.SmartFlows.Api
         ///  Get info about the login methods
         /// </summary>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="prompt">Specifies whether the Authorization Server prompts the End-User for reauthentication and consent. Allowed values are none, login, consent and select_account. When not specified, parameters is omitted from auth url. (optional)</param>
         /// <returns>ApiResponse of AuthenticationInfo</returns>
-        public ApiResponse<AuthenticationInfo> AuthenticateGetWithHttpInfo()
+        public ApiResponse<AuthenticationInfo> AuthenticateGetWithHttpInfo(string prompt = null)
         {
 
             var localVarPath = "/authenticate";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7135,6 +7930,10 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (prompt != null) localVarQueryParams.Add("prompt", Configuration.ApiClient.ParameterToString(prompt)); // query parameter
 
 
             // make the HTTP request
@@ -7153,16 +7952,18 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<AuthenticationInfo>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (AuthenticationInfo)Configuration.ApiClient.Deserialize(localVarResponse, typeof(AuthenticationInfo)));
+
         }
 
         /// <summary>
         ///  Get info about the login methods
         /// </summary>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="prompt">Specifies whether the Authorization Server prompts the End-User for reauthentication and consent. Allowed values are none, login, consent and select_account. When not specified, parameters is omitted from auth url. (optional)</param>
         /// <returns>Task of AuthenticationInfo</returns>
-        public async System.Threading.Tasks.Task<AuthenticationInfo> AuthenticateGetAsync()
+        public async System.Threading.Tasks.Task<AuthenticationInfo> AuthenticateGetAsync(string prompt = null)
         {
-            ApiResponse<AuthenticationInfo> localVarResponse = await AuthenticateGetAsyncWithHttpInfo();
+            ApiResponse<AuthenticationInfo> localVarResponse = await AuthenticateGetAsyncWithHttpInfo(prompt);
             return localVarResponse.Data;
 
         }
@@ -7171,13 +7972,14 @@ namespace Xpertdoc.SmartFlows.Api
         ///  Get info about the login methods
         /// </summary>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="prompt">Specifies whether the Authorization Server prompts the End-User for reauthentication and consent. Allowed values are none, login, consent and select_account. When not specified, parameters is omitted from auth url. (optional)</param>
         /// <returns>Task of ApiResponse (AuthenticationInfo)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<AuthenticationInfo>> AuthenticateGetAsyncWithHttpInfo()
+        public async System.Threading.Tasks.Task<ApiResponse<AuthenticationInfo>> AuthenticateGetAsyncWithHttpInfo(string prompt = null)
         {
 
             var localVarPath = "/authenticate";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7195,6 +7997,10 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (prompt != null) localVarQueryParams.Add("prompt", Configuration.ApiClient.ParameterToString(prompt)); // query parameter
 
 
             // make the HTTP request
@@ -7213,6 +8019,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<AuthenticationInfo>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (AuthenticationInfo)Configuration.ApiClient.Deserialize(localVarResponse, typeof(AuthenticationInfo)));
+
         }
 
         /// <summary>
@@ -7238,7 +8045,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/authenticate/login";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7256,6 +8063,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -7282,6 +8092,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Authentication>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Authentication)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Authentication)));
+
         }
 
         /// <summary>
@@ -7308,7 +8119,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/authenticate/login";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7326,6 +8137,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -7352,6 +8166,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Authentication>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Authentication)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Authentication)));
+
         }
 
         /// <summary>
@@ -7377,7 +8192,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/authenticate/oauth2";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7395,6 +8210,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -7421,6 +8239,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Authentication>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Authentication)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Authentication)));
+
         }
 
         /// <summary>
@@ -7447,7 +8266,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/authenticate/oauth2";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7465,6 +8284,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -7491,6 +8313,152 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Authentication>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Authentication)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Authentication)));
+
+        }
+
+        /// <summary>
+        ///  Reset the password of a user
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The new password (optional)</param>
+        /// <returns></returns>
+        public void AuthorizeResetPassword(UserResetPasswordParameters body = null)
+        {
+            AuthorizeResetPasswordWithHttpInfo(body);
+        }
+
+        /// <summary>
+        ///  Reset the password of a user
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The new password (optional)</param>
+        /// <returns>ApiResponse of Object(void)</returns>
+        public ApiResponse<Object> AuthorizeResetPasswordWithHttpInfo(UserResetPasswordParameters body = null)
+        {
+
+            var localVarPath = "/authenticate/authorizeReset";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("AuthorizeResetPassword", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+
+            return new ApiResponse<Object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                null);
+        }
+
+        /// <summary>
+        ///  Reset the password of a user
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The new password (optional)</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task AuthorizeResetPasswordAsync(UserResetPasswordParameters body = null)
+        {
+            await AuthorizeResetPasswordAsyncWithHttpInfo(body);
+
+        }
+
+        /// <summary>
+        ///  Reset the password of a user
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The new password (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> AuthorizeResetPasswordAsyncWithHttpInfo(UserResetPasswordParameters body = null)
+        {
+
+            var localVarPath = "/authenticate/authorizeReset";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("AuthorizeResetPassword", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+
+            return new ApiResponse<Object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                null);
         }
 
         /// <summary>
@@ -7519,7 +8487,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions/{execution}/progress";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7537,9 +8505,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (execution != null) localVarPathParams.Add("execution", Configuration.ApiClient.ParameterToString(execution)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -7562,6 +8533,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowExecutionProgress>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowExecutionProgress)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecutionProgress)));
+
         }
 
         /// <summary>
@@ -7591,7 +8563,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions/{execution}/progress";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7609,9 +8581,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (execution != null) localVarPathParams.Add("execution", Configuration.ApiClient.ParameterToString(execution)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -7634,6 +8609,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowExecutionProgress>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowExecutionProgress)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecutionProgress)));
+
         }
 
         /// <summary>
@@ -7661,7 +8637,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/settings/{settingsType}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7679,9 +8655,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (settingsType != null) localVarPathParams.Add("settingsType", Configuration.ApiClient.ParameterToString(settingsType)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -7700,6 +8679,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("ClearSubSettings", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -7732,7 +8712,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/settings/{settingsType}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7750,9 +8730,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (settingsType != null) localVarPathParams.Add("settingsType", Configuration.ApiClient.ParameterToString(settingsType)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -7771,6 +8754,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("ClearSubSettings", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -7805,7 +8789,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions/{execution}/progress";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7823,6 +8807,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (execution != null) localVarPathParams.Add("execution", Configuration.ApiClient.ParameterToString(execution)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -7833,7 +8820,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -7856,6 +8843,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowExecutionProgress>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowExecutionProgress)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecutionProgress)));
+
         }
 
         /// <summary>
@@ -7887,7 +8875,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions/{execution}/progress";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7905,6 +8893,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (execution != null) localVarPathParams.Add("execution", Configuration.ApiClient.ParameterToString(execution)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -7915,7 +8906,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -7938,6 +8929,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowExecutionProgress>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowExecutionProgress)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecutionProgress)));
+
         }
 
         /// <summary>
@@ -7965,7 +8957,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/backup";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -7984,10 +8976,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (includeHistory != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeHistory", includeHistory)); // query parameter
-            if (includeSensitiveData != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeSensitiveData", includeSensitiveData)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (includeHistory != null) localVarQueryParams.Add("includeHistory", Configuration.ApiClient.ParameterToString(includeHistory)); // query parameter
+            if (includeSensitiveData != null) localVarQueryParams.Add("includeSensitiveData", Configuration.ApiClient.ParameterToString(includeSensitiveData)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -8010,6 +9005,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -8038,7 +9034,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/backup";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -8057,10 +9053,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (includeHistory != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeHistory", includeHistory)); // query parameter
-            if (includeSensitiveData != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeSensitiveData", includeSensitiveData)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (includeHistory != null) localVarQueryParams.Add("includeHistory", Configuration.ApiClient.ParameterToString(includeHistory)); // query parameter
+            if (includeSensitiveData != null) localVarQueryParams.Add("includeSensitiveData", Configuration.ApiClient.ParameterToString(includeSensitiveData)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -8083,6 +9082,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -8108,7 +9108,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -8126,6 +9126,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -8135,7 +9138,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -8158,6 +9161,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Connector>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Connector)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Connector)));
+
         }
 
         /// <summary>
@@ -8184,7 +9188,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -8202,6 +9206,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -8211,7 +9218,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -8234,6 +9241,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Connector>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Connector)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Connector)));
+
         }
 
         /// <summary>
@@ -8259,7 +9267,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -8277,6 +9285,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -8286,7 +9297,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -8309,6 +9320,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Dataset>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Dataset)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dataset)));
+
         }
 
         /// <summary>
@@ -8335,7 +9347,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -8353,6 +9365,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -8362,7 +9377,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -8385,6 +9400,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Dataset>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Dataset)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dataset)));
+
         }
 
         /// <summary>
@@ -8415,7 +9431,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/{datasetId}/data";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -8434,6 +9450,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasetId != null) localVarPathParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -8444,7 +9463,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -8467,6 +9486,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Data>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Data)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Data)));
+
         }
 
         /// <summary>
@@ -8498,7 +9518,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/{datasetId}/data";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -8517,6 +9537,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasetId != null) localVarPathParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -8527,7 +9550,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -8550,6 +9573,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Data>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Data)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Data)));
+
         }
 
         /// <summary>
@@ -8575,7 +9599,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/documents";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -8593,6 +9617,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -8602,7 +9629,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -8625,6 +9652,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<GeneratedDocument>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<GeneratedDocument>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<GeneratedDocument>)));
+
         }
 
         /// <summary>
@@ -8651,7 +9679,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/documents";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -8669,6 +9697,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -8678,7 +9709,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -8701,6 +9732,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<GeneratedDocument>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<GeneratedDocument>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<GeneratedDocument>)));
+
         }
 
         /// <summary>
@@ -8710,10 +9742,11 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="body">The settings for the archive to create (optional)</param>
         /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
         /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
+        /// <param name="includeUserData">Whether to include data objects that are created by users (samples) (optional, default to true)</param>
         /// <returns>System.IO.Stream</returns>
-        public System.IO.Stream CreateExport(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null)
+        public System.IO.Stream CreateExport(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null, bool? includeUserData = null)
         {
-            ApiResponse<System.IO.Stream> localVarResponse = CreateExportWithHttpInfo(body, includeHistory, includeSensitiveData);
+            ApiResponse<System.IO.Stream> localVarResponse = CreateExportWithHttpInfo(body, includeHistory, includeSensitiveData, includeUserData);
             return localVarResponse.Data;
         }
 
@@ -8724,13 +9757,14 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="body">The settings for the archive to create (optional)</param>
         /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
         /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
+        /// <param name="includeUserData">Whether to include data objects that are created by users (samples) (optional, default to true)</param>
         /// <returns>ApiResponse of System.IO.Stream</returns>
-        public ApiResponse<System.IO.Stream> CreateExportWithHttpInfo(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null)
+        public ApiResponse<System.IO.Stream> CreateExportWithHttpInfo(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null, bool? includeUserData = null)
         {
 
             var localVarPath = "/system/export";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -8749,8 +9783,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (includeHistory != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeHistory", includeHistory)); // query parameter
-            if (includeSensitiveData != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeSensitiveData", includeSensitiveData)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (includeHistory != null) localVarQueryParams.Add("includeHistory", Configuration.ApiClient.ParameterToString(includeHistory)); // query parameter
+            if (includeSensitiveData != null) localVarQueryParams.Add("includeSensitiveData", Configuration.ApiClient.ParameterToString(includeSensitiveData)); // query parameter
+            if (includeUserData != null) localVarQueryParams.Add("includeUserData", Configuration.ApiClient.ParameterToString(includeUserData)); // query parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -8760,7 +9798,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -8783,6 +9821,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -8792,10 +9831,11 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="body">The settings for the archive to create (optional)</param>
         /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
         /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
+        /// <param name="includeUserData">Whether to include data objects that are created by users (samples) (optional, default to true)</param>
         /// <returns>Task of System.IO.Stream</returns>
-        public async System.Threading.Tasks.Task<System.IO.Stream> CreateExportAsync(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null)
+        public async System.Threading.Tasks.Task<System.IO.Stream> CreateExportAsync(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null, bool? includeUserData = null)
         {
-            ApiResponse<System.IO.Stream> localVarResponse = await CreateExportAsyncWithHttpInfo(body, includeHistory, includeSensitiveData);
+            ApiResponse<System.IO.Stream> localVarResponse = await CreateExportAsyncWithHttpInfo(body, includeHistory, includeSensitiveData, includeUserData);
             return localVarResponse.Data;
 
         }
@@ -8807,13 +9847,14 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="body">The settings for the archive to create (optional)</param>
         /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
         /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
+        /// <param name="includeUserData">Whether to include data objects that are created by users (samples) (optional, default to true)</param>
         /// <returns>Task of ApiResponse (System.IO.Stream)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<System.IO.Stream>> CreateExportAsyncWithHttpInfo(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null)
+        public async System.Threading.Tasks.Task<ApiResponse<System.IO.Stream>> CreateExportAsyncWithHttpInfo(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null, bool? includeUserData = null)
         {
 
             var localVarPath = "/system/export";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -8832,8 +9873,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (includeHistory != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeHistory", includeHistory)); // query parameter
-            if (includeSensitiveData != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeSensitiveData", includeSensitiveData)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (includeHistory != null) localVarQueryParams.Add("includeHistory", Configuration.ApiClient.ParameterToString(includeHistory)); // query parameter
+            if (includeSensitiveData != null) localVarQueryParams.Add("includeSensitiveData", Configuration.ApiClient.ParameterToString(includeSensitiveData)); // query parameter
+            if (includeUserData != null) localVarQueryParams.Add("includeUserData", Configuration.ApiClient.ParameterToString(includeUserData)); // query parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -8843,7 +9888,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -8866,171 +9911,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
-        }
 
-        /// <summary>
-        ///  Create an export for the given request
-        /// </summary>
-        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The settings for the archive to create (optional)</param>
-        /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
-        /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
-        /// <returns>FlatArchive</returns>
-        public FlatArchive CreateFlatExport(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null)
-        {
-            ApiResponse<FlatArchive> localVarResponse = CreateFlatExportWithHttpInfo(body, includeHistory, includeSensitiveData);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        ///  Create an export for the given request
-        /// </summary>
-        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The settings for the archive to create (optional)</param>
-        /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
-        /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
-        /// <returns>ApiResponse of FlatArchive</returns>
-        public ApiResponse<FlatArchive> CreateFlatExportWithHttpInfo(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null)
-        {
-
-            var localVarPath = "/system/export/flat";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (includeHistory != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeHistory", includeHistory)); // query parameter
-            if (includeSensitiveData != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeSensitiveData", includeSensitiveData)); // query parameter
-            if (body != null && body.GetType() != typeof(byte[]))
-            {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
-            }
-            else
-            {
-                localVarPostBody = body; // byte array
-            }
-
-            // authentication (SmartFlows_auth) required
-            // oauth required
-            if (!String.IsNullOrEmpty(Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
-                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int)localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("CreateFlatExport", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<FlatArchive>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (FlatArchive)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlatArchive)));
-        }
-
-        /// <summary>
-        ///  Create an export for the given request
-        /// </summary>
-        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The settings for the archive to create (optional)</param>
-        /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
-        /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
-        /// <returns>Task of FlatArchive</returns>
-        public async System.Threading.Tasks.Task<FlatArchive> CreateFlatExportAsync(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null)
-        {
-            ApiResponse<FlatArchive> localVarResponse = await CreateFlatExportAsyncWithHttpInfo(body, includeHistory, includeSensitiveData);
-            return localVarResponse.Data;
-
-        }
-
-        /// <summary>
-        ///  Create an export for the given request
-        /// </summary>
-        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The settings for the archive to create (optional)</param>
-        /// <param name="includeHistory">Whether to include the complete history of templates (optional, default to false)</param>
-        /// <param name="includeSensitiveData">Whether to include possible sensitive data (passwords from connectors e.a.) (optional, default to false)</param>
-        /// <returns>Task of ApiResponse (FlatArchive)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<FlatArchive>> CreateFlatExportAsyncWithHttpInfo(ArchiveRequest body = null, bool? includeHistory = null, bool? includeSensitiveData = null)
-        {
-
-            var localVarPath = "/system/export/flat";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (includeHistory != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeHistory", includeHistory)); // query parameter
-            if (includeSensitiveData != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeSensitiveData", includeSensitiveData)); // query parameter
-            if (body != null && body.GetType() != typeof(byte[]))
-            {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
-            }
-            else
-            {
-                localVarPostBody = body; // byte array
-            }
-
-            // authentication (SmartFlows_auth) required
-            // oauth required
-            if (!String.IsNullOrEmpty(Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int)localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("CreateFlatExport", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<FlatArchive>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (FlatArchive)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlatArchive)));
         }
 
         /// <summary>
@@ -9056,7 +9937,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -9076,6 +9957,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -9085,7 +9969,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -9108,6 +9992,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Flow>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Flow)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Flow)));
+
         }
 
         /// <summary>
@@ -9134,7 +10019,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -9154,6 +10039,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -9163,7 +10051,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -9186,6 +10074,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Flow>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Flow)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Flow)));
+
         }
 
         /// <summary>
@@ -9211,7 +10100,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -9231,6 +10120,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -9240,7 +10132,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -9263,6 +10155,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Language>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Language)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Language)));
+
         }
 
         /// <summary>
@@ -9289,7 +10182,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -9309,6 +10202,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -9318,7 +10214,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -9341,6 +10237,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Language>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Language)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Language)));
+
         }
 
         /// <summary>
@@ -9366,7 +10263,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -9386,6 +10283,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -9395,7 +10295,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -9418,6 +10318,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Printer>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Printer)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Printer)));
+
         }
 
         /// <summary>
@@ -9444,7 +10345,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -9464,6 +10365,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -9473,7 +10377,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -9496,6 +10400,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Printer>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Printer)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Printer)));
+
         }
 
         /// <summary>
@@ -9521,7 +10426,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/taggroups";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -9539,6 +10444,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -9548,7 +10456,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -9571,6 +10479,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<TagGroup>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (TagGroup)Configuration.ApiClient.Deserialize(localVarResponse, typeof(TagGroup)));
+
         }
 
         /// <summary>
@@ -9597,7 +10506,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/taggroups";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -9615,6 +10524,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -9624,7 +10536,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -9647,6 +10559,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<TagGroup>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (TagGroup)Configuration.ApiClient.Deserialize(localVarResponse, typeof(TagGroup)));
+
         }
 
         /// <summary>
@@ -9672,7 +10585,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -9690,6 +10603,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -9699,7 +10615,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -9722,6 +10638,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Template>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Template)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Template)));
+
         }
 
         /// <summary>
@@ -9748,7 +10665,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -9766,6 +10683,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -9775,7 +10695,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -9798,6 +10718,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Template>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Template)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Template)));
+
         }
 
         /// <summary>
@@ -9823,7 +10744,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -9843,6 +10764,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -9852,7 +10776,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -9875,6 +10799,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<User>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (User)Configuration.ApiClient.Deserialize(localVarResponse, typeof(User)));
+
         }
 
         /// <summary>
@@ -9901,7 +10826,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -9921,6 +10846,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -9930,7 +10858,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -9953,6 +10881,182 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<User>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (User)Configuration.ApiClient.Deserialize(localVarResponse, typeof(User)));
+
+        }
+
+        /// <summary>
+        ///  Create a user personal access token
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <param name="body">The user token to create, only name will be used (optional)</param>
+        /// <returns>UserToken</returns>
+        public UserToken CreateUserToken(string user, UserToken body = null)
+        {
+            ApiResponse<UserToken> localVarResponse = CreateUserTokenWithHttpInfo(user, body);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Create a user personal access token
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <param name="body">The user token to create, only name will be used (optional)</param>
+        /// <returns>ApiResponse of UserToken</returns>
+        public ApiResponse<UserToken> CreateUserTokenWithHttpInfo(string user, UserToken body = null)
+        {
+            // verify the required parameter 'user' is set
+            if (user == null)
+                throw new ApiException(400, "Missing required parameter 'user' when calling DefaultApi->CreateUserToken");
+
+            var localVarPath = "/users/{user}/tokens";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (user != null) localVarPathParams.Add("user", Configuration.ApiClient.ParameterToString(user)); // path parameter
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CreateUserToken", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<UserToken>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (UserToken)Configuration.ApiClient.Deserialize(localVarResponse, typeof(UserToken)));
+
+        }
+
+        /// <summary>
+        ///  Create a user personal access token
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <param name="body">The user token to create, only name will be used (optional)</param>
+        /// <returns>Task of UserToken</returns>
+        public async System.Threading.Tasks.Task<UserToken> CreateUserTokenAsync(string user, UserToken body = null)
+        {
+            ApiResponse<UserToken> localVarResponse = await CreateUserTokenAsyncWithHttpInfo(user, body);
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Create a user personal access token
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <param name="body">The user token to create, only name will be used (optional)</param>
+        /// <returns>Task of ApiResponse (UserToken)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<UserToken>> CreateUserTokenAsyncWithHttpInfo(string user, UserToken body = null)
+        {
+            // verify the required parameter 'user' is set
+            if (user == null)
+                throw new ApiException(400, "Missing required parameter 'user' when calling DefaultApi->CreateUserToken");
+
+            var localVarPath = "/users/{user}/tokens";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (user != null) localVarPathParams.Add("user", Configuration.ApiClient.ParameterToString(user)); // path parameter
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CreateUserToken", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<UserToken>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (UserToken)Configuration.ApiClient.Deserialize(localVarResponse, typeof(UserToken)));
+
         }
 
         /// <summary>
@@ -9982,7 +11086,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets/{assetId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10000,10 +11104,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (assetId != null) localVarPathParams.Add("assetId", Configuration.ApiClient.ParameterToString(assetId)); // path parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10022,6 +11129,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteAsset", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -10056,7 +11164,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets/{assetId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10074,10 +11182,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (assetId != null) localVarPathParams.Add("assetId", Configuration.ApiClient.ParameterToString(assetId)); // path parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10096,6 +11207,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteAsset", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -10129,7 +11241,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10147,10 +11259,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10169,6 +11284,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteConnector", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -10203,7 +11319,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10221,10 +11337,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10243,6 +11362,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteConnector", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -10276,7 +11396,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/{dataId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10294,10 +11414,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (dataId != null) localVarPathParams.Add("dataId", Configuration.ApiClient.ParameterToString(dataId)); // path parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10316,6 +11439,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteData", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -10350,7 +11474,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/{dataId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10368,10 +11492,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (dataId != null) localVarPathParams.Add("dataId", Configuration.ApiClient.ParameterToString(dataId)); // path parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10390,6 +11517,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteData", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -10423,7 +11551,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/{datasetId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10441,10 +11569,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasetId != null) localVarPathParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // path parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10463,6 +11594,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteDataset", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -10497,7 +11629,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/{datasetId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10515,10 +11647,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasetId != null) localVarPathParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // path parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10537,6 +11672,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteDataset", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -10568,7 +11704,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/{flow}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10586,9 +11722,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (flow != null) localVarPathParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10607,6 +11746,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteFlow", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -10639,7 +11779,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/{flow}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10657,9 +11797,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (flow != null) localVarPathParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10678,6 +11821,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteFlow", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -10713,7 +11857,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages/{language}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10731,11 +11875,14 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (language != null) localVarPathParams.Add("language", Configuration.ApiClient.ParameterToString(language)); // path parameter
-            if (force != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "force", force)); // query parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (force != null) localVarQueryParams.Add("force", Configuration.ApiClient.ParameterToString(force)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10754,6 +11901,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteLanguage", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -10790,7 +11938,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages/{language}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10808,11 +11956,14 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (language != null) localVarPathParams.Add("language", Configuration.ApiClient.ParameterToString(language)); // path parameter
-            if (force != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "force", force)); // query parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (force != null) localVarQueryParams.Add("force", Configuration.ApiClient.ParameterToString(force)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10831,6 +11982,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteLanguage", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -10866,7 +12018,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/{printer}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10884,11 +12036,14 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (printer != null) localVarPathParams.Add("printer", Configuration.ApiClient.ParameterToString(printer)); // path parameter
-            if (force != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "force", force)); // query parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (force != null) localVarQueryParams.Add("force", Configuration.ApiClient.ParameterToString(force)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10907,6 +12062,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeletePrinter", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -10943,7 +12099,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/{printer}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -10961,11 +12117,14 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (printer != null) localVarPathParams.Add("printer", Configuration.ApiClient.ParameterToString(printer)); // path parameter
-            if (force != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "force", force)); // query parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (force != null) localVarQueryParams.Add("force", Configuration.ApiClient.ParameterToString(force)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -10984,6 +12143,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeletePrinter", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -11017,7 +12177,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/taggroups/{tagGroupId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -11035,10 +12195,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (tagGroupId != null) localVarPathParams.Add("tagGroupId", Configuration.ApiClient.ParameterToString(tagGroupId)); // path parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -11057,6 +12220,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteTagGroup", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -11091,7 +12255,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/taggroups/{tagGroupId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -11109,10 +12273,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (tagGroupId != null) localVarPathParams.Add("tagGroupId", Configuration.ApiClient.ParameterToString(tagGroupId)); // path parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -11131,6 +12298,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteTagGroup", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -11164,7 +12332,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -11182,10 +12350,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -11204,6 +12375,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteTemplate", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -11238,7 +12410,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -11256,10 +12428,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -11278,6 +12453,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteTemplate", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -11313,7 +12489,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -11331,11 +12507,14 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
-            if (lang != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "lang", lang)); // query parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (lang != null) localVarQueryParams.Add("lang", Configuration.ApiClient.ParameterToString(lang)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -11354,6 +12533,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteTemplateContent", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -11390,7 +12570,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -11408,11 +12588,14 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
-            if (lang != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "lang", lang)); // query parameter
-            if (deleteInbound != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "deleteInbound", deleteInbound)); // query parameter
+            if (lang != null) localVarQueryParams.Add("lang", Configuration.ApiClient.ParameterToString(lang)); // query parameter
+            if (deleteInbound != null) localVarQueryParams.Add("deleteInbound", Configuration.ApiClient.ParameterToString(deleteInbound)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -11431,6 +12614,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteTemplateContent", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -11464,7 +12648,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/{user}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -11482,10 +12666,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (user != null) localVarPathParams.Add("user", Configuration.ApiClient.ParameterToString(user)); // path parameter
-            if (force != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "force", force)); // query parameter
+            if (force != null) localVarQueryParams.Add("force", Configuration.ApiClient.ParameterToString(force)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -11504,6 +12691,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("DeleteUser", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -11538,7 +12726,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/{user}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -11556,10 +12744,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (user != null) localVarPathParams.Add("user", Configuration.ApiClient.ParameterToString(user)); // path parameter
-            if (force != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "force", force)); // query parameter
+            if (force != null) localVarQueryParams.Add("force", Configuration.ApiClient.ParameterToString(force)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -11579,34 +12770,43 @@ namespace Xpertdoc.SmartFlows.Api
                 if (exception != null) throw exception;
             }
 
+
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 null);
         }
 
         /// <summary>
-        ///  Import the content from the given archive
+        ///  Delete personal access token
         /// </summary>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The flat archive content (optional)</param>
+        /// <param name="user">The id of the user</param>
+        /// <param name="token">The id of the token</param>
         /// <returns></returns>
-        public void ExecuteFlatImport(FlatArchive body = null)
+        public void DeleteUserToken(string user, string token)
         {
-            ExecuteFlatImportWithHttpInfo(body);
+            DeleteUserTokenWithHttpInfo(user, token);
         }
 
         /// <summary>
-        ///  Import the content from the given archive
+        ///  Delete personal access token
         /// </summary>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The flat archive content (optional)</param>
+        /// <param name="user">The id of the user</param>
+        /// <param name="token">The id of the token</param>
         /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> ExecuteFlatImportWithHttpInfo(FlatArchive body = null)
+        public ApiResponse<Object> DeleteUserTokenWithHttpInfo(string user, string token)
         {
+            // verify the required parameter 'user' is set
+            if (user == null)
+                throw new ApiException(400, "Missing required parameter 'user' when calling DefaultApi->DeleteUserToken");
+            // verify the required parameter 'token' is set
+            if (token == null)
+                throw new ApiException(400, "Missing required parameter 'token' when calling DefaultApi->DeleteUserToken");
 
-            var localVarPath = "/system/import/flat";
+            var localVarPath = "/users/{user}/tokens/{token}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -11619,21 +12819,19 @@ namespace Xpertdoc.SmartFlows.Api
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
             };
             String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (body != null && body.GetType() != typeof(byte[]))
-            {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
-            }
-            else
-            {
-                localVarPostBody = body; // byte array
-            }
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (user != null) localVarPathParams.Add("user", Configuration.ApiClient.ParameterToString(user)); // path parameter
+            if (token != null) localVarPathParams.Add("token", Configuration.ApiClient.ParameterToString(token)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -11642,16 +12840,17 @@ namespace Xpertdoc.SmartFlows.Api
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
-                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ExecuteFlatImport", localVarResponse);
+                Exception exception = ExceptionFactory("DeleteUserToken", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -11659,29 +12858,37 @@ namespace Xpertdoc.SmartFlows.Api
         }
 
         /// <summary>
-        ///  Import the content from the given archive
+        ///  Delete personal access token
         /// </summary>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The flat archive content (optional)</param>
+        /// <param name="user">The id of the user</param>
+        /// <param name="token">The id of the token</param>
         /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task ExecuteFlatImportAsync(FlatArchive body = null)
+        public async System.Threading.Tasks.Task DeleteUserTokenAsync(string user, string token)
         {
-            await ExecuteFlatImportAsyncWithHttpInfo(body);
+            await DeleteUserTokenAsyncWithHttpInfo(user, token);
 
         }
 
         /// <summary>
-        ///  Import the content from the given archive
+        ///  Delete personal access token
         /// </summary>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="body">The flat archive content (optional)</param>
+        /// <param name="user">The id of the user</param>
+        /// <param name="token">The id of the token</param>
         /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> ExecuteFlatImportAsyncWithHttpInfo(FlatArchive body = null)
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteUserTokenAsyncWithHttpInfo(string user, string token)
         {
+            // verify the required parameter 'user' is set
+            if (user == null)
+                throw new ApiException(400, "Missing required parameter 'user' when calling DefaultApi->DeleteUserToken");
+            // verify the required parameter 'token' is set
+            if (token == null)
+                throw new ApiException(400, "Missing required parameter 'token' when calling DefaultApi->DeleteUserToken");
 
-            var localVarPath = "/system/import/flat";
+            var localVarPath = "/users/{user}/tokens/{token}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -11694,21 +12901,19 @@ namespace Xpertdoc.SmartFlows.Api
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
             };
             String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (body != null && body.GetType() != typeof(byte[]))
-            {
-                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
-            }
-            else
-            {
-                localVarPostBody = body; // byte array
-            }
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (user != null) localVarPathParams.Add("user", Configuration.ApiClient.ParameterToString(user)); // path parameter
+            if (token != null) localVarPathParams.Add("token", Configuration.ApiClient.ParameterToString(token)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -11717,16 +12922,17 @@ namespace Xpertdoc.SmartFlows.Api
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int)localVarResponse.StatusCode;
 
             if (ExceptionFactory != null)
             {
-                Exception exception = ExceptionFactory("ExecuteFlatImport", localVarResponse);
+                Exception exception = ExceptionFactory("DeleteUserToken", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -11760,7 +12966,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -11780,8 +12986,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (flowId != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "flowId", flowId)); // query parameter
-            if (datasetId != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "datasetId", datasetId)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (flowId != null) localVarQueryParams.Add("flowId", Configuration.ApiClient.ParameterToString(flowId)); // query parameter
+            if (datasetId != null) localVarQueryParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // query parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -11791,7 +13000,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -11814,6 +13023,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowExecutionProgress>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowExecutionProgress)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecutionProgress)));
+
         }
 
         /// <summary>
@@ -11844,7 +13054,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -11864,8 +13074,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (flowId != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "flowId", flowId)); // query parameter
-            if (datasetId != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "datasetId", datasetId)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (flowId != null) localVarQueryParams.Add("flowId", Configuration.ApiClient.ParameterToString(flowId)); // query parameter
+            if (datasetId != null) localVarQueryParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // query parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -11875,7 +13088,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -11898,6 +13111,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowExecutionProgress>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowExecutionProgress)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecutionProgress)));
+
         }
 
         /// <summary>
@@ -11922,7 +13136,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/import";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -11940,6 +13154,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -11949,7 +13166,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -11968,6 +13185,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("ExecuteImport", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -11997,7 +13215,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/import";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12015,6 +13233,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -12024,7 +13245,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -12043,6 +13264,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("ExecuteImport", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -12074,7 +13296,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/{dataId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12092,9 +13314,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (dataId != null) localVarPathParams.Add("dataId", Configuration.ApiClient.ParameterToString(dataId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -12113,6 +13338,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("ExistsData", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -12145,7 +13371,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/{dataId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12163,9 +13389,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (dataId != null) localVarPathParams.Add("dataId", Configuration.ApiClient.ParameterToString(dataId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -12184,6 +13413,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("ExistsData", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -12219,7 +13449,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12237,12 +13467,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -12265,6 +13498,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<FlowExecution>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<FlowExecution>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<FlowExecution>)));
+
         }
 
         /// <summary>
@@ -12297,7 +13531,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12315,12 +13549,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -12343,6 +13580,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<FlowExecution>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<FlowExecution>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<FlowExecution>)));
+
         }
 
         /// <summary>
@@ -12373,7 +13611,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets/{assetId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12391,10 +13629,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (assetId != null) localVarPathParams.Add("assetId", Configuration.ApiClient.ParameterToString(assetId)); // path parameter
-            if (includeContent != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeContent", includeContent)); // query parameter
+            if (includeContent != null) localVarQueryParams.Add("includeContent", Configuration.ApiClient.ParameterToString(includeContent)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -12417,6 +13658,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Asset>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Asset)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Asset)));
+
         }
 
         /// <summary>
@@ -12448,7 +13690,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets/{assetId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12466,10 +13708,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (assetId != null) localVarPathParams.Add("assetId", Configuration.ApiClient.ParameterToString(assetId)); // path parameter
-            if (includeContent != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeContent", includeContent)); // query parameter
+            if (includeContent != null) localVarQueryParams.Add("includeContent", Configuration.ApiClient.ParameterToString(includeContent)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -12492,6 +13737,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Asset>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Asset)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Asset)));
+
         }
 
         /// <summary>
@@ -12519,7 +13765,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets/{assetId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12538,9 +13784,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (assetId != null) localVarPathParams.Add("assetId", Configuration.ApiClient.ParameterToString(assetId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -12559,6 +13808,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("GetAssetContent", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -12591,7 +13841,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets/{assetId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12610,9 +13860,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (assetId != null) localVarPathParams.Add("assetId", Configuration.ApiClient.ParameterToString(assetId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -12631,6 +13884,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("GetAssetContent", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -12666,7 +13920,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12684,12 +13938,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -12712,6 +13969,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Asset>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Asset>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Asset>)));
+
         }
 
         /// <summary>
@@ -12744,7 +14002,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12762,12 +14020,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -12790,6 +14051,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Asset>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Asset>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Asset>)));
+
         }
 
         /// <summary>
@@ -12818,7 +14080,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12836,9 +14098,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -12861,6 +14126,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Connector>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Connector)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Connector)));
+
         }
 
         /// <summary>
@@ -12890,7 +14156,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12908,9 +14174,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -12933,6 +14202,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Connector>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Connector)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Connector)));
+
         }
 
         /// <summary>
@@ -12961,7 +14231,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/types/{connectorTypeId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -12979,9 +14249,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorTypeId != null) localVarPathParams.Add("connectorTypeId", Configuration.ApiClient.ParameterToString(connectorTypeId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13004,6 +14277,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ConnectorType>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ConnectorType)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ConnectorType)));
+
         }
 
         /// <summary>
@@ -13033,7 +14307,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/types/{connectorTypeId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13051,9 +14325,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorTypeId != null) localVarPathParams.Add("connectorTypeId", Configuration.ApiClient.ParameterToString(connectorTypeId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13076,6 +14353,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ConnectorType>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ConnectorType)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ConnectorType)));
+
         }
 
         /// <summary>
@@ -13099,7 +14377,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/types";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13117,8 +14395,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13141,6 +14422,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<ConnectorType>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<ConnectorType>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<ConnectorType>)));
+
         }
 
         /// <summary>
@@ -13165,7 +14447,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/types";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13183,8 +14465,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13207,6 +14492,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<ConnectorType>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<ConnectorType>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<ConnectorType>)));
+
         }
 
         /// <summary>
@@ -13238,7 +14524,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13256,12 +14542,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13284,6 +14573,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Connector>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Connector>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Connector>)));
+
         }
 
         /// <summary>
@@ -13316,7 +14606,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13334,12 +14624,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13362,6 +14655,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Connector>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Connector>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Connector>)));
+
         }
 
         /// <summary>
@@ -13385,7 +14679,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/me";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13404,8 +14698,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13428,6 +14725,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<User>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (User)Configuration.ApiClient.Deserialize(localVarResponse, typeof(User)));
+
         }
 
         /// <summary>
@@ -13452,7 +14750,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/me";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13471,8 +14769,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13495,6 +14796,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<User>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (User)Configuration.ApiClient.Deserialize(localVarResponse, typeof(User)));
+
         }
 
         /// <summary>
@@ -13523,7 +14825,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/{dataId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13541,9 +14843,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (dataId != null) localVarPathParams.Add("dataId", Configuration.ApiClient.ParameterToString(dataId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13566,6 +14871,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Data>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Data)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Data)));
+
         }
 
         /// <summary>
@@ -13595,7 +14901,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/{dataId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13613,9 +14919,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (dataId != null) localVarPathParams.Add("dataId", Configuration.ApiClient.ParameterToString(dataId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13638,6 +14947,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Data>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Data)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Data)));
+
         }
 
         /// <summary>
@@ -13666,7 +14976,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/{dataId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13684,9 +14994,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (dataId != null) localVarPathParams.Add("dataId", Configuration.ApiClient.ParameterToString(dataId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13709,6 +15022,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -13738,7 +15052,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/{dataId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13756,9 +15070,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (dataId != null) localVarPathParams.Add("dataId", Configuration.ApiClient.ParameterToString(dataId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13781,6 +15098,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -13810,7 +15128,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/meta";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13829,11 +15147,14 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (templateName != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "templateName", templateName)); // query parameter
-            if (projectName != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "projectName", projectName)); // query parameter
-            if (creator != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "creator", creator)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (templateName != null) localVarQueryParams.Add("templateName", Configuration.ApiClient.ParameterToString(templateName)); // query parameter
+            if (projectName != null) localVarQueryParams.Add("projectName", Configuration.ApiClient.ParameterToString(projectName)); // query parameter
+            if (creator != null) localVarQueryParams.Add("creator", Configuration.ApiClient.ParameterToString(creator)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13856,6 +15177,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -13886,7 +15208,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/meta";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13905,11 +15227,14 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (templateName != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "templateName", templateName)); // query parameter
-            if (projectName != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "projectName", projectName)); // query parameter
-            if (creator != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "creator", creator)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (templateName != null) localVarQueryParams.Add("templateName", Configuration.ApiClient.ParameterToString(templateName)); // query parameter
+            if (projectName != null) localVarQueryParams.Add("projectName", Configuration.ApiClient.ParameterToString(projectName)); // query parameter
+            if (creator != null) localVarQueryParams.Add("creator", Configuration.ApiClient.ParameterToString(creator)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -13932,6 +15257,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -13960,7 +15286,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/{dataId}/preview";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -13979,9 +15305,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (dataId != null) localVarPathParams.Add("dataId", Configuration.ApiClient.ParameterToString(dataId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -14004,6 +15333,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -14033,7 +15363,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/{dataId}/preview";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -14052,9 +15382,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (dataId != null) localVarPathParams.Add("dataId", Configuration.ApiClient.ParameterToString(dataId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -14077,6 +15410,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -14105,7 +15439,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/{datasetId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -14123,9 +15457,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasetId != null) localVarPathParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -14148,6 +15485,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Dataset>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Dataset)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dataset)));
+
         }
 
         /// <summary>
@@ -14177,7 +15515,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/{datasetId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -14195,9 +15533,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasetId != null) localVarPathParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -14220,6 +15561,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Dataset>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Dataset)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dataset)));
+
         }
 
         /// <summary>
@@ -14256,7 +15598,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/{datasetId}/data";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -14274,13 +15616,16 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasetId != null) localVarPathParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // path parameter
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -14303,6 +15648,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Data>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Data>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Data>)));
+
         }
 
         /// <summary>
@@ -14340,7 +15686,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/{datasetId}/data";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -14358,13 +15704,16 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasetId != null) localVarPathParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // path parameter
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -14387,6 +15736,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Data>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Data>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Data>)));
+
         }
 
         /// <summary>
@@ -14423,7 +15773,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/{datasetId}/entityrefs";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -14441,13 +15791,16 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasetId != null) localVarPathParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // path parameter
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -14470,6 +15823,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<IdWithName>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<IdWithName>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IdWithName>)));
+
         }
 
         /// <summary>
@@ -14507,7 +15861,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/{datasetId}/entityrefs";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -14525,13 +15879,16 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasetId != null) localVarPathParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // path parameter
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -14554,6 +15911,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<IdWithName>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<IdWithName>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IdWithName>)));
+
         }
 
         /// <summary>
@@ -14581,7 +15939,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/layout";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -14599,7 +15957,10 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (primaryOnly != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "primaryOnly", primaryOnly)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (primaryOnly != null) localVarQueryParams.Add("primaryOnly", Configuration.ApiClient.ParameterToString(primaryOnly)); // query parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -14609,7 +15970,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -14632,6 +15993,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<EntityDefinition>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<EntityDefinition>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<EntityDefinition>)));
+
         }
 
         /// <summary>
@@ -14660,7 +16022,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/layout";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -14678,7 +16040,10 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (primaryOnly != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "primaryOnly", primaryOnly)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (primaryOnly != null) localVarQueryParams.Add("primaryOnly", Configuration.ApiClient.ParameterToString(primaryOnly)); // query parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -14688,7 +16053,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -14711,6 +16076,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<EntityDefinition>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<EntityDefinition>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<EntityDefinition>)));
+
         }
 
         /// <summary>
@@ -14742,7 +16108,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -14760,12 +16126,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -14788,6 +16157,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Dataset>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Dataset>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Dataset>)));
+
         }
 
         /// <summary>
@@ -14820,7 +16190,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -14838,12 +16208,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -14866,6 +16239,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Dataset>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Dataset>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Dataset>)));
+
         }
 
         /// <summary>
@@ -14894,7 +16268,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources/{datasourceId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -14912,9 +16286,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasourceId != null) localVarPathParams.Add("datasourceId", Configuration.ApiClient.ParameterToString(datasourceId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -14937,6 +16314,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Datasource>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Datasource)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Datasource)));
+
         }
 
         /// <summary>
@@ -14966,7 +16344,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources/{datasourceId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -14984,9 +16362,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasourceId != null) localVarPathParams.Add("datasourceId", Configuration.ApiClient.ParameterToString(datasourceId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15009,6 +16390,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Datasource>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Datasource)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Datasource)));
+
         }
 
         /// <summary>
@@ -15042,7 +16424,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources/{datasourceId}/layout/{entityName}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15060,10 +16442,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasourceId != null) localVarPathParams.Add("datasourceId", Configuration.ApiClient.ParameterToString(datasourceId)); // path parameter
             if (entityName != null) localVarPathParams.Add("entityName", Configuration.ApiClient.ParameterToString(entityName)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15086,6 +16471,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<EntityDefinition>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (EntityDefinition)Configuration.ApiClient.Deserialize(localVarResponse, typeof(EntityDefinition)));
+
         }
 
         /// <summary>
@@ -15120,7 +16506,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources/{datasourceId}/layout/{entityName}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15138,10 +16524,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasourceId != null) localVarPathParams.Add("datasourceId", Configuration.ApiClient.ParameterToString(datasourceId)); // path parameter
             if (entityName != null) localVarPathParams.Add("entityName", Configuration.ApiClient.ParameterToString(entityName)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15164,6 +16553,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<EntityDefinition>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (EntityDefinition)Configuration.ApiClient.Deserialize(localVarResponse, typeof(EntityDefinition)));
+
         }
 
         /// <summary>
@@ -15194,7 +16584,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources/{datasourceId}/layout";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15212,10 +16602,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasourceId != null) localVarPathParams.Add("datasourceId", Configuration.ApiClient.ParameterToString(datasourceId)); // path parameter
-            if (full != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "full", full)); // query parameter
+            if (full != null) localVarQueryParams.Add("full", Configuration.ApiClient.ParameterToString(full)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15238,6 +16631,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<DatasourceLayout>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (DatasourceLayout)Configuration.ApiClient.Deserialize(localVarResponse, typeof(DatasourceLayout)));
+
         }
 
         /// <summary>
@@ -15269,7 +16663,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources/{datasourceId}/layout";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15287,10 +16681,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasourceId != null) localVarPathParams.Add("datasourceId", Configuration.ApiClient.ParameterToString(datasourceId)); // path parameter
-            if (full != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "full", full)); // query parameter
+            if (full != null) localVarQueryParams.Add("full", Configuration.ApiClient.ParameterToString(full)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15313,6 +16710,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<DatasourceLayout>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (DatasourceLayout)Configuration.ApiClient.Deserialize(localVarResponse, typeof(DatasourceLayout)));
+
         }
 
         /// <summary>
@@ -15341,7 +16739,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources/types/{datasourceTypeId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15359,9 +16757,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasourceTypeId != null) localVarPathParams.Add("datasourceTypeId", Configuration.ApiClient.ParameterToString(datasourceTypeId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15384,6 +16785,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<DatasourceType>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (DatasourceType)Configuration.ApiClient.Deserialize(localVarResponse, typeof(DatasourceType)));
+
         }
 
         /// <summary>
@@ -15413,7 +16815,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources/types/{datasourceTypeId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15431,9 +16833,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasourceTypeId != null) localVarPathParams.Add("datasourceTypeId", Configuration.ApiClient.ParameterToString(datasourceTypeId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15456,6 +16861,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<DatasourceType>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (DatasourceType)Configuration.ApiClient.Deserialize(localVarResponse, typeof(DatasourceType)));
+
         }
 
         /// <summary>
@@ -15479,7 +16885,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources/types";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15497,8 +16903,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15521,6 +16930,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<DatasourceType>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<DatasourceType>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<DatasourceType>)));
+
         }
 
         /// <summary>
@@ -15545,7 +16955,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources/types";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15563,8 +16973,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15587,6 +17000,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<DatasourceType>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<DatasourceType>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<DatasourceType>)));
+
         }
 
         /// <summary>
@@ -15618,7 +17032,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15636,12 +17050,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15664,6 +17081,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Datasource>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Datasource>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Datasource>)));
+
         }
 
         /// <summary>
@@ -15696,7 +17114,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15714,12 +17132,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15742,6 +17163,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Datasource>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Datasource>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Datasource>)));
+
         }
 
         /// <summary>
@@ -15765,7 +17187,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages/default";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15784,8 +17206,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15808,6 +17233,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Language>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Language)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Language)));
+
         }
 
         /// <summary>
@@ -15832,7 +17258,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages/default";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15851,8 +17277,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15875,6 +17304,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Language>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Language)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Language)));
+
         }
 
         /// <summary>
@@ -15898,7 +17328,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/default";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15917,8 +17347,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -15941,6 +17374,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Printer>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Printer)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Printer)));
+
         }
 
         /// <summary>
@@ -15965,7 +17399,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/default";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -15984,8 +17418,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -16008,6 +17445,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Printer>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Printer)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Printer)));
+
         }
 
         /// <summary>
@@ -16045,7 +17483,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/dependencies/{objectType}/{objectId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -16064,10 +17502,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (objectType != null) localVarPathParams.Add("objectType", Configuration.ApiClient.ParameterToString(objectType)); // path parameter
             if (objectId != null) localVarPathParams.Add("objectId", Configuration.ApiClient.ParameterToString(objectId)); // path parameter
-            if (direction != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "direction", direction)); // query parameter
-            if (depth != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "depth", depth)); // query parameter
+            if (direction != null) localVarQueryParams.Add("direction", Configuration.ApiClient.ParameterToString(direction)); // query parameter
+            if (depth != null) localVarQueryParams.Add("depth", Configuration.ApiClient.ParameterToString(depth)); // query parameter
 
 
             // make the HTTP request
@@ -16086,6 +17527,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<DependencyTree>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (DependencyTree)Configuration.ApiClient.Deserialize(localVarResponse, typeof(DependencyTree)));
+
         }
 
         /// <summary>
@@ -16124,7 +17566,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/dependencies/{objectType}/{objectId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -16143,10 +17585,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (objectType != null) localVarPathParams.Add("objectType", Configuration.ApiClient.ParameterToString(objectType)); // path parameter
             if (objectId != null) localVarPathParams.Add("objectId", Configuration.ApiClient.ParameterToString(objectId)); // path parameter
-            if (direction != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "direction", direction)); // query parameter
-            if (depth != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "depth", depth)); // query parameter
+            if (direction != null) localVarQueryParams.Add("direction", Configuration.ApiClient.ParameterToString(direction)); // query parameter
+            if (depth != null) localVarQueryParams.Add("depth", Configuration.ApiClient.ParameterToString(depth)); // query parameter
 
 
             // make the HTTP request
@@ -16165,6 +17610,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<DependencyTree>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (DependencyTree)Configuration.ApiClient.Deserialize(localVarResponse, typeof(DependencyTree)));
+
         }
 
         /// <summary>
@@ -16193,7 +17639,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/documents/{documentId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -16211,9 +17657,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (documentId != null) localVarPathParams.Add("documentId", Configuration.ApiClient.ParameterToString(documentId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -16236,6 +17685,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Document>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Document)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Document)));
+
         }
 
         /// <summary>
@@ -16265,7 +17715,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/documents/{documentId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -16283,9 +17733,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (documentId != null) localVarPathParams.Add("documentId", Configuration.ApiClient.ParameterToString(documentId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -16308,6 +17761,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Document>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Document)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Document)));
+
         }
 
         /// <summary>
@@ -16315,18 +17769,11 @@ namespace Xpertdoc.SmartFlows.Api
         /// </summary>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="documentId">The id of the document</param>
-        /// <returns></returns>
-        public byte[] GetDocumentContent(string documentId)
+        /// <returns>System.IO.Stream</returns>
+        public System.IO.Stream GetDocumentContent(string documentId)
         {
-            Object obj = GetDocumentContentWithHttpInfo(documentId);
-            if (obj == null)
-                return null;
-            BinaryFormatter bf = new BinaryFormatter();
-            using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
-            {
-                bf.Serialize(ms, obj);
-                return ms.ToArray();
-            }
+            ApiResponse<System.IO.Stream> localVarResponse = GetDocumentContentWithHttpInfo(documentId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -16334,8 +17781,8 @@ namespace Xpertdoc.SmartFlows.Api
         /// </summary>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="documentId">The id of the document</param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public ApiResponse<Object> GetDocumentContentWithHttpInfo(string documentId)
+        /// <returns>ApiResponse of System.IO.Stream</returns>
+        public ApiResponse<System.IO.Stream> GetDocumentContentWithHttpInfo(string documentId)
         {
             // verify the required parameter 'documentId' is set
             if (documentId == null)
@@ -16343,7 +17790,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/documents/{documentId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -16356,15 +17803,19 @@ namespace Xpertdoc.SmartFlows.Api
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
+                "application/octet-stream",
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             };
             String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (documentId != null) localVarPathParams.Add("documentId", Configuration.ApiClient.ParameterToString(documentId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -16384,9 +17835,10 @@ namespace Xpertdoc.SmartFlows.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                null);
+                (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -16394,10 +17846,11 @@ namespace Xpertdoc.SmartFlows.Api
         /// </summary>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="documentId">The id of the document</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetDocumentContentAsync(string documentId)
+        /// <returns>Task of System.IO.Stream</returns>
+        public async System.Threading.Tasks.Task<System.IO.Stream> GetDocumentContentAsync(string documentId)
         {
-            await GetDocumentContentAsyncWithHttpInfo(documentId);
+            ApiResponse<System.IO.Stream> localVarResponse = await GetDocumentContentAsyncWithHttpInfo(documentId);
+            return localVarResponse.Data;
 
         }
 
@@ -16406,8 +17859,8 @@ namespace Xpertdoc.SmartFlows.Api
         /// </summary>
         /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="documentId">The id of the document</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> GetDocumentContentAsyncWithHttpInfo(string documentId)
+        /// <returns>Task of ApiResponse (System.IO.Stream)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<System.IO.Stream>> GetDocumentContentAsyncWithHttpInfo(string documentId)
         {
             // verify the required parameter 'documentId' is set
             if (documentId == null)
@@ -16415,7 +17868,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/documents/{documentId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -16428,15 +17881,19 @@ namespace Xpertdoc.SmartFlows.Api
 
             // to determine the Accept header
             String[] localVarHttpHeaderAccepts = new String[] {
+                "application/octet-stream",
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             };
             String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (documentId != null) localVarPathParams.Add("documentId", Configuration.ApiClient.ParameterToString(documentId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -16456,9 +17913,10 @@ namespace Xpertdoc.SmartFlows.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Object>(localVarStatusCode,
+            return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                null);
+                (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -16490,7 +17948,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/documents";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -16508,12 +17966,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -16536,6 +17997,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Document>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Document>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Document>)));
+
         }
 
         /// <summary>
@@ -16568,7 +18030,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/documents";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -16586,12 +18048,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -16614,6 +18079,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Document>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Document>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Document>)));
+
         }
 
         /// <summary>
@@ -16645,7 +18111,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/expression/functions";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -16664,12 +18130,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -16692,6 +18161,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<ExpressionFunction>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<ExpressionFunction>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<ExpressionFunction>)));
+
         }
 
         /// <summary>
@@ -16724,7 +18194,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/expression/functions";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -16743,12 +18213,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -16771,6 +18244,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<ExpressionFunction>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<ExpressionFunction>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<ExpressionFunction>)));
+
         }
 
         /// <summary>
@@ -16802,7 +18276,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/external";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -16820,12 +18294,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -16848,6 +18325,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<User>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<User>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<User>)));
+
         }
 
         /// <summary>
@@ -16880,7 +18358,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/external";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -16898,12 +18376,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -16926,6 +18407,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<User>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<User>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<User>)));
+
         }
 
         /// <summary>
@@ -16957,7 +18439,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -16975,9 +18457,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -16987,7 +18472,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -17010,6 +18495,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Asset>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Asset>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Asset>)));
+
         }
 
         /// <summary>
@@ -17042,7 +18528,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -17060,9 +18546,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -17072,7 +18561,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -17095,6 +18584,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Asset>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Asset>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Asset>)));
+
         }
 
         /// <summary>
@@ -17126,7 +18616,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -17144,9 +18634,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -17156,7 +18649,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -17179,6 +18672,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Connector>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Connector>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Connector>)));
+
         }
 
         /// <summary>
@@ -17211,7 +18705,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -17229,9 +18723,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -17241,7 +18738,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -17264,6 +18761,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Connector>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Connector>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Connector>)));
+
         }
 
         /// <summary>
@@ -17295,7 +18793,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -17313,9 +18811,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -17325,7 +18826,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -17348,6 +18849,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Dataset>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Dataset>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Dataset>)));
+
         }
 
         /// <summary>
@@ -17380,7 +18882,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -17398,9 +18900,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -17410,7 +18915,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -17433,6 +18938,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Dataset>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Dataset>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Dataset>)));
+
         }
 
         /// <summary>
@@ -17464,7 +18970,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -17482,9 +18988,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -17494,7 +19003,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -17517,6 +19026,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Datasource>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Datasource>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Datasource>)));
+
         }
 
         /// <summary>
@@ -17549,7 +19059,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasources/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -17567,9 +19077,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -17579,7 +19092,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -17602,6 +19115,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Datasource>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Datasource>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Datasource>)));
+
         }
 
         /// <summary>
@@ -17633,7 +19147,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/documents/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -17651,9 +19165,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -17663,7 +19180,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -17686,6 +19203,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Document>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Document>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Document>)));
+
         }
 
         /// <summary>
@@ -17718,7 +19236,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/documents/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -17736,9 +19254,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -17748,7 +19269,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -17771,6 +19292,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Document>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Document>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Document>)));
+
         }
 
         /// <summary>
@@ -17802,7 +19324,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -17822,9 +19344,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -17834,7 +19359,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -17857,6 +19382,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<FlowExecution>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<FlowExecution>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<FlowExecution>)));
+
         }
 
         /// <summary>
@@ -17889,7 +19415,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -17909,9 +19435,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -17921,7 +19450,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -17944,6 +19473,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<FlowExecution>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<FlowExecution>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<FlowExecution>)));
+
         }
 
         /// <summary>
@@ -17975,7 +19505,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -17994,9 +19524,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -18006,7 +19539,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -18029,6 +19562,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Printer>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Printer>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Printer>)));
+
         }
 
         /// <summary>
@@ -18061,7 +19595,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -18080,9 +19614,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -18092,7 +19629,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -18115,6 +19652,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Printer>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Printer>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Printer>)));
+
         }
 
         /// <summary>
@@ -18146,7 +19684,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/taggroups/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -18164,9 +19702,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -18176,7 +19717,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -18199,6 +19740,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<TagGroup>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<TagGroup>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<TagGroup>)));
+
         }
 
         /// <summary>
@@ -18231,7 +19773,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/taggroups/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -18249,9 +19791,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -18261,7 +19806,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -18284,6 +19829,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<TagGroup>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<TagGroup>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<TagGroup>)));
+
         }
 
         /// <summary>
@@ -18315,7 +19861,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -18333,9 +19879,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -18345,7 +19894,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -18368,6 +19917,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Template>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Template>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Template>)));
+
         }
 
         /// <summary>
@@ -18400,7 +19950,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -18418,9 +19968,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -18430,7 +19983,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -18453,6 +20006,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Template>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Template>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Template>)));
+
         }
 
         /// <summary>
@@ -18484,7 +20038,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -18503,9 +20057,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -18515,7 +20072,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -18538,6 +20095,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<User>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<User>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<User>)));
+
         }
 
         /// <summary>
@@ -18570,7 +20128,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/filter";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -18589,9 +20147,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -18601,7 +20162,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -18624,6 +20185,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<User>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<User>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<User>)));
+
         }
 
         /// <summary>
@@ -18652,7 +20214,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/{flow}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -18671,9 +20233,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (flow != null) localVarPathParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -18696,6 +20261,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Flow>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Flow)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Flow)));
+
         }
 
         /// <summary>
@@ -18725,7 +20291,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/{flow}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -18744,9 +20310,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (flow != null) localVarPathParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -18769,6 +20338,154 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Flow>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Flow)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Flow)));
+
+        }
+
+        /// <summary>
+        ///  Get a specific callback
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="callbackId">The id of the callback</param>
+        /// <param name="executionId">The id to identify the execution (optional)</param>
+        /// <returns>Object</returns>
+        public Object GetFlowCallback(string callbackId, string executionId = null)
+        {
+            ApiResponse<Object> localVarResponse = GetFlowCallbackWithHttpInfo(callbackId, executionId);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Get a specific callback
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="callbackId">The id of the callback</param>
+        /// <param name="executionId">The id to identify the execution (optional)</param>
+        /// <returns>ApiResponse of Object</returns>
+        public ApiResponse<Object> GetFlowCallbackWithHttpInfo(string callbackId, string executionId = null)
+        {
+            // verify the required parameter 'callbackId' is set
+            if (callbackId == null)
+                throw new ApiException(400, "Missing required parameter 'callbackId' when calling DefaultApi->GetFlowCallback");
+
+            var localVarPath = "/flows/callback/{callbackId}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (callbackId != null) localVarPathParams.Add("callbackId", Configuration.ApiClient.ParameterToString(callbackId)); // path parameter
+            if (executionId != null) localVarQueryParams.Add("executionId", Configuration.ApiClient.ParameterToString(executionId)); // query parameter
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetFlowCallback", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<Object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (Object)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Object)));
+
+        }
+
+        /// <summary>
+        ///  Get a specific callback
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="callbackId">The id of the callback</param>
+        /// <param name="executionId">The id to identify the execution (optional)</param>
+        /// <returns>Task of Object</returns>
+        public async System.Threading.Tasks.Task<Object> GetFlowCallbackAsync(string callbackId, string executionId = null)
+        {
+            ApiResponse<Object> localVarResponse = await GetFlowCallbackAsyncWithHttpInfo(callbackId, executionId);
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Get a specific callback
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="callbackId">The id of the callback</param>
+        /// <param name="executionId">The id to identify the execution (optional)</param>
+        /// <returns>Task of ApiResponse (Object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> GetFlowCallbackAsyncWithHttpInfo(string callbackId, string executionId = null)
+        {
+            // verify the required parameter 'callbackId' is set
+            if (callbackId == null)
+                throw new ApiException(400, "Missing required parameter 'callbackId' when calling DefaultApi->GetFlowCallback");
+
+            var localVarPath = "/flows/callback/{callbackId}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (callbackId != null) localVarPathParams.Add("callbackId", Configuration.ApiClient.ParameterToString(callbackId)); // path parameter
+            if (executionId != null) localVarQueryParams.Add("executionId", Configuration.ApiClient.ParameterToString(executionId)); // query parameter
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetFlowCallback", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<Object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (Object)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Object)));
+
         }
 
         /// <summary>
@@ -18799,7 +20516,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/{flow}/contract";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -18819,6 +20536,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (flow != null) localVarPathParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -18829,7 +20549,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -18852,6 +20572,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowContract>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowContract)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowContract)));
+
         }
 
         /// <summary>
@@ -18883,7 +20604,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/{flow}/contract";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -18903,6 +20624,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (flow != null) localVarPathParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -18913,7 +20637,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -18936,6 +20660,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowContract>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowContract)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowContract)));
+
         }
 
         /// <summary>
@@ -18964,7 +20689,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions/{execution}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -18982,9 +20707,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (execution != null) localVarPathParams.Add("execution", Configuration.ApiClient.ParameterToString(execution)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -19007,6 +20735,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowExecution>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowExecution)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecution)));
+
         }
 
         /// <summary>
@@ -19036,7 +20765,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions/{execution}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -19054,9 +20783,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (execution != null) localVarPathParams.Add("execution", Configuration.ApiClient.ParameterToString(execution)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -19079,6 +20811,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowExecution>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowExecution)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecution)));
+
         }
 
         /// <summary>
@@ -19109,7 +20842,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions/{execution}/progress";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -19127,10 +20860,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (execution != null) localVarPathParams.Add("execution", Configuration.ApiClient.ParameterToString(execution)); // path parameter
-            if (timeout != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "timeout", timeout)); // query parameter
+            if (timeout != null) localVarQueryParams.Add("timeout", Configuration.ApiClient.ParameterToString(timeout)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -19153,6 +20889,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowExecutionProgress>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowExecutionProgress)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecutionProgress)));
+
         }
 
         /// <summary>
@@ -19184,7 +20921,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions/{execution}/progress";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -19202,10 +20939,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (execution != null) localVarPathParams.Add("execution", Configuration.ApiClient.ParameterToString(execution)); // path parameter
-            if (timeout != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "timeout", timeout)); // query parameter
+            if (timeout != null) localVarQueryParams.Add("timeout", Configuration.ApiClient.ParameterToString(timeout)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -19228,6 +20968,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowExecutionProgress>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowExecutionProgress)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecutionProgress)));
+
         }
 
         /// <summary>
@@ -19255,7 +20996,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions/statistics";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -19275,7 +21016,10 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (groupTimeBy != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "groupTimeBy", groupTimeBy)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (groupTimeBy != null) localVarQueryParams.Add("groupTimeBy", Configuration.ApiClient.ParameterToString(groupTimeBy)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -19285,7 +21029,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -19308,6 +21052,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Statistics>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Statistics)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Statistics)));
+
         }
 
         /// <summary>
@@ -19336,7 +21081,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/executions/statistics";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -19356,7 +21101,10 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (groupTimeBy != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "groupTimeBy", groupTimeBy)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (groupTimeBy != null) localVarQueryParams.Add("groupTimeBy", Configuration.ApiClient.ParameterToString(groupTimeBy)); // query parameter
             if (filter != null && filter.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(filter); // http body (model) parameter
@@ -19366,7 +21114,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = filter; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -19389,6 +21137,164 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Statistics>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Statistics)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Statistics)));
+
+        }
+
+        /// <summary>
+        ///  Find out the status of an existing batch execution
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="executionId">The id of the flow execution</param>
+        /// <param name="output">The id or name of the flow output to include in the result. When nothing specified, all outputs will be returned. (optional)</param>
+        /// <returns>FlowExecution</returns>
+        public FlowExecution GetFlowExecutionStatus(string executionId, string output = null)
+        {
+            ApiResponse<FlowExecution> localVarResponse = GetFlowExecutionStatusWithHttpInfo(executionId, output);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Find out the status of an existing batch execution
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="executionId">The id of the flow execution</param>
+        /// <param name="output">The id or name of the flow output to include in the result. When nothing specified, all outputs will be returned. (optional)</param>
+        /// <returns>ApiResponse of FlowExecution</returns>
+        public ApiResponse<FlowExecution> GetFlowExecutionStatusWithHttpInfo(string executionId, string output = null)
+        {
+            // verify the required parameter 'executionId' is set
+            if (executionId == null)
+                throw new ApiException(400, "Missing required parameter 'executionId' when calling DefaultApi->GetFlowExecutionStatus");
+
+            var localVarPath = "/flows/executions/{executionId}/status";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (executionId != null) localVarPathParams.Add("executionId", Configuration.ApiClient.ParameterToString(executionId)); // path parameter
+            if (output != null) localVarQueryParams.Add("output", Configuration.ApiClient.ParameterToString(output)); // query parameter
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetFlowExecutionStatus", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<FlowExecution>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (FlowExecution)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecution)));
+
+        }
+
+        /// <summary>
+        ///  Find out the status of an existing batch execution
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="executionId">The id of the flow execution</param>
+        /// <param name="output">The id or name of the flow output to include in the result. When nothing specified, all outputs will be returned. (optional)</param>
+        /// <returns>Task of FlowExecution</returns>
+        public async System.Threading.Tasks.Task<FlowExecution> GetFlowExecutionStatusAsync(string executionId, string output = null)
+        {
+            ApiResponse<FlowExecution> localVarResponse = await GetFlowExecutionStatusAsyncWithHttpInfo(executionId, output);
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Find out the status of an existing batch execution
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="executionId">The id of the flow execution</param>
+        /// <param name="output">The id or name of the flow output to include in the result. When nothing specified, all outputs will be returned. (optional)</param>
+        /// <returns>Task of ApiResponse (FlowExecution)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<FlowExecution>> GetFlowExecutionStatusAsyncWithHttpInfo(string executionId, string output = null)
+        {
+            // verify the required parameter 'executionId' is set
+            if (executionId == null)
+                throw new ApiException(400, "Missing required parameter 'executionId' when calling DefaultApi->GetFlowExecutionStatus");
+
+            var localVarPath = "/flows/executions/{executionId}/status";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (executionId != null) localVarPathParams.Add("executionId", Configuration.ApiClient.ParameterToString(executionId)); // path parameter
+            if (output != null) localVarQueryParams.Add("output", Configuration.ApiClient.ParameterToString(output)); // query parameter
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetFlowExecutionStatus", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<FlowExecution>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (FlowExecution)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecution)));
+
         }
 
         /// <summary>
@@ -19425,7 +21331,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/{flow}/executions";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -19443,13 +21349,16 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (flow != null) localVarPathParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // path parameter
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -19472,6 +21381,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<FlowExecution>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<FlowExecution>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<FlowExecution>)));
+
         }
 
         /// <summary>
@@ -19509,7 +21419,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/{flow}/executions";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -19527,13 +21437,16 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (flow != null) localVarPathParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // path parameter
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -19556,6 +21469,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<FlowExecution>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<FlowExecution>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<FlowExecution>)));
+
         }
 
         /// <summary>
@@ -19591,7 +21505,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/steps/{step}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -19611,8 +21525,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (step != null) localVarPathParams.Add("step", Configuration.ApiClient.ParameterToString(step)); // path parameter
-            if (property != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "property", property)); // query parameter
+            if (property != null) localVarQueryParams.Add("property", Configuration.ApiClient.ParameterToString(property)); // query parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -19622,7 +21539,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -19645,6 +21562,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Object)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Object)));
+
         }
 
         /// <summary>
@@ -19681,7 +21599,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/steps/{step}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -19701,8 +21619,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (step != null) localVarPathParams.Add("step", Configuration.ApiClient.ParameterToString(step)); // path parameter
-            if (property != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "property", property)); // query parameter
+            if (property != null) localVarQueryParams.Add("property", Configuration.ApiClient.ParameterToString(property)); // query parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -19712,7 +21633,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -19735,6 +21656,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Object)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Object)));
+
         }
 
         /// <summary>
@@ -19763,7 +21685,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/steps/{step}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -19782,9 +21704,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (step != null) localVarPathParams.Add("step", Configuration.ApiClient.ParameterToString(step)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -19807,6 +21732,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowStep>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowStep)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowStep)));
+
         }
 
         /// <summary>
@@ -19836,7 +21762,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/steps/{step}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -19855,9 +21781,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (step != null) localVarPathParams.Add("step", Configuration.ApiClient.ParameterToString(step)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -19880,6 +21809,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FlowStep>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FlowStep)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowStep)));
+
         }
 
         /// <summary>
@@ -19903,7 +21833,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/steps";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -19922,8 +21852,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -19946,6 +21879,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<FlowStep>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<FlowStep>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<FlowStep>)));
+
         }
 
         /// <summary>
@@ -19970,7 +21904,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/steps";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -19989,8 +21923,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -20013,6 +21950,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<FlowStep>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<FlowStep>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<FlowStep>)));
+
         }
 
         /// <summary>
@@ -20041,7 +21979,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/{flow}/thumbnail";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20059,9 +21997,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (flow != null) localVarPathParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -20084,6 +22025,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -20113,7 +22055,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/{flow}/thumbnail";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20131,9 +22073,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (flow != null) localVarPathParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -20156,6 +22101,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -20187,7 +22133,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20206,12 +22152,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -20234,6 +22183,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Flow>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Flow>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Flow>)));
+
         }
 
         /// <summary>
@@ -20266,7 +22216,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20285,12 +22235,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -20313,6 +22266,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Flow>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Flow>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Flow>)));
+
         }
 
         /// <summary>
@@ -20353,7 +22307,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/format";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20372,12 +22326,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (value != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "value", value)); // query parameter
-            if (pattern != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "pattern", pattern)); // query parameter
-            if (type != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "type", type)); // query parameter
-            if (locale != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "locale", locale)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (value != null) localVarQueryParams.Add("value", Configuration.ApiClient.ParameterToString(value)); // query parameter
+            if (pattern != null) localVarQueryParams.Add("pattern", Configuration.ApiClient.ParameterToString(pattern)); // query parameter
+            if (type != null) localVarQueryParams.Add("type", Configuration.ApiClient.ParameterToString(type)); // query parameter
+            if (locale != null) localVarQueryParams.Add("locale", Configuration.ApiClient.ParameterToString(locale)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -20400,6 +22357,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FormattedValue>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FormattedValue)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FormattedValue)));
+
         }
 
         /// <summary>
@@ -20441,7 +22399,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/format";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20460,12 +22418,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (value != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "value", value)); // query parameter
-            if (pattern != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "pattern", pattern)); // query parameter
-            if (type != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "type", type)); // query parameter
-            if (locale != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "locale", locale)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (value != null) localVarQueryParams.Add("value", Configuration.ApiClient.ParameterToString(value)); // query parameter
+            if (pattern != null) localVarQueryParams.Add("pattern", Configuration.ApiClient.ParameterToString(pattern)); // query parameter
+            if (type != null) localVarQueryParams.Add("type", Configuration.ApiClient.ParameterToString(type)); // query parameter
+            if (locale != null) localVarQueryParams.Add("locale", Configuration.ApiClient.ParameterToString(locale)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -20488,6 +22449,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<FormattedValue>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (FormattedValue)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FormattedValue)));
+
         }
 
         /// <summary>
@@ -20516,7 +22478,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages/{language}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20535,9 +22497,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (language != null) localVarPathParams.Add("language", Configuration.ApiClient.ParameterToString(language)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -20560,6 +22525,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Language>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Language)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Language)));
+
         }
 
         /// <summary>
@@ -20589,7 +22555,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages/{language}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20608,9 +22574,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (language != null) localVarPathParams.Add("language", Configuration.ApiClient.ParameterToString(language)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -20633,6 +22602,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Language>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Language)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Language)));
+
         }
 
         /// <summary>
@@ -20656,7 +22626,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20675,8 +22645,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -20699,6 +22672,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Language>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Language>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Language>)));
+
         }
 
         /// <summary>
@@ -20723,7 +22697,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20742,8 +22716,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -20766,6 +22743,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Language>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Language>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Language>)));
+
         }
 
         /// <summary>
@@ -20789,7 +22767,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/license";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20808,6 +22786,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
 
             // make the HTTP request
@@ -20826,6 +22807,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<LicenseInformation>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (LicenseInformation)Configuration.ApiClient.Deserialize(localVarResponse, typeof(LicenseInformation)));
+
         }
 
         /// <summary>
@@ -20850,7 +22832,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/license";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20869,6 +22851,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
 
             // make the HTTP request
@@ -20887,6 +22872,136 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<LicenseInformation>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (LicenseInformation)Configuration.ApiClient.Deserialize(localVarResponse, typeof(LicenseInformation)));
+
+        }
+
+        /// <summary>
+        ///  Return the current notifications
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Notification</returns>
+        public Notification GetNotifications()
+        {
+            ApiResponse<Notification> localVarResponse = GetNotificationsWithHttpInfo();
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Return the current notifications
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of Notification</returns>
+        public ApiResponse<Notification> GetNotificationsWithHttpInfo()
+        {
+
+            var localVarPath = "/system/notifications";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetNotifications", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<Notification>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (Notification)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Notification)));
+
+        }
+
+        /// <summary>
+        ///  Return the current notifications
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of Notification</returns>
+        public async System.Threading.Tasks.Task<Notification> GetNotificationsAsync()
+        {
+            ApiResponse<Notification> localVarResponse = await GetNotificationsAsyncWithHttpInfo();
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Return the current notifications
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (Notification)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Notification>> GetNotificationsAsyncWithHttpInfo()
+        {
+
+            var localVarPath = "/system/notifications";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetNotifications", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<Notification>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (Notification)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Notification)));
+
         }
 
         /// <summary>
@@ -20910,7 +23025,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/plugin";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20928,8 +23043,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -20952,6 +23070,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Dataset>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Dataset>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Dataset>)));
+
         }
 
         /// <summary>
@@ -20976,7 +23095,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/plugin";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -20994,8 +23113,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -21018,6 +23140,285 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Dataset>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Dataset>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Dataset>)));
+
+        }
+
+        /// <summary>
+        ///  Returns all output datasets defined by plugins
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>List&lt;Dataset&gt;</returns>
+        public List<Dataset> GetPluginOutputDatasets()
+        {
+            ApiResponse<List<Dataset>> localVarResponse = GetPluginOutputDatasetsWithHttpInfo();
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Returns all output datasets defined by plugins
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of List&lt;Dataset&gt;</returns>
+        public ApiResponse<List<Dataset>> GetPluginOutputDatasetsWithHttpInfo()
+        {
+
+            var localVarPath = "/datasets/plugin/output";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPluginOutputDatasets", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<Dataset>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<Dataset>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Dataset>)));
+
+        }
+
+        /// <summary>
+        ///  Returns all output datasets defined by plugins
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of List&lt;Dataset&gt;</returns>
+        public async System.Threading.Tasks.Task<List<Dataset>> GetPluginOutputDatasetsAsync()
+        {
+            ApiResponse<List<Dataset>> localVarResponse = await GetPluginOutputDatasetsAsyncWithHttpInfo();
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Returns all output datasets defined by plugins
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (List&lt;Dataset&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<Dataset>>> GetPluginOutputDatasetsAsyncWithHttpInfo()
+        {
+
+            var localVarPath = "/datasets/plugin/output";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPluginOutputDatasets", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<Dataset>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<Dataset>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Dataset>)));
+
+        }
+
+        /// <summary>
+        ///  Returns all tag groups defined by plugins
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>List&lt;TagGroup&gt;</returns>
+        public List<TagGroup> GetPluginTagGroups()
+        {
+            ApiResponse<List<TagGroup>> localVarResponse = GetPluginTagGroupsWithHttpInfo();
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Returns all tag groups defined by plugins
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of List&lt;TagGroup&gt;</returns>
+        public ApiResponse<List<TagGroup>> GetPluginTagGroupsWithHttpInfo()
+        {
+
+            var localVarPath = "/taggroups/plugin";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPluginTagGroups", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<TagGroup>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<TagGroup>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<TagGroup>)));
+
+        }
+
+        /// <summary>
+        ///  Returns all tag groups defined by plugins
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of List&lt;TagGroup&gt;</returns>
+        public async System.Threading.Tasks.Task<List<TagGroup>> GetPluginTagGroupsAsync()
+        {
+            ApiResponse<List<TagGroup>> localVarResponse = await GetPluginTagGroupsAsyncWithHttpInfo();
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Returns all tag groups defined by plugins
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (List&lt;TagGroup&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<TagGroup>>> GetPluginTagGroupsAsyncWithHttpInfo()
+        {
+
+            var localVarPath = "/taggroups/plugin";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPluginTagGroups", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<TagGroup>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<TagGroup>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<TagGroup>)));
+
         }
 
         /// <summary>
@@ -21041,7 +23442,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/plugins";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21059,6 +23460,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
 
             // make the HTTP request
@@ -21077,6 +23481,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Plugin>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Plugin>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Plugin>)));
+
         }
 
         /// <summary>
@@ -21101,7 +23506,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/plugins";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21119,6 +23524,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
 
             // make the HTTP request
@@ -21137,6 +23545,683 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Plugin>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Plugin>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Plugin>)));
+
+        }
+
+        /// <summary>
+        ///  Returns all Portal Smart Forms
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>List&lt;IdWithName&gt;</returns>
+        public List<IdWithName> GetPortalForms(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+            ApiResponse<List<IdWithName>> localVarResponse = GetPortalFormsWithHttpInfo(page, size, sort, filter, connectorid);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Returns all Portal Smart Forms
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>ApiResponse of List&lt;IdWithName&gt;</returns>
+        public ApiResponse<List<IdWithName>> GetPortalFormsWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+
+            var localVarPath = "/portal/forms";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
+            if (connectorid != null) localVarQueryParams.Add("connectorid", Configuration.ApiClient.ParameterToString(connectorid)); // query parameter
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPortalForms", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<IdWithName>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<IdWithName>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IdWithName>)));
+
+        }
+
+        /// <summary>
+        ///  Returns all Portal Smart Forms
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of List&lt;IdWithName&gt;</returns>
+        public async System.Threading.Tasks.Task<List<IdWithName>> GetPortalFormsAsync(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+            ApiResponse<List<IdWithName>> localVarResponse = await GetPortalFormsAsyncWithHttpInfo(page, size, sort, filter, connectorid);
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Returns all Portal Smart Forms
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of ApiResponse (List&lt;IdWithName&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<IdWithName>>> GetPortalFormsAsyncWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+
+            var localVarPath = "/portal/forms";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
+            if (connectorid != null) localVarQueryParams.Add("connectorid", Configuration.ApiClient.ParameterToString(connectorid)); // query parameter
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPortalForms", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<IdWithName>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<IdWithName>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IdWithName>)));
+
+        }
+
+        /// <summary>
+        ///  Returns all Portal template groups
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>List&lt;IdWithName&gt;</returns>
+        public List<IdWithName> GetPortalTemplateGroups(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+            ApiResponse<List<IdWithName>> localVarResponse = GetPortalTemplateGroupsWithHttpInfo(page, size, sort, filter, connectorid);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Returns all Portal template groups
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>ApiResponse of List&lt;IdWithName&gt;</returns>
+        public ApiResponse<List<IdWithName>> GetPortalTemplateGroupsWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+
+            var localVarPath = "/portal/groups";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
+            if (connectorid != null) localVarQueryParams.Add("connectorid", Configuration.ApiClient.ParameterToString(connectorid)); // query parameter
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPortalTemplateGroups", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<IdWithName>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<IdWithName>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IdWithName>)));
+
+        }
+
+        /// <summary>
+        ///  Returns all Portal template groups
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of List&lt;IdWithName&gt;</returns>
+        public async System.Threading.Tasks.Task<List<IdWithName>> GetPortalTemplateGroupsAsync(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+            ApiResponse<List<IdWithName>> localVarResponse = await GetPortalTemplateGroupsAsyncWithHttpInfo(page, size, sort, filter, connectorid);
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Returns all Portal template groups
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of ApiResponse (List&lt;IdWithName&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<IdWithName>>> GetPortalTemplateGroupsAsyncWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+
+            var localVarPath = "/portal/groups";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
+            if (connectorid != null) localVarQueryParams.Add("connectorid", Configuration.ApiClient.ParameterToString(connectorid)); // query parameter
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPortalTemplateGroups", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<IdWithName>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<IdWithName>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IdWithName>)));
+
+        }
+
+        /// <summary>
+        ///  Returns all Portal template libraries
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>List&lt;IdWithName&gt;</returns>
+        public List<IdWithName> GetPortalTemplateLibraries(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+            ApiResponse<List<IdWithName>> localVarResponse = GetPortalTemplateLibrariesWithHttpInfo(page, size, sort, filter, connectorid);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Returns all Portal template libraries
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>ApiResponse of List&lt;IdWithName&gt;</returns>
+        public ApiResponse<List<IdWithName>> GetPortalTemplateLibrariesWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+
+            var localVarPath = "/portal/libraries";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
+            if (connectorid != null) localVarQueryParams.Add("connectorid", Configuration.ApiClient.ParameterToString(connectorid)); // query parameter
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPortalTemplateLibraries", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<IdWithName>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<IdWithName>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IdWithName>)));
+
+        }
+
+        /// <summary>
+        ///  Returns all Portal template libraries
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of List&lt;IdWithName&gt;</returns>
+        public async System.Threading.Tasks.Task<List<IdWithName>> GetPortalTemplateLibrariesAsync(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+            ApiResponse<List<IdWithName>> localVarResponse = await GetPortalTemplateLibrariesAsyncWithHttpInfo(page, size, sort, filter, connectorid);
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Returns all Portal template libraries
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of ApiResponse (List&lt;IdWithName&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<IdWithName>>> GetPortalTemplateLibrariesAsyncWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+
+            var localVarPath = "/portal/libraries";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
+            if (connectorid != null) localVarQueryParams.Add("connectorid", Configuration.ApiClient.ParameterToString(connectorid)); // query parameter
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPortalTemplateLibraries", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<IdWithName>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<IdWithName>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IdWithName>)));
+
+        }
+
+        /// <summary>
+        ///  Returns all Portal templates
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>List&lt;IdWithName&gt;</returns>
+        public List<IdWithName> GetPortalTemplates(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+            ApiResponse<List<IdWithName>> localVarResponse = GetPortalTemplatesWithHttpInfo(page, size, sort, filter, connectorid);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Returns all Portal templates
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>ApiResponse of List&lt;IdWithName&gt;</returns>
+        public ApiResponse<List<IdWithName>> GetPortalTemplatesWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+
+            var localVarPath = "/portal/templates";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
+            if (connectorid != null) localVarQueryParams.Add("connectorid", Configuration.ApiClient.ParameterToString(connectorid)); // query parameter
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPortalTemplates", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<IdWithName>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<IdWithName>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IdWithName>)));
+
+        }
+
+        /// <summary>
+        ///  Returns all Portal templates
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of List&lt;IdWithName&gt;</returns>
+        public async System.Threading.Tasks.Task<List<IdWithName>> GetPortalTemplatesAsync(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+            ApiResponse<List<IdWithName>> localVarResponse = await GetPortalTemplatesAsyncWithHttpInfo(page, size, sort, filter, connectorid);
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Returns all Portal templates
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">The 0-based page to retrieve, defaults to 0 (optional)</param>
+        /// <param name="size">The size of the page, defaults to 20 (optional)</param>
+        /// <param name="sort">The fields to sort on (optional)</param>
+        /// <param name="filter">The filter (optional)</param>
+        /// <param name="connectorid">The Portal connector (optional)</param>
+        /// <returns>Task of ApiResponse (List&lt;IdWithName&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<IdWithName>>> GetPortalTemplatesAsyncWithHttpInfo(int? page = null, int? size = null, string sort = null, string filter = null, string connectorid = null)
+        {
+
+            var localVarPath = "/portal/templates";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
+            if (connectorid != null) localVarQueryParams.Add("connectorid", Configuration.ApiClient.ParameterToString(connectorid)); // query parameter
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPortalTemplates", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<IdWithName>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<IdWithName>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<IdWithName>)));
+
         }
 
         /// <summary>
@@ -21165,7 +24250,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/{printer}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21184,9 +24269,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (printer != null) localVarPathParams.Add("printer", Configuration.ApiClient.ParameterToString(printer)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -21209,6 +24297,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Printer>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Printer)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Printer)));
+
         }
 
         /// <summary>
@@ -21238,7 +24327,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/{printer}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21257,9 +24346,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (printer != null) localVarPathParams.Add("printer", Configuration.ApiClient.ParameterToString(printer)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -21282,6 +24374,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Printer>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Printer)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Printer)));
+
         }
 
         /// <summary>
@@ -21305,7 +24398,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21324,8 +24417,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -21348,6 +24444,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Printer>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Printer>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Printer>)));
+
         }
 
         /// <summary>
@@ -21372,7 +24469,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21391,8 +24488,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -21415,6 +24515,134 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Printer>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Printer>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Printer>)));
+
+        }
+
+        /// <summary>
+        ///  Get settings that are publicly available
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>PublicSettings</returns>
+        public PublicSettings GetPublicSettings()
+        {
+            ApiResponse<PublicSettings> localVarResponse = GetPublicSettingsWithHttpInfo();
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Get settings that are publicly available
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of PublicSettings</returns>
+        public ApiResponse<PublicSettings> GetPublicSettingsWithHttpInfo()
+        {
+
+            var localVarPath = "/settings/public";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPublicSettings", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<PublicSettings>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (PublicSettings)Configuration.ApiClient.Deserialize(localVarResponse, typeof(PublicSettings)));
+
+        }
+
+        /// <summary>
+        ///  Get settings that are publicly available
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of PublicSettings</returns>
+        public async System.Threading.Tasks.Task<PublicSettings> GetPublicSettingsAsync()
+        {
+            ApiResponse<PublicSettings> localVarResponse = await GetPublicSettingsAsyncWithHttpInfo();
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Get settings that are publicly available
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (PublicSettings)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<PublicSettings>> GetPublicSettingsAsyncWithHttpInfo()
+        {
+
+            var localVarPath = "/settings/public";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetPublicSettings", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<PublicSettings>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (PublicSettings)Configuration.ApiClient.Deserialize(localVarResponse, typeof(PublicSettings)));
+
         }
 
         /// <summary>
@@ -21438,7 +24666,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/roles";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21457,8 +24685,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -21481,6 +24712,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Role>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Role>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Role>)));
+
         }
 
         /// <summary>
@@ -21505,7 +24737,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/roles";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21524,8 +24756,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -21548,6 +24783,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Role>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Role>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Role>)));
+
         }
 
         /// <summary>
@@ -21571,7 +24807,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/settings";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21589,8 +24825,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -21613,6 +24852,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Settings>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Settings)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Settings)));
+
         }
 
         /// <summary>
@@ -21637,7 +24877,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/settings";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21655,8 +24895,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -21679,6 +24922,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Settings>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Settings)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Settings)));
+
         }
 
         /// <summary>
@@ -21707,7 +24951,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/settings/{settingsType}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21725,9 +24969,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (settingsType != null) localVarPathParams.Add("settingsType", Configuration.ApiClient.ParameterToString(settingsType)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -21750,6 +24997,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Object)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Object)));
+
         }
 
         /// <summary>
@@ -21779,7 +25027,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/settings/{settingsType}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21797,9 +25045,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (settingsType != null) localVarPathParams.Add("settingsType", Configuration.ApiClient.ParameterToString(settingsType)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -21822,6 +25073,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Object)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Object)));
+
         }
 
         /// <summary>
@@ -21845,7 +25097,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/features";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21864,8 +25116,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -21888,6 +25143,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Feature>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Feature>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Feature>)));
+
         }
 
         /// <summary>
@@ -21912,7 +25168,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/features";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -21931,8 +25187,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -21955,6 +25214,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Feature>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Feature>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Feature>)));
+
         }
 
         /// <summary>
@@ -21986,7 +25246,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/currencies";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22005,12 +25265,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22033,6 +25296,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<CurrencySymbol>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<CurrencySymbol>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<CurrencySymbol>)));
+
         }
 
         /// <summary>
@@ -22065,7 +25329,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/currencies";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22084,12 +25348,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22112,6 +25379,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<CurrencySymbol>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<CurrencySymbol>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<CurrencySymbol>)));
+
         }
 
         /// <summary>
@@ -22135,7 +25403,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/languages/default";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22154,8 +25422,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22178,6 +25449,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<LanguageDefinition>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (LanguageDefinition)Configuration.ApiClient.Deserialize(localVarResponse, typeof(LanguageDefinition)));
+
         }
 
         /// <summary>
@@ -22202,7 +25474,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/languages/default";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22221,8 +25493,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22245,6 +25520,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<LanguageDefinition>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (LanguageDefinition)Configuration.ApiClient.Deserialize(localVarResponse, typeof(LanguageDefinition)));
+
         }
 
         /// <summary>
@@ -22268,7 +25544,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/info";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22287,8 +25563,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22311,6 +25590,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<SystemInfo>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (SystemInfo)Configuration.ApiClient.Deserialize(localVarResponse, typeof(SystemInfo)));
+
         }
 
         /// <summary>
@@ -22335,7 +25615,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/info";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22354,8 +25634,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22378,6 +25661,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<SystemInfo>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (SystemInfo)Configuration.ApiClient.Deserialize(localVarResponse, typeof(SystemInfo)));
+
         }
 
         /// <summary>
@@ -22411,7 +25695,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/languages";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22430,13 +25714,16 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
-            if (formats != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "formats", formats)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
+            if (formats != null) localVarQueryParams.Add("formats", Configuration.ApiClient.ParameterToString(formats)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22459,6 +25746,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<LanguageDefinition>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<LanguageDefinition>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<LanguageDefinition>)));
+
         }
 
         /// <summary>
@@ -22493,7 +25781,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/languages";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22512,13 +25800,16 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
-            if (formats != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "formats", formats)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
+            if (formats != null) localVarQueryParams.Add("formats", Configuration.ApiClient.ParameterToString(formats)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22541,6 +25832,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<LanguageDefinition>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<LanguageDefinition>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<LanguageDefinition>)));
+
         }
 
         /// <summary>
@@ -22571,7 +25863,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/printers/{printer}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22590,10 +25882,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (printer != null) localVarPathParams.Add("printer", Configuration.ApiClient.ParameterToString(printer)); // path parameter
-            if (includeDetails != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeDetails", includeDetails)); // query parameter
+            if (includeDetails != null) localVarQueryParams.Add("includeDetails", Configuration.ApiClient.ParameterToString(includeDetails)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22616,6 +25911,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<PrinterDefinition>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (PrinterDefinition)Configuration.ApiClient.Deserialize(localVarResponse, typeof(PrinterDefinition)));
+
         }
 
         /// <summary>
@@ -22647,7 +25943,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/printers/{printer}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22666,10 +25962,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (printer != null) localVarPathParams.Add("printer", Configuration.ApiClient.ParameterToString(printer)); // path parameter
-            if (includeDetails != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeDetails", includeDetails)); // query parameter
+            if (includeDetails != null) localVarQueryParams.Add("includeDetails", Configuration.ApiClient.ParameterToString(includeDetails)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22692,6 +25991,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<PrinterDefinition>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (PrinterDefinition)Configuration.ApiClient.Deserialize(localVarResponse, typeof(PrinterDefinition)));
+
         }
 
         /// <summary>
@@ -22725,7 +26025,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/printers";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22744,13 +26044,16 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
-            if (includeDetails != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeDetails", includeDetails)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
+            if (includeDetails != null) localVarQueryParams.Add("includeDetails", Configuration.ApiClient.ParameterToString(includeDetails)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22773,6 +26076,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<PrinterDefinition>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<PrinterDefinition>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<PrinterDefinition>)));
+
         }
 
         /// <summary>
@@ -22807,7 +26111,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/printers";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22826,13 +26130,16 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
-            if (includeDetails != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeDetails", includeDetails)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
+            if (includeDetails != null) localVarQueryParams.Add("includeDetails", Configuration.ApiClient.ParameterToString(includeDetails)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22855,6 +26162,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<PrinterDefinition>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<PrinterDefinition>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<PrinterDefinition>)));
+
         }
 
         /// <summary>
@@ -22878,7 +26186,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/timeZones";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22897,8 +26205,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22921,6 +26232,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<string>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<string>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<string>)));
+
         }
 
         /// <summary>
@@ -22945,7 +26257,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/timeZones";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -22964,8 +26276,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -22988,6 +26303,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<string>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<string>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<string>)));
+
         }
 
         /// <summary>
@@ -23016,7 +26332,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/taggroups/{tagGroupId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -23034,9 +26350,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (tagGroupId != null) localVarPathParams.Add("tagGroupId", Configuration.ApiClient.ParameterToString(tagGroupId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -23059,6 +26378,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<TagGroup>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (TagGroup)Configuration.ApiClient.Deserialize(localVarResponse, typeof(TagGroup)));
+
         }
 
         /// <summary>
@@ -23088,7 +26408,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/taggroups/{tagGroupId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -23106,9 +26426,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (tagGroupId != null) localVarPathParams.Add("tagGroupId", Configuration.ApiClient.ParameterToString(tagGroupId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -23131,6 +26454,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<TagGroup>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (TagGroup)Configuration.ApiClient.Deserialize(localVarResponse, typeof(TagGroup)));
+
         }
 
         /// <summary>
@@ -23162,7 +26486,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/taggroups";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -23180,12 +26504,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -23208,6 +26535,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<TagGroup>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<TagGroup>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<TagGroup>)));
+
         }
 
         /// <summary>
@@ -23240,7 +26568,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/taggroups";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -23258,12 +26586,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -23286,6 +26617,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<TagGroup>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<TagGroup>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<TagGroup>)));
+
         }
 
         /// <summary>
@@ -23314,7 +26646,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -23332,9 +26664,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -23357,6 +26692,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Template>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Template)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Template)));
+
         }
 
         /// <summary>
@@ -23386,7 +26722,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -23404,9 +26740,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -23429,6 +26768,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Template>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Template)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Template)));
+
         }
 
         /// <summary>
@@ -23463,7 +26803,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -23482,12 +26822,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
-            if (lang != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "lang", lang)); // query parameter
-            if (version != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "version", version)); // query parameter
-            if (includeMeta != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeMeta", includeMeta)); // query parameter
+            if (lang != null) localVarQueryParams.Add("lang", Configuration.ApiClient.ParameterToString(lang)); // query parameter
+            if (version != null) localVarQueryParams.Add("version", Configuration.ApiClient.ParameterToString(version)); // query parameter
+            if (includeMeta != null) localVarQueryParams.Add("includeMeta", Configuration.ApiClient.ParameterToString(includeMeta)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -23510,6 +26853,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -23545,7 +26889,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -23564,12 +26908,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
-            if (lang != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "lang", lang)); // query parameter
-            if (version != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "version", version)); // query parameter
-            if (includeMeta != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "includeMeta", includeMeta)); // query parameter
+            if (lang != null) localVarQueryParams.Add("lang", Configuration.ApiClient.ParameterToString(lang)); // query parameter
+            if (version != null) localVarQueryParams.Add("version", Configuration.ApiClient.ParameterToString(version)); // query parameter
+            if (includeMeta != null) localVarQueryParams.Add("includeMeta", Configuration.ApiClient.ParameterToString(includeMeta)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -23592,6 +26939,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -23604,9 +26952,9 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="size">The size of the page, defaults to 20 (optional)</param>
         /// <param name="sort">The fields to sort on (optional)</param>
         /// <returns>List&lt;Version&gt;</returns>
-        public List<Model.Version> GetTemplateHistory(string templateId, string lang = null, int? page = null, int? size = null, string sort = null)
+        public List<Version> GetTemplateHistory(string templateId, string lang = null, int? page = null, int? size = null, string sort = null)
         {
-            ApiResponse<List<Model.Version>> localVarResponse = GetTemplateHistoryWithHttpInfo(templateId, lang, page, size, sort);
+            ApiResponse<List<Version>> localVarResponse = GetTemplateHistoryWithHttpInfo(templateId, lang, page, size, sort);
             return localVarResponse.Data;
         }
 
@@ -23620,7 +26968,7 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="size">The size of the page, defaults to 20 (optional)</param>
         /// <param name="sort">The fields to sort on (optional)</param>
         /// <returns>ApiResponse of List&lt;Version&gt;</returns>
-        public ApiResponse<List<Model.Version>> GetTemplateHistoryWithHttpInfo(string templateId, string lang = null, int? page = null, int? size = null, string sort = null)
+        public ApiResponse<List<Version>> GetTemplateHistoryWithHttpInfo(string templateId, string lang = null, int? page = null, int? size = null, string sort = null)
         {
             // verify the required parameter 'templateId' is set
             if (templateId == null)
@@ -23628,7 +26976,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}/history";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -23646,13 +26994,16 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
-            if (lang != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "lang", lang)); // query parameter
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            if (lang != null) localVarQueryParams.Add("lang", Configuration.ApiClient.ParameterToString(lang)); // query parameter
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -23672,9 +27023,10 @@ namespace Xpertdoc.SmartFlows.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<List<Model.Version>>(localVarStatusCode,
+            return new ApiResponse<List<Version>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (List<Model.Version>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Model.Version>)));
+                (List<Version>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Version>)));
+
         }
 
         /// <summary>
@@ -23687,9 +27039,9 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="size">The size of the page, defaults to 20 (optional)</param>
         /// <param name="sort">The fields to sort on (optional)</param>
         /// <returns>Task of List&lt;Version&gt;</returns>
-        public async System.Threading.Tasks.Task<List<Model.Version>> GetTemplateHistoryAsync(string templateId, string lang = null, int? page = null, int? size = null, string sort = null)
+        public async System.Threading.Tasks.Task<List<Version>> GetTemplateHistoryAsync(string templateId, string lang = null, int? page = null, int? size = null, string sort = null)
         {
-            ApiResponse<List<Model.Version>> localVarResponse = await GetTemplateHistoryAsyncWithHttpInfo(templateId, lang, page, size, sort);
+            ApiResponse<List<Version>> localVarResponse = await GetTemplateHistoryAsyncWithHttpInfo(templateId, lang, page, size, sort);
             return localVarResponse.Data;
 
         }
@@ -23704,7 +27056,7 @@ namespace Xpertdoc.SmartFlows.Api
         /// <param name="size">The size of the page, defaults to 20 (optional)</param>
         /// <param name="sort">The fields to sort on (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;Version&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<Model.Version>>> GetTemplateHistoryAsyncWithHttpInfo(string templateId, string lang = null, int? page = null, int? size = null, string sort = null)
+        public async System.Threading.Tasks.Task<ApiResponse<List<Version>>> GetTemplateHistoryAsyncWithHttpInfo(string templateId, string lang = null, int? page = null, int? size = null, string sort = null)
         {
             // verify the required parameter 'templateId' is set
             if (templateId == null)
@@ -23712,7 +27064,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}/history";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -23730,13 +27082,16 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
-            if (lang != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "lang", lang)); // query parameter
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
+            if (lang != null) localVarQueryParams.Add("lang", Configuration.ApiClient.ParameterToString(lang)); // query parameter
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -23756,9 +27111,10 @@ namespace Xpertdoc.SmartFlows.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<List<Model.Version>>(localVarStatusCode,
+            return new ApiResponse<List<Version>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                (List<Model.Version>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Model.Version>)));
+                (List<Version>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Version>)));
+
         }
 
         /// <summary>
@@ -23792,7 +27148,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}/lang/{lang}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -23810,10 +27166,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
             if (lang != null) localVarPathParams.Add("lang", Configuration.ApiClient.ParameterToString(lang)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -23836,6 +27195,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<TemplateLanguage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (TemplateLanguage)Configuration.ApiClient.Deserialize(localVarResponse, typeof(TemplateLanguage)));
+
         }
 
         /// <summary>
@@ -23870,7 +27230,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}/lang/{lang}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -23888,10 +27248,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
             if (lang != null) localVarPathParams.Add("lang", Configuration.ApiClient.ParameterToString(lang)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -23914,6 +27277,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<TemplateLanguage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (TemplateLanguage)Configuration.ApiClient.Deserialize(localVarResponse, typeof(TemplateLanguage)));
+
         }
 
         /// <summary>
@@ -23944,7 +27308,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}/schema";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -23962,10 +27326,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
-            if (format != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "format", format)); // query parameter
+            if (format != null) localVarQueryParams.Add("format", Configuration.ApiClient.ParameterToString(format)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -23988,6 +27355,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -24019,7 +27387,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}/schema";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -24037,10 +27405,13 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
-            if (format != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "format", format)); // query parameter
+            if (format != null) localVarQueryParams.Add("format", Configuration.ApiClient.ParameterToString(format)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -24063,6 +27434,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<System.IO.Stream>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (System.IO.Stream)Configuration.ApiClient.Deserialize(localVarResponse, typeof(System.IO.Stream)));
+
         }
 
         /// <summary>
@@ -24094,7 +27466,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -24112,12 +27484,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -24140,6 +27515,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Template>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Template>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Template>)));
+
         }
 
         /// <summary>
@@ -24172,7 +27548,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -24190,12 +27566,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -24218,6 +27597,148 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<Template>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Template>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Template>)));
+
+        }
+
+        /// <summary>
+        ///  Lists all the languages that are availabled for the user interface
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>List&lt;LanguageReference&gt;</returns>
+        public List<LanguageReference> GetUiLanguages()
+        {
+            ApiResponse<List<LanguageReference>> localVarResponse = GetUiLanguagesWithHttpInfo();
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Lists all the languages that are availabled for the user interface
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of List&lt;LanguageReference&gt;</returns>
+        public ApiResponse<List<LanguageReference>> GetUiLanguagesWithHttpInfo()
+        {
+
+            var localVarPath = "/system/languages/ui";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetUiLanguages", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<LanguageReference>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<LanguageReference>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<LanguageReference>)));
+
+        }
+
+        /// <summary>
+        ///  Lists all the languages that are availabled for the user interface
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of List&lt;LanguageReference&gt;</returns>
+        public async System.Threading.Tasks.Task<List<LanguageReference>> GetUiLanguagesAsync()
+        {
+            ApiResponse<List<LanguageReference>> localVarResponse = await GetUiLanguagesAsyncWithHttpInfo();
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Lists all the languages that are availabled for the user interface
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (List&lt;LanguageReference&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<LanguageReference>>> GetUiLanguagesAsyncWithHttpInfo()
+        {
+
+            var localVarPath = "/system/languages/ui";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetUiLanguages", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<LanguageReference>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<LanguageReference>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<LanguageReference>)));
+
         }
 
         /// <summary>
@@ -24246,7 +27767,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/{user}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -24265,9 +27786,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (user != null) localVarPathParams.Add("user", Configuration.ApiClient.ParameterToString(user)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -24290,6 +27814,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<User>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (User)Configuration.ApiClient.Deserialize(localVarResponse, typeof(User)));
+
         }
 
         /// <summary>
@@ -24319,7 +27844,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/{user}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -24338,9 +27863,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (user != null) localVarPathParams.Add("user", Configuration.ApiClient.ParameterToString(user)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -24363,6 +27891,160 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<User>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (User)Configuration.ApiClient.Deserialize(localVarResponse, typeof(User)));
+
+        }
+
+        /// <summary>
+        ///  List all user personal access tokens, secrets or keys will not be returned
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <returns>List&lt;UserToken&gt;</returns>
+        public List<UserToken> GetUserTokens(string user)
+        {
+            ApiResponse<List<UserToken>> localVarResponse = GetUserTokensWithHttpInfo(user);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  List all user personal access tokens, secrets or keys will not be returned
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <returns>ApiResponse of List&lt;UserToken&gt;</returns>
+        public ApiResponse<List<UserToken>> GetUserTokensWithHttpInfo(string user)
+        {
+            // verify the required parameter 'user' is set
+            if (user == null)
+                throw new ApiException(400, "Missing required parameter 'user' when calling DefaultApi->GetUserTokens");
+
+            var localVarPath = "/users/{user}/tokens";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (user != null) localVarPathParams.Add("user", Configuration.ApiClient.ParameterToString(user)); // path parameter
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetUserTokens", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<UserToken>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<UserToken>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<UserToken>)));
+
+        }
+
+        /// <summary>
+        ///  List all user personal access tokens, secrets or keys will not be returned
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <returns>Task of List&lt;UserToken&gt;</returns>
+        public async System.Threading.Tasks.Task<List<UserToken>> GetUserTokensAsync(string user)
+        {
+            ApiResponse<List<UserToken>> localVarResponse = await GetUserTokensAsyncWithHttpInfo(user);
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  List all user personal access tokens, secrets or keys will not be returned
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="user">The id of the user</param>
+        /// <returns>Task of ApiResponse (List&lt;UserToken&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<UserToken>>> GetUserTokensAsyncWithHttpInfo(string user)
+        {
+            // verify the required parameter 'user' is set
+            if (user == null)
+                throw new ApiException(400, "Missing required parameter 'user' when calling DefaultApi->GetUserTokens");
+
+            var localVarPath = "/users/{user}/tokens";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (user != null) localVarPathParams.Add("user", Configuration.ApiClient.ParameterToString(user)); // path parameter
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetUserTokens", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<UserToken>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<UserToken>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<UserToken>)));
+
         }
 
         /// <summary>
@@ -24394,7 +28076,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -24413,12 +28095,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -24441,6 +28126,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<User>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<User>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<User>)));
+
         }
 
         /// <summary>
@@ -24473,7 +28159,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -24492,12 +28178,15 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (size != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "size", size)); // query parameter
-            if (sort != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "sort", sort)); // query parameter
-            if (filter != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "filter", filter)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (page != null) localVarQueryParams.Add("page", Configuration.ApiClient.ParameterToString(page)); // query parameter
+            if (size != null) localVarQueryParams.Add("size", Configuration.ApiClient.ParameterToString(size)); // query parameter
+            if (sort != null) localVarQueryParams.Add("sort", Configuration.ApiClient.ParameterToString(sort)); // query parameter
+            if (filter != null) localVarQueryParams.Add("filter", Configuration.ApiClient.ParameterToString(filter)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -24520,6 +28209,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<User>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<User>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<User>)));
+
         }
 
         /// <summary>
@@ -24545,7 +28235,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/license";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -24563,6 +28253,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -24572,7 +28265,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -24595,6 +28288,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<LicenseInformation>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (LicenseInformation)Configuration.ApiClient.Deserialize(localVarResponse, typeof(LicenseInformation)));
+
         }
 
         /// <summary>
@@ -24621,7 +28315,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/license";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -24639,6 +28333,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -24648,7 +28345,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -24671,6 +28368,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<LicenseInformation>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (LicenseInformation)Configuration.ApiClient.Deserialize(localVarResponse, typeof(LicenseInformation)));
+
         }
 
         /// <summary>
@@ -24696,7 +28394,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/expression";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -24716,6 +28414,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -24725,7 +28426,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -24748,6 +28449,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ParseExpressionResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ParseExpressionResponse)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ParseExpressionResponse)));
+
         }
 
         /// <summary>
@@ -24774,7 +28476,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/expression";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -24794,6 +28496,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -24803,7 +28508,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -24826,6 +28531,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ParseExpressionResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ParseExpressionResponse)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ParseExpressionResponse)));
+
         }
 
         /// <summary>
@@ -24858,7 +28564,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/callback/{callbackId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -24876,8 +28582,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (callbackId != null) localVarPathParams.Add("callbackId", Configuration.ApiClient.ParameterToString(callbackId)); // path parameter
-            if (executionId != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "executionId", executionId)); // query parameter
+            if (executionId != null) localVarQueryParams.Add("executionId", Configuration.ApiClient.ParameterToString(executionId)); // query parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -24904,6 +28613,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<string>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (string)Configuration.ApiClient.Deserialize(localVarResponse, typeof(string)));
+
         }
 
         /// <summary>
@@ -24937,7 +28647,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/callback/{callbackId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -24955,8 +28665,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (callbackId != null) localVarPathParams.Add("callbackId", Configuration.ApiClient.ParameterToString(callbackId)); // path parameter
-            if (executionId != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "executionId", executionId)); // query parameter
+            if (executionId != null) localVarQueryParams.Add("executionId", Configuration.ApiClient.ParameterToString(executionId)); // query parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -24983,6 +28696,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<string>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (string)Configuration.ApiClient.Deserialize(localVarResponse, typeof(string)));
+
         }
 
         /// <summary>
@@ -25008,7 +28722,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/import/prepare";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25026,6 +28740,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -25052,6 +28769,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ImportInformation>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ImportInformation)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ImportInformation)));
+
         }
 
         /// <summary>
@@ -25078,7 +28796,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/import/prepare";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25096,6 +28814,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -25122,6 +28843,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ImportInformation>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ImportInformation)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ImportInformation)));
+
         }
 
         /// <summary>
@@ -25149,7 +28871,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/refresh";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25167,9 +28889,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -25188,6 +28913,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("RefreshConnector", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -25220,7 +28946,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/refresh";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25238,9 +28964,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -25259,6 +28988,152 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("RefreshConnector", localVarResponse);
                 if (exception != null) throw exception;
             }
+
+
+            return new ApiResponse<Object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                null);
+        }
+
+        /// <summary>
+        ///  Send a reset user password email
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The username (optional)</param>
+        /// <returns></returns>
+        public void ResetPassword(UserResetParameters body = null)
+        {
+            ResetPasswordWithHttpInfo(body);
+        }
+
+        /// <summary>
+        ///  Send a reset user password email
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The username (optional)</param>
+        /// <returns>ApiResponse of Object(void)</returns>
+        public ApiResponse<Object> ResetPasswordWithHttpInfo(UserResetParameters body = null)
+        {
+
+            var localVarPath = "/authenticate/reset";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ResetPassword", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+
+            return new ApiResponse<Object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                null);
+        }
+
+        /// <summary>
+        ///  Send a reset user password email
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The username (optional)</param>
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task ResetPasswordAsync(UserResetParameters body = null)
+        {
+            await ResetPasswordAsyncWithHttpInfo(body);
+
+        }
+
+        /// <summary>
+        ///  Send a reset user password email
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The username (optional)</param>
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> ResetPasswordAsyncWithHttpInfo(UserResetParameters body = null)
+        {
+
+            var localVarPath = "/authenticate/reset";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ResetPassword", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -25287,7 +29162,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/backup/restore";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25305,6 +29180,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -25314,7 +29192,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -25333,6 +29211,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("RestoreBackup", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -25362,7 +29241,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/backup/restore";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25380,6 +29259,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -25389,7 +29271,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -25408,6 +29290,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("RestoreBackup", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -25437,7 +29320,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/cleanup/run";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25456,9 +29339,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (action != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "action", action)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (action != null) localVarQueryParams.Add("action", Configuration.ApiClient.ParameterToString(action)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -25481,6 +29367,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<CleanupActionStatus>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<CleanupActionStatus>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<CleanupActionStatus>)));
+
         }
 
         /// <summary>
@@ -25507,7 +29394,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/cleanup/run";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25526,9 +29413,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (action != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "action", action)); // query parameter
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (action != null) localVarQueryParams.Add("action", Configuration.ApiClient.ParameterToString(action)); // query parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -25551,6 +29441,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<List<CleanupActionStatus>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<CleanupActionStatus>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<CleanupActionStatus>)));
+
         }
 
         /// <summary>
@@ -25576,7 +29467,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages/default";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25596,6 +29487,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -25605,7 +29499,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -25628,6 +29522,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Language>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Language)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Language)));
+
         }
 
         /// <summary>
@@ -25654,7 +29549,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages/default";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25674,6 +29569,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -25683,7 +29581,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -25706,6 +29604,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Language>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Language)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Language)));
+
         }
 
         /// <summary>
@@ -25731,7 +29630,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/default";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25751,6 +29650,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -25760,7 +29662,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -25783,6 +29685,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Printer>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Printer)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Printer)));
+
         }
 
         /// <summary>
@@ -25809,7 +29712,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/default";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25829,6 +29732,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -25838,7 +29744,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -25861,6 +29767,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Printer>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Printer)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Printer)));
+
         }
 
         /// <summary>
@@ -25886,7 +29793,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/languages/default";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25906,6 +29813,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -25915,7 +29825,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -25938,6 +29848,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<LanguageDefinition>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (LanguageDefinition)Configuration.ApiClient.Deserialize(localVarResponse, typeof(LanguageDefinition)));
+
         }
 
         /// <summary>
@@ -25964,7 +29875,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/system/languages/default";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -25984,6 +29895,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -25993,7 +29907,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -26016,6 +29930,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<LanguageDefinition>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (LanguageDefinition)Configuration.ApiClient.Deserialize(localVarResponse, typeof(LanguageDefinition)));
+
         }
 
         /// <summary>
@@ -26044,7 +29959,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/setup";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -26062,9 +29977,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -26087,6 +30005,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ConnectorStage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ConnectorStage)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ConnectorStage)));
+
         }
 
         /// <summary>
@@ -26116,7 +30035,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/setup";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -26134,9 +30053,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -26159,6 +30081,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ConnectorStage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ConnectorStage)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ConnectorStage)));
+
         }
 
         /// <summary>
@@ -26189,7 +30112,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/setup/cancel";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -26207,6 +30130,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -26217,7 +30143,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -26240,6 +30166,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Connector>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Connector)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Connector)));
+
         }
 
         /// <summary>
@@ -26271,7 +30198,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/setup/cancel";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -26289,6 +30216,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -26299,7 +30229,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -26322,6 +30252,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Connector>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Connector)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Connector)));
+
         }
 
         /// <summary>
@@ -26350,7 +30281,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/setup/current";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -26368,9 +30299,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -26393,6 +30327,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ConnectorStage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ConnectorStage)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ConnectorStage)));
+
         }
 
         /// <summary>
@@ -26422,7 +30357,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/setup/current";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -26440,9 +30375,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -26465,6 +30403,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ConnectorStage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ConnectorStage)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ConnectorStage)));
+
         }
 
         /// <summary>
@@ -26495,7 +30434,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/setup/finish";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -26513,6 +30452,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -26523,7 +30465,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -26546,6 +30488,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Connector>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Connector)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Connector)));
+
         }
 
         /// <summary>
@@ -26577,7 +30520,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/setup/finish";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -26595,6 +30538,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -26605,7 +30551,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -26628,6 +30574,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Connector>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Connector)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Connector)));
+
         }
 
         /// <summary>
@@ -26658,7 +30605,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/setup/next";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -26676,6 +30623,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -26686,7 +30636,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -26709,6 +30659,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ConnectorStage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ConnectorStage)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ConnectorStage)));
+
         }
 
         /// <summary>
@@ -26740,7 +30691,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/setup/next";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -26758,6 +30709,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -26768,7 +30722,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -26791,6 +30745,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ConnectorStage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ConnectorStage)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ConnectorStage)));
+
         }
 
         /// <summary>
@@ -26821,7 +30776,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/setup/previous";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -26839,6 +30794,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -26849,7 +30807,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -26872,6 +30830,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ConnectorStage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ConnectorStage)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ConnectorStage)));
+
         }
 
         /// <summary>
@@ -26903,7 +30862,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/setup/previous";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -26921,6 +30880,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -26931,7 +30893,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -26954,6 +30916,341 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<ConnectorStage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (ConnectorStage)Configuration.ApiClient.Deserialize(localVarResponse, typeof(ConnectorStage)));
+
+        }
+
+        /// <summary>
+        ///  Sorts the given list of pseudofields
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The result object for the language (optional)</param>
+        /// <returns>List&lt;PseudoElementInformation&gt;</returns>
+        public List<PseudoElementInformation> SortPseudoFields(StandardTemplateDefinition body = null)
+        {
+            ApiResponse<List<PseudoElementInformation>> localVarResponse = SortPseudoFieldsWithHttpInfo(body);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Sorts the given list of pseudofields
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The result object for the language (optional)</param>
+        /// <returns>ApiResponse of List&lt;PseudoElementInformation&gt;</returns>
+        public ApiResponse<List<PseudoElementInformation>> SortPseudoFieldsWithHttpInfo(StandardTemplateDefinition body = null)
+        {
+
+            var localVarPath = "/system/pseudo/sort";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("SortPseudoFields", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<PseudoElementInformation>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<PseudoElementInformation>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<PseudoElementInformation>)));
+
+        }
+
+        /// <summary>
+        ///  Sorts the given list of pseudofields
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The result object for the language (optional)</param>
+        /// <returns>Task of List&lt;PseudoElementInformation&gt;</returns>
+        public async System.Threading.Tasks.Task<List<PseudoElementInformation>> SortPseudoFieldsAsync(StandardTemplateDefinition body = null)
+        {
+            ApiResponse<List<PseudoElementInformation>> localVarResponse = await SortPseudoFieldsAsyncWithHttpInfo(body);
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Sorts the given list of pseudofields
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="body">The result object for the language (optional)</param>
+        /// <returns>Task of ApiResponse (List&lt;PseudoElementInformation&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<PseudoElementInformation>>> SortPseudoFieldsAsyncWithHttpInfo(StandardTemplateDefinition body = null)
+        {
+
+            var localVarPath = "/system/pseudo/sort";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("SortPseudoFields", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<PseudoElementInformation>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<PseudoElementInformation>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<PseudoElementInformation>)));
+
+        }
+
+        /// <summary>
+        ///  Start a flow without asking any user input
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="flow">The id or name of the flow.</param>
+        /// <param name="body">The input object for the flow (optional)</param>
+        /// <returns>FlowExecution</returns>
+        public FlowExecution StartFlow(string flow, Object body = null)
+        {
+            ApiResponse<FlowExecution> localVarResponse = StartFlowWithHttpInfo(flow, body);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Start a flow without asking any user input
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="flow">The id or name of the flow.</param>
+        /// <param name="body">The input object for the flow (optional)</param>
+        /// <returns>ApiResponse of FlowExecution</returns>
+        public ApiResponse<FlowExecution> StartFlowWithHttpInfo(string flow, Object body = null)
+        {
+            // verify the required parameter 'flow' is set
+            if (flow == null)
+                throw new ApiException(400, "Missing required parameter 'flow' when calling DefaultApi->StartFlow");
+
+            var localVarPath = "/flows/executions/start";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (flow != null) localVarQueryParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // query parameter
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("StartFlow", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<FlowExecution>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (FlowExecution)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecution)));
+
+        }
+
+        /// <summary>
+        ///  Start a flow without asking any user input
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="flow">The id or name of the flow.</param>
+        /// <param name="body">The input object for the flow (optional)</param>
+        /// <returns>Task of FlowExecution</returns>
+        public async System.Threading.Tasks.Task<FlowExecution> StartFlowAsync(string flow, Object body = null)
+        {
+            ApiResponse<FlowExecution> localVarResponse = await StartFlowAsyncWithHttpInfo(flow, body);
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Start a flow without asking any user input
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="flow">The id or name of the flow.</param>
+        /// <param name="body">The input object for the flow (optional)</param>
+        /// <returns>Task of ApiResponse (FlowExecution)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<FlowExecution>> StartFlowAsyncWithHttpInfo(string flow, Object body = null)
+        {
+            // verify the required parameter 'flow' is set
+            if (flow == null)
+                throw new ApiException(400, "Missing required parameter 'flow' when calling DefaultApi->StartFlow");
+
+            var localVarPath = "/flows/executions/start";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+            if (flow != null) localVarQueryParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // query parameter
+            if (body != null && body.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = body; // byte array
+            }
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("StartFlow", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<FlowExecution>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (FlowExecution)Configuration.ApiClient.Deserialize(localVarResponse, typeof(FlowExecution)));
+
         }
 
         /// <summary>
@@ -26977,7 +31274,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/external";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -26995,8 +31292,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -27019,6 +31319,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<SyncResult>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (SyncResult)Configuration.ApiClient.Deserialize(localVarResponse, typeof(SyncResult)));
+
         }
 
         /// <summary>
@@ -27043,7 +31344,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/external";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -27061,8 +31362,11 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -27085,6 +31389,146 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<SyncResult>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (SyncResult)Configuration.ApiClient.Deserialize(localVarResponse, typeof(SyncResult)));
+
+        }
+
+        /// <summary>
+        ///  Synchronize &amp; fetch all tag groups defined by plugins
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>List&lt;TagGroup&gt;</returns>
+        public List<TagGroup> SyncPluginTagGroups()
+        {
+            ApiResponse<List<TagGroup>> localVarResponse = SyncPluginTagGroupsWithHttpInfo();
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        ///  Synchronize &amp; fetch all tag groups defined by plugins
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>ApiResponse of List&lt;TagGroup&gt;</returns>
+        public ApiResponse<List<TagGroup>> SyncPluginTagGroupsWithHttpInfo()
+        {
+
+            var localVarPath = "/taggroups/plugin";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("SyncPluginTagGroups", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<TagGroup>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<TagGroup>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<TagGroup>)));
+
+        }
+
+        /// <summary>
+        ///  Synchronize &amp; fetch all tag groups defined by plugins
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of List&lt;TagGroup&gt;</returns>
+        public async System.Threading.Tasks.Task<List<TagGroup>> SyncPluginTagGroupsAsync()
+        {
+            ApiResponse<List<TagGroup>> localVarResponse = await SyncPluginTagGroupsAsyncWithHttpInfo();
+            return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        ///  Synchronize &amp; fetch all tag groups defined by plugins
+        /// </summary>
+        /// <exception cref="Xpertdoc.SmartFlows.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <returns>Task of ApiResponse (List&lt;TagGroup&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<TagGroup>>> SyncPluginTagGroupsAsyncWithHttpInfo()
+        {
+
+            var localVarPath = "/taggroups/plugin";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new Dictionary<String, String>();
+            var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+            };
+            String localVarHttpHeaderAccept = Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
+
+            // authentication (xperido_auth) required
+            // oauth required
+            if (!String.IsNullOrEmpty(Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse)await Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int)localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("SyncPluginTagGroups", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<TagGroup>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (List<TagGroup>)Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<TagGroup>)));
+
         }
 
         /// <summary>
@@ -27113,7 +31557,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/test";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -27131,9 +31575,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -27156,6 +31603,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<OperationStatus>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (OperationStatus)Configuration.ApiClient.Deserialize(localVarResponse, typeof(OperationStatus)));
+
         }
 
         /// <summary>
@@ -27185,7 +31633,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}/test";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -27203,9 +31651,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -27228,6 +31679,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<OperationStatus>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (OperationStatus)Configuration.ApiClient.Deserialize(localVarResponse, typeof(OperationStatus)));
+
         }
 
         /// <summary>
@@ -27255,7 +31707,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/{printer}/test";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -27273,9 +31725,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (printer != null) localVarPathParams.Add("printer", Configuration.ApiClient.ParameterToString(printer)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -27294,6 +31749,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("TestPrinter", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -27326,7 +31782,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/{printer}/test";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -27344,9 +31800,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (printer != null) localVarPathParams.Add("printer", Configuration.ApiClient.ParameterToString(printer)); // path parameter
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -27365,6 +31824,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("TestPrinter", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -27399,7 +31859,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets/{assetId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -27417,6 +31877,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (assetId != null) localVarPathParams.Add("assetId", Configuration.ApiClient.ParameterToString(assetId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -27427,7 +31890,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -27450,6 +31913,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Asset>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Asset)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Asset)));
+
         }
 
         /// <summary>
@@ -27481,7 +31945,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets/{assetId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -27499,6 +31963,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (assetId != null) localVarPathParams.Add("assetId", Configuration.ApiClient.ParameterToString(assetId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -27509,7 +31976,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -27532,6 +31999,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Asset>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Asset)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Asset)));
+
         }
 
         /// <summary>
@@ -27561,7 +32029,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets/{assetId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -27579,6 +32047,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (assetId != null) localVarPathParams.Add("assetId", Configuration.ApiClient.ParameterToString(assetId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -27589,7 +32060,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -27608,6 +32079,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("UpdateAssetContent", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -27642,7 +32114,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/assets/{assetId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -27660,6 +32132,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (assetId != null) localVarPathParams.Add("assetId", Configuration.ApiClient.ParameterToString(assetId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -27670,7 +32145,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -27689,6 +32164,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("UpdateAssetContent", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -27723,7 +32199,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -27741,6 +32217,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -27751,7 +32230,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -27774,6 +32253,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Connector>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Connector)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Connector)));
+
         }
 
         /// <summary>
@@ -27805,7 +32285,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/connectors/{connectorId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -27823,6 +32303,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (connectorId != null) localVarPathParams.Add("connectorId", Configuration.ApiClient.ParameterToString(connectorId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -27833,7 +32316,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -27856,6 +32339,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Connector>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Connector)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Connector)));
+
         }
 
         /// <summary>
@@ -27886,7 +32370,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/{dataId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -27904,6 +32388,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (dataId != null) localVarPathParams.Add("dataId", Configuration.ApiClient.ParameterToString(dataId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -27914,7 +32401,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -27937,6 +32424,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Data>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Data)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Data)));
+
         }
 
         /// <summary>
@@ -27968,7 +32456,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/data/{dataId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -27986,6 +32474,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (dataId != null) localVarPathParams.Add("dataId", Configuration.ApiClient.ParameterToString(dataId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -27996,7 +32487,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -28019,6 +32510,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Data>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Data)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Data)));
+
         }
 
         /// <summary>
@@ -28049,7 +32541,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/{datasetId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -28067,6 +32559,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasetId != null) localVarPathParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -28077,7 +32572,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -28100,6 +32595,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Dataset>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Dataset)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dataset)));
+
         }
 
         /// <summary>
@@ -28131,7 +32627,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/datasets/{datasetId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -28149,6 +32645,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (datasetId != null) localVarPathParams.Add("datasetId", Configuration.ApiClient.ParameterToString(datasetId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -28159,7 +32658,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -28182,6 +32681,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Dataset>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Dataset)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Dataset)));
+
         }
 
         /// <summary>
@@ -28212,7 +32712,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/{flow}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -28232,6 +32732,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (flow != null) localVarPathParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -28242,7 +32745,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -28265,6 +32768,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Flow>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Flow)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Flow)));
+
         }
 
         /// <summary>
@@ -28296,7 +32800,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/flows/{flow}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -28316,6 +32820,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (flow != null) localVarPathParams.Add("flow", Configuration.ApiClient.ParameterToString(flow)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -28326,7 +32833,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -28349,6 +32856,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Flow>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Flow)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Flow)));
+
         }
 
         /// <summary>
@@ -28379,7 +32887,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages/{language}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -28399,6 +32907,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (language != null) localVarPathParams.Add("language", Configuration.ApiClient.ParameterToString(language)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -28409,7 +32920,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -28432,6 +32943,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Language>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Language)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Language)));
+
         }
 
         /// <summary>
@@ -28463,7 +32975,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/languages/{language}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -28483,6 +32995,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (language != null) localVarPathParams.Add("language", Configuration.ApiClient.ParameterToString(language)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -28493,7 +33008,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -28516,6 +33031,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Language>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Language)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Language)));
+
         }
 
         /// <summary>
@@ -28546,7 +33062,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/{printer}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -28566,6 +33082,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (printer != null) localVarPathParams.Add("printer", Configuration.ApiClient.ParameterToString(printer)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -28576,7 +33095,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -28599,6 +33118,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Printer>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Printer)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Printer)));
+
         }
 
         /// <summary>
@@ -28630,7 +33150,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/printers/{printer}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -28650,6 +33170,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (printer != null) localVarPathParams.Add("printer", Configuration.ApiClient.ParameterToString(printer)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -28660,7 +33183,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -28683,6 +33206,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Printer>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Printer)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Printer)));
+
         }
 
         /// <summary>
@@ -28713,7 +33237,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/settings/{settingsType}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -28731,6 +33255,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (settingsType != null) localVarPathParams.Add("settingsType", Configuration.ApiClient.ParameterToString(settingsType)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -28741,7 +33268,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -28764,6 +33291,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Object)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Object)));
+
         }
 
         /// <summary>
@@ -28795,7 +33323,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/settings/{settingsType}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -28813,6 +33341,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (settingsType != null) localVarPathParams.Add("settingsType", Configuration.ApiClient.ParameterToString(settingsType)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -28823,7 +33354,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -28846,6 +33377,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Object)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Object)));
+
         }
 
         /// <summary>
@@ -28876,7 +33408,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/taggroups/{tagGroupId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -28894,6 +33426,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (tagGroupId != null) localVarPathParams.Add("tagGroupId", Configuration.ApiClient.ParameterToString(tagGroupId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -28904,7 +33439,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -28927,6 +33462,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<TagGroup>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (TagGroup)Configuration.ApiClient.Deserialize(localVarResponse, typeof(TagGroup)));
+
         }
 
         /// <summary>
@@ -28958,7 +33494,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/taggroups/{tagGroupId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -28976,6 +33512,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (tagGroupId != null) localVarPathParams.Add("tagGroupId", Configuration.ApiClient.ParameterToString(tagGroupId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -28986,7 +33525,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -29009,6 +33548,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<TagGroup>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (TagGroup)Configuration.ApiClient.Deserialize(localVarResponse, typeof(TagGroup)));
+
         }
 
         /// <summary>
@@ -29039,7 +33579,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -29057,6 +33597,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -29067,7 +33610,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -29090,6 +33633,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Template>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Template)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Template)));
+
         }
 
         /// <summary>
@@ -29121,7 +33665,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -29139,6 +33683,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -29149,7 +33696,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -29172,6 +33719,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<Template>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (Template)Configuration.ApiClient.Deserialize(localVarResponse, typeof(Template)));
+
         }
 
         /// <summary>
@@ -29205,7 +33753,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -29224,9 +33772,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
-            if (lang != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "lang", lang)); // query parameter
-            if (description != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "description", description)); // query parameter
+            if (lang != null) localVarQueryParams.Add("lang", Configuration.ApiClient.ParameterToString(lang)); // query parameter
+            if (description != null) localVarQueryParams.Add("description", Configuration.ApiClient.ParameterToString(description)); // query parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -29236,7 +33787,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -29255,6 +33806,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("UpdateTemplateContent", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -29293,7 +33845,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/templates/{templateId}/content";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -29312,9 +33864,12 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (templateId != null) localVarPathParams.Add("templateId", Configuration.ApiClient.ParameterToString(templateId)); // path parameter
-            if (lang != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "lang", lang)); // query parameter
-            if (description != null) localVarQueryParams.AddRange(Configuration.ApiClient.ParameterToKeyValuePairs("", "description", description)); // query parameter
+            if (lang != null) localVarQueryParams.Add("lang", Configuration.ApiClient.ParameterToString(lang)); // query parameter
+            if (description != null) localVarQueryParams.Add("description", Configuration.ApiClient.ParameterToString(description)); // query parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
                 localVarPostBody = Configuration.ApiClient.Serialize(body); // http body (model) parameter
@@ -29324,7 +33879,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -29343,6 +33898,7 @@ namespace Xpertdoc.SmartFlows.Api
                 Exception exception = ExceptionFactory("UpdateTemplateContent", localVarResponse);
                 if (exception != null) throw exception;
             }
+
 
             return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
@@ -29377,7 +33933,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/{user}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -29397,6 +33953,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (user != null) localVarPathParams.Add("user", Configuration.ApiClient.ParameterToString(user)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -29407,7 +33966,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -29430,6 +33989,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<User>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (User)Configuration.ApiClient.Deserialize(localVarResponse, typeof(User)));
+
         }
 
         /// <summary>
@@ -29461,7 +34021,7 @@ namespace Xpertdoc.SmartFlows.Api
 
             var localVarPath = "/users/{user}";
             var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarQueryParams = new Dictionary<String, String>();
             var localVarHeaderParams = new Dictionary<String, String>(Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
@@ -29481,6 +34041,9 @@ namespace Xpertdoc.SmartFlows.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
+            // set "format" to json by default
+            // e.g. /pet/{petId}.{format} becomes /pet/{petId}.json
+            localVarPathParams.Add("format", "json");
             if (user != null) localVarPathParams.Add("user", Configuration.ApiClient.ParameterToString(user)); // path parameter
             if (body != null && body.GetType() != typeof(byte[]))
             {
@@ -29491,7 +34054,7 @@ namespace Xpertdoc.SmartFlows.Api
                 localVarPostBody = body; // byte array
             }
 
-            // authentication (SmartFlows_auth) required
+            // authentication (xperido_auth) required
             // oauth required
             if (!String.IsNullOrEmpty(Configuration.AccessToken))
             {
@@ -29514,6 +34077,7 @@ namespace Xpertdoc.SmartFlows.Api
             return new ApiResponse<User>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (User)Configuration.ApiClient.Deserialize(localVarResponse, typeof(User)));
+
         }
 
     }

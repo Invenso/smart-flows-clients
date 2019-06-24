@@ -26,23 +26,23 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class Archivable : IEquatable<Archivable>, IValidatableObject
     {
         /// <summary>
-        /// Defines ArchiveType
+        /// Gets or Sets ArchiveType
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum ArchiveTypeEnum
         {
 
             /// <summary>
-            /// Enum Explicit for value: explicit
+            /// Enum Explicit for "explicit"
             /// </summary>
             [EnumMember(Value = "explicit")]
-            Explicit = 1,
+            Explicit,
 
             /// <summary>
-            /// Enum Dependency for value: dependency
+            /// Enum Dependency for "dependency"
             /// </summary>
             [EnumMember(Value = "dependency")]
-            Dependency = 2
+            Dependency
         }
 
         /// <summary>
@@ -59,7 +59,8 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="Checksum">Checksum.</param>
         /// <param name="Contents">Contents.</param>
         /// <param name="OutboundDependencies">OutboundDependencies.</param>
-        public Archivable(IdWithName Identifier = default(IdWithName), ArchiveTypeEnum? ArchiveType = default(ArchiveTypeEnum?), string Definition = default(string), string Checksum = default(string), List<ArchivableContent> Contents = default(List<ArchivableContent>), List<DependencyTreeNode> OutboundDependencies = default(List<DependencyTreeNode>))
+        /// <param name="InboundDependencies">InboundDependencies.</param>
+        public Archivable(IdWithName Identifier = default(IdWithName), ArchiveTypeEnum? ArchiveType = default(ArchiveTypeEnum?), string Definition = default(string), string Checksum = default(string), List<ArchivableContent> Contents = default(List<ArchivableContent>), List<DependencyTreeNode> OutboundDependencies = default(List<DependencyTreeNode>), List<DependencyTreeNode> InboundDependencies = default(List<DependencyTreeNode>))
         {
             this.Identifier = Identifier;
             this.ArchiveType = ArchiveType;
@@ -67,6 +68,7 @@ namespace Xpertdoc.SmartFlows.Model
             this.Checksum = Checksum;
             this.Contents = Contents;
             this.OutboundDependencies = OutboundDependencies;
+            this.InboundDependencies = InboundDependencies;
         }
 
         /// <summary>
@@ -74,32 +76,31 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "identifier", EmitDefaultValue = false)]
         public IdWithName Identifier { get; set; }
-
-
         /// <summary>
         /// Gets or Sets Definition
         /// </summary>
         [DataMember(Name = "definition", EmitDefaultValue = false)]
         public string Definition { get; set; }
-
         /// <summary>
         /// Gets or Sets Checksum
         /// </summary>
         [DataMember(Name = "checksum", EmitDefaultValue = false)]
         public string Checksum { get; set; }
-
         /// <summary>
         /// Gets or Sets Contents
         /// </summary>
         [DataMember(Name = "contents", EmitDefaultValue = false)]
         public List<ArchivableContent> Contents { get; set; }
-
         /// <summary>
         /// Gets or Sets OutboundDependencies
         /// </summary>
         [DataMember(Name = "outboundDependencies", EmitDefaultValue = false)]
         public List<DependencyTreeNode> OutboundDependencies { get; set; }
-
+        /// <summary>
+        /// Gets or Sets InboundDependencies
+        /// </summary>
+        [DataMember(Name = "inboundDependencies", EmitDefaultValue = false)]
+        public List<DependencyTreeNode> InboundDependencies { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -114,6 +115,7 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("  Checksum: ").Append(Checksum).Append("\n");
             sb.Append("  Contents: ").Append(Contents).Append("\n");
             sb.Append("  OutboundDependencies: ").Append(OutboundDependencies).Append("\n");
+            sb.Append("  InboundDependencies: ").Append(InboundDependencies).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -130,53 +132,60 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Archivable);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Archivable);
         }
 
         /// <summary>
         /// Returns true if Archivable instances are equal
         /// </summary>
-        /// <param name="input">Instance of Archivable to be compared</param>
+        /// <param name="other">Instance of Archivable to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Archivable input)
+        public bool Equals(Archivable other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Identifier == input.Identifier ||
-                    (this.Identifier != null &&
-                    this.Identifier.Equals(input.Identifier))
+                    this.Identifier == other.Identifier ||
+                    this.Identifier != null &&
+                    this.Identifier.Equals(other.Identifier)
                 ) &&
                 (
-                    this.ArchiveType == input.ArchiveType ||
-                    (this.ArchiveType != null &&
-                    this.ArchiveType.Equals(input.ArchiveType))
+                    this.ArchiveType == other.ArchiveType ||
+                    this.ArchiveType != null &&
+                    this.ArchiveType.Equals(other.ArchiveType)
                 ) &&
                 (
-                    this.Definition == input.Definition ||
-                    (this.Definition != null &&
-                    this.Definition.Equals(input.Definition))
+                    this.Definition == other.Definition ||
+                    this.Definition != null &&
+                    this.Definition.Equals(other.Definition)
                 ) &&
                 (
-                    this.Checksum == input.Checksum ||
-                    (this.Checksum != null &&
-                    this.Checksum.Equals(input.Checksum))
+                    this.Checksum == other.Checksum ||
+                    this.Checksum != null &&
+                    this.Checksum.Equals(other.Checksum)
                 ) &&
                 (
-                    this.Contents == input.Contents ||
+                    this.Contents == other.Contents ||
                     this.Contents != null &&
-                    this.Contents.SequenceEqual(input.Contents)
+                    this.Contents.SequenceEqual(other.Contents)
                 ) &&
                 (
-                    this.OutboundDependencies == input.OutboundDependencies ||
+                    this.OutboundDependencies == other.OutboundDependencies ||
                     this.OutboundDependencies != null &&
-                    this.OutboundDependencies.SequenceEqual(input.OutboundDependencies)
+                    this.OutboundDependencies.SequenceEqual(other.OutboundDependencies)
+                ) &&
+                (
+                    this.InboundDependencies == other.InboundDependencies ||
+                    this.InboundDependencies != null &&
+                    this.InboundDependencies.SequenceEqual(other.InboundDependencies)
                 );
         }
 
@@ -186,31 +195,30 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Identifier != null)
-                    hashCode = hashCode * 59 + this.Identifier.GetHashCode();
+                    hash = hash * 59 + this.Identifier.GetHashCode();
                 if (this.ArchiveType != null)
-                    hashCode = hashCode * 59 + this.ArchiveType.GetHashCode();
+                    hash = hash * 59 + this.ArchiveType.GetHashCode();
                 if (this.Definition != null)
-                    hashCode = hashCode * 59 + this.Definition.GetHashCode();
+                    hash = hash * 59 + this.Definition.GetHashCode();
                 if (this.Checksum != null)
-                    hashCode = hashCode * 59 + this.Checksum.GetHashCode();
+                    hash = hash * 59 + this.Checksum.GetHashCode();
                 if (this.Contents != null)
-                    hashCode = hashCode * 59 + this.Contents.GetHashCode();
+                    hash = hash * 59 + this.Contents.GetHashCode();
                 if (this.OutboundDependencies != null)
-                    hashCode = hashCode * 59 + this.OutboundDependencies.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.OutboundDependencies.GetHashCode();
+                if (this.InboundDependencies != null)
+                    hash = hash * 59 + this.InboundDependencies.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

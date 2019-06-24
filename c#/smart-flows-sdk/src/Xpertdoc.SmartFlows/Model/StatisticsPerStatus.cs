@@ -39,13 +39,11 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public FlowExecutionStatus Status { get; set; }
-
         /// <summary>
         /// Gets or Sets Count
         /// </summary>
         [DataMember(Name = "count", EmitDefaultValue = false)]
         public int? Count { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -72,33 +70,35 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as StatisticsPerStatus);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as StatisticsPerStatus);
         }
 
         /// <summary>
         /// Returns true if StatisticsPerStatus instances are equal
         /// </summary>
-        /// <param name="input">Instance of StatisticsPerStatus to be compared</param>
+        /// <param name="other">Instance of StatisticsPerStatus to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(StatisticsPerStatus input)
+        public bool Equals(StatisticsPerStatus other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Status == input.Status ||
-                    (this.Status != null &&
-                    this.Status.Equals(input.Status))
+                    this.Status == other.Status ||
+                    this.Status != null &&
+                    this.Status.Equals(other.Status)
                 ) &&
                 (
-                    this.Count == input.Count ||
-                    (this.Count != null &&
-                    this.Count.Equals(input.Count))
+                    this.Count == other.Count ||
+                    this.Count != null &&
+                    this.Count.Equals(other.Count)
                 );
         }
 
@@ -108,28 +108,25 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Status != null)
-                    hashCode = hashCode * 59 + this.Status.GetHashCode();
+                    hash = hash * 59 + this.Status.GetHashCode();
                 if (this.Count != null)
-                    hashCode = hashCode * 59 + this.Count.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Count.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // Count (int?) minimum
             if (this.Count < (int?)0)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Count, must be a value greater than or equal to 0.", new[] { "Count" });
+                yield return new ValidationResult("Invalid value for Count, must be a value greater than or equal to 0.", new[] { "Count" });
             }
 
             yield break;

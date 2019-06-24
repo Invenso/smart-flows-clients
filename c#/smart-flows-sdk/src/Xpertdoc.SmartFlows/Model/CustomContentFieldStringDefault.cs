@@ -14,21 +14,20 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text;
-using SwaggerDateConverter = Xpertdoc.SmartFlows.Client.SwaggerDateConverter;
 
 namespace Xpertdoc.SmartFlows.Model
 {
     /// <summary>
-    /// CustomContentFieldDate
+    /// CustomContentFieldStringDefault
     /// </summary>
     [DataContract]
-    public partial class CustomContentFieldDate : IEquatable<CustomContentFieldDate>, IValidatableObject
+    public partial class CustomContentFieldStringDefault : IEquatable<CustomContentFieldStringDefault>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CustomContentFieldDate" /> class.
+        /// Initializes a new instance of the <see cref="CustomContentFieldStringDefault" /> class.
         /// </summary>
         /// <param name="_Default">_Default.</param>
-        public CustomContentFieldDate(DateTime? _Default = default(DateTime?))
+        public CustomContentFieldStringDefault(string _Default = default(string))
         {
             this._Default = _Default;
         }
@@ -37,9 +36,7 @@ namespace Xpertdoc.SmartFlows.Model
         /// Gets or Sets _Default
         /// </summary>
         [DataMember(Name = "default", EmitDefaultValue = false)]
-        [JsonConverter(typeof(SwaggerDateConverter))]
-        public DateTime? _Default { get; set; }
-
+        public string _Default { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -47,7 +44,7 @@ namespace Xpertdoc.SmartFlows.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class CustomContentFieldDate {\n");
+            sb.Append("class CustomContentFieldStringDefault {\n");
             sb.Append("  _Default: ").Append(_Default).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -65,28 +62,30 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as CustomContentFieldDate);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as CustomContentFieldStringDefault);
         }
 
         /// <summary>
-        /// Returns true if CustomContentFieldDate instances are equal
+        /// Returns true if CustomContentFieldStringDefault instances are equal
         /// </summary>
-        /// <param name="input">Instance of CustomContentFieldDate to be compared</param>
+        /// <param name="other">Instance of CustomContentFieldStringDefault to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CustomContentFieldDate input)
+        public bool Equals(CustomContentFieldStringDefault other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this._Default == input._Default ||
-                    (this._Default != null &&
-                    this._Default.Equals(input._Default))
+                    this._Default == other._Default ||
+                    this._Default != null &&
+                    this._Default.Equals(other._Default)
                 );
         }
 
@@ -96,21 +95,18 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this._Default != null)
-                    hashCode = hashCode * 59 + this._Default.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this._Default.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

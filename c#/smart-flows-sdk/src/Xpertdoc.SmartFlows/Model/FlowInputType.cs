@@ -17,29 +17,27 @@ namespace Xpertdoc.SmartFlows.Model
     /// <summary>
     /// Defines flowInputType
     /// </summary>
-
     [JsonConverter(typeof(StringEnumConverter))]
-
     public enum FlowInputType
     {
 
         /// <summary>
-        /// Enum Plugin for value: plugin
+        /// Enum Plugin for "plugin"
         /// </summary>
         [EnumMember(Value = "plugin")]
-        Plugin = 1,
+        Plugin,
 
         /// <summary>
-        /// Enum User for value: user
+        /// Enum User for "user"
         /// </summary>
         [EnumMember(Value = "user")]
-        User = 2,
+        User,
 
         /// <summary>
-        /// Enum None for value: none
+        /// Enum None for "none"
         /// </summary>
         [EnumMember(Value = "none")]
-        None = 3
+        None
     }
 
 }

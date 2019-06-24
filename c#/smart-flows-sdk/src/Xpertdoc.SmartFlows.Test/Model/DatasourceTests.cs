@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Datasource> (instance, "variable 'instance' is a Datasource");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

@@ -26,26 +26,32 @@ namespace Xpertdoc.SmartFlows.Model
     [DataContract]
     public partial class Dataset : IEquatable<Dataset>, IValidatableObject
     {
+
         /// <summary>
-        /// Defines Purpose
+        /// Gets or Sets Purpose
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum PurposeEnum
         {
 
             /// <summary>
-            /// Enum TemplateDesign for value: templateDesign
+            /// Enum TemplateDesign for "templateDesign"
             /// </summary>
             [EnumMember(Value = "templateDesign")]
-            TemplateDesign = 1,
+            TemplateDesign,
 
             /// <summary>
-            /// Enum FlowInput for value: flowInput
+            /// Enum FlowInput for "flowInput"
             /// </summary>
             [EnumMember(Value = "flowInput")]
-            FlowInput = 2
-        }
+            FlowInput,
 
+            /// <summary>
+            /// Enum FlowOutput for "flowOutput"
+            /// </summary>
+            [EnumMember(Value = "flowOutput")]
+            FlowOutput
+        }
 
         /// <summary>
         /// Gets or Sets Purpose
@@ -68,12 +74,13 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="ModifiedAt">ModifiedAt.</param>
         /// <param name="ModifiedBy">ModifiedBy.</param>
         /// <param name="Datasources">Datasources.</param>
+        /// <param name="Plugin">Plugin.</param>
         /// <param name="TagGroups">TagGroups.</param>
         /// <param name="Content">Content.</param>
         /// <param name="Layout">Layout.</param>
         /// <param name="Purpose">Purpose.</param>
         /// <param name="_ReadOnly">_ReadOnly (default to false).</param>
-        public Dataset(string Id = default(string), string DisplayName = default(string), string Description = default(string), string CreatedAt = default(string), IdWithName CreatedBy = default(IdWithName), string ModifiedAt = default(string), IdWithName ModifiedBy = default(IdWithName), List<IdWithName> Datasources = default(List<IdWithName>), List<TagGroupRef> TagGroups = default(List<TagGroupRef>), DatasetContent Content = default(DatasetContent), List<EntityReference> Layout = default(List<EntityReference>), List<PurposeEnum> Purpose = default(List<PurposeEnum>), bool? _ReadOnly = false)
+        public Dataset(string Id = default(string), string DisplayName = default(string), string Description = default(string), string CreatedAt = default(string), IdWithName CreatedBy = default(IdWithName), string ModifiedAt = default(string), IdWithName ModifiedBy = default(IdWithName), List<IdWithName> Datasources = default(List<IdWithName>), IdWithName Plugin = default(IdWithName), List<TagGroupRef> TagGroups = default(List<TagGroupRef>), DatasetContent Content = default(DatasetContent), List<EntityReference> Layout = default(List<EntityReference>), List<PurposeEnum> Purpose = default(List<PurposeEnum>), bool? _ReadOnly = false)
         {
             // to ensure "DisplayName" is required (not null)
             if (DisplayName == null)
@@ -91,6 +98,7 @@ namespace Xpertdoc.SmartFlows.Model
             this.ModifiedAt = ModifiedAt;
             this.ModifiedBy = ModifiedBy;
             this.Datasources = Datasources;
+            this.Plugin = Plugin;
             this.TagGroups = TagGroups;
             this.Content = Content;
             this.Layout = Layout;
@@ -111,74 +119,66 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedAt
         /// </summary>
         [DataMember(Name = "createdAt", EmitDefaultValue = false)]
         public string CreatedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedBy
         /// </summary>
         [DataMember(Name = "createdBy", EmitDefaultValue = false)]
         public IdWithName CreatedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedAt
         /// </summary>
         [DataMember(Name = "modifiedAt", EmitDefaultValue = false)]
         public string ModifiedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedBy
         /// </summary>
         [DataMember(Name = "modifiedBy", EmitDefaultValue = false)]
         public IdWithName ModifiedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets Datasources
         /// </summary>
         [DataMember(Name = "datasources", EmitDefaultValue = false)]
         public List<IdWithName> Datasources { get; set; }
-
+        /// <summary>
+        /// Gets or Sets Plugin
+        /// </summary>
+        [DataMember(Name = "plugin", EmitDefaultValue = false)]
+        public IdWithName Plugin { get; set; }
         /// <summary>
         /// Gets or Sets TagGroups
         /// </summary>
         [DataMember(Name = "tagGroups", EmitDefaultValue = false)]
         public List<TagGroupRef> TagGroups { get; set; }
-
         /// <summary>
         /// Gets or Sets Content
         /// </summary>
         [DataMember(Name = "content", EmitDefaultValue = false)]
         public DatasetContent Content { get; set; }
-
         /// <summary>
         /// Gets or Sets Layout
         /// </summary>
         [DataMember(Name = "layout", EmitDefaultValue = false)]
         public List<EntityReference> Layout { get; set; }
-
-
         /// <summary>
         /// Gets or Sets _ReadOnly
         /// </summary>
         [DataMember(Name = "readOnly", EmitDefaultValue = false)]
         public bool? _ReadOnly { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -195,6 +195,7 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("  ModifiedAt: ").Append(ModifiedAt).Append("\n");
             sb.Append("  ModifiedBy: ").Append(ModifiedBy).Append("\n");
             sb.Append("  Datasources: ").Append(Datasources).Append("\n");
+            sb.Append("  Plugin: ").Append(Plugin).Append("\n");
             sb.Append("  TagGroups: ").Append(TagGroups).Append("\n");
             sb.Append("  Content: ").Append(Content).Append("\n");
             sb.Append("  Layout: ").Append(Layout).Append("\n");
@@ -216,88 +217,95 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Dataset);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Dataset);
         }
 
         /// <summary>
         /// Returns true if Dataset instances are equal
         /// </summary>
-        /// <param name="input">Instance of Dataset to be compared</param>
+        /// <param name="other">Instance of Dataset to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Dataset input)
+        public bool Equals(Dataset other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.CreatedAt == input.CreatedAt ||
-                    (this.CreatedAt != null &&
-                    this.CreatedAt.Equals(input.CreatedAt))
+                    this.CreatedAt == other.CreatedAt ||
+                    this.CreatedAt != null &&
+                    this.CreatedAt.Equals(other.CreatedAt)
                 ) &&
                 (
-                    this.CreatedBy == input.CreatedBy ||
-                    (this.CreatedBy != null &&
-                    this.CreatedBy.Equals(input.CreatedBy))
+                    this.CreatedBy == other.CreatedBy ||
+                    this.CreatedBy != null &&
+                    this.CreatedBy.Equals(other.CreatedBy)
                 ) &&
                 (
-                    this.ModifiedAt == input.ModifiedAt ||
-                    (this.ModifiedAt != null &&
-                    this.ModifiedAt.Equals(input.ModifiedAt))
+                    this.ModifiedAt == other.ModifiedAt ||
+                    this.ModifiedAt != null &&
+                    this.ModifiedAt.Equals(other.ModifiedAt)
                 ) &&
                 (
-                    this.ModifiedBy == input.ModifiedBy ||
-                    (this.ModifiedBy != null &&
-                    this.ModifiedBy.Equals(input.ModifiedBy))
+                    this.ModifiedBy == other.ModifiedBy ||
+                    this.ModifiedBy != null &&
+                    this.ModifiedBy.Equals(other.ModifiedBy)
                 ) &&
                 (
-                    this.Datasources == input.Datasources ||
+                    this.Datasources == other.Datasources ||
                     this.Datasources != null &&
-                    this.Datasources.SequenceEqual(input.Datasources)
+                    this.Datasources.SequenceEqual(other.Datasources)
                 ) &&
                 (
-                    this.TagGroups == input.TagGroups ||
+                    this.Plugin == other.Plugin ||
+                    this.Plugin != null &&
+                    this.Plugin.Equals(other.Plugin)
+                ) &&
+                (
+                    this.TagGroups == other.TagGroups ||
                     this.TagGroups != null &&
-                    this.TagGroups.SequenceEqual(input.TagGroups)
+                    this.TagGroups.SequenceEqual(other.TagGroups)
                 ) &&
                 (
-                    this.Content == input.Content ||
-                    (this.Content != null &&
-                    this.Content.Equals(input.Content))
+                    this.Content == other.Content ||
+                    this.Content != null &&
+                    this.Content.Equals(other.Content)
                 ) &&
                 (
-                    this.Layout == input.Layout ||
+                    this.Layout == other.Layout ||
                     this.Layout != null &&
-                    this.Layout.SequenceEqual(input.Layout)
+                    this.Layout.SequenceEqual(other.Layout)
                 ) &&
                 (
-                    this.Purpose == input.Purpose ||
+                    this.Purpose == other.Purpose ||
                     this.Purpose != null &&
-                    this.Purpose.SequenceEqual(input.Purpose)
+                    this.Purpose.SequenceEqual(other.Purpose)
                 ) &&
                 (
-                    this._ReadOnly == input._ReadOnly ||
-                    (this._ReadOnly != null &&
-                    this._ReadOnly.Equals(input._ReadOnly))
+                    this._ReadOnly == other._ReadOnly ||
+                    this._ReadOnly != null &&
+                    this._ReadOnly.Equals(other._ReadOnly)
                 );
         }
 
@@ -307,56 +315,55 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.CreatedAt != null)
-                    hashCode = hashCode * 59 + this.CreatedAt.GetHashCode();
+                    hash = hash * 59 + this.CreatedAt.GetHashCode();
                 if (this.CreatedBy != null)
-                    hashCode = hashCode * 59 + this.CreatedBy.GetHashCode();
+                    hash = hash * 59 + this.CreatedBy.GetHashCode();
                 if (this.ModifiedAt != null)
-                    hashCode = hashCode * 59 + this.ModifiedAt.GetHashCode();
+                    hash = hash * 59 + this.ModifiedAt.GetHashCode();
                 if (this.ModifiedBy != null)
-                    hashCode = hashCode * 59 + this.ModifiedBy.GetHashCode();
+                    hash = hash * 59 + this.ModifiedBy.GetHashCode();
                 if (this.Datasources != null)
-                    hashCode = hashCode * 59 + this.Datasources.GetHashCode();
+                    hash = hash * 59 + this.Datasources.GetHashCode();
+                if (this.Plugin != null)
+                    hash = hash * 59 + this.Plugin.GetHashCode();
                 if (this.TagGroups != null)
-                    hashCode = hashCode * 59 + this.TagGroups.GetHashCode();
+                    hash = hash * 59 + this.TagGroups.GetHashCode();
                 if (this.Content != null)
-                    hashCode = hashCode * 59 + this.Content.GetHashCode();
+                    hash = hash * 59 + this.Content.GetHashCode();
                 if (this.Layout != null)
-                    hashCode = hashCode * 59 + this.Layout.GetHashCode();
+                    hash = hash * 59 + this.Layout.GetHashCode();
                 if (this.Purpose != null)
-                    hashCode = hashCode * 59 + this.Purpose.GetHashCode();
+                    hash = hash * 59 + this.Purpose.GetHashCode();
                 if (this._ReadOnly != null)
-                    hashCode = hashCode * 59 + this._ReadOnly.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this._ReadOnly.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // DisplayName (string) maxLength
             if (this.DisplayName != null && this.DisplayName.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
+                yield return new ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
             }
 
             // Description (string) maxLength
             if (this.Description != null && this.Description.Length > 2048)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
+                yield return new ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
             }
 
             yield break;

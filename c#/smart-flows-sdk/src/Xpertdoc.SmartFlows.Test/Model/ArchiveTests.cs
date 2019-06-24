@@ -55,7 +55,14 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Archive> (instance, "variable 'instance' is a Archive");
         }
 
-
+        /// <summary>
+        /// Test the property 'General'
+        /// </summary>
+        [Test]
+        public void GeneralTest()
+        {
+            // TODO unit test for the property 'General'
+        }
         /// <summary>
         /// Test the property 'Items'
         /// </summary>

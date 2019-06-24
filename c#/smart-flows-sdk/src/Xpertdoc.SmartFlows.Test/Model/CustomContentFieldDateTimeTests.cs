@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<CustomContentFieldDateTime> (instance, "variable 'instance' is a CustomContentFieldDateTime");
         }
 
-
         /// <summary>
         /// Test the property '_Default'
         /// </summary>

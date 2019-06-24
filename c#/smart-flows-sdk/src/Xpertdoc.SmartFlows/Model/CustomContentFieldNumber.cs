@@ -25,23 +25,23 @@ namespace Xpertdoc.SmartFlows.Model
     public partial class CustomContentFieldNumber : IEquatable<CustomContentFieldNumber>, IValidatableObject
     {
         /// <summary>
-        /// Defines Type
+        /// Gets or Sets Type
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public enum TypeEnum
         {
 
             /// <summary>
-            /// Enum Integer for value: integer
+            /// Enum Integer for "integer"
             /// </summary>
             [EnumMember(Value = "integer")]
-            Integer = 1,
+            Integer,
 
             /// <summary>
-            /// Enum Real for value: real
+            /// Enum Real for "real"
             /// </summary>
             [EnumMember(Value = "real")]
-            Real = 2
+            Real
         }
 
         /// <summary>
@@ -64,25 +64,21 @@ namespace Xpertdoc.SmartFlows.Model
             this._Default = _Default;
         }
 
-
         /// <summary>
         /// Gets or Sets MinValue
         /// </summary>
         [DataMember(Name = "minValue", EmitDefaultValue = false)]
         public decimal? MinValue { get; set; }
-
         /// <summary>
         /// Gets or Sets MaxValue
         /// </summary>
         [DataMember(Name = "maxValue", EmitDefaultValue = false)]
         public decimal? MaxValue { get; set; }
-
         /// <summary>
         /// Gets or Sets _Default
         /// </summary>
         [DataMember(Name = "default", EmitDefaultValue = false)]
         public decimal? _Default { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -111,43 +107,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as CustomContentFieldNumber);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as CustomContentFieldNumber);
         }
 
         /// <summary>
         /// Returns true if CustomContentFieldNumber instances are equal
         /// </summary>
-        /// <param name="input">Instance of CustomContentFieldNumber to be compared</param>
+        /// <param name="other">Instance of CustomContentFieldNumber to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CustomContentFieldNumber input)
+        public bool Equals(CustomContentFieldNumber other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Type == input.Type ||
-                    (this.Type != null &&
-                    this.Type.Equals(input.Type))
+                    this.Type == other.Type ||
+                    this.Type != null &&
+                    this.Type.Equals(other.Type)
                 ) &&
                 (
-                    this.MinValue == input.MinValue ||
-                    (this.MinValue != null &&
-                    this.MinValue.Equals(input.MinValue))
+                    this.MinValue == other.MinValue ||
+                    this.MinValue != null &&
+                    this.MinValue.Equals(other.MinValue)
                 ) &&
                 (
-                    this.MaxValue == input.MaxValue ||
-                    (this.MaxValue != null &&
-                    this.MaxValue.Equals(input.MaxValue))
+                    this.MaxValue == other.MaxValue ||
+                    this.MaxValue != null &&
+                    this.MaxValue.Equals(other.MaxValue)
                 ) &&
                 (
-                    this._Default == input._Default ||
-                    (this._Default != null &&
-                    this._Default.Equals(input._Default))
+                    this._Default == other._Default ||
+                    this._Default != null &&
+                    this._Default.Equals(other._Default)
                 );
         }
 
@@ -157,27 +155,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Type != null)
-                    hashCode = hashCode * 59 + this.Type.GetHashCode();
+                    hash = hash * 59 + this.Type.GetHashCode();
                 if (this.MinValue != null)
-                    hashCode = hashCode * 59 + this.MinValue.GetHashCode();
+                    hash = hash * 59 + this.MinValue.GetHashCode();
                 if (this.MaxValue != null)
-                    hashCode = hashCode * 59 + this.MaxValue.GetHashCode();
+                    hash = hash * 59 + this.MaxValue.GetHashCode();
                 if (this._Default != null)
-                    hashCode = hashCode * 59 + this._Default.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this._Default.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

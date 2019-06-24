@@ -28,11 +28,13 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         /// <param name="Id">Id.</param>
         /// <param name="Group">Group.</param>
+        /// <param name="PluginGroup">PluginGroup.</param>
         /// <param name="Value">Value.</param>
-        public Tag(string Id = default(string), string Group = default(string), string Value = default(string))
+        public Tag(string Id = default(string), string Group = default(string), string PluginGroup = default(string), string Value = default(string))
         {
             this.Id = Id;
             this.Group = Group;
+            this.PluginGroup = PluginGroup;
             this.Value = Value;
         }
 
@@ -41,19 +43,21 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets Group
         /// </summary>
         [DataMember(Name = "group", EmitDefaultValue = false)]
         public string Group { get; set; }
-
+        /// <summary>
+        /// Gets or Sets PluginGroup
+        /// </summary>
+        [DataMember(Name = "pluginGroup", EmitDefaultValue = false)]
+        public string PluginGroup { get; set; }
         /// <summary>
         /// Gets or Sets Value
         /// </summary>
         [DataMember(Name = "value", EmitDefaultValue = false)]
         public string Value { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -64,6 +68,7 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("class Tag {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Group: ").Append(Group).Append("\n");
+            sb.Append("  PluginGroup: ").Append(PluginGroup).Append("\n");
             sb.Append("  Value: ").Append(Value).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -81,38 +86,45 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Tag);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Tag);
         }
 
         /// <summary>
         /// Returns true if Tag instances are equal
         /// </summary>
-        /// <param name="input">Instance of Tag to be compared</param>
+        /// <param name="other">Instance of Tag to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Tag input)
+        public bool Equals(Tag other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.Group == input.Group ||
-                    (this.Group != null &&
-                    this.Group.Equals(input.Group))
+                    this.Group == other.Group ||
+                    this.Group != null &&
+                    this.Group.Equals(other.Group)
                 ) &&
                 (
-                    this.Value == input.Value ||
-                    (this.Value != null &&
-                    this.Value.Equals(input.Value))
+                    this.PluginGroup == other.PluginGroup ||
+                    this.PluginGroup != null &&
+                    this.PluginGroup.Equals(other.PluginGroup)
+                ) &&
+                (
+                    this.Value == other.Value ||
+                    this.Value != null &&
+                    this.Value.Equals(other.Value)
                 );
         }
 
@@ -122,25 +134,24 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.Group != null)
-                    hashCode = hashCode * 59 + this.Group.GetHashCode();
+                    hash = hash * 59 + this.Group.GetHashCode();
+                if (this.PluginGroup != null)
+                    hash = hash * 59 + this.PluginGroup.GetHashCode();
                 if (this.Value != null)
-                    hashCode = hashCode * 59 + this.Value.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Value.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

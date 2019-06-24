@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<ImportInformation> (instance, "variable 'instance' is a ImportInformation");
         }
 
-
         /// <summary>
         /// Test the property 'Archive'
         /// </summary>
@@ -79,6 +78,22 @@ namespace Xpertdoc.SmartFlows.Test
         public void SuggestedMappingsTest()
         {
             // TODO unit test for the property 'SuggestedMappings'
+        }
+        /// <summary>
+        /// Test the property 'MissingConnectors'
+        /// </summary>
+        [Test]
+        public void MissingConnectorsTest()
+        {
+            // TODO unit test for the property 'MissingConnectors'
+        }
+        /// <summary>
+        /// Test the property 'MissingConnectorTypes'
+        /// </summary>
+        [Test]
+        public void MissingConnectorTypesTest()
+        {
+            // TODO unit test for the property 'MissingConnectorTypes'
         }
 
     }

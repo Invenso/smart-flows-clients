@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<GeneralPrintPropsPageRange> (instance, "variable 'instance' is a GeneralPrintPropsPageRange");
         }
 
-
         /// <summary>
         /// Test the property 'Type'
         /// </summary>

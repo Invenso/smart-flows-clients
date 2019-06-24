@@ -42,7 +42,8 @@ namespace Xpertdoc.SmartFlows.Model
         /// <param name="ContentType">ContentType.</param>
         /// <param name="PostProcessing">PostProcessing.</param>
         /// <param name="Usage">Usage.</param>
-        public Document(string Id = default(string), string DisplayName = default(string), string Description = default(string), string CreatedAt = default(string), IdWithName CreatedBy = default(IdWithName), string ModifiedAt = default(string), IdWithName ModifiedBy = default(IdWithName), IdWithName TemplateId = default(IdWithName), IdWithName Language = default(IdWithName), IdWithName Origin = default(IdWithName), bool? Finished = default(bool?), string Expiration = default(string), string ContentType = default(string), List<DocumentPostProcessing> PostProcessing = default(List<DocumentPostProcessing>), ObjectUsage Usage = default(ObjectUsage))
+        /// <param name="FlowExecution">FlowExecution.</param>
+        public Document(string Id = default(string), string DisplayName = default(string), string Description = default(string), string CreatedAt = default(string), IdWithName CreatedBy = default(IdWithName), string ModifiedAt = default(string), IdWithName ModifiedBy = default(IdWithName), IdWithName TemplateId = default(IdWithName), IdWithName Language = default(IdWithName), IdWithName Origin = default(IdWithName), bool? Finished = default(bool?), string Expiration = default(string), string ContentType = default(string), List<DocumentPostProcessing> PostProcessing = default(List<DocumentPostProcessing>), ObjectUsage Usage = default(ObjectUsage), FlowExecution FlowExecution = default(FlowExecution))
         {
             this.Id = Id;
             this.DisplayName = DisplayName;
@@ -59,6 +60,7 @@ namespace Xpertdoc.SmartFlows.Model
             this.ContentType = ContentType;
             this.PostProcessing = PostProcessing;
             this.Usage = Usage;
+            this.FlowExecution = FlowExecution;
         }
 
         /// <summary>
@@ -66,91 +68,81 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "id", EmitDefaultValue = false)]
         public string Id { get; set; }
-
         /// <summary>
         /// Gets or Sets DisplayName
         /// </summary>
         [DataMember(Name = "displayName", EmitDefaultValue = false)]
         public string DisplayName { get; set; }
-
         /// <summary>
         /// Gets or Sets Description
         /// </summary>
         [DataMember(Name = "description", EmitDefaultValue = false)]
         public string Description { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedAt
         /// </summary>
         [DataMember(Name = "createdAt", EmitDefaultValue = false)]
         public string CreatedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets CreatedBy
         /// </summary>
         [DataMember(Name = "createdBy", EmitDefaultValue = false)]
         public IdWithName CreatedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedAt
         /// </summary>
         [DataMember(Name = "modifiedAt", EmitDefaultValue = false)]
         public string ModifiedAt { get; set; }
-
         /// <summary>
         /// Gets or Sets ModifiedBy
         /// </summary>
         [DataMember(Name = "modifiedBy", EmitDefaultValue = false)]
         public IdWithName ModifiedBy { get; set; }
-
         /// <summary>
         /// Gets or Sets TemplateId
         /// </summary>
         [DataMember(Name = "templateId", EmitDefaultValue = false)]
         public IdWithName TemplateId { get; set; }
-
         /// <summary>
         /// Gets or Sets Language
         /// </summary>
         [DataMember(Name = "language", EmitDefaultValue = false)]
         public IdWithName Language { get; set; }
-
         /// <summary>
         /// Gets or Sets Origin
         /// </summary>
         [DataMember(Name = "origin", EmitDefaultValue = false)]
         public IdWithName Origin { get; set; }
-
         /// <summary>
         /// Gets or Sets Finished
         /// </summary>
         [DataMember(Name = "finished", EmitDefaultValue = false)]
         public bool? Finished { get; set; }
-
         /// <summary>
         /// Gets or Sets Expiration
         /// </summary>
         [DataMember(Name = "expiration", EmitDefaultValue = false)]
         public string Expiration { get; set; }
-
         /// <summary>
         /// Gets or Sets ContentType
         /// </summary>
         [DataMember(Name = "contentType", EmitDefaultValue = false)]
         public string ContentType { get; set; }
-
         /// <summary>
         /// Gets or Sets PostProcessing
         /// </summary>
         [DataMember(Name = "postProcessing", EmitDefaultValue = false)]
         public List<DocumentPostProcessing> PostProcessing { get; set; }
-
         /// <summary>
         /// Gets or Sets Usage
         /// </summary>
         [DataMember(Name = "usage", EmitDefaultValue = false)]
         public ObjectUsage Usage { get; set; }
-
+        /// <summary>
+        /// Gets or Sets FlowExecution
+        /// </summary>
+        [DataMember(Name = "flowExecution", EmitDefaultValue = false)]
+        public FlowExecution FlowExecution { get; set; }
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -174,6 +166,7 @@ namespace Xpertdoc.SmartFlows.Model
             sb.Append("  ContentType: ").Append(ContentType).Append("\n");
             sb.Append("  PostProcessing: ").Append(PostProcessing).Append("\n");
             sb.Append("  Usage: ").Append(Usage).Append("\n");
+            sb.Append("  FlowExecution: ").Append(FlowExecution).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -190,98 +183,105 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as Document);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as Document);
         }
 
         /// <summary>
         /// Returns true if Document instances are equal
         /// </summary>
-        /// <param name="input">Instance of Document to be compared</param>
+        /// <param name="other">Instance of Document to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Document input)
+        public bool Equals(Document other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
+                    this.Id == other.Id ||
+                    this.Id != null &&
+                    this.Id.Equals(other.Id)
                 ) &&
                 (
-                    this.DisplayName == input.DisplayName ||
-                    (this.DisplayName != null &&
-                    this.DisplayName.Equals(input.DisplayName))
+                    this.DisplayName == other.DisplayName ||
+                    this.DisplayName != null &&
+                    this.DisplayName.Equals(other.DisplayName)
                 ) &&
                 (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Description == other.Description ||
+                    this.Description != null &&
+                    this.Description.Equals(other.Description)
                 ) &&
                 (
-                    this.CreatedAt == input.CreatedAt ||
-                    (this.CreatedAt != null &&
-                    this.CreatedAt.Equals(input.CreatedAt))
+                    this.CreatedAt == other.CreatedAt ||
+                    this.CreatedAt != null &&
+                    this.CreatedAt.Equals(other.CreatedAt)
                 ) &&
                 (
-                    this.CreatedBy == input.CreatedBy ||
-                    (this.CreatedBy != null &&
-                    this.CreatedBy.Equals(input.CreatedBy))
+                    this.CreatedBy == other.CreatedBy ||
+                    this.CreatedBy != null &&
+                    this.CreatedBy.Equals(other.CreatedBy)
                 ) &&
                 (
-                    this.ModifiedAt == input.ModifiedAt ||
-                    (this.ModifiedAt != null &&
-                    this.ModifiedAt.Equals(input.ModifiedAt))
+                    this.ModifiedAt == other.ModifiedAt ||
+                    this.ModifiedAt != null &&
+                    this.ModifiedAt.Equals(other.ModifiedAt)
                 ) &&
                 (
-                    this.ModifiedBy == input.ModifiedBy ||
-                    (this.ModifiedBy != null &&
-                    this.ModifiedBy.Equals(input.ModifiedBy))
+                    this.ModifiedBy == other.ModifiedBy ||
+                    this.ModifiedBy != null &&
+                    this.ModifiedBy.Equals(other.ModifiedBy)
                 ) &&
                 (
-                    this.TemplateId == input.TemplateId ||
-                    (this.TemplateId != null &&
-                    this.TemplateId.Equals(input.TemplateId))
+                    this.TemplateId == other.TemplateId ||
+                    this.TemplateId != null &&
+                    this.TemplateId.Equals(other.TemplateId)
                 ) &&
                 (
-                    this.Language == input.Language ||
-                    (this.Language != null &&
-                    this.Language.Equals(input.Language))
+                    this.Language == other.Language ||
+                    this.Language != null &&
+                    this.Language.Equals(other.Language)
                 ) &&
                 (
-                    this.Origin == input.Origin ||
-                    (this.Origin != null &&
-                    this.Origin.Equals(input.Origin))
+                    this.Origin == other.Origin ||
+                    this.Origin != null &&
+                    this.Origin.Equals(other.Origin)
                 ) &&
                 (
-                    this.Finished == input.Finished ||
-                    (this.Finished != null &&
-                    this.Finished.Equals(input.Finished))
+                    this.Finished == other.Finished ||
+                    this.Finished != null &&
+                    this.Finished.Equals(other.Finished)
                 ) &&
                 (
-                    this.Expiration == input.Expiration ||
-                    (this.Expiration != null &&
-                    this.Expiration.Equals(input.Expiration))
+                    this.Expiration == other.Expiration ||
+                    this.Expiration != null &&
+                    this.Expiration.Equals(other.Expiration)
                 ) &&
                 (
-                    this.ContentType == input.ContentType ||
-                    (this.ContentType != null &&
-                    this.ContentType.Equals(input.ContentType))
+                    this.ContentType == other.ContentType ||
+                    this.ContentType != null &&
+                    this.ContentType.Equals(other.ContentType)
                 ) &&
                 (
-                    this.PostProcessing == input.PostProcessing ||
+                    this.PostProcessing == other.PostProcessing ||
                     this.PostProcessing != null &&
-                    this.PostProcessing.SequenceEqual(input.PostProcessing)
+                    this.PostProcessing.SequenceEqual(other.PostProcessing)
                 ) &&
                 (
-                    this.Usage == input.Usage ||
-                    (this.Usage != null &&
-                    this.Usage.Equals(input.Usage))
+                    this.Usage == other.Usage ||
+                    this.Usage != null &&
+                    this.Usage.Equals(other.Usage)
+                ) &&
+                (
+                    this.FlowExecution == other.FlowExecution ||
+                    this.FlowExecution != null &&
+                    this.FlowExecution.Equals(other.FlowExecution)
                 );
         }
 
@@ -291,60 +291,59 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                    hash = hash * 59 + this.Id.GetHashCode();
                 if (this.DisplayName != null)
-                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                    hash = hash * 59 + this.DisplayName.GetHashCode();
                 if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                    hash = hash * 59 + this.Description.GetHashCode();
                 if (this.CreatedAt != null)
-                    hashCode = hashCode * 59 + this.CreatedAt.GetHashCode();
+                    hash = hash * 59 + this.CreatedAt.GetHashCode();
                 if (this.CreatedBy != null)
-                    hashCode = hashCode * 59 + this.CreatedBy.GetHashCode();
+                    hash = hash * 59 + this.CreatedBy.GetHashCode();
                 if (this.ModifiedAt != null)
-                    hashCode = hashCode * 59 + this.ModifiedAt.GetHashCode();
+                    hash = hash * 59 + this.ModifiedAt.GetHashCode();
                 if (this.ModifiedBy != null)
-                    hashCode = hashCode * 59 + this.ModifiedBy.GetHashCode();
+                    hash = hash * 59 + this.ModifiedBy.GetHashCode();
                 if (this.TemplateId != null)
-                    hashCode = hashCode * 59 + this.TemplateId.GetHashCode();
+                    hash = hash * 59 + this.TemplateId.GetHashCode();
                 if (this.Language != null)
-                    hashCode = hashCode * 59 + this.Language.GetHashCode();
+                    hash = hash * 59 + this.Language.GetHashCode();
                 if (this.Origin != null)
-                    hashCode = hashCode * 59 + this.Origin.GetHashCode();
+                    hash = hash * 59 + this.Origin.GetHashCode();
                 if (this.Finished != null)
-                    hashCode = hashCode * 59 + this.Finished.GetHashCode();
+                    hash = hash * 59 + this.Finished.GetHashCode();
                 if (this.Expiration != null)
-                    hashCode = hashCode * 59 + this.Expiration.GetHashCode();
+                    hash = hash * 59 + this.Expiration.GetHashCode();
                 if (this.ContentType != null)
-                    hashCode = hashCode * 59 + this.ContentType.GetHashCode();
+                    hash = hash * 59 + this.ContentType.GetHashCode();
                 if (this.PostProcessing != null)
-                    hashCode = hashCode * 59 + this.PostProcessing.GetHashCode();
+                    hash = hash * 59 + this.PostProcessing.GetHashCode();
                 if (this.Usage != null)
-                    hashCode = hashCode * 59 + this.Usage.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Usage.GetHashCode();
+                if (this.FlowExecution != null)
+                    hash = hash * 59 + this.FlowExecution.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // DisplayName (string) maxLength
             if (this.DisplayName != null && this.DisplayName.Length > 255)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
+                yield return new ValidationResult("Invalid value for DisplayName, length must be less than 255.", new[] { "DisplayName" });
             }
 
             // Description (string) maxLength
             if (this.Description != null && this.Description.Length > 2048)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
+                yield return new ValidationResult("Invalid value for Description, length must be less than 2048.", new[] { "Description" });
             }
 
             yield break;

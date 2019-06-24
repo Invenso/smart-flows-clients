@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<FlowBlockState> (instance, "variable 'instance' is a FlowBlockState");
         }
 
-
         /// <summary>
         /// Test the property 'Id'
         /// </summary>

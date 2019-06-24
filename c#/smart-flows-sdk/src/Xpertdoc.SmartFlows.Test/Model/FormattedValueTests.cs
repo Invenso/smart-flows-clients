@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<FormattedValue> (instance, "variable 'instance' is a FormattedValue");
         }
 
-
         /// <summary>
         /// Test the property 'Value'
         /// </summary>

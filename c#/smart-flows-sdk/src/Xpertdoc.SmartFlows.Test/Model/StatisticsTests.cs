@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<Statistics> (instance, "variable 'instance' is a Statistics");
         }
 
-
         /// <summary>
         /// Test the property 'PerTime'
         /// </summary>

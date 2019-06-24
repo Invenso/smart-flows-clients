@@ -17,29 +17,27 @@ namespace Xpertdoc.SmartFlows.Model
     /// <summary>
     /// Defines dependencyDirection
     /// </summary>
-
     [JsonConverter(typeof(StringEnumConverter))]
-
     public enum DependencyDirection
     {
 
         /// <summary>
-        /// Enum Inbound for value: inbound
+        /// Enum Inbound for "inbound"
         /// </summary>
         [EnumMember(Value = "inbound")]
-        Inbound = 1,
+        Inbound,
 
         /// <summary>
-        /// Enum Outbound for value: outbound
+        /// Enum Outbound for "outbound"
         /// </summary>
         [EnumMember(Value = "outbound")]
-        Outbound = 2,
+        Outbound,
 
         /// <summary>
-        /// Enum Both for value: both
+        /// Enum Both for "both"
         /// </summary>
         [EnumMember(Value = "both")]
-        Both = 3
+        Both
     }
 
 }

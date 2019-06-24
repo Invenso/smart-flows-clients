@@ -41,19 +41,16 @@ namespace Xpertdoc.SmartFlows.Model
         /// </summary>
         [DataMember(Name = "entity", EmitDefaultValue = false)]
         public IdWithName Entity { get; set; }
-
         /// <summary>
         /// Gets or Sets Link
         /// </summary>
         [DataMember(Name = "link", EmitDefaultValue = false)]
         public string Link { get; set; }
-
         /// <summary>
         /// Gets or Sets Data
         /// </summary>
         [DataMember(Name = "data", EmitDefaultValue = false)]
         public byte[] Data { get; set; }
-
         /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
@@ -81,38 +78,40 @@ namespace Xpertdoc.SmartFlows.Model
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
-        /// <param name="input">Object to be compared</param>
+        /// <param name="obj">Object to be compared</param>
         /// <returns>Boolean</returns>
-        public override bool Equals(object input)
+        public override bool Equals(object obj)
         {
-            return this.Equals(input as GeneratedDocumentContent);
+            // credit: http://stackoverflow.com/a/10454552/677735
+            return this.Equals(obj as GeneratedDocumentContent);
         }
 
         /// <summary>
         /// Returns true if GeneratedDocumentContent instances are equal
         /// </summary>
-        /// <param name="input">Instance of GeneratedDocumentContent to be compared</param>
+        /// <param name="other">Instance of GeneratedDocumentContent to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(GeneratedDocumentContent input)
+        public bool Equals(GeneratedDocumentContent other)
         {
-            if (input == null)
+            // credit: http://stackoverflow.com/a/10454552/677735
+            if (other == null)
                 return false;
 
             return
                 (
-                    this.Entity == input.Entity ||
-                    (this.Entity != null &&
-                    this.Entity.Equals(input.Entity))
+                    this.Entity == other.Entity ||
+                    this.Entity != null &&
+                    this.Entity.Equals(other.Entity)
                 ) &&
                 (
-                    this.Link == input.Link ||
-                    (this.Link != null &&
-                    this.Link.Equals(input.Link))
+                    this.Link == other.Link ||
+                    this.Link != null &&
+                    this.Link.Equals(other.Link)
                 ) &&
                 (
-                    this.Data == input.Data ||
-                    (this.Data != null &&
-                    this.Data.Equals(input.Data))
+                    this.Data == other.Data ||
+                    this.Data != null &&
+                    this.Data.Equals(other.Data)
                 );
         }
 
@@ -122,25 +121,22 @@ namespace Xpertdoc.SmartFlows.Model
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
+            // credit: http://stackoverflow.com/a/263416/677735
             unchecked // Overflow is fine, just wrap
             {
-                int hashCode = 41;
+                int hash = 41;
+                // Suitable nullity checks etc, of course :)
                 if (this.Entity != null)
-                    hashCode = hashCode * 59 + this.Entity.GetHashCode();
+                    hash = hash * 59 + this.Entity.GetHashCode();
                 if (this.Link != null)
-                    hashCode = hashCode * 59 + this.Link.GetHashCode();
+                    hash = hash * 59 + this.Link.GetHashCode();
                 if (this.Data != null)
-                    hashCode = hashCode * 59 + this.Data.GetHashCode();
-                return hashCode;
+                    hash = hash * 59 + this.Data.GetHashCode();
+                return hash;
             }
         }
 
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield break;
         }

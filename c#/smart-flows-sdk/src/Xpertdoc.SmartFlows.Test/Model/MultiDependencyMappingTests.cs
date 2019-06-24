@@ -55,7 +55,6 @@ namespace Xpertdoc.SmartFlows.Test
             //Assert.IsInstanceOfType<MultiDependencyMapping> (instance, "variable 'instance' is a MultiDependencyMapping");
         }
 
-
         /// <summary>
         /// Test the property 'Source'
         /// </summary>
