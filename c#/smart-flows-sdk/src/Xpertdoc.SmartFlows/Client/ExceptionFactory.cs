@@ -9,8 +9,8 @@
  */
 
 
-using System;
 using RestSharp;
+using System;
 
 namespace Xpertdoc.SmartFlows.Client
 {

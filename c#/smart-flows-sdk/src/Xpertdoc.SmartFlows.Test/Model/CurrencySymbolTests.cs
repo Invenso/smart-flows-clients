@@ -11,16 +11,6 @@
 
 using NUnit.Framework;
 
-using System;
-using System.Linq;
-using System.IO;
-using System.Collections.Generic;
-using Xpertdoc.SmartFlows.Api;
-using Xpertdoc.SmartFlows.Model;
-using Xpertdoc.SmartFlows.Client;
-using System.Reflection;
-using Newtonsoft.Json;
-
 namespace Xpertdoc.SmartFlows.Test
 {
     /// <summary>
