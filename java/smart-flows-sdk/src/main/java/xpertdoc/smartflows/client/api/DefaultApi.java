@@ -1432,16 +1432,24 @@ public class DefaultApi {
      * @param body The parameters to create the document with (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
+     * @param watermark true to include a watermark in the resulting document
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createDocumentCall(DocGenSettings body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call createDocumentCall(
+            DocGenSettings body,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener,
+            boolean watermark) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
         String localVarPath = "/documents";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        if (watermark) {
+            localVarQueryParams.add(new Pair("addWaterMark", Boolean.toString(true)));
+        }
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
@@ -1477,10 +1485,12 @@ public class DefaultApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createDocumentValidateBeforeCall(DocGenSettings body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-
-        com.squareup.okhttp.Call call = createDocumentCall(body, progressListener, progressRequestListener);
+    private com.squareup.okhttp.Call createDocumentValidateBeforeCall(
+            DocGenSettings body,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener,
+            boolean watermark) throws ApiException {
+        com.squareup.okhttp.Call call = createDocumentCall(body, progressListener, progressRequestListener, watermark);
         return call;
 
     }
@@ -1493,7 +1503,19 @@ public class DefaultApi {
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public List<GeneratedDocument> createDocument(DocGenSettings body) throws ApiException {
-        ApiResponse<List<GeneratedDocument>> resp = createDocumentWithHttpInfo(body);
+        return createDocument(body, false);
+    }
+
+    /**
+     *
+     * Create preview of given template(ref) with given data(ref)
+     * @param body The parameters to create the document with (optional)
+     * @param watermark true to include a watermark in the resulting document
+     * @return List&lt;GeneratedDocument&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public List<GeneratedDocument> createDocument(DocGenSettings body, boolean watermark) throws ApiException {
+        ApiResponse<List<GeneratedDocument>> resp = createDocumentWithHttpInfo(body, watermark);
         return resp.getData();
     }
 
@@ -1501,11 +1523,12 @@ public class DefaultApi {
      * 
      * Create preview of given template(ref) with given data(ref)
      * @param body The parameters to create the document with (optional)
+     * @param watermark true to include a watermark in the resulting document
      * @return ApiResponse&lt;List&lt;GeneratedDocument&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<List<GeneratedDocument>> createDocumentWithHttpInfo(DocGenSettings body) throws ApiException {
-        com.squareup.okhttp.Call call = createDocumentValidateBeforeCall(body, null, null);
+    public ApiResponse<List<GeneratedDocument>> createDocumentWithHttpInfo(DocGenSettings body, boolean watermark) throws ApiException {
+        com.squareup.okhttp.Call call = createDocumentValidateBeforeCall(body, null, null, watermark);
         Type localVarReturnType = new TypeToken<List<GeneratedDocument>>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1519,6 +1542,20 @@ public class DefaultApi {
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
     public com.squareup.okhttp.Call createDocumentAsync(DocGenSettings body, final ApiCallback<List<GeneratedDocument>> callback) throws ApiException {
+        return createDocumentAsync(body, callback, false);
+    }
+
+    /**
+     *  (asynchronously)
+     * Create preview of given template(ref) with given data(ref)
+     * @param body The parameters to create the document with (optional)
+     * @param callback The callback to be executed when the API call finishes
+     * @param watermark true to include a watermark in the resulting document
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call createDocumentAsync(DocGenSettings body, final ApiCallback<List<GeneratedDocument>> callback,
+                                                        boolean watermark) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1539,7 +1576,7 @@ public class DefaultApi {
             };
         }
 
-        com.squareup.okhttp.Call call = createDocumentValidateBeforeCall(body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = createDocumentValidateBeforeCall(body, progressListener, progressRequestListener, watermark);
         Type localVarReturnType = new TypeToken<List<GeneratedDocument>>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
